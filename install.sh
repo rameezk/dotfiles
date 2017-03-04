@@ -5,7 +5,7 @@
 export DOTFILES_DIR
 DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# Symlinking files
+# Symlinking the files
 ln -sfv "$DOTFILES_DIR/brew/Brewfile" ~
 
 # Setup package managers
