@@ -1,0 +1,8 @@
+tap 'caskroom/cask'
+
+brew 'git'
+brew 'node'
+brew 'npm'
+brew 'mas'
+
+mas 'Todoist', id: 585829637
