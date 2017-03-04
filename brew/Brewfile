@@ -1,8 +1,9 @@
 tap 'caskroom/cask'
+tap 'caskroom/versions'
 
 brew 'git'
 brew 'node'
 brew 'npm'
 brew 'mas'
 
-mas 'Todoist', id: 585829637
+cask 'iterm2-beta'
