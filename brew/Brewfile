@@ -6,6 +6,7 @@ brew 'node'
 brew 'npm'
 brew 'mas'
 brew 'zsh'
+brew 'antigen'
 
 cask 'iterm2-beta'
 cask 'alfred'
