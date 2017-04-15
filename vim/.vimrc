@@ -4,7 +4,7 @@
 
 set nocompatible " just in case - better safe than sorry ;)
 
-call plug#begin('C:/dev/utils/vim/plugged')
+call plug#begin('~/.vim/plugged')
 
 Plug 'tpope/vim-sensible'
 Plug 'scrooloose/nerdtree'
