@@ -1,5 +1,6 @@
 tap 'caskroom/cask'
 tap 'caskroom/versions'
+tap 'caskroom/fonts'  
 
 brew 'git'
 brew 'node'
@@ -7,6 +8,7 @@ brew 'npm'
 brew 'mas'
 brew 'zsh'
 brew 'antigen'
+brew 'wget'
 
 cask 'iterm2-beta'
 cask 'alfred'
