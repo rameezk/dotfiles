@@ -1,6 +1,16 @@
-source /usr/local/share/antigen/antigen.zsh
+# 
+#  _____                               _                 _              
+# |  __ \                             ( )               | |             
+# | |__) |__ _ _ __ ___   ___  ___ ___|/ ___     _______| |__  _ __ ___ 
+# |  _  // _` | '_ ` _ \ / _ \/ _ \_  / / __|   |_  / __| '_ \| '__/ __|
+# | | \ \ (_| | | | | | |  __/  __// /  \__ \  _ / /\__ \ | | | | | (__ 
+# |_|  \_\__,_|_| |_| |_|\___|\___/___| |___/ (_)___|___/_| |_|_|  \___|
+#                                                                       
+#                                                                     
 
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle git
-antigen theme XsErG/zsh-themes themes/lazyuser
-antigen use oh-my-zsh
+
+# Load antigen {{{
+	source ~/.dotfiles/antigen/antigen.zsh
+# }}}
+
+# vim: set foldmethod=marker foldlevel=0 foldcolumn=3 textwidth=78:
