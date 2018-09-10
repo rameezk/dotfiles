@@ -8,7 +8,6 @@
 #
 #
 
-
 # Load antigen {{{
 source ~/.dotfiles/antigen/antigen.zsh
 # }}}
@@ -211,6 +210,7 @@ antigen bundle helm
 
 # docker {{{
 antigen bundle docker
+antigen bundle docker-compose
 # }}}
 
 # pyenv {{{
@@ -243,6 +243,8 @@ HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 
 # Export vars {{{
 # Export it only once for better performance
+export NVM_DIR="$HOME/.nvm"
+. "/usr/local/opt/nvm/nvm.sh"
 export PATH
 # }}}
 
