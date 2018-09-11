@@ -216,6 +216,7 @@ antigen bundle docker-compose
 # pyenv {{{
   PATH="/Users/username/.pyenv:$PATH"
   eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
 # }}}
 
 # bat {{{
