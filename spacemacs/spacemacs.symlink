@@ -62,7 +62,7 @@ values."
      shell-scripts
 
      ;; spell-checking
-     ;; syntax-checking
+     syntax-checking
      ;; version-control
 
      search-engine
