@@ -247,6 +247,8 @@ HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 export NVM_DIR="$HOME/.nvm"
 . "/usr/local/opt/nvm/nvm.sh"
 export PATH
+export LC_CTYPE=en_ZA.UTF-8
+export LC_ALL=en_ZA.UTF-8
 # }}}
 
 # vim: set foldmethod=marker foldlevel=0 foldcolumn=3 textwidth=78:
