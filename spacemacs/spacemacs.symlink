@@ -344,6 +344,8 @@ you should place your code here."
 
   "Add more saturation."
   (setq ns-use-srgb-colorspace nil)
+
+  (setq ns-pop-up-frames nil)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
