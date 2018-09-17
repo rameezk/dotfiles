@@ -138,7 +138,8 @@ if command -v nvim >/dev/null 2>&1; then
     export VISUAL=vi
 fi
 # ‘e’ for ‘edit’
-alias e="$VISUAL"
+#alias e="$VISUAL"
+alias e='open -a Emacs.app'
 
 PAGER=less
 # }}}
