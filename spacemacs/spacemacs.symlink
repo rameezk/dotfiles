@@ -40,7 +40,7 @@ values."
      ;; ----------------------------------------------------------------
      helm
      osx
-     themes-megapack
+     ;; themes-megapack
      ;; auto-completion
      ;; better-defaults
      emacs-lisp
