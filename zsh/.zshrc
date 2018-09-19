@@ -231,6 +231,10 @@ antigen bundle docker-compose
 # history {{{
   antigen bundle zdharma/history-search-multi-word
 # }}}
+
+# watch {{{
+  alias watch='watch '
+# }}}
 # }}}
 
 # Apply antigen {{{
