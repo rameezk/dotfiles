@@ -354,8 +354,7 @@ you should place your code here."
 
   (setq ns-pop-up-frames nil)
 
-  ;; (eval-after-load "company"
-  ;;   '(add-to-list 'company-backends 'company-anaconda))
+  (setq linum-relative-format "%3s ")
 
   )
 
