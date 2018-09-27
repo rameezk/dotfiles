@@ -139,7 +139,8 @@ if command -v nvim >/dev/null 2>&1; then
 fi
 # ‘e’ for ‘edit’
 #alias e="$VISUAL"
-alias e='open -a Emacs.app'
+#alias e='open -a Emacs.app'
+alias e='emacsclient --no-wait'
 
 PAGER=less
 # }}}
