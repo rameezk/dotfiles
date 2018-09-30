@@ -16,4 +16,4 @@ check:
 		--ignore 'docker/completion.zsh'
 
 ci: check
-    ./script/test
+	./script/test
