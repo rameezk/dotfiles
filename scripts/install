@@ -1,12 +1,17 @@
-#!/bin/sh
+#!/usr/bin/env bash
 #
-# Run all dotfiles installers.
+# Run all the installers
+
 set -e
 
 cd "$(dirname "$0")"/..
 
+# Run homebrew via the Brewfile
+echo "› brew bundle"
+brew bundle
+
 # find the installers and run them iteratively
-git ls-tree --name-only -r HEAD | grep install.sh | while read -r installer; do
-	echo "› ${installer}..."
-	sh -c "$installer"
+find . -name install.sh | while read -r installer ; do
+	  echo "› ${installer}..."
+    sh -c "${installer}" ;
 done
