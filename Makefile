@@ -1,0 +1,2 @@
+ci: 	check
+			./script/test
