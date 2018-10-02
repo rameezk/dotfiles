@@ -52,4 +52,4 @@ brew update
 
 # Install software
 echo "› $DOTFILES_ROOT/script/install"
-$DOTFILES_ROOT/script/install.sh
+$DOTFILES_ROOT/script/install
