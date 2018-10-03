@@ -13,6 +13,8 @@ source ~/.dotfiles/antigen/antigen.zsh
 # }}}
 
 # Appearance {{{
+POWERLEVEL9K_INSTALLATION_PATH=$ANTIGEN_BUNDLES/bhilburn/powerlevel9k
+#antigen theme bhilburn/powerlevel9k powerlevel9k
 antigen theme https://github.com/denysdovhan/spaceship-prompt spaceship
 
 # Syntax highlighting {{{
