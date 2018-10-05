@@ -206,6 +206,7 @@ alias vim='nvim'
 
 # kubernetes {{{
 alias kc='kubectl'
+PATH="$PATH:/Users/rameezk/Code/tooling/istio/istio-1.0.2/bin"
 
   function kcssh() {
     kubectl -n $1 exec -it $2 -- bash
