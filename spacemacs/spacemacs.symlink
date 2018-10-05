@@ -79,6 +79,8 @@ values."
      spotify
 
      slack
+
+     ;; cucumber
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -347,16 +349,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (add-to-list 'default-frame-alist
                '(ns-appearance . dark))
 
-
-  "Doom themes"
-  (setq doom-themes-enable-bold t
-        doom-themes-enable-italic t)
-
-  (doom-themes-visual-bell-config)
-
-  (doom-themes-neotree-config)
-
-
   )
 
 (defun dotspacemacs/user-config ()
@@ -375,6 +367,11 @@ you should place your code here."
 
   (setq linum-relative-format "%3s ")
 
+  "Doom themes"
+  (setq doom-themes-enable-bold t
+        doom-themes-enable-italic t)
+  (doom-themes-visual-bell-config)
+  (doom-themes-neotree-config)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
