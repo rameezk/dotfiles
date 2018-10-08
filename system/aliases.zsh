@@ -1,4 +1,24 @@
 #!/bin/sh
+
+# editors
+if which emacsclient >/dev/null 2>&1; then
+    alias e='emacsclient --no-wait'
+fi
+
+if command -v nvim >/dev/null 2>&1; then
+    export EDITOR=nvim
+    export VISUAL=nvim
+elif command -v vim >/dev/null 2>&1; then
+    export EDITOR=vim
+    export VISUAL=vim
+elif command -v vi >/dev/null 2>&1; then
+    export EDITOR=vi
+    export VISUAL=vi
+fi
+
+# paging
+PAGER=LESS
+
 # modern make
 if which mmake >/dev/null 2>&2; then
 	alias make='mmake'

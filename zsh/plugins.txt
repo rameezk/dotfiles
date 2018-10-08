@@ -4,6 +4,8 @@ rupa/z
 Tarrasch/zsh-bd
 junegunn/fzf
 zsh-users/zsh-autosuggestions branch:develop
+djui/alias-tips
+hlissner/zsh-autopair
 
 # tried to play with async stuff
 # these should be at last!
