@@ -43,3 +43,9 @@ if [ "$(uname -s)" != "Darwin" ]; then
 		alias open="xdg-open"
 	fi
 fi
+
+# use trash util for safer deleting
+if which trash >/dev/null 2>&1; then
+    alias rm='trash'
+fi
+
