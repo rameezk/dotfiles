@@ -49,3 +49,6 @@ if which trash >/dev/null 2>&1; then
     alias rm='trash'
 fi
 
+# go to root directory of git project
+alias grt='cd $(git rev-parse --show-toplevel)'
+
