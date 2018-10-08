@@ -9,6 +9,9 @@ alias k='kubectl'
 alias kc='kubectx'
 alias kn='kubens'
 
+#Current cluster
+alias kcc='k config current-context'
+
 alias sk='kubectl -n kube-system'
 alias ke='EDITOR=$EDITOR kubectl edit'
 alias klbaddr="kubectl get svc -ojsonpath='{.status.loadBalancer.ingress[0].hostname}'"
