@@ -11,11 +11,6 @@
 #
 export DOTFILES="$HOME/.dotfiles"
 
-# Load ZSH plugins
-source ~/.zsh_plugins.sh
-
-source ~/.dotfiles/zsh/functions/functions.zsh
-
 # your project folder that we can `c [tab]` to
 export PROJECTS="$HOME/Code"
 
