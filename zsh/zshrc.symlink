@@ -9,6 +9,9 @@
 # |_|  \_\__,_|_| |_| |_|\___|\___/___| |___/ (_)___|___/_| |_|_|  \___|
 #
 #
+export DOTFILES="$HOME/.dotfiles"
 
 # Load ZSH plugins
 source ~/.zsh_plugins.sh
+
+source ~/.dotfiles/zsh/functions/functions.zsh
