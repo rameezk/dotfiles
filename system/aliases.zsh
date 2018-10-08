@@ -52,3 +52,9 @@ fi
 # go to root directory of git project
 alias grt='cd $(git rev-parse --show-toplevel)'
 
+# bat, a better cat
+if which bat >/dev/null 2>&1; then
+    alias cat='bat'
+fi
+
+
