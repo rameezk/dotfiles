@@ -5,15 +5,6 @@ Tarrasch/zsh-bd
 junegunn/fzf
 zsh-users/zsh-autosuggestions branch:develop
 djui/alias-tips
-hlissner/zsh-autopair
-
-# tried to play with async stuff
-# these should be at last!
-# dritter/powerlevel9k branch:async_all_the_segments
-# dritter/powerlevel9k
-# bhilburn/powerlevel9k
-# denysdovhan/spaceship-prompt
-#maximbaz/spaceship-prompt
 
 sindresorhus/pure
 zsh-users/zsh-syntax-highlighting
