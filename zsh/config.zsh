@@ -41,6 +41,9 @@ setopt HIST_VERIFY
 setopt HIST_EXPIRE_DUPS_FIRST
 # dont ask for confirmation in rm globs*
 setopt RM_STAR_SILENT
+# No autocorrect thank you
+unsetopt CORRECT
+unsetopt CORRECT_ALL
 
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
@@ -82,3 +85,4 @@ if test -d /usr/local/opt/fzf/shell; then
 else
 	bindkey '^R' history-incremental-search-backward
 fi
+
