@@ -76,6 +76,7 @@ alias ..='cd ..'
 
 # bat, a better cat
 if which bat >/dev/null 2>&1; then
+    export BAT_THEME="TwoDark"
     alias cat='bat'
 fi
 
