@@ -362,6 +362,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (add-to-list 'default-frame-alist
                '(ns-appearance . dark))
 
+
   )
 
 (defun dotspacemacs/user-config ()
@@ -385,6 +386,11 @@ you should place your code here."
         doom-themes-enable-italic t)
   (doom-themes-visual-bell-config)
   (doom-themes-neotree-config)
+
+  (spacemacs/declare-prefix "d" "Documentation")
+  (evil-leader/set-key
+    "dd" 'dash-at-point)
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
