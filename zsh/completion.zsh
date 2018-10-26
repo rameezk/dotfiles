@@ -3,7 +3,7 @@
 zstyle ':completion:*' completer _oldlist _expand _complete _match _ignored _approximate
 
 # matches case insensitive for lowercase
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
 # pasting with tabs doesn't perform completion
 zstyle ':completion:*' insert-tab pending
