@@ -30,6 +30,7 @@ if which exa >/dev/null 2>&1; then
 	alias l='exa -la --git'
 	alias la='exa -laa --git'
 	alias ll='exa -l --git'
+  alias tree='ls --tree'
 else
 	if [ "$(uname -s)" = "Darwin" ]; then
 		alias ls="ls -FG"
