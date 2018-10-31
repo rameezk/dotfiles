@@ -10,6 +10,10 @@ bind r source-file ~/.tmux.conf
 bind - split-window -v
 bind / split-window -h
 
+# TITLES
+set -g set-titles on
+set -g set-titles-string '#(whoami)::#h::#(curl ipecho.net/plain;echo)'
+
 # TERMINAL
 set -ga terminal-overrides ",xterm-256color:Tc"
 set -g default-terminal "xterm-256color"
