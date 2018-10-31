@@ -1,7 +1,7 @@
 # PREFIX
 unbind C-b
-set -g prefix C-a
-bind C-a send-prefix
+set -g prefix C-Space
+bind C-Space send-prefix
 
 # RELOAD CONFIG
 bind r source-file ~/.tmux.conf
@@ -9,6 +9,15 @@ bind r source-file ~/.tmux.conf
 # Window management
 bind - split-window -v
 bind / split-window -h
+
+unbind-key j
+bind-key j select-pane -D
+unbind-key k
+bind-key k select-pane -U
+unbind-key h
+bind-key h select-pane -L
+unbind-key l
+bind-key l select-pane -R
 
 # TITLES
 set -g set-titles on
