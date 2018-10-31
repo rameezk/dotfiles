@@ -3,9 +3,16 @@ unbind C-b
 set -g prefix C-a
 bind C-a send-prefix
 
-# Reload config
+# RELOAD CONFIG
 bind r source-file ~/.tmux.conf
 
 # Window management
 bind - split-window -v
 bind / split-window -h
+
+# COLOR SCHEME
+set -ga terminal-overrides ",xterm-256color:Tc"
+set -g default-terminal "xterm-256color"
+
+# STATUS BAR
+# set -g status-bg black
