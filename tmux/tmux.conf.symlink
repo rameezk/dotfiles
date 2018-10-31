@@ -10,9 +10,11 @@ bind r source-file ~/.tmux.conf
 bind - split-window -v
 bind / split-window -h
 
-# COLOR SCHEME
+# TERMINAL
 set -ga terminal-overrides ",xterm-256color:Tc"
 set -g default-terminal "xterm-256color"
 
 # STATUS BAR
-# set -g status-bg black
+set -g status-style 'bg=#1E272C,fg=#6A7D89'
+set -g status-left-style 'fg=blue'
+set -g window-status-current-style 'fg=cyan'
