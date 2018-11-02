@@ -6,6 +6,9 @@ bind C-Space send-prefix
 # RELOAD CONFIG
 bind r source-file ~/.tmux.conf
 
+# COUNT SESSIONS START AT 1
+set -g base-index 1
+
 # Window management
 bind - split-window -v
 bind / split-window -h
@@ -19,13 +22,18 @@ bind-key h select-pane -L
 unbind-key l
 bind-key l select-pane -R
 
+set-option -g allow-rename off
+
+# USE VIM BINDINGS
+setw -g mode-keys vi
+
 # TITLES
 set -g set-titles on
 set -g set-titles-string '#(whoami)::#h::#(curl ipecho.net/plain;echo)'
 
 # TERMINAL
 set -ga terminal-overrides ",xterm-256color:Tc"
-set -g default-terminal "xterm-256color"
+set -g default-terminal "screen-256color"
 
 # COLOR SCHEME
 set -g status-style 'bg=#1E272C,fg=#6A7D89'
@@ -37,4 +45,27 @@ set -g pane-border-style 'bg=#1E272C,fg=#6A7D89'
 set -g pane-active-border-style 'bg=#1E272C,fg=cyan'
 
 # STATUS
+set -g status-left '#{prefix_highlight}[#{session_name}] #(cd #{pane_current_path}; git rev-parse --abbrev-ref HEAD) '
+set -g status-left-length 100
+set -g status-right ''
+set -g status-right-length 0
+set -g status-justify right
 set -g status-interval 1
+
+# List of plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-continuum'
+set -g @plugin 'tmux-plugins/tmux-yank'
+set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
+set -g @plugin 'Morantron/tmux-fingers'
+
+# Other examples:
+# set -g @plugin 'github_username/plugin_name'
+# set -g @plugin 'git@github.com/user/plugin'
+# set -g @plugin 'git@bitbucket.com/user/plugin'
+
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+run '~/.tmux/plugins/tpm/tpm'
+
