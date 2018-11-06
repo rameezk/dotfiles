@@ -8,6 +8,7 @@ kubectl() {
 alias k='kubectl'
 alias kc='kubectx'
 alias kn='kubens'
+alias kf='sudo kubefwd services -n '
 
 #Current cluster
 alias kcc='k config current-context'
