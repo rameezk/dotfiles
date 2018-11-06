@@ -24,6 +24,9 @@ bind-key l select-pane -R
 
 set-option -g allow-rename off
 
+# MOUSE MODE
+setw -g mouse on
+
 # USE VIM BINDINGS
 setw -g mode-keys vi
 
