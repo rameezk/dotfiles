@@ -24,6 +24,21 @@ bind-key h select-pane -L
 unbind-key l
 bind-key l select-pane -R
 
+# Use Alt-vim keys without prefix key to switch panes
+bind -n M-h select-pane -L
+bind -n M-j select-pane -D 
+bind -n M-k select-pane -U
+bind -n M-l select-pane -R
+
+# Use Alt-arrow keys without prefix key to switch panes
+bind -n M-Left select-pane -L
+bind -n M-Right select-pane -R
+bind -n M-Up select-pane -U
+bind -n M-Down select-pane -D
+
+bind -n S-Left  previous-window
+bind -n S-Right next-window
+
 set-option -g allow-rename off
 
 # MOUSE MODE
@@ -41,7 +56,7 @@ set -g set-titles-string '#(whoami)::#h::#(curl ipecho.net/plain;echo)'
 
 # TERMINAL
 set -ga terminal-overrides ",xterm-256color:Tc"
-set -g default-terminal "screen-256color"
+set -g default-terminal "xterm-256color"
 
 # COLOR SCHEME
 set -g status-style 'bg=#1E272C,fg=#6A7D89'
