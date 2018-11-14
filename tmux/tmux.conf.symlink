@@ -68,12 +68,22 @@ set -g pane-border-style 'bg=#1E272C,fg=#6A7D89'
 set -g pane-active-border-style 'bg=#1E272C,fg=cyan'
 
 # STATUS
-set -g status-left '#{prefix_highlight}[#{session_name}] #(cd #{pane_current_path}; git rev-parse --abbrev-ref HEAD) '
+set -g status-left '#{prefix_highlight}#[fg=yellow]#[bg=#6A7D89]  #{session_name} '
 set -g status-left-length 100
-set -g status-right ''
-set -g status-right-length 0
-set -g status-justify right
+set -g status-right '#[fg=green]  #U@#H'
+set -g status-right-length 100
+set -g status-justify left
 set -g status-interval 1
+set-option -g status-position bottom
+setw -g pane-border-status bottom
+setw -g pane-border-format '#[fg=#6A7D89] #{pane_current_command} '
+
+# HISTORY
+set -g history-limit 10000
+
+# SET WINDOW NOTIFICATIONS
+setw -g monitor-activity on
+set -g visual-activity on
 
 # SESSION MANAGEMENT
 set -g @continuum-boot 'on'
@@ -89,6 +99,7 @@ set -g @plugin 'tmux-plugins/tmux-yank'
 set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
 set -g @plugin 'Morantron/tmux-fingers'
 set -g @plugin 'tmux-plugins/tmux-copycat'
+set -g @plugin 'soyuka/tmux-current-pane-hostname'
 
 # Other examples:
 # set -g @plugin 'github_username/plugin_name'
