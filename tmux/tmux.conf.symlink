@@ -11,9 +11,9 @@ set -g base-index 1
 
 # Window management
 unbind-key -
-bind - split-window -v
+bind - split-window -v -c "#{pane_current_path}"
 unbind-key |
-bind | split-window -h
+bind | split-window -h -c "#{pane_current_path}"
 
 unbind-key j
 bind-key j select-pane -D
@@ -45,7 +45,7 @@ set -g default-terminal "screen-256color"
 
 # COLOR SCHEME
 set -g status-style 'bg=#1E272C,fg=#6A7D89'
-set -g status-left-style 'fg=blue'
+set -g status-left-style 'fg=cyan'
 set -g window-status-current-style 'fg=cyan'
 set -g mode-style 'bg=cyan,fg=black'
 set -g message-style 'bg=black,fg=cyan'
