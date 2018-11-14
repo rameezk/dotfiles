@@ -357,14 +357,13 @@ executes.
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
 
-  (setq exec-path-from-shell-arguments '("-i"))
+  ;; (setq exec-path-from-shell-arguments '("-i"))
 
   (add-to-list 'default-frame-alist
                '(ns-transparent-titlebar . t))
 
   (add-to-list 'default-frame-alist
                '(ns-appearance . dark))
-
 
   )
 
