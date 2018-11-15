@@ -70,7 +70,7 @@ set -g pane-active-border-style 'bg=#1E272C,fg=cyan'
 # STATUS
 set -g status-left '#{prefix_highlight}#[fg=yellow]#[bg=#6A7D89][  #{session_name} ]'
 set -g status-left-length 100
-set -g status-right '#[fg=green]  #U@#H'
+set -g status-right '#[fg=green]#($TMUX_PLUGIN_MANAGER_PATH/tmux-mem-cpu-load/tmux-mem-cpu-load --colors --powerline-right --interval 2)#[default] #[fg=green]  #U@#H'
 set -g status-right-length 100
 set -g status-justify left
 set -g status-interval 1
@@ -100,6 +100,8 @@ set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
 set -g @plugin 'Morantron/tmux-fingers'
 set -g @plugin 'tmux-plugins/tmux-copycat'
 set -g @plugin 'soyuka/tmux-current-pane-hostname'
+set -g @plugin 'nhdaly/tmux-better-mouse-mode'
+set -g @plugin 'thewtex/tmux-mem-cpu-load'
 
 # Other examples:
 # set -g @plugin 'github_username/plugin_name'
