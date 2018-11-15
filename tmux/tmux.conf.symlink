@@ -68,7 +68,7 @@ set -g pane-border-style 'bg=#1E272C,fg=#6A7D89'
 set -g pane-active-border-style 'bg=#1E272C,fg=cyan'
 
 # STATUS
-set -g status-left '#{prefix_highlight}#[fg=yellow]#[bg=#6A7D89]  #{session_name} '
+set -g status-left '#{prefix_highlight}#[fg=yellow]#[bg=#6A7D89][  #{session_name} ]'
 set -g status-left-length 100
 set -g status-right '#[fg=green]  #U@#H'
 set -g status-right-length 100
