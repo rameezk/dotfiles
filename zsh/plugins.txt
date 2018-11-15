@@ -5,6 +5,7 @@ Tarrasch/zsh-bd
 junegunn/fzf
 zsh-users/zsh-autosuggestions branch:develop
 djui/alias-tips
+caarlos0/ports kind:path
 
 sindresorhus/pure
 zsh-users/zsh-syntax-highlighting
