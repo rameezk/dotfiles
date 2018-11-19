@@ -80,10 +80,19 @@ set -g window-status-current-format "#[fg=colour233,bg=colour31]#[fg=colour25
 set -g window-status-current-bg colour39
 set -g window-status-current-fg colour255
 
+# KUBERNETES
+set -g @kube_color_dev '#[fg=colour32]'
+set -g @kube_color_stage '#[fg=colour221]'
+set -g @kube_color_prod '#[fg=colour196]'
+
+set -g @kube_stage_clusters 'VumaPangea'
+set -g @kube_prod_clusters 'VumaPangeaProduction'
+set -g @kube_dev_clusters  'thatsit'
+
 # STATUS
 set -g status-left '#{prefix_highlight}#[fg=yellow]#[bg=#6A7D89][  #{session_name} ]'
 set -g status-left-length 100
-set -g status-right '#[fg=green]#($TMUX_PLUGIN_MANAGER_PATH/tmux-mem-cpu-load/tmux-mem-cpu-load --colors --powerline-right --interval 2)#[default] #[fg=green]  #U@#H'
+set -g status-right '#[fg=colour219]ﴱ #{kube_cluster}:#{kube_namespace} #[fg=green]#($TMUX_PLUGIN_MANAGER_PATH/tmux-mem-cpu-load/tmux-mem-cpu-load --colors --powerline-right --interval 2)#[default] #[fg=green]  #U@#H'
 set -g status-right-length 100
 set -g status-justify left
 set -g status-interval 1
@@ -116,6 +125,7 @@ set -g @plugin 'soyuka/tmux-current-pane-hostname'
 set -g @plugin 'nhdaly/tmux-better-mouse-mode'
 set -g @plugin 'thewtex/tmux-mem-cpu-load'
 set -g @plugin 'tmux-plugins/tmux-sessionist'
+set -g @plugin 'sudermanjr/tmux-kube'
 
 # Other examples:
 # set -g @plugin 'github_username/plugin_name'
