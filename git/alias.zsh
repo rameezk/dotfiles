@@ -18,7 +18,7 @@ alias gaa='git add -A'
 alias gcm='git commit -m'
 alias gcam='git commit -a -m'
 alias gs='git status -sb'
-alias gpr='gp && git pr'
+# alias gpr='gp && git pr' #Removing to make pr's portal in ./function.zsh
 alias glnext='git log --oneline $(git describe --tags --abbrev=0 @^)..@'
 
 if which svu >/dev/null 2>&1; then
