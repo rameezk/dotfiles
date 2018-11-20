@@ -93,7 +93,8 @@ set -g @kube_dev_clusters  'thatsit'
 # STATUS
 set -g status-left '#{prefix_highlight}#[fg=yellow]#[bg=#6A7D89][  #{session_name} ]'
 set -g status-left-length 100
-set -g status-right '#[fg=colour219]ﴱ #{kube_cluster}:#{kube_namespace} #[fg=green]#($TMUX_PLUGIN_MANAGER_PATH/tmux-mem-cpu-load/tmux-mem-cpu-load --colors --powerline-right --interval 2)#[default] #[fg=green]  #U@#H'
+# set -g status-right '#[fg=colour219]ﴱ #{kube_cluster}:#{kube_namespace} #[fg=green]#($TMUX_PLUGIN_MANAGER_PATH/tmux-mem-cpu-load/tmux-mem-cpu-load --colors --powerline-right --interval 2)#[default] #[fg=green]  #U@#H'
+set -g status-right '#[fg=colour219]ﴱ #{kube_cluster}:#{kube_namespace} #{online_status} #[fg=green]  #U@#H'
 set -g status-right-length 100
 set -g status-justify left
 set -g status-interval 1
@@ -113,6 +114,10 @@ set -g @continuum-boot 'on'
 set -g @continuum-boot-options 'iterm,fullscreen'
 set -g @continuum-restore 'on'
 
+# ONLINE CHECKER
+set -g @online_icon "#[fg=green]"
+set -g @offline_icon "#[fg=red]"
+
 # List of plugins
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
@@ -127,6 +132,7 @@ set -g @plugin 'nhdaly/tmux-better-mouse-mode'
 set -g @plugin 'thewtex/tmux-mem-cpu-load'
 set -g @plugin 'tmux-plugins/tmux-sessionist'
 set -g @plugin 'sudermanjr/tmux-kube'
+set -g @plugin 'tmux-plugins/tmux-online-status'
 
 # Other examples:
 # set -g @plugin 'github_username/plugin_name'
