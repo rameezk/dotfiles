@@ -46,6 +46,9 @@ bind E command-prompt -p "Command:" \
        "run \"tmux list-panes -a -F '##{session_name}:##{window_index}.##{pane_index}' \
               | xargs -I PANE tmux send-keys -t PANE '%1' Enter\""
 
+# Sync panes
+bind e set-window-option synchronize-panes
+
 # MOUSE MODE
 setw -g mouse on
 
