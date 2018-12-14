@@ -81,4 +81,7 @@ if which bat >/dev/null 2>&1; then
     alias cat='bat'
 fi
 
+# check what processes are stopping macos from sleeping
+alias why_cant_i_sleep='pmset -g assertions'
+
 
