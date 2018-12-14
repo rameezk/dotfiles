@@ -396,6 +396,12 @@ you should place your code here."
   (setq flycheck-gometalinter-deadline "10s")
   (setq flycheck-gometalinter-fast t)
 
+  "Ansible vault stuff"
+  (setq ansible::vault-password-file "~/.vault_pass.txt")
+
+  "Fix helm bug"
+  (setq-default helm-display-function 'helm-default-display-buffer)
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
