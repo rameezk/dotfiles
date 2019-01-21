@@ -7,5 +7,6 @@
     "files.autoSave": "onFocusChange",
     "editor.renderWhitespace": "boundary",
     "editor.minimap.enabled": false,
-    "terminal.integrated.cursorStyle": "line"
+    "terminal.integrated.cursorStyle": "line",
+    "editor.formatOnSave": true
 }
