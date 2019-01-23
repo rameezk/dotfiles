@@ -4,9 +4,10 @@
     "sync.gist": "41d7e6be6d23b6b1a9787b87624d6e44",
     "workbench.colorTheme": "Spacemacs - dark",
     "workbench.iconTheme": "vscode-icons",
-    "files.autoSave": "onFocusChange",
     "editor.renderWhitespace": "boundary",
     "editor.minimap.enabled": false,
     "terminal.integrated.cursorStyle": "line",
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "editor.cursorBlinking": "solid",
+    "vim.useSystemClipboard": true
 }
