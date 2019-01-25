@@ -84,4 +84,5 @@ fi
 # check what processes are stopping macos from sleeping
 alias why_cant_i_sleep='pmset -g assertions'
 
-
+# get my outgoing IP
+alias ip_plez='curl https://canihazip.com/s'
