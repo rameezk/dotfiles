@@ -1,6 +1,5 @@
 {
     "editor.fontFamily": "Fira Code, Menlo, Monaco, 'Courier New', monospace",
-    "editor.fontLigatures": true,
     "sync.gist": "41d7e6be6d23b6b1a9787b87624d6e44",
     "workbench.colorTheme": "Spacemacs - dark",
     "workbench.iconTheme": "vscode-icons",
@@ -9,5 +8,6 @@
     "terminal.integrated.cursorStyle": "line",
     "editor.formatOnSave": true,
     "editor.cursorBlinking": "solid",
-    "vim.useSystemClipboard": true
+    "vim.useSystemClipboard": true,
+    "editor.fontLigatures": true
 }
