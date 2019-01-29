@@ -6,8 +6,11 @@
     "editor.renderWhitespace": "boundary",
     "editor.minimap.enabled": false,
     "terminal.integrated.cursorStyle": "line",
-    "editor.formatOnSave": true,
     "editor.cursorBlinking": "solid",
     "vim.useSystemClipboard": true,
-    "editor.fontLigatures": true
+    "editor.fontLigatures": true,
+    "latex-workshop.view.pdf.viewer": "external",
+    "[javascript]": {
+        "editor.formatOnSave": true
+    }
 }
