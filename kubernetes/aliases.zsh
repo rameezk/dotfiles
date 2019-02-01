@@ -22,4 +22,5 @@ alias knrunning='kubectl get pods --field-selector=status.phase!=Running'
 alias kfails='kubectl get po -owide --all-namespaces | grep "0/" | tee /dev/tty | wc -l'
 alias kimg="kubectl get deployment --output=jsonpath='{.spec.template.spec.containers[*].image}'"
 
-alias kdebug='kubectl run --rm -i -t debug --image=rameezk/debuggery --restart=Never'
+alias kdebug='kubectl exec -it debuggery -- zsh || kubectl run --rm -it debuggery --image=rameezk/debuggery --restart=Never'
+alias kdebug-clean='kubectl delete pod debuggery'
