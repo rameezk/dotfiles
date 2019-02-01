@@ -11,6 +11,6 @@
     "editor.fontLigatures": true,
     "latex-workshop.view.pdf.viewer": "external",
     "[javascript]": {
-        "editor.formatOnSave": true
-    }
+        "editor.formatOnSave": false
+    },
 }
