@@ -1,0 +1,4 @@
+set nu
+
+" Use the clipboard as the default register
+clipboard=unamed
