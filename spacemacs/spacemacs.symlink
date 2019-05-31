@@ -64,7 +64,8 @@ values."
      ansible
      terraform
      (go :variables
-         go-use-gometalinter t)
+         go-use-gometalinter t
+         go-tab-width 4)
 
      github
 
@@ -378,7 +379,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   (add-to-list 'default-frame-alist
                '(ns-appearance . dark))
-  
+
   (setq url-proxy-services
    '(("no_proxy" . "^\\(localhost\\|10.*\\)")
      ("http" . "127.0.0.1:3128")
