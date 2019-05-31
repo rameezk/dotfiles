@@ -71,6 +71,12 @@ set-option -g allow-rename off
 
 # Yank behaviour for mouse
 set -g @yank_selection_mouse 'clipboard' # or 'primary' or 'secondary'
+
+# Automatically restore session on tmux start-up
+set -g @continuum-restore 'on'
+
+# Start tmux server on system boot
+set -g @continuum-boot 'on'
 #############################################
 # Key-Bindings
 #############################################
@@ -130,6 +136,8 @@ set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
 set -g @plugin 'tmux-plugins/tmux-sessionist'
 set -g @plugin 'tmux-plugins/tmux-yank'
 set -g @plugin 'tmux-plugins/tmux-copycat'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-continuum'
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/.tmux/plugins/tpm/tpm'
