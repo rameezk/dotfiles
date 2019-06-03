@@ -50,7 +50,13 @@ zle -N down-line-or-beginning-search
 
 # emacs mode
 # I always enter vi mode by mistake
-bindkey -e
+#bindkey -e
+
+# vi mode
+bindkey -v
+# new commands in command mode
+#zle-line-init() { zle -K vicmd; }
+#zle -N zle-line-init 
 
 # fuzzy find: start to type
 bindkey "$terminfo[kcuu1]" up-line-or-beginning-search
