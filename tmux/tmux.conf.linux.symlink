@@ -45,7 +45,7 @@ set -g window-status-current-fg colour255
 #############################################
 # Terminal Overrides
 set -ga terminal-overrides ",xterm-256color:Tc"
-set -g default-terminal "xterm-256color"
+set -g default-terminal "screen-256color"
 
 # Count sessions from 1
 set -g base-index 1
