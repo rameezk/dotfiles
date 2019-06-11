@@ -57,7 +57,9 @@ values."
 
      html
 
-     python
+     (python :variables
+             python-formatter 'black
+             python-format-on-save t)
      ipython-notebook
      django
 
