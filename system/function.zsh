@@ -13,3 +13,7 @@ fid() {
 fix_clock_manually() {
 	sudo date -s "$(wget --no-cache -S -O /dev/null google.com 2>&1 | sed -n -e '/  *Date: */ {' -e s///p -e q -e '}')"
 }
+
+whois_on_port() {
+    sudo lsof -i :$1
+}
