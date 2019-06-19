@@ -3,3 +3,5 @@ syntax on "Turn on syntax highlighting
 set incsearch "Incremental search
 set smartcase "Smart case matching
 
+nnoremap cc :action CommentByLineComment<CR>
+vnoremap cc :action CommentByLineComment<CR>
