@@ -4,3 +4,6 @@ set iskeyword-=_
 
 set incsearch "Incremental search
 set smartcase "Smart case matching
+
+" Plugins
+set surround
