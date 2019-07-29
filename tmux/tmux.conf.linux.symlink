@@ -11,7 +11,7 @@ set -g status-interval 1
 # Status Line
 set -g status-left '#{prefix_highlight}#[fg=yellow]#[bg=#6A7D89][  #{session_name} ]'
 set -g status-left-length 100
-set -g status-right '#[fg=colour219]ﴱ #{kube_cluster}:#{kube_namespace} #{online_status} #[fg=green]  #U@#H'
+set -g status-right '#[fg=colour219]ﴱ #{kubectl_context}#{kubectl_separator}#{kubectl_namespace} #[fg=green]  #U@#H'
 set -g status-right-length 100
 set -g status-justify left
 
@@ -138,6 +138,7 @@ set -g @plugin 'tmux-plugins/tmux-yank'
 set -g @plugin 'tmux-plugins/tmux-copycat'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
+set -g @plugin 'rameezk/tmux-kubectl'
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/.tmux/plugins/tpm/tpm'
