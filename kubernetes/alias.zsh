@@ -1,10 +1,3 @@
-#!/bin/sh
-
-kubectl() {
-    source <(command kubectl completion zsh)
-    command kubectl "$@"
-}
-
 alias k='kubectl'
 alias kc='kubectx'
 alias kn='kubens'
