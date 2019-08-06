@@ -68,7 +68,8 @@ values."
 
      docker
      ansible
-     terraform
+     (terraform :variables
+                terraform-auto-format-on-save t)
      (go :variables
          go-use-gometalinter t
          go-tab-width 4)
