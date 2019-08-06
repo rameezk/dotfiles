@@ -9,36 +9,27 @@ set -g set-titles-string '#(whoami)::#h::#(curl ipecho.net/plain;echo)'
 set -g status-interval 1
 
 # Status Line
-set -g status-left '#{prefix_highlight}#[fg=yellow]#[bg=#6A7D89][  #{session_name} ]'
-set -g status-left-length 100
-set -g status-right '#[fg=colour219]ﴱ #{kubectl_context}#{kubectl_separator}#{kubectl_namespace} #[fg=green]  #U@#H'
-set -g status-right-length 100
-set -g status-justify left
+set -g status-left-length 30
+set -g status-left '#[bg=colour7]#[fg=colour0]#{?client_prefix,#[bg=colour2],} ❐ #S #[bg=colour0]#[fg=colour7]#{?client_prefix,#[fg=colour2],}#{?window_zoomed_flag, 🔍 ,}#[fg=colour1] ♥ #(~/.dotfiles/tmux/scripts/battery.sh) '
+set -g status-right '#[fg=colour7]#[bg=colour7] #[fg=colour2] #[fg=colour1]#[fg=colour3]#[bg=colour3]#[fg=colour0] ﴱ #{kubectl_context}#{kubectl_separator}#{kubectl_namespace} #[bg=colour3]#[fg=colour1]#[bg=colour1]#[fg=colour0]  #U@#H '
+set -g status-right-length 150
 
 # Above bottom status line thingy
 set-option -g status-position bottom
 setw -g pane-border-status bottom
-setw -g pane-border-format '#[fg=#6A7D89] #{pane_current_command} '
+setw -g pane-border-format '#[fg=colour2] $ #{pane_current_command} '
 
 # SET WINDOW NOTIFICATIONS
 setw -g monitor-activity on
 set -g visual-activity on
 
 # Color scheme
-set -g status-style 'bg=#1E272C,fg=#6A7D89'
-set -g status-left-style 'fg=cyan'
-set -g window-status-current-style 'fg=cyan'
-set -g mode-style 'bg=cyan,fg=black'
-set -g message-style 'bg=black,fg=cyan'
-set -g pane-border-style 'bg=#1E272C,fg=#6A7D89'
-set -g pane-active-border-style 'bg=#1E272C,fg=cyan'
+set -g status-bg colour0
+set -g pane-active-border-style fg=colour58
 
 # WINDOW STATUS
-set -g window-status-format "  #I#F  #W  "
-# set -g window-status-current-format "#[fg=colour233,bg=colour31]#[fg=colour255,bg=colour31] #I#F  #W #[fg=colour31,bg=colour233,nobold]"
-set -g window-status-current-format "#[fg=colour233,bg=colour31]#[fg=colour255,bg=colour31] #I#F  #W #[fg=colour31,bg=colour233,nobold]"
-set -g window-status-current-bg colour39
-set -g window-status-current-fg colour255
+set -g window-status-current-format "#[fg=colour0]#[bg=colour5]#[fg=colour15]#[bg=colour5] #I* #[fg=colour15] #W #[fg=colour5]#[bg=colour0]"
+set -g window-status-format "#[fg=colour244]#[bg=colour0]#I-#[fg=colour240]  #W"
 
 #############################################
 # Behaviour
@@ -49,6 +40,7 @@ set -g default-terminal "screen-256color"
 
 # Count sessions from 1
 set -g base-index 1
+set -g pane-base-index 1
 
 # MOUSE MODE
 setw -g mouse on
@@ -132,7 +124,6 @@ bind r source-file ~/.tmux.conf \; display-message "Config reloaded."
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'soyuka/tmux-current-pane-hostname'
-set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
 set -g @plugin 'tmux-plugins/tmux-sessionist'
 set -g @plugin 'tmux-plugins/tmux-yank'
 set -g @plugin 'tmux-plugins/tmux-copycat'
