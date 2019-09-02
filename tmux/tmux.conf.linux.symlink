@@ -3,7 +3,7 @@
 #############################################
 # Titles
 set -g set-titles on
-set -g set-titles-string '#(whoami)::#h::#(curl ipecho.net/plain;echo)'
+set -g set-titles-string '#(whoami)::#h'
 
 # Status Line Updates
 set -g status-interval 1
