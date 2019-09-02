@@ -2,6 +2,7 @@ alias k='kubectl'
 alias kc='kubectx'
 alias kn='kubens'
 alias kf='sudo kubefwd services -n '
+alias kw='watch kubectl'
 
 #Current cluster
 alias kcc='k config current-context'
