@@ -17,3 +17,23 @@ fix_clock_manually() {
 whois_on_port() {
     sudo lsof -i :$1
 }
+
+xorg-switch-to-4k() {
+    if [ -f ~/.Xresources.4k-27inch.deactivated ]; then
+            echo "[..] Adding xorg config for 4k screen..."
+            mv ~/.Xresources.4k-27inch.deactivated ~/.Xresources
+            echo "[..] Done..."
+            echo "[..] Please reboot now..."
+    else
+            "[..] Oops.Xorg config file not found..."
+    fi
+}
+
+xorg-switch-to-1k() {
+    if [ -f ~/.Xresources ]; then
+            echo "[..] Adding xorg config for 1k screen..."
+            mv ~/.Xresources ~/.Xresources.4k-27inch.deactivated
+            echo "[..] Done..."
+            echo "[..] Please reboot now..."
+    fi
+}
