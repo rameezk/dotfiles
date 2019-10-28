@@ -25,7 +25,7 @@ xorg-switch-to-4k() {
             echo "[..] Done..."
             echo "[..] Please reboot now..."
     else
-            "[..] Oops.Xorg config file not found..."
+            echo "[..] Already switched"
     fi
 }
 
@@ -35,5 +35,7 @@ xorg-switch-to-1k() {
             mv ~/.Xresources ~/.Xresources.4k-27inch.deactivated
             echo "[..] Done..."
             echo "[..] Please reboot now..."
+    else
+            echo "[..] Already switched"
     fi
 }
