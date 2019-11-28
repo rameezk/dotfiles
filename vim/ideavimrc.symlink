@@ -1,6 +1,6 @@
 syntax on "Turn on syntax highlighting
 
-set iskeyword-=_
+set iskeyword+=_
 
 set incsearch "Incremental search
 set smartcase "Smart case matching
