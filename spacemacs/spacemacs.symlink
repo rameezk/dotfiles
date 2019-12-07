@@ -215,10 +215,10 @@ values."
    ;; with 2 themes variants, one dark and one light)
    ;; dotspacemacs-themes '(spacemacs-dark
    ;;                       spacemacs-light)
-   ;; dotspacemacs-themes '(spacemacs-dark
-   ;;                       spacemacs-light)
-   dotspacemacs-themes '(doom-one
+   dotspacemacs-themes '(spacemacs-dark
                          spacemacs-light)
+   ;; dotspacemacs-themes '(doom-one
+   ;;                       spacemacs-light)
    dotspacemacs-mode-line-theme '(all-the-icons :separator cup :separator-scale 1.5)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
@@ -434,11 +434,11 @@ you should place your code here."
   (setq linum-relative-format "%3s ")
 
   "Doom themes"
-  (setq doom-themes-enable-bold t
-        doom-themes-enable-italic t)
-  (doom-themes-visual-bell-config)
-  (doom-themes-neotree-config)
-  (doom-themes-treemacs-config)
+  ;; (setq doom-themes-enable-bold t
+  ;;       doom-themes-enable-italic t)
+  ;; (doom-themes-visual-bell-config)
+  ;; (doom-themes-neotree-config)
+  ;; (doom-themes-treemacs-config)
 
   (spacemacs/declare-prefix "d" "Documentation")
   (evil-leader/set-key
