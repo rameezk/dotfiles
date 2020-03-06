@@ -1,3 +1,4 @@
 if [ -x "$(command -v kubectl)" ]; then
-    source <(command kubectl completion zsh)
+    # source <(kubectl completion zsh) ## workaround below
+    kubectl completion zsh > ~/.zsh/completion/_kubectl
 fi
