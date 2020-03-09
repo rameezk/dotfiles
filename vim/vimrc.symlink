@@ -9,13 +9,14 @@
 
 " Plugins {{{
 	Plug 'morhetz/gruvbox'
+    Plug 'dracula/vim', { 'as': 'dracula' }
 	call plug#end()
 " }}}
 
 " Colours {{{
 	syntax on
 	set background=dark
-	colorscheme gruvbox
+	colorscheme dracula
 " }}}
 
 " Misc {{{
