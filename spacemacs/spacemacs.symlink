@@ -115,6 +115,7 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
                                       doom-themes
+                                      dracula-theme
 
                                       ;; Vue Stuff
                                       vue-mode
@@ -216,7 +217,7 @@ values."
    ;; with 2 themes variants, one dark and one light)
    ;; dotspacemacs-themes '(spacemacs-dark
    ;;                       spacemacs-light)
-   dotspacemacs-themes '(spacemacs-dark
+   dotspacemacs-themes '(doom-dracula
                          spacemacs-light)
    ;; dotspacemacs-themes '(doom-one
    ;;                       spacemacs-light)
@@ -225,7 +226,12 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Hack"
+   ;; dotspacemacs-default-font '("Hack"
+   ;;                             :size 12
+   ;;                             :weight normal
+   ;;                             :width normal
+   ;;                             :powerline-scale 1.2)
+   dotspacemacs-default-font '("Jetbrains Mono"
                                :size 12
                                :weight normal
                                :width normal
@@ -464,6 +470,7 @@ you should place your code here."
     :init
     (setq pipenv-projectile-after-switch-function
           #'pipenv-projectile-after-switch-extended))
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
