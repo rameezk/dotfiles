@@ -13,8 +13,3 @@ fi
 
 # Tell pyenv-virtualenvwrapper to use pyenv when creating new Python environments
 export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
-
-#### Poetry
-if [ -d "$HOME/.poetry" ]; then
-    PATH="$PATH:$HOME/.poetry/bin"
-fi
