@@ -2,8 +2,18 @@ syntax on "Turn on syntax highlighting
 
 set iskeyword+=_
 
+set clipboard+=unnamed "use clipboard
+
 set incsearch "Incremental search
 set smartcase "Smart case matching
+
+" always make these typos
+:command WQ wq
+:command Wq wq
+:command W w
+:command Q q
+:command Wall wall
+:command WAll wall
 
 " Plugins
 set surround
