@@ -39,3 +39,27 @@ xorg-switch-to-1k() {
             echo "[..] Already switched"
     fi
 }
+
+b64_encode() {
+    to_encode="$1"
+
+    encoded=$(echo -n "$to_encode" | base64 -w0)
+
+    echo "Encoded: [$encoded]"
+
+    echo "$encoded" | pbcopy
+
+    echo "Copied to clipboard."
+}
+
+b64_decode() {
+    to_decode="$1"
+
+    decoded=$(echo "$to_decode" | base64 -d -w0)
+
+    echo "Decoded: [$decoded]"
+
+    echo "$decoded" | pbcopy
+
+    echo "Copied to clipboard."
+}
