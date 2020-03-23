@@ -10,6 +10,7 @@
 " Plugins {{{
 	Plug 'morhetz/gruvbox'
     Plug 'dracula/vim', { 'as': 'dracula' }
+    Plug 'tpope/vim-commentary'
 	call plug#end()
 " }}}
 
@@ -24,6 +25,8 @@
 	set softtabstop=4
 	set expandtab
     set backspace=indent,eol,start "backspace works in insert mode but not over automatically inserted indents, line breaks or the place where insert mode started
+    
+    set clipboard+=unnamed "use system clipboard
 " }}}
 
 " UI {{{
