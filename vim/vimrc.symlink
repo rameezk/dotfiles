@@ -26,7 +26,7 @@
 	set expandtab
     set backspace=indent,eol,start "backspace works in insert mode but not over automatically inserted indents, line breaks or the place where insert mode started
     
-    set clipboard+=unnamed "use system clipboard
+    set clipboard+=unnamedplus "use system clipboard
 " }}}
 
 " UI {{{
@@ -57,6 +57,11 @@
     
     nnoremap <leader>ev :vsp $MYVIMRC<CR>
     nnoremap <leader>sv :source $MYVIMRC<CR>
+
+    noremap <Leader>y "*y
+    noremap <Leader>p "*p
+    noremap <Leader>Y "+y
+    noremap <Leader>P "+p
 " }}}
 
 " vim:foldmethod=marker:foldlevel=0

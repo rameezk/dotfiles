@@ -2,7 +2,7 @@ syntax on "Turn on syntax highlighting
 
 set iskeyword+=_
 
-set clipboard+=unnamed "use clipboard
+set clipboard+=unnamedplus "use clipboard
 
 set incsearch "Incremental search
 set smartcase "Smart case matching
