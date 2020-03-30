@@ -63,3 +63,14 @@ b64_decode() {
 
     echo "Copied to clipboard."
 }
+
+unsource_exports() {
+    file="$1"
+
+    if [ -z "$file" ]; then
+        echo "Please specify path to file"
+        return 1
+    fi
+
+    unset $(awk -F'[ =]+' '/^export/{print $2}' "$file")
+}
