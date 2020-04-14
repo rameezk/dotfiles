@@ -69,6 +69,10 @@ set -g @continuum-restore 'on'
 
 # Start tmux server on system boot
 set -g @continuum-boot 'on'
+
+# Fix sha copying
+set -g @copycat_search_G '\b[0-9a-f]{5,40}\b'
+
 #############################################
 # Key-Bindings
 #############################################
@@ -127,8 +131,8 @@ set -g @plugin 'soyuka/tmux-current-pane-hostname'
 set -g @plugin 'tmux-plugins/tmux-sessionist'
 set -g @plugin 'tmux-plugins/tmux-yank'
 set -g @plugin 'tmux-plugins/tmux-copycat'
-set -g @plugin 'tmux-plugins/tmux-resurrect'
-set -g @plugin 'tmux-plugins/tmux-continuum'
+#set -g @plugin 'tmux-plugins/tmux-resurrect'
+#set -g @plugin 'tmux-plugins/tmux-continuum'
 set -g @plugin 'rameezk/tmux-kubectl'
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
