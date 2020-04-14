@@ -232,7 +232,7 @@ values."
    ;;                             :width normal
    ;;                             :powerline-scale 1.2)
    dotspacemacs-default-font '("Jetbrains Mono"
-                               :size 12
+                               :size 11
                                :weight normal
                                :width normal
                                :powerline-scale 1.2)
