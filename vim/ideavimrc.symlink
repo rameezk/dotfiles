@@ -1,11 +1,15 @@
 syntax on "Turn on syntax highlighting
 
+set commentary
+
 set iskeyword+=_
 
 set clipboard+=unnamedplus "use clipboard
 
 set incsearch "Incremental search
 set smartcase "Smart case matching
+
+let mapleader=" "
 
 " always make these typos
 :command WQ wq
@@ -14,6 +18,11 @@ set smartcase "Smart case matching
 :command Q q
 :command Wall wall
 :command WAll wall
+
+" fancy bindings yo
+:nnoremap <leader>fs :w *<CR>
+:nnoremap <leader>fS :wall *<CR>
+:nmap <leader>cl gcc
 
 " Plugins
 set surround
