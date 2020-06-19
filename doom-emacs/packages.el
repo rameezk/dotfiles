@@ -50,3 +50,4 @@
 ;(unpin! t)
 
 (package! color-theme-sanityinc-tomorrow)
+(package! aggressive-indent)
