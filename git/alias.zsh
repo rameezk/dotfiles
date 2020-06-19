@@ -29,5 +29,5 @@ if which svu >/dev/null 2>&1; then
 fi
 
 gi() {
-	  curl -s "https://www.gitignore.io/api/$*"
+	  curl -Ls "https://www.gitignore.io/api/$*"
 }
