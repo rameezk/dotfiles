@@ -41,7 +41,7 @@ values."
               clojure-enable-fancify-symbols t
               clojure-enable-clj-refactor t
               clojure-enable-sayid t
-              clojure-enable-linters t)
+              clojure-enable-linters 'clj-kondo)
 
      javascript
      react
@@ -58,7 +58,10 @@ values."
 
      themes-megapack
 
-     auto-completion
+     (auto-completion :variables
+                      auto-completion-enable-help-tooltip t
+                      auto-completion-enable-snippets-in-popup t
+                      auto-completion-enable-sort-by-usage t)
      ;; better-defaults
      emacs-lisp
 
@@ -70,7 +73,9 @@ values."
      ipython-notebook
      django
 
-     git
+     (git :variables
+          git-magit-status-fullscreen t
+          magit-diff-refine-hunk 'all)
      org
 
      docker
@@ -470,6 +475,11 @@ you should place your code here."
     :init
     (setq pipenv-projectile-after-switch-function
           #'pipenv-projectile-after-switch-extended))
+
+  "clojure"
+  (global-aggressive-indent-mode 1)
+  (setq clojure-indent-style 'align-arguments)
+  (setq clojure-align-forms-automatically t)
 
   "all-the-icons"
   (setq all-the-icons-scale-factor 1.0)
