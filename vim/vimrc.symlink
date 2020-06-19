@@ -9,20 +9,21 @@
 
 " Plugins {{{
 	Plug 'morhetz/gruvbox'
-    Plug 'dracula/vim', { 'as': 'dracula' }
     Plug 'tpope/vim-commentary'
+    Plug 'file://'.expand('/home/rameezk/Code/themes/dracula-pro/themes/vim'), { 'as': 'dracula_pro' }
 	call plug#end()
 " }}}
 
 " Colours {{{
 	syntax on
 	set background=dark
-	colorscheme dracula
+	colorscheme gruvbox
 " }}}
 
 " Misc {{{
-	set tabstop=4
-	set softtabstop=4
+	set tabstop=2
+    set shiftwidth=2
+	set softtabstop=2
 	set expandtab
     set backspace=indent,eol,start "backspace works in insert mode but not over automatically inserted indents, line breaks or the place where insert mode started
     
