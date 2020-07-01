@@ -17,7 +17,7 @@
 " Colours {{{
 	syntax on
 	set background=dark
-	colorscheme gruvbox
+"	colorscheme gruvbox
 " }}}
 
 " Misc {{{
