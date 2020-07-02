@@ -51,3 +51,4 @@
 
 (package! color-theme-sanityinc-tomorrow)
 (package! aggressive-indent)
+(package! org-journal)

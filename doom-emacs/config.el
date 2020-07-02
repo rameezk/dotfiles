@@ -67,10 +67,33 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("99ea831ca79a916f1bd789de366b639d09811501e8c092c85b2cb7d697777f93" default)))
+   '("99ea831ca79a916f1bd789de366b639d09811501e8c092c85b2cb7d697777f93" default))
+ '(org-agenda-files '("~/DigitalGarden/org-basics.org")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;; Transparency
+(set-frame-parameter (selected-frame) 'alpha '(95 50))
+
+(defun my-increase-opacity()
+  (interactive)
+  (let ((increase (+ 10 (car (frame-parameter nil 'alpha)))))
+    (if (> increase 99)(setq increase 99))
+    (set-frame-parameter (selected-frame) 'alpha (values increase 75)))
+  )
+
+(defun my-decrease-opacity()
+  (interactive)
+  (let ((decrease (- (car (frame-parameter nil 'alpha)) 10)))
+    (if (< decrease 20)(setq decrease 20))
+    (set-frame-parameter (selected-frame) 'alpha (values decrease 75)))
+  )
+
+;; org-mode and org-journal
+(setq org-journal-dir "~/DigitalGarden/journal/")
+(setq org-journal-file-format "%Y%m%d.org")
+(setq org-journal-file-type 'monthly)
