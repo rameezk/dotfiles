@@ -3,6 +3,7 @@
 # editors
 if which emacsclient >/dev/null 2>&1; then
     alias e='emacsclient --no-wait'
+    alias E="SUDO_EDITOR=\"emacsclient\" sudo -e"
 fi
 
 if command -v nvim >/dev/null 2>&1; then
