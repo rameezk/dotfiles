@@ -97,3 +97,11 @@
 (setq org-journal-dir "~/DigitalGarden/journal/")
 (setq org-journal-file-format "%Y%m%d.org")
 (setq org-journal-file-type 'monthly)
+
+(define-prefix-command 'org-journal)
+
+(map! :leader
+      (:prefix-map ("a" . "applications")
+       (:prefix ("j" . "journal")
+        :desc "New journal entry" "j" #'org-journal-new-entry
+        :desc "Search journal entry" "s" #'org-journal-search)))
