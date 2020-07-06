@@ -53,3 +53,4 @@
 (package! aggressive-indent)
 (package! org-journal)
 (package! org-pomodoro)
+(package! zenburn-theme)
