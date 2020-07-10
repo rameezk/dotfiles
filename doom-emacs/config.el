@@ -97,6 +97,7 @@
 (setq org-journal-dir "~/DigitalGarden/journal/")
 (setq org-journal-file-format "%Y%m%d.org")
 (setq org-journal-file-type 'monthly)
+(setq org-journal-carryover-items "")
 
 (define-prefix-command 'org-journal)
 
