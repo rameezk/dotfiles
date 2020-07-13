@@ -68,7 +68,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    '("99ea831ca79a916f1bd789de366b639d09811501e8c092c85b2cb7d697777f93" default))
- '(org-agenda-files '("~/DigitalGarden/journal/20200701.org")))
+ '(org-agenda-files '("~/Dropbox/DigitalGarden/journal/journal-202007.org")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -94,16 +94,9 @@
   )
 
 ;; org-mode and org-journal
-(setq org-journal-dir "~/DigitalGarden/journal/")
-(setq org-journal-file-format "%Y%m%d.org")
+(setq org-journal-dir "~/Dropbox/DigitalGarden/journal/")
+(setq org-journal-file-format "journal-%Y%m.org")
 (setq org-journal-file-type 'monthly)
 (setq org-journal-carryover-items "")
-
-(define-prefix-command 'org-journal)
-
-(map! :leader
-      (:prefix-map ("a" . "applications")
-       (:prefix ("j" . "journal")
-        :desc "New journal entry" "j" #'org-journal-new-entry
-        :desc "Open current journal" "o" #'org-journal-open-current-journal-file
-        :desc "Search journal entry" "s" #'org-journal-search)))
+(map! :leader :desc "Search Narrow" "n j S" #'org-journal-search)
+(map! :leader :desc "Open Current Journal" "n j o" #'org-journal-open-current-journal-file)
