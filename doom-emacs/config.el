@@ -77,7 +77,7 @@
  )
 
 ;; Transparency
-(set-frame-parameter (selected-frame) 'alpha '(95 50))
+;; (set-frame-parameter (selected-frame) 'alpha '(95 50))
 
 (defun my-increase-opacity()
   (interactive)
@@ -94,9 +94,26 @@
   )
 
 ;; org-mode and org-journal
-(setq org-journal-dir "~/Dropbox/DigitalGarden/journal/")
-(setq org-journal-file-format "journal-%Y%m.org")
-(setq org-journal-file-type 'monthly)
+(setq org-journal-dir "~/Dropbox/DigitalGarden")
+(setq org-journal-file-format "private-%Y-%m-%d.org")
 (setq org-journal-carryover-items "")
+(setq org-journal-enable-agenda-integration t)
 (map! :leader :desc "Search Narrow" "n j S" #'org-journal-search)
 (map! :leader :desc "Open Current Journal" "n j o" #'org-journal-open-current-journal-file)
+
+;; org-roam
+(setq org-roam-directory "~/Dropbox/DigitalGarden")
+(after! org-roam
+  (setq org-roam-graph-viewer "/usr/bin/xdg-open"))
+(setq deft-directory "~/Dropbox/DigitalGarden")
+(setq deft-recursive t)
+(setq deft-use-filter-string-for-filename t)
+(setq deft-default-extension "org")
+
+(require 'simple-httpd)
+(setq httpd-root "/var/www")
+(httpd-start)
+
+(use-package! org-roam-server
+  :ensure nil
+  :load-path "~/Dropbox/DigitalGarden")
