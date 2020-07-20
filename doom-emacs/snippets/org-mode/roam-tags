@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: #+ROAM_TAGS
+# uuid:
+# key: rt
+# condition: t   
+# --
+
+#+ROAM_TAGS: 

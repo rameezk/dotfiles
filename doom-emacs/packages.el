@@ -53,3 +53,4 @@
 (package! aggressive-indent)
 (package! zenburn-theme)
 (package! org-roam-server)
+(package! request-deferred)

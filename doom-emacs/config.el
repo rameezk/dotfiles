@@ -68,7 +68,8 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    '("99ea831ca79a916f1bd789de366b639d09811501e8c092c85b2cb7d697777f93" default))
- '(org-agenda-files '("~/Dropbox/DigitalGarden/journal/journal-202007.org")))
+ '(org-agenda-files
+   '("~/Dropbox/DigitalGarden/todoist.org" "~/Dropbox/DigitalGarden/inbox.org" "/home/rameezk/Dropbox/DigitalGarden/private-2020-07-14.org")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -104,16 +105,21 @@
 ;; org-roam
 (setq org-roam-directory "~/Dropbox/DigitalGarden")
 (after! org-roam
-  (setq org-roam-graph-viewer "/usr/bin/xdg-open"))
+  (setq org-roam-graph-viewer "/usr/bin/xdg-open")
+  (setq org-roam-graph-exclude-matcher '("private" "dailies" "inbox"))
+  (require 'simple-httpd)
+  (setq httpd-root "/var/www")
+  (httpd-start))
 (setq deft-directory "~/Dropbox/DigitalGarden")
 (setq deft-recursive t)
 (setq deft-use-filter-string-for-filename t)
 (setq deft-default-extension "org")
 
-(require 'simple-httpd)
-(setq httpd-root "/var/www")
-(httpd-start)
-
 (use-package! org-roam-server
   :ensure nil
   :load-path "~/Dropbox/DigitalGarden")
+
+(load! "/home/rameezk/.emacs.d/lisp/org-todoist.el")
+(after! org-todoist
+  (setq org-todoist-file "~/DigitalGarden/todoist.org")
+  (setq org-todoist-api-token (getenv "TODOIST_TOKEN")))
