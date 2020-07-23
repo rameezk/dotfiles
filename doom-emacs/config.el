@@ -123,3 +123,5 @@
 (after! org-todoist
   (setq org-todoist-file "~/DigitalGarden/todoist.org")
   (setq org-todoist-api-token (getenv "TODOIST_TOKEN")))
+
+(add-hook 'org-mode-hook #'emojify-mode)
