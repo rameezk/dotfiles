@@ -125,3 +125,6 @@
   (setq org-todoist-api-token (getenv "TODOIST_TOKEN")))
 
 (add-hook 'org-mode-hook #'emojify-mode)
+
+;; magit
+(setq magit-repository-directories `(("~/Code" . 10)))
