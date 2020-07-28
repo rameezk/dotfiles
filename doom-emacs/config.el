@@ -106,7 +106,7 @@
 (setq org-roam-directory "~/Dropbox/DigitalGarden")
 (after! org-roam
   (setq org-roam-graph-viewer "/usr/bin/xdg-open")
-  (setq org-roam-graph-exclude-matcher '("private" "dailies" "inbox"))
+  (setq org-roam-graph-exclude-matcher '("private" "dailies" "inbox" "Inbox" "todoist"))
   (require 'simple-httpd)
   (setq httpd-root "/var/www")
   (httpd-start))
