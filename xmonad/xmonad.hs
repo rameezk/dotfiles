@@ -18,6 +18,7 @@ import XMonad.Hooks.DynamicLog
 -- LAYOUT MODIFIERS
 import XMonad.Layout.LayoutModifier
 import XMonad.Layout.Spacing
+import XMonad.Layout.NoBorders (smartBorders)
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
@@ -191,7 +192,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 mySpacing' :: Integer -> l a -> XMonad.Layout.LayoutModifier.ModifiedLayout Spacing l a
 mySpacing' i = spacingRaw True (Border i i i i) True (Border i i i i) True
 
-myLayout = avoidStruts (tiled ||| Mirror tiled ||| Full)
+myLayout = avoidStruts (smartBorders tiled ||| Mirror tiled ||| smartBorders Full)
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
