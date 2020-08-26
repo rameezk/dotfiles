@@ -25,3 +25,5 @@ let mapleader=" "
 :nnoremap <leader>fs :w *<CR>
 :nnoremap <leader>fS :wall *<CR>
 :nmap <leader>cl gcc
+:nnoremap <leader>wv :vsplit <CR>
+:nnoremap <leader>ws :split <CR>
