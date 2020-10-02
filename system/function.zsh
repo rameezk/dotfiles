@@ -74,3 +74,45 @@ unsource_exports() {
 
     unset $(awk -F'[ =]+' '/^export/{print $2}' "$file")
 }
+
+create_tcp_tunnel() {
+    remote_host=$1
+    remote_port=$2
+    local_port=$3
+    
+    echo "This will create a TCP tunnel via a Kubernetes Pod using netcat"
+    echo ""
+
+    echo "Checking if Kubernetes pod is available"
+    if kubectl -n default get pod debuggery; then
+        if [ -z "$remote_host" ]; then
+            echo "Remote host? "
+            read remote_host
+        fi
+
+        if [ -z "$remote_port" ]; then
+            echo "Remote port? "
+            read remote_port
+        fi
+
+
+        if [ -z "$local_port" ]; then
+            echo "Local host? "
+            read local_port
+        fi
+
+        echo ""
+
+        echo "remote_host = $remote_host"
+        echo "remote_port = $remote_port"
+        echo "local_port = $local_port"
+
+        echo ""
+        echo "Attempting to create tunnel. Don't expect any output."
+
+        tcpserver 127.0.0.1 "$local_port" kubectl -n default exec -i debuggery -- nc "$remote_host" "$remote_port"
+    else
+        echo "Kubernetes pod not found. Please run kdebug in the default namespace in another window. Exiting."
+        return 1
+    fi
+}
