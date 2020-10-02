@@ -10,14 +10,15 @@
 " Plugins {{{
 	Plug 'morhetz/gruvbox'
     Plug 'tpope/vim-commentary'
-    Plug 'file://'.expand('/home/rameezk/Code/themes/dracula-pro/themes/vim'), { 'as': 'dracula_pro' }
+    Plug 'itchyny/lightline.vim'
+    Plug 'joshdick/onedark.vim'
 	call plug#end()
 " }}}
 
 " Colours {{{
 	syntax on
 	set background=dark
-"	colorscheme gruvbox
+	colorscheme onedark
 " }}}
 
 " Misc {{{
@@ -38,6 +39,11 @@
     set wildmenu "Visual autocomplete for command menu
     set lazyredraw "Only re-draw when we need to
     set showmatch "Highlight matching braces
+  set laststatus=2
+
+  let g:lightline = {
+      \ 'colorscheme': 'onedark',
+      \ }
 " }}}
 
 " Searching {{{
