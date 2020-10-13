@@ -69,6 +69,9 @@
     noremap <Leader>p "*p
     noremap <Leader>Y "+y
     noremap <Leader>P "+p
+
+    vnoremap <leader>pp :w !xsel -i -b<CR><CR> \| :echo "-M- Selection printed to Ubuntu clipboard."<CR>
+    noremap <leader>vv :r !xsel -o -b<CR><CR>
 " }}}
 
 " vim:foldmethod=marker:foldlevel=0
