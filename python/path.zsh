@@ -1,9 +1,9 @@
-PATH="/Users/rameezk/.pyenv:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+#PATH="/Users/rameezk/.pyenv:$PATH"
+#eval "$(pyenv init -)"
+#eval "$(pyenv virtualenv-init -)"
 
 # Setup virtualenv home
-export WORKON_HOME=$HOME/.virtualenvs
+#export WORKON_HOME=$HOME/.virtualenvs
 
 if which pipenv >/dev/null 2>&1; then
 	# If neccessary, do some pipenv stuff here
@@ -12,4 +12,4 @@ else
 fi
 
 # Tell pyenv-virtualenvwrapper to use pyenv when creating new Python environments
-export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
+#export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
