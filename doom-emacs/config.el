@@ -21,7 +21,7 @@
 ;; font string. You generally only need these two:
 ;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
-(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 16))
+(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 18))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -57,7 +57,14 @@
 ;; clojure
 (setq clojure-indent-style 'align-arguments)
 (setq clojure-align-forms-automatically t)
-(add-hook 'clojure-mode-hook #'aggressive-indent-mode)
+(add-hook 'clojure-mode-hook
+          #'aggressive-indent-mode
+          #'paredit-mode
+          #'turn-on-smartparens-strict-mode)
+(map! (:localleader
+       (:map (clojure-mode-map clojurescript-mode-map)
+        (:prefix ("p" . "paredit")
+         "s" #'paredit-forward-slurp-sexp))))
 
 ;;emacs-lisp
 (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
