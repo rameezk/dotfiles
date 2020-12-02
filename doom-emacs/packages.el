@@ -55,3 +55,4 @@
 (package! org-roam-server)
 (package! request-deferred)
 (package! emojify)
+(package! csv-mode)
