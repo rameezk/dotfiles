@@ -1,3 +1,5 @@
+;; Rameez's Emacs config
+
 (setq inhibit-startup-message t)
 
 (scroll-bar-mode -1)        ; Disable visible scrollbar
@@ -29,13 +31,20 @@
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
-(use-package color-theme-sanityinc-tomorrow)
-(load-theme 'sanityinc-tomorrow-eighties)
+;(use-package color-theme-sanityinc-tomorrow)
+;(add-hook 'after-init-hook (lambda () (load-theme 'sanityinc-tomorrow-eighties)))
+;(load-theme 'sanityinc-tomorrow-eighties)
 
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-(use-package command-log-mode)
+(use-package color-theme-sanityinc-tomorrow
+  :ensure t
+  :init
+  :defer t
+  :config
+  (load-theme 'sanityinc-tomorrow-eighties)
+  )
 
 ;; counsel and ivy for some nice completions
 (use-package counsel)
