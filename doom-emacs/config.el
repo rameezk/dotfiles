@@ -57,10 +57,7 @@
 ;; clojure
 (setq clojure-indent-style 'align-arguments)
 (setq clojure-align-forms-automatically t)
-(add-hook 'clojure-mode-hook
-          #'aggressive-indent-mode
-          #'paredit-mode
-          #'turn-on-smartparens-strict-mode)
+(add-hook 'clojure-mode-hook #'aggressive-indent-mode)
 (map! (:localleader
        (:map (clojure-mode-map clojurescript-mode-map)
         (:prefix ("p" . "paredit")
