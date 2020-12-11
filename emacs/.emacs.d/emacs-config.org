@@ -6,3 +6,33 @@
 (defvar rkn/default-font-size 180)
 (defvar rkn/default-variable-font-size 180)
 #+end_src
+
+* Org Mode
+** Babel
+*** Languages
+In order to execute code in ~org-mode~ blocks, we need to define the following:
+#+begin_src elisp
+(org-babel-do-load-languages
+  'org-babel-load-languages
+  '((emacs-lisp . t)
+    (python . t)))
+
+(push '("conf-unix" . conf-unix) org-src-lang-modes)
+#+end_src
+
+#+RESULTS:
+: ((conf-unix . conf-unix) (conf-unix . conf-unix) (C . c) (C++ . c++) (asymptote . asy) (bash . sh) (beamer . latex) (calc . fundamental) (cpp . c++) (ditaa . artist) (dot . fundamental) (elisp . emacs-lisp) (ocaml . tuareg) (screen . shell-script) (shell . sh) (sqlite . sql))
+
+** Auto-tangle Configuration Files
+We define a function that gets executed every time this file is saved.
+#+begin_src elisp
+;; Automatically tangle our Emacs.org config file when we save it
+(defun rkn/org-babel-tangle-config ()
+  (when (string-equal (file-name-directory (buffer-file-name))
+                      (expand-file-name user-emacs-directory))
+    ;; Dynamic scoping to the rescue
+    (let ((org-confirm-babel-evaluate nil))
+      (org-babel-tangle))))
+
+(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'rkn/org-babel-tangle-config)))
+#+end_src
