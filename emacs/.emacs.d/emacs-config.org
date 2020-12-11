@@ -1,6 +1,9 @@
 #+title: Emacs Config
 #+PROPERTY: header-args:emacs-lisp :tangle ./init.el :mkdirp yes
 
+* Table of Contents
+#+TOC: headlines 5 local
+
 * Font
 #+begin_src emacs-lisp
 (set-face-attribute 'default nil :font "JetbrainsMono Nerd Font" :height 160)
