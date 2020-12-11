@@ -1,0 +1,2 @@
+#+title: Emacs Config
+#+PROPERTY: header-args:emacs-lisp :tangle ./init.el :mkdirp yes
