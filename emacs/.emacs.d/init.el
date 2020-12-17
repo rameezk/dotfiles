@@ -98,7 +98,8 @@
 (rkn/leader-key-def
 "f" '(:ignore t :which-key "file")
 "ff" 'counsel-find-file
-"fc" (lambda() (interactive)(counsel-find-file "~/.emacs.d/emacs-config.org")))
+"fc" (lambda() (interactive)(counsel-find-file "~/.emacs.d/emacs-config.org"))
+"f/" 'swiper)
 
 (use-package magit)
 
@@ -118,6 +119,19 @@
 (use-package counsel
   :bind (("M-x" . counsel-M-x)
          ("C-x C-f" . counsel-find-file)))
+
+(use-package projectile
+  :diminish projectile-mode
+  :config
+  (projectile-mode))
+
+(use-package counsel-projectile
+  :after projectile)
+
+(rkn/leader-key-def 
+"p" '(:ignore t :which-key "project")
+"pp" 'counsel-projectile
+"ps" 'counsel-projectile-switch-project)
 
 (org-babel-do-load-languages
   'org-babel-load-languages

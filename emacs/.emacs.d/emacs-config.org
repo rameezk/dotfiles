@@ -43,6 +43,8 @@
     - [[#ivy][Ivy]]
     - [[#ivy-rich][Ivy Rich]]
     - [[#counsel][Counsel]]
+  - [[#projects][Projects]]
+    - [[#projectile][Projectile]]
 - [[#languages][Languages]]
   - [[#org][Org]]
     - [[#babel][Babel]]
@@ -221,7 +223,8 @@ For handling files.
 (rkn/leader-key-def
 "f" '(:ignore t :which-key "file")
 "ff" 'counsel-find-file
-"fc" (lambda() (interactive)(counsel-find-file "~/.emacs.d/emacs-config.org")))
+"fc" (lambda() (interactive)(counsel-find-file "~/.emacs.d/emacs-config.org"))
+"f/" 'swiper)
 #+end_src
 
 * Applications and tooling
@@ -258,6 +261,23 @@ Complete stuff nicely together with [[Ivy]].
 (use-package counsel
   :bind (("M-x" . counsel-M-x)
          ("C-x C-f" . counsel-find-file)))
+#+end_src
+** Projects
+*** Projectile
+Switch easily between projects.
+#+begin_src emacs-lisp
+(use-package projectile
+  :diminish projectile-mode
+  :config
+  (projectile-mode))
+
+(use-package counsel-projectile
+  :after projectile)
+
+(rkn/leader-key-def 
+"p" '(:ignore t :which-key "project")
+"pp" 'counsel-projectile
+"ps" 'counsel-projectile-switch-project)
 #+end_src
 * Languages
 ** Org
