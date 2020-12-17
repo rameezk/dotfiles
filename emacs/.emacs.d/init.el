@@ -59,6 +59,19 @@
   :ensure t
   :init (doom-modeline-mode 1))
 
+(use-package all-the-icons)
+
+(use-package all-the-icons-ivy-rich
+  :ensure t
+  :init (all-the-icons-ivy-rich-mode 1))
+
+(use-package which-key
+  :init
+  (which-key-mode 1)
+  :diminish which-key-mode
+  :config
+  (setq which-key-idle-delay 0.1))
+
 (use-package evil
    :init
    (setq evil-want-integration t)
@@ -73,7 +86,38 @@
   :config
   (evil-collection-init))
 
+(use-package general
+:config
+(general-evil-setup t)
+
+(general-create-definer rkn/leader-key-def 
+   :keymaps '(normal insert visual emacs)
+   :prefix "SPC"
+   :global-prefix "C-SPC"))
+
+(rkn/leader-key-def
+"f" '(:ignore t :which-key "file")
+"ff" 'counsel-find-file
+"fc" (lambda() (interactive)(counsel-find-file "~/.emacs.d/emacs-config.org")))
+
 (use-package magit)
+
+(rkn/leader-key-def 
+  "g" '(:ignore t :which-key "git")
+  "gg" 'magit-status)
+
+(use-package ivy
+  :diminish
+  :init
+  (ivy-mode 1))
+
+(use-package ivy-rich
+  :init
+  (ivy-rich-mode 1))
+
+(use-package counsel
+  :bind (("M-x" . counsel-M-x)
+         ("C-x C-f" . counsel-find-file)))
 
 (org-babel-do-load-languages
   'org-babel-load-languages

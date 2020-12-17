@@ -23,13 +23,26 @@
     - [[#current-theme][Current Theme]]
   - [[#modeline][Modeline]]
     - [[#doom-modeline][Doom Modeline]]
+  - [[#icons][Icons]]
+    - [[#all-the-icons][All the icons]]
+    - [[#icons-in-ivy-rich][Icons in Ivy Rich]]
+  - [[#keybinding-panel][Keybinding Panel]]
+    - [[#which-key][which-key]]
 - [[#keybindings][Keybindings]]
   - [[#evil][Evil]]
   - [[#evil-collection][Evil Collection]]
+  - [[#leader-bindings][Leader Bindings]]
+    - [[#leader-key-definition][Leader key definition]]
+    - [[#leader-keys][Leader Keys]]
+      - [[#files][Files]]
 - [[#applications-and-tooling][Applications and tooling]]
   - [[#development][Development]]
     - [[#git][Git]]
       - [[#magit][Magit]]
+  - [[#completions][Completions]]
+    - [[#ivy][Ivy]]
+    - [[#ivy-rich][Ivy Rich]]
+    - [[#counsel][Counsel]]
 - [[#languages][Languages]]
   - [[#org][Org]]
     - [[#babel][Babel]]
@@ -146,6 +159,27 @@ A fancy modeline.
   :ensure t
   :init (doom-modeline-mode 1))
 #+end_src
+** Icons
+*** All the icons
+#+begin_src emacs-lisp
+(use-package all-the-icons)
+#+end_src
+*** Icons in Ivy Rich
+#+begin_src emacs-lisp
+(use-package all-the-icons-ivy-rich
+  :ensure t
+  :init (all-the-icons-ivy-rich-mode 1))
+#+end_src
+** Keybinding Panel
+*** which-key
+    #+begin_src emacs-lisp
+    (use-package which-key
+      :init
+      (which-key-mode 1)
+      :diminish which-key-mode
+      :config
+      (setq which-key-idle-delay 0.1))
+    #+end_src
 * Keybindings
 ** Evil
 #+begin_src emacs-lisp
@@ -166,6 +200,30 @@ A set of keybindings that [[Evil]] doesn't cover by default.
   :config
   (evil-collection-init))
 #+end_src
+** Leader Bindings
+*** Leader key definition 
+   #+begin_src emacs-lisp
+   (use-package general
+   :config
+   (general-evil-setup t)
+
+   (general-create-definer rkn/leader-key-def 
+      :keymaps '(normal insert visual emacs)
+      :prefix "SPC"
+      :global-prefix "C-SPC"))
+   #+end_src
+*** Leader Keys
+Some general leader keybindings for convenience.
+
+**** Files
+For handling files.
+#+begin_src emacs-lisp
+(rkn/leader-key-def
+"f" '(:ignore t :which-key "file")
+"ff" 'counsel-find-file
+"fc" (lambda() (interactive)(counsel-find-file "~/.emacs.d/emacs-config.org")))
+#+end_src
+
 * Applications and tooling
 ** Development
 *** Git
@@ -173,6 +231,33 @@ A set of keybindings that [[Evil]] doesn't cover by default.
 The best Git client. Ever.
 #+begin_src emacs-lisp
 (use-package magit)
+
+(rkn/leader-key-def 
+  "g" '(:ignore t :which-key "git")
+  "gg" 'magit-status)
+#+end_src
+** Completions
+*** Ivy
+A generic completion framework for Emacs.
+#+begin_src emacs-lisp
+(use-package ivy
+  :diminish
+  :init
+  (ivy-mode 1))
+#+end_src
+*** Ivy Rich
+A better looking interface for Ivy.
+#+begin_src emacs-lisp
+(use-package ivy-rich
+  :init
+  (ivy-rich-mode 1))
+#+end_src
+*** Counsel
+Complete stuff nicely together with [[Ivy]].
+#+begin_src emacs-lisp
+(use-package counsel
+  :bind (("M-x" . counsel-M-x)
+         ("C-x C-f" . counsel-find-file)))
 #+end_src
 * Languages
 ** Org
