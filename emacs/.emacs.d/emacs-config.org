@@ -1,8 +1,21 @@
 #+title: Emacs Config
 #+PROPERTY: header-args:emacs-lisp :tangle ./init.el :mkdirp yes
 
-* Table of Contents
-#+TOC: headlines 5 local
+* Performance
+** Startup
+#+begin_src emacs-lisp
+;; The default is 800 kilobytes.  Measured in bytes.
+(setq gc-cons-threshold (* 50 1000 1000))
+
+;; Profile emacs startup
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (message "*** Emacs loaded in %s with %d garbage collections."
+                     (format "%.2f seconds"
+                             (float-time
+                              (time-subtract after-init-time before-init-time)))
+                     gcs-done)))
+#+end_src
 
 * Font
 #+begin_src emacs-lisp
@@ -11,9 +24,7 @@
 
 * Theme
 #+begin_src emacs-lisp
-(if (package-installed-p 'color-theme-sanityinc-tomorrow)
-    (load-theme 'sanityinc-tomorrow-eighties t)
-    (load-theme 'wombat t))
+(load-theme 'wombat t)
 #+end_src
 * Networking
 ** Proxy

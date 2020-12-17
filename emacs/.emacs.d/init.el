@@ -1,8 +1,18 @@
+;; The default is 800 kilobytes.  Measured in bytes.
+(setq gc-cons-threshold (* 50 1000 1000))
+
+;; Profile emacs startup
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (message "*** Emacs loaded in %s with %d garbage collections."
+                     (format "%.2f seconds"
+                             (float-time
+                              (time-subtract after-init-time before-init-time)))
+                     gcs-done)))
+
 (set-face-attribute 'default nil :font "JetbrainsMono Nerd Font" :height 160)
 
-(if (package-installed-p 'color-theme-sanityinc-tomorrow)
-    (load-theme 'sanityinc-tomorrow-eighties t)
-    (load-theme 'wombat t))
+(load-theme 'wombat t)
 
 (if (file-exists-p "~/.proxyrc")
 (setq url-proxy-services
