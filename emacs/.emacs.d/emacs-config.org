@@ -89,8 +89,16 @@ Make scrollbars invisible.
 #+end_src
 
 ** Theme
+*** Custom Themes
 #+begin_src emacs-lisp
-(load-theme 'wombat t)
+(use-package color-theme-sanityinc-tomorrow)
+#+end_src
+
+*** Current Theme
+#+begin_src emacs-lisp
+(if (package-installed-p 'color-theme-sanityinc-tomorrow)
+    (load-theme 'sanityinc-tomorrow-eighties t)
+    (load-theme 'wombat t))
 #+end_src
 
 * Languages

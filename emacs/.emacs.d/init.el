@@ -49,7 +49,11 @@
 
 (set-face-attribute 'default nil :font "JetbrainsMono Nerd Font" :height 160)
 
-(load-theme 'wombat t)
+(use-package color-theme-sanityinc-tomorrow)
+
+(if (package-installed-p 'color-theme-sanityinc-tomorrow)
+    (load-theme 'sanityinc-tomorrow-eighties t)
+    (load-theme 'wombat t))
 
 (org-babel-do-load-languages
   'org-babel-load-languages
