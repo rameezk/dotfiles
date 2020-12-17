@@ -17,15 +17,6 @@
                      gcs-done)))
 #+end_src
 
-* Font
-#+begin_src emacs-lisp
-(set-face-attribute 'default nil :font "JetbrainsMono Nerd Font" :height 160)
-#+end_src
-
-* Theme
-#+begin_src emacs-lisp
-(load-theme 'wombat t)
-#+end_src
 * Networking
 ** Proxy
 Check if the ~~/.proxyrc~ exists. If it does, we assume we need to have a proxy set.
@@ -42,18 +33,66 @@ is running on "127.0.0.1:3128".
 #+end_src
 
 * Package Management
-** Repositories
 #+begin_src emacs-lisp
+;; Initialize package sources
+(require 'package)
+
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                         ("melpa-stable" . "https://stable.melpa.org/packages/")
                          ("org" . "https://orgmode.org/elpa/")
                          ("elpa" . "https://elpa.gnu.org/packages/")))
-(package-initialize)
-(unless package-archive-contents
-(package-refresh-contents))
 
+;;(package-initialize)
+;; (unless package-archive-contents
+;;   (package-refresh-contents))
+
+;; Initialize use-package on non-Linux platforms
+(unless (package-installed-p 'use-package) 
+   (package-install 'use-package))
+(require 'use-package)
+
+;; Uncomment this to get a reading on packages that get loaded at startup
+(setq use-package-verbose t)
+
+;; On non-Guix systems, "ensure" packages by default
+(setq use-package-always-ensure t)
 #+end_src
 
-** 
+* Appearance
+** Interface
+*** Startup Message/Splash Screen
+Me no likey, so will disable
+#+begin_src emacs-lisp
+(setq inhibit-startup-message t)
+#+end_src
+
+*** Menu Bar
+Takes up unneccessary space, will disable.
+#+begin_src emacs-lisp
+(menu-bar-mode -1)
+#+end_src
+
+*** Tool Bar 
+Disable fugly tool bar.
+#+begin_src emacs-lisp
+(tool-bar-mode -1)
+#+end_src
+
+*** Scrollbars
+Make scrollbars invisible.
+#+begin_src emacs-lisp
+(scroll-bar-mode -1)
+#+end_src
+* Font
+#+begin_src emacs-lisp
+(set-face-attribute 'default nil :font "JetbrainsMono Nerd Font" :height 160)
+#+end_src
+
+* Theme
+#+begin_src emacs-lisp
+(load-theme 'wombat t)
+#+end_src
+
 * Org Mode
 ** Babel
 *** Languages
@@ -69,13 +108,14 @@ In order to execute code in ~org-mode~ blocks, we need to define the following:
 *** Auto-tangle Configuration Files
 We define a function that gets executed every time this file is saved.
 #+begin_src emacs-lisp
-;; Automatically tangle our config file when we save it
-(defun rkn/org-babel-tangle-config ()
-  (when (string-equal (file-name-directory (buffer-file-name))
-                      (expand-file-name user-emacs-directory))
-    ;; Dynamic scoping to the rescue
-    (let ((org-confirm-babel-evaluate nil))
-      (org-babel-tangle))))
+;; Since we don't want to disable org-confirm-babel-evaluate all
+;; of the time, do it around the after-save-hook
+(defun rkn/org-babel-tangle-dont-ask ()
+  ;; Dynamic scoping to the rescue
+  (let ((org-confirm-babel-evaluate nil))
+    (org-babel-tangle)))
 
-(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'rkn/org-babel-tangle-config)))
+(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'rkn/org-babel-tangle-dont-ask
+                                              'run-at-end 'only-in-org-mode)))
+
 #+end_src
