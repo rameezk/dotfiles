@@ -1,6 +1,39 @@
 #+title: Emacs Config
 #+PROPERTY: header-args:emacs-lisp :tangle ./init.el :mkdirp yes
 
+* Table of Contents
+  :PROPERTIES:
+  :TOC: :include all :ignore this
+  :END:
+:CONTENTS:
+- [[#performance][Performance]]
+  - [[#startup][Startup]]
+- [[#networking][Networking]]
+  - [[#proxy][Proxy]]
+- [[#package-management][Package Management]]
+- [[#appearance][Appearance]]
+  - [[#interface][Interface]]
+    - [[#startup-messagesplash-screen][Startup Message/Splash Screen]]
+    - [[#menu-bar][Menu Bar]]
+    - [[#tool-bar][Tool Bar]]
+    - [[#scrollbars][Scrollbars]]
+  - [[#font][Font]]
+  - [[#theme][Theme]]
+    - [[#custom-themes][Custom Themes]]
+    - [[#current-theme][Current Theme]]
+  - [[#modeline][Modeline]]
+    - [[#doom-modeline][Doom Modeline]]
+- [[#keybindings][Keybindings]]
+  - [[#evil][Evil]]
+  - [[#evil-collection][Evil Collection]]
+- [[#languages][Languages]]
+  - [[#org][Org]]
+    - [[#babel][Babel]]
+      - [[#languages][Languages]]
+      - [[#auto-tangle-configuration-files][Auto-tangle Configuration Files]]
+    - [[#block-templates][Block Templates]]
+    - [[#update-toc-on-save][Update TOC on save]]
+:END:
 * Performance
 ** Startup
 #+begin_src emacs-lisp
@@ -101,6 +134,14 @@ Make scrollbars invisible.
     (load-theme 'wombat t))
 #+end_src
 
+** Modeline
+*** Doom Modeline
+A fancy modeline.
+#+begin_src emacs-lisp
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1))
+#+end_src
 * Keybindings
 ** Evil
 #+begin_src emacs-lisp
@@ -122,8 +163,8 @@ A set of keybindings that [[Evil]] doesn't cover by default.
 #+end_src
 * Languages
 ** Org
-** Babel
-*** Languages
+*** Babel
+**** Languages
 In order to execute code in ~org-mode~ blocks, we need to define the following:
 #+begin_src emacs-lisp
 (org-babel-do-load-languages
@@ -133,7 +174,7 @@ In order to execute code in ~org-mode~ blocks, we need to define the following:
 (push '("conf-unix" . conf-unix) org-src-lang-modes)
 #+end_src
 
-*** Auto-tangle Configuration Files
+**** Auto-tangle Configuration Files
 We define a function that gets executed every time this file is saved.
 #+begin_src emacs-lisp
 ;; Since we don't want to disable org-confirm-babel-evaluate all
@@ -146,4 +187,26 @@ We define a function that gets executed every time this file is saved.
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'rkn/org-babel-tangle-dont-ask
                                               'run-at-end 'only-in-org-mode)))
 
+#+end_src
+
+*** Block Templates
+Allows me to write something like =<el= and hit tab to complete.
+#+begin_src emacs-lisp
+;; This is needed as of Org 9.2
+(require 'org-tempo)
+
+(add-to-list 'org-structure-template-alist '("sh" . "src sh"))
+(add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+(add-to-list 'org-structure-template-alist '("sc" . "src scheme"))
+(add-to-list 'org-structure-template-alist '("ts" . "src typescript"))
+(add-to-list 'org-structure-template-alist '("py" . "src python"))
+(add-to-list 'org-structure-template-alist '("yaml" . "src yaml"))
+(add-to-list 'org-structure-template-alist '("json" . "src json"))
+#+end_src
+
+*** Update TOC on save
+It's super nice to have a TOC for long org files (like this one) so it's great to not have to worry about updating it. 
+#+begin_src emacs-lisp
+(use-package org-make-toc
+  :hook (org-mode . org-make-toc-mode))
 #+end_src
