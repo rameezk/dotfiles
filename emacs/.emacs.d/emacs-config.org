@@ -101,6 +101,25 @@ Make scrollbars invisible.
     (load-theme 'wombat t))
 #+end_src
 
+* Keybindings
+** Evil
+#+begin_src emacs-lisp
+(use-package evil
+   :init
+   (setq evil-want-integration t)
+   :config
+   (evil-mode 1))
+#+end_src
+** Evil Collection
+A set of keybindings that [[Evil]] doesn't cover by default.
+#+begin_src emacs-lisp
+(use-package evil-collection
+  :after evil
+  :custom
+  (evil-collection-outline-bind-tab-p nil)
+  :config
+  (evil-collection-init))
+#+end_src
 * Languages
 ** Org
 ** Babel

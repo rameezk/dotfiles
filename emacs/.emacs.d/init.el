@@ -55,6 +55,19 @@
     (load-theme 'sanityinc-tomorrow-eighties t)
     (load-theme 'wombat t))
 
+(use-package evil
+   :init
+   (setq evil-want-integration t)
+   :config
+   (evil-mode 1))
+
+(use-package evil-collection
+  :after evil
+  :custom
+  (evil-collection-outline-bind-tab-p nil)
+  :config
+  (evil-collection-init))
+
 (org-babel-do-load-languages
   'org-babel-load-languages
   '((emacs-lisp . t)))
