@@ -62,6 +62,7 @@
 (use-package evil
    :init
    (setq evil-want-integration t)
+   (setq evil-want-keybinding nil)
    :config
    (evil-mode 1))
 
@@ -71,6 +72,8 @@
   (evil-collection-outline-bind-tab-p nil)
   :config
   (evil-collection-init))
+
+(use-package magit)
 
 (org-babel-do-load-languages
   'org-babel-load-languages

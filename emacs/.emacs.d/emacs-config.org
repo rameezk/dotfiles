@@ -26,6 +26,10 @@
 - [[#keybindings][Keybindings]]
   - [[#evil][Evil]]
   - [[#evil-collection][Evil Collection]]
+- [[#applications-and-tooling][Applications and tooling]]
+  - [[#development][Development]]
+    - [[#git][Git]]
+      - [[#magit][Magit]]
 - [[#languages][Languages]]
   - [[#org][Org]]
     - [[#babel][Babel]]
@@ -148,6 +152,7 @@ A fancy modeline.
 (use-package evil
    :init
    (setq evil-want-integration t)
+   (setq evil-want-keybinding nil)
    :config
    (evil-mode 1))
 #+end_src
@@ -160,6 +165,14 @@ A set of keybindings that [[Evil]] doesn't cover by default.
   (evil-collection-outline-bind-tab-p nil)
   :config
   (evil-collection-init))
+#+end_src
+* Applications and tooling
+** Development
+*** Git
+**** Magit
+The best Git client. Ever.
+#+begin_src emacs-lisp
+(use-package magit)
 #+end_src
 * Languages
 ** Org
