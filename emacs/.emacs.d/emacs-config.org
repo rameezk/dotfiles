@@ -83,17 +83,18 @@ Make scrollbars invisible.
 #+begin_src emacs-lisp
 (scroll-bar-mode -1)
 #+end_src
-* Font
+** Font
 #+begin_src emacs-lisp
 (set-face-attribute 'default nil :font "JetbrainsMono Nerd Font" :height 160)
 #+end_src
 
-* Theme
+** Theme
 #+begin_src emacs-lisp
 (load-theme 'wombat t)
 #+end_src
 
-* Org Mode
+* Languages
+** Org
 ** Babel
 *** Languages
 In order to execute code in ~org-mode~ blocks, we need to define the following:
