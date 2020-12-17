@@ -62,7 +62,7 @@
 (use-package all-the-icons)
 
 (use-package all-the-icons-ivy-rich
-  :ensure t
+  :after (ivy counsel counsel-projectile)
   :init (all-the-icons-ivy-rich-mode 1))
 
 (use-package which-key
@@ -112,10 +112,6 @@
   :init
   (ivy-mode 1))
 
-(use-package ivy-rich
-  :init
-  (ivy-rich-mode 1))
-
 (use-package counsel
   :bind (("M-x" . counsel-M-x)
          ("C-x C-f" . counsel-find-file)))
@@ -125,13 +121,16 @@
   :config
   (projectile-mode))
 
-(use-package counsel-projectile
-  :after projectile)
+(use-package counsel-projectile)
 
 (rkn/leader-key-def 
 "p" '(:ignore t :which-key "project")
-"pp" 'counsel-projectile
-"ps" 'counsel-projectile-switch-project)
+"pf" 'counsel-projectile-find-file
+"pp" 'counsel-projectile-switch-project)
+
+(use-package ivy-rich
+  :after (all-the-icons-ivy-rich)
+  :init (ivy-rich-mode 1))
 
 (org-babel-do-load-languages
   'org-babel-load-languages

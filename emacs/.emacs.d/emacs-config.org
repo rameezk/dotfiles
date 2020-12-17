@@ -25,7 +25,6 @@
     - [[#doom-modeline][Doom Modeline]]
   - [[#icons][Icons]]
     - [[#all-the-icons][All the icons]]
-    - [[#icons-in-ivy-rich][Icons in Ivy Rich]]
   - [[#keybinding-panel][Keybinding Panel]]
     - [[#which-key][which-key]]
 - [[#keybindings][Keybindings]]
@@ -39,11 +38,9 @@
   - [[#development][Development]]
     - [[#git][Git]]
       - [[#magit][Magit]]
-  - [[#completions][Completions]]
+  - [[#completion][Completion]]
     - [[#ivy][Ivy]]
-    - [[#ivy-rich][Ivy Rich]]
     - [[#counsel][Counsel]]
-  - [[#projects][Projects]]
     - [[#projectile][Projectile]]
 - [[#languages][Languages]]
   - [[#org][Org]]
@@ -163,15 +160,18 @@ A fancy modeline.
 #+end_src
 ** Icons
 *** All the icons
+Get some icons!
 #+begin_src emacs-lisp
 (use-package all-the-icons)
 #+end_src
-*** Icons in Ivy Rich
+
+Enable some transformations for Ivy, Counsel and Projectile using all-the-icons-ivy-rich.
 #+begin_src emacs-lisp
 (use-package all-the-icons-ivy-rich
-  :ensure t
+  :after (ivy counsel counsel-projectile)
   :init (all-the-icons-ivy-rich-mode 1))
 #+end_src
+
 ** Keybinding Panel
 *** which-key
     #+begin_src emacs-lisp
@@ -239,7 +239,7 @@ The best Git client. Ever.
   "g" '(:ignore t :which-key "git")
   "gg" 'magit-status)
 #+end_src
-** Completions
+** Completion
 *** Ivy
 A generic completion framework for Emacs.
 #+begin_src emacs-lisp
@@ -248,13 +248,7 @@ A generic completion framework for Emacs.
   :init
   (ivy-mode 1))
 #+end_src
-*** Ivy Rich
-A better looking interface for Ivy.
-#+begin_src emacs-lisp
-(use-package ivy-rich
-  :init
-  (ivy-rich-mode 1))
-#+end_src
+
 *** Counsel
 Complete stuff nicely together with [[Ivy]].
 #+begin_src emacs-lisp
@@ -262,7 +256,7 @@ Complete stuff nicely together with [[Ivy]].
   :bind (("M-x" . counsel-M-x)
          ("C-x C-f" . counsel-find-file)))
 #+end_src
-** Projects
+
 *** Projectile
 Switch easily between projects.
 #+begin_src emacs-lisp
@@ -271,13 +265,19 @@ Switch easily between projects.
   :config
   (projectile-mode))
 
-(use-package counsel-projectile
-  :after projectile)
+(use-package counsel-projectile)
 
 (rkn/leader-key-def 
 "p" '(:ignore t :which-key "project")
-"pp" 'counsel-projectile
-"ps" 'counsel-projectile-switch-project)
+"pf" 'counsel-projectile-find-file
+"pp" 'counsel-projectile-switch-project)
+#+end_src
+
+3. ivy-rich
+#+begin_src emacs-lisp
+(use-package ivy-rich
+  :after (all-the-icons-ivy-rich)
+  :init (ivy-rich-mode 1))
 #+end_src
 * Languages
 ** Org
@@ -328,3 +328,4 @@ It's super nice to have a TOC for long org files (like this one) so it's great t
 (use-package org-make-toc
   :hook (org-mode . org-make-toc-mode))
 #+end_src
+
