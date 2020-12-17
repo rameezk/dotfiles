@@ -29,7 +29,7 @@
 - [[#languages][Languages]]
   - [[#org][Org]]
     - [[#babel][Babel]]
-      - [[#languages][Languages]]
+      - [[#languages-to-tangle][Languages to tangle]]
       - [[#auto-tangle-configuration-files][Auto-tangle Configuration Files]]
     - [[#block-templates][Block Templates]]
     - [[#update-toc-on-save][Update TOC on save]]
@@ -164,7 +164,7 @@ A set of keybindings that [[Evil]] doesn't cover by default.
 * Languages
 ** Org
 *** Babel
-**** Languages
+**** Languages to tangle
 In order to execute code in ~org-mode~ blocks, we need to define the following:
 #+begin_src emacs-lisp
 (org-babel-do-load-languages
