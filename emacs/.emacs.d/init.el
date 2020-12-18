@@ -126,11 +126,15 @@
 (rkn/leader-key-def 
 "p" '(:ignore t :which-key "project")
 "pf" 'counsel-projectile-find-file
+"ps" 'counsel-projectile-rg
 "pp" 'counsel-projectile-switch-project)
 
 (use-package ivy-rich
   :after (all-the-icons-ivy-rich)
   :init (ivy-rich-mode 1))
+
+(use-package evil-nerd-commenter
+  :bind ("M-/" . evilnc-comment-or-uncomment-lines))
 
 (org-babel-do-load-languages
   'org-babel-load-languages

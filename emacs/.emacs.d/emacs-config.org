@@ -42,6 +42,8 @@
     - [[#ivy][Ivy]]
     - [[#counsel][Counsel]]
     - [[#projectile][Projectile]]
+- [[#editing][Editing]]
+  - [[#commenting][Commenting]]
 - [[#languages][Languages]]
   - [[#org][Org]]
     - [[#babel][Babel]]
@@ -270,6 +272,7 @@ Switch easily between projects.
 (rkn/leader-key-def 
 "p" '(:ignore t :which-key "project")
 "pf" 'counsel-projectile-find-file
+"ps" 'counsel-projectile-rg
 "pp" 'counsel-projectile-switch-project)
 #+end_src
 
@@ -278,6 +281,14 @@ Switch easily between projects.
 (use-package ivy-rich
   :after (all-the-icons-ivy-rich)
   :init (ivy-rich-mode 1))
+#+end_src
+
+* Editing
+** Commenting
+Use evil-nerd-commenter for better commenting.
+#+begin_src emacs-lisp
+(use-package evil-nerd-commenter
+  :bind ("M-/" . evilnc-comment-or-uncomment-lines))
 #+end_src
 * Languages
 ** Org
@@ -328,4 +339,6 @@ It's super nice to have a TOC for long org files (like this one) so it's great t
 (use-package org-make-toc
   :hook (org-mode . org-make-toc-mode))
 #+end_src
+
+
 
