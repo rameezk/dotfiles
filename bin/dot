@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+
+function main() {
+
+    echo "hello world"
+
+}
+
+main
