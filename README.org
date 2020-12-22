@@ -10,6 +10,10 @@ In future, I hope to port this over to my other Linux machines as well.
 
 1. Install Nix
     1. On MacOS, this can done via
-    #+BEGIN_SRC bash
+    #+BEGIN_SRC sh
     sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume
     #+END_SRC
+2. Temporarily source the neccessary environment variables
+#+BEGIN_SRC sh
+. /Users/$USER/.nix-profile/etc/profile.d/nix.sh
+#+END_SRC
