@@ -1,4 +1,4 @@
-#+#+TITLE: dotfiles
+#+TITLE: dotfiles
 
 #+BEGIN_QUOTE
 A saner, more predictable way of managing my machines.
