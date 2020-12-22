@@ -1,22 +1,34 @@
 #!/usr/bin/env zsh
 
+DOTFILES_DIR="$HOME/.dotfiles"
+
 function main {
 
     function _usage {
         echo "Usage: dot COMMAND [FLAGS...] [ARGS...]"
         echo
         echo "Available commands:"
-        echo "  build              Build system"
+        echo "  build|b            Build system"
+        echo "  check|ch           Check system before building"
     }
 
     function _build {
         echo "Building system"
+        cd $DOTFILES_DIR
+        nix --experimental-features 'flakes nix-command' build  ".#rivendell"
+    }
+
+    function _check {
+        echo "Checking system"
+        cd $DOTFILES_DIR
+        nix --experimental-features 'flakes nix-command' flake check
     }
 
     cmd="$1"
     [[ $# > 0 ]] && shift
     case "$cmd" in
-        build) _build ;;
+        build|b) _build ;;
+        check|ch) _check ;;
         h|help|-h|--help) _usage ;;
         "") _usage ;;
     esac
