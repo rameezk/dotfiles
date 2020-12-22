@@ -10,6 +10,7 @@ function main {
         echo "Available commands:"
         echo "  build|b            Build system"
         echo "  check|ch           Check system before building"
+        echo "  switch|sw          Switch to latest config"
     }
 
     function _build {
@@ -24,11 +25,18 @@ function main {
         nix --experimental-features 'flakes nix-command' flake check 
     }
 
+    function _switch {
+        echo "Switching system"
+        cd $DOTFILES_DIR
+        ./result/activate
+    }
+
     cmd="$1"
     [[ $# > 0 ]] && shift
     case "$cmd" in
         build|b) _build ;;
         check|ch) _check ;;
+        switch|sw) _switch ;;
         h|help|-h|--help) _usage ;;
         "") _usage ;;
     esac
