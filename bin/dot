@@ -15,13 +15,13 @@ function main {
     function _build {
         echo "Building system"
         cd $DOTFILES_DIR
-        nix --experimental-features 'flakes nix-command' build  ".#rivendell"
+        nix --experimental-features 'flakes nix-command' build ".#homeManagerConfigurations.rivendell.activationPackage"
     }
 
     function _check {
         echo "Checking system"
         cd $DOTFILES_DIR
-        nix --experimental-features 'flakes nix-command' flake check
+        nix --experimental-features 'flakes nix-command' flake check 
     }
 
     cmd="$1"
