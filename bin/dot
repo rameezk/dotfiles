@@ -1,9 +1,25 @@
 #!/usr/bin/env zsh
 
-function main() {
+function main {
 
-    echo "hello world"
+    function _usage {
+        echo "Usage: dot COMMAND [FLAGS...] [ARGS...]"
+        echo
+        echo "Available commands:"
+        echo "  build              Build system"
+    }
 
+    function _build {
+        echo "Building system"
+    }
+
+    cmd="$1"
+    [[ $# > 0 ]] && shift
+    case "$cmd" in
+        build) _build ;;
+        h|help|-h|--help) _usage ;;
+        "") _usage ;;
+    esac
 }
 
-main
+main "$@"
