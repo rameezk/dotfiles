@@ -9,7 +9,7 @@ At the moment, this is targetting only MacOS.
 In future, I hope to port this over to my other Linux machines as well.
 
 1. Install Nix
-1.1. On MacOS, this can done via
-#+BEGIN_SRC bash
-sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume
-#+END_SRC
+    a. On MacOS, this can done via
+    #+BEGIN_SRC bash
+    sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume
+    #+END_SRC
