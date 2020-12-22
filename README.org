@@ -15,5 +15,13 @@ In future, I hope to port this over to my other Linux machines as well.
     #+END_SRC
 2. Temporarily source the neccessary environment variables
 #+BEGIN_SRC sh
-. /Users/$USER/.nix-profile/etc/profile.d/nix.sh
+. ~/.nix-profile/etc/profile.d/nix.sh
+#+END_SRC
+3. Clone repo
+#+BEGIN_SRC sh
+git clone git@github.com:rameezk/dotfiles.git ~/.dotfiles
+#+END_SRC
+4. Build dotfiles
+#+BEGIN_SRC sh
+~/.dotfiles/bin/dot build
 #+END_SRC
