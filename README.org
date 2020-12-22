@@ -17,11 +17,15 @@ In future, I hope to port this over to my other Linux machines as well.
 #+BEGIN_SRC sh
 . ~/.nix-profile/etc/profile.d/nix.sh
 #+END_SRC
-3. Clone repo
+3. Install nix flakes
+#+BEGIN_SRC sh
+nix-env -iA nixpkgs.nixFlakes
+#+END_SRC
+4. Clone repo
 #+BEGIN_SRC sh
 git clone git@github.com:rameezk/dotfiles.git ~/.dotfiles
 #+END_SRC
-4. Build dotfiles
+5. Build dotfiles
 #+BEGIN_SRC sh
 ~/.dotfiles/bin/dot build
 #+END_SRC
