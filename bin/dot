@@ -16,13 +16,13 @@ function main {
     function _build {
         echo "Building system"
         cd $DOTFILES_DIR
-        nix --experimental-features 'flakes nix-command' build ".#homeManagerConfigurations.rivendell.activationPackage"
+        nix --experimental-features 'flakes nix-command' build ".#homeManagerConfigurations.rivendell.activationPackage" --no-allow-dirty
     }
 
     function _check {
         echo "Checking system"
         cd $DOTFILES_DIR
-        nix --experimental-features 'flakes nix-command' flake check 
+        nix --experimental-features 'flakes nix-command' flake check --no-allow-dirty
     }
 
     function _switch {
