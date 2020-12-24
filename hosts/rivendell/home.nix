@@ -27,4 +27,8 @@ in
   home.packages = with pkgs; [
     tmux
   ];
+
+  programs.fish = {
+    enable = true;
+  };
 }
