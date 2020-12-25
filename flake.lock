@@ -1,45 +1,45 @@
 {
   "nodes": {
-    "home-manager": {
+    "darwin": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1608593447,
-        "narHash": "sha256-kPpoSldJMLKS8hdhxj4rnsRZb4f8ZzaiQFjYTuZm4mU=",
-        "owner": "rycee",
-        "repo": "home-manager",
-        "rev": "2901044520fbed466eea8b91df55183297eacd47",
+        "lastModified": 1608628442,
+        "narHash": "sha256-MNpNlZ2TqaQNiYuP8UcudfQoZAT/ocwFwFxhANSRt1c=",
+        "owner": "lnl7",
+        "repo": "nix-darwin",
+        "rev": "8834df431736c3037bbef017b24c62bc4ace4645",
         "type": "github"
       },
       "original": {
-        "owner": "rycee",
+        "owner": "lnl7",
         "ref": "master",
-        "repo": "home-manager",
+        "repo": "nix-darwin",
         "type": "github"
       }
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1607522989,
-        "narHash": "sha256-o/jWhOSAlaK7y2M57OIriRt6whuVVocS/T0mG7fd1TI=",
-        "owner": "NixOS",
+        "lastModified": 1608892876,
+        "narHash": "sha256-NUSLHOfYGdu3F5iQuG3aSQep0U2ThOIwpD1dIedsPok=",
+        "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "e9158eca70ae59e73fae23be5d13d3fa0cfc78b4",
+        "rev": "ae1b121d9a68518dbf46124397e34e465d3cdf6c",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
+        "owner": "nixos",
+        "ref": "nixpkgs-20.09-darwin",
         "repo": "nixpkgs",
         "type": "github"
       }
     },
     "root": {
       "inputs": {
-        "home-manager": "home-manager",
+        "darwin": "darwin",
         "nixpkgs": "nixpkgs"
       }
     }

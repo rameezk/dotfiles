@@ -10,24 +10,20 @@ In future, I hope to port this over to my other Linux machines as well.
 ```bash
 sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume --daemon
 ```
-2. Temporarily source the neccessary environment variables
-```bash
-. ~/.nix-profile/etc/profile.d/nix.sh
-```
-3. Install nix-darwin
+2. Install nix-darwin
 ```bash
 nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
 ./result/bin/darwin-installer
 ```
-4. Install nix flakes
+3. Install nix flakes
 ```bash
 nix-env -iA nixpkgs.nixFlakes
 ```
-5. Clone repo
+4. Clone repo
 ```bash
 git clone git@github.com:rameezk/dotfiles.git ~/.dotfiles
 ```
-6. Build dotfiles
+5. Build dotfiles
 ```bash
 ~/.dotfiles/bin/dot build
 ```
