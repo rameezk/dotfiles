@@ -14,20 +14,20 @@ sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-v
 ```bash
 . ~/.nix-profile/etc/profile.d/nix.sh
 ```
-4. Install nix-darwin
+3. Install nix-darwin
 ```bash
 nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
 ./result/bin/darwin-installer
 ```
-3. Install nix flakes
+4. Install nix flakes
 ```bash
 nix-env -iA nixpkgs.nixFlakes
 ```
-4. Clone repo
+5. Clone repo
 ```bash
 git clone git@github.com:rameezk/dotfiles.git ~/.dotfiles
 ```
-5. Build dotfiles
+6. Build dotfiles
 ```bash
 ~/.dotfiles/bin/dot build
 ```
