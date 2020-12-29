@@ -30,8 +30,13 @@ in
 
   programs.zsh.enable = true;
 
+
+
   system.stateVersion = 4;
 
+   environment.systemPackages =
+    [ pkgs.tmux
+    ];
 
 nix = {
     package = pkgs.nixFlakes;
