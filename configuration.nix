@@ -28,9 +28,10 @@ in
 #     tmux
 #   ];
 
-  programs.fish = {
-    enable = true;
-  };
+  programs.zsh.enable = true;
+
+  system.stateVersion = 4;
+
 
 nix = {
     package = pkgs.nixFlakes;

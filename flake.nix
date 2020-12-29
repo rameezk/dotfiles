@@ -8,7 +8,7 @@
   };
 
   outputs = { self, darwin, nixpkgs }: {
-    darwinConfigurations."Johns-MacBook" = darwin.lib.darwinSystem {
+    darwinConfigurations."rameezk-macbook" = darwin.lib.darwinSystem {
       modules = [ ./configuration.nix ];
     };
   };
