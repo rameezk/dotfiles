@@ -28,7 +28,7 @@ in
 #     tmux
 #   ];
 
-  programs.zsh.enable = true;
+  programs.fish.enable = true;
 
 
 
