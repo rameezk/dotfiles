@@ -8,7 +8,7 @@ In future, I hope to port this over to my other Linux machines as well.
 
 1. Install Nix
 ```bash
-sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume --daemon
+sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume
 ```
 2. Install nix-darwin
 ```bash
