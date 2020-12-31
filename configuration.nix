@@ -36,6 +36,7 @@ in
 
    environment.systemPackages =
     [ pkgs.tmux
+      pkgs.asdf
     ];
 
 nix = {
