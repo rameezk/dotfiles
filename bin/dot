@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
 DOTFILES_DIR="$HOME/.dotfiles"
+HOSTNAME="rameezk-macbook"
 
 function main {
 
@@ -8,35 +9,65 @@ function main {
         echo "Usage: dot COMMAND [FLAGS...] [ARGS...]"
         echo
         echo "Available commands:"
-        echo "  build|b            Build system"
-        echo "  check|ch           Check system before building"
-        echo "  switch|sw          Switch to latest config"
+        echo "  rebuild|re                     Rebuild system"
+        echo "  install-nix-package-manager    Install Nix package manager"
+        echo "  install-nix-darwin             Install Nix Darwin"
+        echo "  source-nix-env-vars            Source Nix environment variables (for emergencies only)"
     }
 
-    function _build {
-        echo "Building system"
+    function _rebuild {
         cd $DOTFILES_DIR
-        nix --experimental-features 'flakes nix-command' build ".#homeManagerConfigurations.rivendell.activationPackage" --no-allow-dirty
+
+        echo "Checking for changes"
+        if git diff --quiet && git diff --cached --quiet; then
+            echo "Rebuilding system"
+            nix build .\#darwinConfigurations.$HOSTNAME.system
+            ./result/sw/bin/darwin-rebuild switch --flake .\#$HOSTNAME
+        else
+            echo "There are uncommitted files. Please commit before rebuilding."
+            exit 1
+        fi
     }
 
-    function _check {
-        echo "Checking system"
-        cd $DOTFILES_DIR
-        nix --experimental-features 'flakes nix-command' flake check --no-allow-dirty
+    function _install_flakes {
+        . $HOME/.nix-profile/etc/profile.d/nix.sh
+        nix-env -iA nixpkgs.nixFlakes
     }
 
-    function _switch {
-        echo "Switching system"
+    function _rollback {
+        echo "Rolling back system"
         cd $DOTFILES_DIR
-        ./result/activate
+    }
+
+    function _install_nix_package_manager {
+        echo "Installing Nix package manager"
+        echo "Assuming fresh install. I am unable to check if nix already exists yet."
+        sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume
+    }
+
+    function _install_nix_darwin {
+        echo "Installing Nix Darwin"
+        echo "Assuming fresh install. I am unable to check if nix-darwin already exists."
+        cd $DOTFILES_DIR
+        . $HOME/.nix-profile/etc/profile.d/nix.sh
+        nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
+        ./result/bin/darwin-installer
+    }
+
+    function _source_nix_env_vars {
+        echo "Copy and run below command."
+        echo ". $HOME/.nix-profile/etc/profile.d/nix.sh"
     }
 
     cmd="$1"
     [[ $# > 0 ]] && shift
     case "$cmd" in
-        build|b) _build ;;
+        rebuild|re) _rebuild ;;
         check|ch) _check ;;
         switch|sw) _switch ;;
+        install-nix-package-manager) _install_nix_package_manager ;;
+        install-nix-darwin) _install_nix_darwin ;;
+        source-nix-env-vars) _source_nix_env_vars ;;
         h|help|-h|--help) _usage ;;
         "") _usage ;;
     esac
