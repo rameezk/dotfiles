@@ -102,11 +102,6 @@
 "f/" 'swiper)
 
 (rkn/leader-key-def 
-"s" '(:ignore t which-key "swiper")
-"ss" 'swiper
-"sp" 'counsel-rg)
-
-(rkn/leader-key-def 
 "b" '(:ignore t :which-key "buffer")
 "bb" 'counsel-switch-buffer)
 

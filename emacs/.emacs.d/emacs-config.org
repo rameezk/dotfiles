@@ -34,7 +34,6 @@
     - [[#leader-key-definition][Leader key definition]]
     - [[#leader-keys][Leader Keys]]
       - [[#files][Files]]
-      - [[#searching][Searching]]
       - [[#buffers][Buffers]]
 - [[#applications-and-tooling][Applications and tooling]]
   - [[#development][Development]]
@@ -233,14 +232,6 @@ For handling files.
 "f/" 'swiper)
 #+end_src
 
-**** Searching
-Searching/grepping files and directories.
-#+begin_src emacs-lisp
-(rkn/leader-key-def 
-"s" '(:ignore t which-key "swiper")
-"ss" 'swiper
-"sp" 'counsel-rg)
-#+end_src
 
 **** Buffers
 Manage buffers.
