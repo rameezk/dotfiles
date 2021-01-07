@@ -34,6 +34,8 @@
     - [[#leader-key-definition][Leader key definition]]
     - [[#leader-keys][Leader Keys]]
       - [[#files][Files]]
+      - [[#searching][Searching]]
+      - [[#buffers][Buffers]]
 - [[#applications-and-tooling][Applications and tooling]]
   - [[#development][Development]]
     - [[#git][Git]]
@@ -42,6 +44,8 @@
     - [[#ivy][Ivy]]
     - [[#counsel][Counsel]]
     - [[#projectile][Projectile]]
+  - [[#notes][Notes]]
+    - [[#org-roam][Org-Roam]]
 - [[#editing][Editing]]
   - [[#commenting][Commenting]]
 - [[#languages][Languages]]
@@ -229,6 +233,23 @@ For handling files.
 "f/" 'swiper)
 #+end_src
 
+**** Searching
+Searching/grepping files and directories.
+#+begin_src emacs-lisp
+(rkn/leader-key-def 
+"s" '(:ignore t which-key "swiper")
+"ss" 'swiper
+"sp" 'counsel-rg)
+#+end_src
+
+**** Buffers
+Manage buffers.
+#+begin_src emacs-lisp
+(rkn/leader-key-def 
+"b" '(:ignore t :which-key "buffer")
+"bb" 'counsel-switch-buffer)
+#+end_src
+
 * Applications and tooling
 ** Development
 *** Git
@@ -281,6 +302,23 @@ Switch easily between projects.
 (use-package ivy-rich
   :after (all-the-icons-ivy-rich)
   :init (ivy-rich-mode 1))
+#+end_src
+** Notes
+*** Org-Roam 
+Org-Roam is the future of smart notes!
+#+begin_src emacs-lisp
+(use-package org-roam
+  :hook 
+  (after-init . org-roam-mode)
+  :custom
+  (org-roam-directory "~/Dropbox/DigitalGarden")
+  :config
+  (setq org-roam-graph-exclude-matcher '("private" "dailies" "Inbox" "todoist")))
+
+(rkn/leader-key-def
+"n" '(:ignore t :which-key "note")
+"nr" '(:ignore t :which-key "roam")
+"nrf" 'org-roam-find-file)
 #+end_src
 
 * Editing

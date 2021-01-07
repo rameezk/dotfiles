@@ -101,6 +101,15 @@
 "fc" (lambda() (interactive)(counsel-find-file "~/.emacs.d/emacs-config.org"))
 "f/" 'swiper)
 
+(rkn/leader-key-def 
+"s" '(:ignore t which-key "swiper")
+"ss" 'swiper
+"sp" 'counsel-rg)
+
+(rkn/leader-key-def 
+"b" '(:ignore t :which-key "buffer")
+"bb" 'counsel-switch-buffer)
+
 (use-package magit)
 
 (rkn/leader-key-def 
@@ -132,6 +141,19 @@
 (use-package ivy-rich
   :after (all-the-icons-ivy-rich)
   :init (ivy-rich-mode 1))
+
+(use-package org-roam
+  :hook 
+  (after-init . org-roam-mode)
+  :custom
+  (org-roam-directory "~/Dropbox/DigitalGarden")
+  :config
+  (setq org-roam-graph-exclude-matcher '("private" "dailies" "Inbox" "todoist")))
+
+(rkn/leader-key-def
+"n" '(:ignore t :which-key "note")
+"nr" '(:ignore t :which-key "roam")
+"nrf" 'org-roam-find-file)
 
 (use-package evil-nerd-commenter
   :bind ("M-/" . evilnc-comment-or-uncomment-lines))
