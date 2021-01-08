@@ -44,7 +44,8 @@
     - [[#counsel][Counsel]]
     - [[#projectile][Projectile]]
   - [[#notes][Notes]]
-    - [[#org-roam][Org-Roam]]
+    - [[#org-roam][org-roam]]
+    - [[#org-journal][org-journal]]
 - [[#editing][Editing]]
   - [[#commenting][Commenting]]
 - [[#languages][Languages]]
@@ -295,7 +296,7 @@ Switch easily between projects.
   :init (ivy-rich-mode 1))
 #+end_src
 ** Notes
-*** Org-Roam 
+*** org-roam 
 Org-Roam is the future of smart notes!
 #+begin_src emacs-lisp
 (use-package org-roam
@@ -310,6 +311,23 @@ Org-Roam is the future of smart notes!
 "n" '(:ignore t :which-key "note")
 "nr" '(:ignore t :which-key "roam")
 "nrf" 'org-roam-find-file)
+#+end_src
+*** org-journal
+I use org-journal to take small daily notes. Some of these notes might progress into larger more structured notes.
+
+#+begin_src emacs-lisp
+(use-package org-journal
+  :config
+  (setq org-journal-dir "~/Dropbox/DigitalGarden")
+  (setq org-journal-file-format "private-%Y-%m-%d.org")
+  (setq org-journal-carryover-items "")
+  (setq org-journal-enable-agenda-integration t))
+
+(rkn/leader-key-def
+"n" '(:ignore t :which-key "note")
+"nj" '(:ignore t :which-key "journal")
+"njS" 'org-journal-search
+"njo" 'org-journal-open-current-journal-file)
 #+end_src
 
 * Editing

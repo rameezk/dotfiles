@@ -150,6 +150,19 @@
 "nr" '(:ignore t :which-key "roam")
 "nrf" 'org-roam-find-file)
 
+(use-package org-journal
+  :config
+  (setq org-journal-dir "~/Dropbox/DigitalGarden")
+  (setq org-journal-file-format "private-%Y-%m-%d.org")
+  (setq org-journal-carryover-items "")
+  (setq org-journal-enable-agenda-integration t))
+
+(rkn/leader-key-def
+"n" '(:ignore t :which-key "note")
+"nj" '(:ignore t :which-key "journal")
+"njS" 'org-journal-search
+"njo" 'org-journal-open-current-journal-file)
+
 (use-package evil-nerd-commenter
   :bind ("M-/" . evilnc-comment-or-uncomment-lines))
 
@@ -182,3 +195,18 @@
 
 (use-package org-make-toc
   :hook (org-mode . org-make-toc-mode))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-agenda-files
+   '("/home/rameezk/Dropbox/DigitalGarden/private-2021-01-08.org"))
+ '(package-selected-packages
+   '(org-journal which-key use-package org-roam org-make-toc magit general evil-nerd-commenter evil-collection doom-modeline counsel-projectile color-theme-sanityinc-tomorrow all-the-icons-ivy-rich)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
