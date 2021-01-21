@@ -35,9 +35,7 @@ in
   system.stateVersion = 4;
 
    environment.systemPackages =
-    [ pkgs.tmux
-      pkgs.asdf
-    ];
+    [ pkgs.tmux ];
 
 nix = {
     package = pkgs.nixFlakes;
