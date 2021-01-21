@@ -37,7 +37,6 @@ in
    environment.systemPackages =
     [ pkgs.tmux
       pkgs.asdf
-      pkgs.yarn
     ];
 
 nix = {
