@@ -30,10 +30,18 @@ in
 
   programs.fish.enable = true;
 
+  programs.fish.shellInit = ''
+for p in /run/current-system/sw/bin ~/bin
+    if not contains $p $fish_user_paths
+        set -g fish_user_paths $p $fish_user_paths
+    end
+end
+  '';
+
 
 
   system.stateVersion = 4;
-  environment.systemPath = [ /run/current-system/sw/bin ];
+
  
 
    environment.systemPackages =
