@@ -36,7 +36,8 @@ in
 
    environment.systemPackages =
     [ pkgs.tmux
-      pkgs.fish ];
+      pkgs.fish
+      pkgs.vim ];
 
 nix = {
     package = pkgs.nixFlakes;
