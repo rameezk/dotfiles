@@ -18,6 +18,10 @@
           ./home.nix
         ];
       };
+
+      system = "x86_64-darwin";
+      homeDirectory = "/Users/rameezk";
+      username = "rameezk";
     };
 
     darwinConfigurations."rameezk-macbook" = darwin.lib.darwinSystem {
