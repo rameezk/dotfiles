@@ -18,9 +18,10 @@
           ./home.nix
         ];
       };
+    };
 
     darwinConfigurations."rameezk-macbook" = darwin.lib.darwinSystem {
       modules = [ ./configuration.nix ];
     };
   };
-};
+}
