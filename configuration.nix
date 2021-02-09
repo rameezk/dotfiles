@@ -33,6 +33,8 @@ in
 
 
   system.stateVersion = 4;
+  environment.systemPath = [ /run/current-system/sw/bin ];
+ 
 
    environment.systemPackages =
     [ pkgs.tmux
