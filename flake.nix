@@ -12,19 +12,19 @@
   };
 
   outputs = { self, darwin, nixpkgs, home-manager, ... }@inputs: {
-    workbook = home-manager.lib.homeManagerConfiguration {
-      configuration = { ... }: {
-        imports = [
-          ./hosts/rivendell/home.nix
-        ];
-      };
+    # workbook = home-manager.lib.homeManagerConfiguration {
+    #   configuration = { ... }: {
+    #     imports = [
+    #       ./hosts/rivendell/home.nix
+    #     ];
+    #   };
 
-      system = "x86_64-darwin";
-      homeDirectory = "/Users/rameezk";
-      username = "rameezk";
-    };
+    #   system = "x86_64-darwin";
+    #   homeDirectory = "/Users/rameezk";
+    #   username = "rameezk";
+    # };
 
-    macbook = self.workbook.activationPackage;
+    # macbook = self.workbook.activationPackage;
 
     darwinConfigurations."rameezk-macbook" = darwin.lib.darwinSystem {
       modules = [ ./configuration.nix ];
