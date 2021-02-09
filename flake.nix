@@ -24,6 +24,8 @@
       username = "rameezk";
     };
 
+    macbook = self.workbook.activationPackage;
+
     darwinConfigurations."rameezk-macbook" = darwin.lib.darwinSystem {
       modules = [ ./configuration.nix ];
     };
