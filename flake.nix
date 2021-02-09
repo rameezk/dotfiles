@@ -15,7 +15,7 @@
     workbook = home-manager.lib.homeManagerConfiguration {
       configuration = { ... }: {
         imports = [
-          ./home.nix
+          ./hosts/rivendell/home.nix
         ];
       };
 
