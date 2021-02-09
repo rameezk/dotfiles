@@ -45,7 +45,8 @@ end
  
 
    environment.systemPackages =
-    [ pkgs.tmux
+    [ 
+      # pkgs.tmux
       pkgs.fish
       pkgs.vim ];
 
