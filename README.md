@@ -10,24 +10,13 @@ In future, I hope to port this over to my other Linux machines as well.
 ```bash
 git clone git@github.com:rameezk/dotfiles.git ~/.dotfiles && cd ~/.dotfiles
 ```
-2. Install Nix
+
+2. Setup new machine build system
 ```bash
-sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume
+./bin/dot new-machine
 ```
-3. Install nix-darwin
+
+3. Build system and activate configuration
 ```bash
-nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
-./result/bin/darwin-installer
-```
-4. Install nix flakes
-```bash
-nix-env -iA nixpkgs.nixFlakes
-```
-5. Clone repo
-```bash
-git clone git@github.com:rameezk/dotfiles.git ~/.dotfiles
-```
-6. Build dotfiles
-```bash
-~/.dotfiles/bin/dot build
+./bin/dot rebuild
 ```

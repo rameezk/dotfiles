@@ -10,8 +10,10 @@ function main {
         echo
         echo "Available commands:"
         echo "  rebuild|re                     Rebuild system"
+        echo "  new-machine                    Setup system for new machine"
         echo "  install-nix-package-manager    Install Nix package manager"
         echo "  install-nix-darwin             Install Nix Darwin"
+        echo "  install-nix-flakes             Install Nix Flakes"
         echo "  source-nix-env-vars            Source Nix environment variables (for emergencies only)"
     }
 
@@ -29,7 +31,7 @@ function main {
         fi
     }
 
-    function _install_flakes {
+    function _install_nix_flakes {
         . $HOME/.nix-profile/etc/profile.d/nix.sh
         nix-env -iA nixpkgs.nixFlakes
     }
@@ -59,14 +61,22 @@ function main {
         echo ". $HOME/.nix-profile/etc/profile.d/nix.sh"
     }
 
+    function _setup_system_for_new_machine {
+        echo "Setting up system for new machine"
+        _install_nix_package_manager
+        _install_nix_darwin
+        _install_nix_flakes
+        echo "Done. Reboot terminal."
+    }
+
     cmd="$1"
     [[ $# > 0 ]] && shift
     case "$cmd" in
         rebuild|re) _rebuild ;;
-        check|ch) _check ;;
-        switch|sw) _switch ;;
+        new-machine) _setup_system_for_new_machine ;;
         install-nix-package-manager) _install_nix_package_manager ;;
         install-nix-darwin) _install_nix_darwin ;;
+        install-nix-flakes) _install_nix_flakes ;;
         source-nix-env-vars) _source_nix_env_vars ;;
         h|help|-h|--help) _usage ;;
         "") _usage ;;
