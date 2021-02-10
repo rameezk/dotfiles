@@ -9,6 +9,7 @@ in
   imports = [ <home-manager/nix-darwin> ];
 
   home-manager.users.rameezk = {pkgs, ... }: {
+    home.username = username;
     home.packages = [ pkgs.httpie ];
   };
 
