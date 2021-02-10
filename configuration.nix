@@ -1,5 +1,3 @@
-imports = [ <home-manager/nix-darwin> ];
-
 { config, lib, pkgs, ... }:
 
 
@@ -8,6 +6,7 @@ let
   homeDirectory = "/Users/rameezk";
 in
 {
+  imports = [ <home-manager/nix-darwin> ];
   # Let Home Manager install and manage itself.
   # programs.home-manager.enable = true;
 
