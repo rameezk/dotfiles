@@ -1,6 +1,7 @@
+imports = [ <home-manager/nix-darwin> ];
+
 { config, lib, pkgs, ... }:
 
-imports = [ <home-manager/nix-darwin> ];
 
 let
   username = "rameezk";
