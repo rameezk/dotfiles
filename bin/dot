@@ -24,7 +24,8 @@ function main {
         if git diff --quiet && git diff --cached --quiet; then
             echo "Rebuilding system"
             nix build .\#darwinConfigurations.$HOSTNAME.system
-            ./result/sw/bin/darwin-rebuild switch --flake .\#$HOSTNAME
+            # ./result/sw/bin/darwin-rebuild switch --flake .\#$HOSTNAME
+            darwin-rebuild switch --flake .\#$HOSTNAME
         else
             echo "There are uncommitted files. Please commit before rebuilding."
             exit 1

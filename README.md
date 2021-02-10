@@ -13,10 +13,23 @@ git clone git@github.com:rameezk/dotfiles.git ~/.dotfiles && cd ~/.dotfiles
 
 2. Setup new machine build system
 ```bash
+export PATH=$PATH:/usr/sbin
 ./bin/dot new-machine
+```
+When asked if you'd like to configure nix-darwin's configuration.nix, set the following:
+```nix
+programs.zsh.enable = true;
+programs.fish.enable = true;
 ```
 
 3. Build system and activate configuration
 ```bash
 ./bin/dot rebuild
+```
+
+## Maintenance
+
+### Nuking environment
+```bash
+./maintenance/darwin-nuke.sh
 ```
