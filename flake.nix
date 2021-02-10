@@ -27,20 +27,21 @@
     # macbook = self.workbook.activationPackage;
 
     darwinConfigurations."rameezk-macbook" = darwin.lib.darwinSystem {
+      system = "x86_64-darwin";
       modules = [ 
         ./configuration.nix
-        home-manager.lib.homeManagerConfiguration
-        {
-          configuration = { ... }: {
-            imports = [
-              ./hosts/rivendell/home.nix2
-            ];
-          };
+        # home-manager.lib.homeManagerConfiguration
+        # {
+        #   configuration = { ... }: {
+        #     imports = [
+        #       ./hosts/rivendell/home.nix2
+        #     ];
+        #   };
 
-          system = "x86_64-darwin";
-          homeDirectory = "/Users/rameezk";
-          username = "rameezk";
-        }
+        #   system = "x86_64-darwin";
+        #   homeDirectory = "/Users/rameezk";
+        #   username = "rameezk";
+        # }
       ];
     };
   };
