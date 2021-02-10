@@ -28,6 +28,7 @@
 
     darwinConfigurations."rameezk-macbook" = darwin.lib.darwinSystem {
       system = "x86_64-darwin";
+
       modules = [ 
         ./configuration.nix
         # home-manager.lib.homeManagerConfiguration
