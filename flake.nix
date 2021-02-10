@@ -29,8 +29,8 @@
     darwinConfigurations."rameezk-macbook" = darwin.lib.darwinSystem {
       modules = [ 
         ./configuration.nix
-        home-manager.nixosModules.home-manager
-        {}
+        # home-manager.nixosModules.home-manager
+        # {}
         # home-manager.lib.homeManagerConfiguration
         # {
         #   configuration = { ... }: {
