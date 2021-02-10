@@ -6,6 +6,7 @@ let
   homeDirectory = "/Users/rameezk";
 in
 {
+  home.stateVersion = "20.09";
   imports = [ <home-manager/nix-darwin> ];
   # Let Home Manager install and manage itself.
   # programs.home-manager.enable = true;
