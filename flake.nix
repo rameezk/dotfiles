@@ -33,14 +33,14 @@
         {
           configuration = { ... }: {
             imports = [
-              ./hosts/rivendell/home.nix
+              ./hosts/rivendell/home.nix2
             ];
           };
 
           system = "x86_64-darwin";
           homeDirectory = "/Users/rameezk";
           username = "rameezk";
-        };
+        }
       ];
     };
   };
