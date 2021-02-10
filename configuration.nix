@@ -6,7 +6,7 @@ let
 in
 {
   # Let Home Manager install and manage itself.
-#   programs.home-manager.enable = true;
+  programs.home-manager.enable = true;
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
@@ -29,7 +29,6 @@ in
 #   ];
 
   programs.fish.enable = true;
-
   programs.fish.shellInit = ''
 for p in /run/current-system/sw/bin ~/bin
     if not contains $p $fish_user_paths
@@ -38,22 +37,18 @@ for p in /run/current-system/sw/bin ~/bin
 end
   '';
 
-
-
   system.stateVersion = 4;
 
- 
+  environment.systemPackages =
+  [ 
+    # pkgs.tmux
+    pkgs.fish
+    pkgs.vim ];
 
-   environment.systemPackages =
-    [ 
-      # pkgs.tmux
-      pkgs.fish
-      pkgs.vim ];
-
-nix = {
-    package = pkgs.nixFlakes;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-   };
+  nix = {
+      package = pkgs.nixFlakes;
+      extraOptions = ''
+        experimental-features = nix-command flakes
+      '';
+    };
 }
