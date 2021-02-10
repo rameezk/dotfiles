@@ -23,7 +23,7 @@ function main {
         echo "Checking for changes"
         if git diff --quiet && git diff --cached --quiet; then
             echo "Rebuilding system"
-            nix build .\#darwinConfigurations.$HOSTNAME.system --impure
+            nix build --impure .\#darwinConfigurations.$HOSTNAME.system
             ./result/sw/bin/darwin-rebuild switch --flake .\#$HOSTNAME
             # darwin-rebuild switch --flake .\#$HOSTNAME
         else
