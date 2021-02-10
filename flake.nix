@@ -27,23 +27,7 @@
     # macbook = self.workbook.activationPackage;
 
     darwinConfigurations."rameezk-macbook" = darwin.lib.darwinSystem {
-      modules = [ 
-        ./configuration.nix
-        # home-manager.nixosModules.home-manager
-        # {}
-        # home-manager.lib.homeManagerConfiguration
-        # {
-        #   configuration = { ... }: {
-        #     imports = [
-        #       ./hosts/rivendell/home.nix2
-        #     ];
-        #   };
-
-        #   system = "x86_64-darwin";
-        #   homeDirectory = "/Users/rameezk";
-        #   username = "rameezk";
-        # }
-      ];
+      modules = [ ./configuration.nix ];
     };
   };
 }
