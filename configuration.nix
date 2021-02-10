@@ -6,15 +6,15 @@ let
   homeDirectory = "/Users/rameezk";
 in
 {
-  home.stateVersion = "20.09";
   imports = [ <home-manager/nix-darwin> ];
+
   # Let Home Manager install and manage itself.
   # programs.home-manager.enable = true;
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
-#   home.username = username;
-#   home.homeDirectory = homeDirectory;
+  home.username = username;
+  home.homeDirectory = homeDirectory;
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
@@ -24,12 +24,15 @@ in
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-#   home.stateVersion = "20.09";
+  home.stateVersion = "20.09";
+
+  home-manager.useUserPackages = true;
+  home-manager.useGlobalPkgs = true;
 
   # General packages
-#   home.packages = with pkgs; [
-#     tmux
-#   ];
+  home.packages = with pkgs; [
+    tmux
+  ];
 
   programs.fish.enable = true;
   programs.fish.shellInit = ''
