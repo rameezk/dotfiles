@@ -26,7 +26,8 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+;; (setq doom-theme 'doom-one)
+(setq doom-theme 'sanityinc-tomorrow-eighties)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -110,7 +111,8 @@
 (setq org-roam-directory "~/Dropbox/DigitalGarden")
 (after! org-roam
   (setq org-roam-graph-viewer "/usr/bin/xdg-open")
-  (setq org-roam-graph-exclude-matcher '("private" "dailies" "inbox" "Inbox" "todoist"))
+  ;; (setq org-roam-graph-exclude-matcher '("private" "dailies" "inbox" "Inbox" "todoist"))
+  (setq org-roam-graph-exclude-matcher '("dailies" "inbox" "Inbox" "todoist"))
   (require 'simple-httpd)
   (setq httpd-root "/var/www")
   (httpd-start))
@@ -119,14 +121,29 @@
 (setq deft-use-filter-string-for-filename t)
 (setq deft-default-extension "org")
 
+;; (use-package! org-roam-server
+;;   :ensure nil
+;;   :load-path "~/Dropbox/DigitalGarden")
+
 (use-package! org-roam-server
   :ensure nil
-  :load-path "~/Dropbox/DigitalGarden")
+  :config
+  (setq org-roam-server-host "127.0.0.1"
+        org-roam-server-port 8080
+        org-roam-server-authenticate nil
+        org-roam-server-export-inline-images t
+        org-roam-server-serve-files nil
+        org-roam-server-served-file-extensions '("pdf" "mp4" "ogv")
+        org-roam-server-network-poll t
+        org-roam-server-network-arrows nil
+        org-roam-server-network-label-truncate t
+        org-roam-server-network-label-truncate-length 60
+        org-roam-server-network-label-wrap-length 20))
 
-(load! "/home/rameezk/.emacs.d/lisp/org-todoist.el")
-(after! org-todoist
-  (setq org-todoist-file "~/DigitalGarden/todoist.org")
-  (setq org-todoist-api-token (getenv "TODOIST_TOKEN")))
+;; (load! "/home/rameezk/.emacs.d/lisp/org-todoist.el")
+;; (after! org-todoist
+;;   (setq org-todoist-file "~/DigitalGarden/todoist.org")
+;;   (setq org-todoist-api-token (getenv "TODOIST_TOKEN")))
 
 (add-hook 'org-mode-hook #'emojify-mode)
 
