@@ -15,3 +15,13 @@ k-patch-img-pull-secret() {
 
     k patch serviceaccount default -p "{\"imagePullSecrets\": [{\"name\": \"$1\"}]}"
 }
+
+k-exec-into() {
+    # Interactively exec a shell in a kubernetes pod
+    pod=$(kubectl get pods --no-headers | awk '{print $1}' | fzf)
+    shell=$(echo "bash\nsh\nzsh\nfish" | fzf)
+
+    kubectl exec -it $pod -- $shell
+}
+
+
