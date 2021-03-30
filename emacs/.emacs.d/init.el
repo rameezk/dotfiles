@@ -160,6 +160,7 @@
 (rkn/leader-key-def
 "n" '(:ignore t :which-key "note")
 "nj" '(:ignore t :which-key "journal")
+"njj" 'org-journal-new-entry
 "njS" 'org-journal-search
 "njo" 'org-journal-open-current-journal-file)
 
@@ -175,9 +176,9 @@
 ;; Since we don't want to disable org-confirm-babel-evaluate all
 ;; of the time, do it around the after-save-hook
 (defun rkn/org-babel-tangle-dont-ask ()
-  ;; Dynamic scoping to the rescue
-  (let ((org-confirm-babel-evaluate nil))
-    (org-babel-tangle)))
+  (when (string-equal (buffer-file-name) (expand-file-name "~/.dotfiles/emacs/.emacs.d/emacs-config.org"))
+    (let ((org-confirm-babel-evaluate nil))
+	(org-babel-tangle))))
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'rkn/org-babel-tangle-dont-ask
                                               'run-at-end 'only-in-org-mode)))
@@ -195,15 +196,26 @@
 
 (use-package org-make-toc
   :hook (org-mode . org-make-toc-mode))
+
+(use-package org-superstar
+  :after org
+  :hook (org-mode . org-superstar-mode)
+  :config 
+  (setq org-superstar-leading-bullet ?\s
+        org-superstar-leading-fallback ?\s
+        org-hide-leading-stars nil
+        org-superstar-todo-bullet-alist
+        '(("TODO" . 9744)
+          ("[ ]"  . 9744)
+          ("DONE" . 9745)
+          ("[X]"  . 9745))))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(org-agenda-files
-   '("/home/rameezk/Dropbox/DigitalGarden/private-2021-01-08.org"))
- '(package-selected-packages
-   '(org-journal which-key use-package org-roam org-make-toc magit general evil-nerd-commenter evil-collection doom-modeline counsel-projectile color-theme-sanityinc-tomorrow all-the-icons-ivy-rich)))
+   '("/home/rameezk/Dropbox/DigitalGarden/private-2021-01-11.org")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

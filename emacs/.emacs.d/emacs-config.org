@@ -55,6 +55,7 @@
       - [[#auto-tangle-configuration-files][Auto-tangle Configuration Files]]
     - [[#block-templates][Block Templates]]
     - [[#update-toc-on-save][Update TOC on save]]
+    - [[#fancy-ui][Fancy UI]]
 :END:
 * Performance
 ** Startup
@@ -326,6 +327,7 @@ I use org-journal to take small daily notes. Some of these notes might progress 
 (rkn/leader-key-def
 "n" '(:ignore t :which-key "note")
 "nj" '(:ignore t :which-key "journal")
+"njj" 'org-journal-new-entry
 "njS" 'org-journal-search
 "njo" 'org-journal-open-current-journal-file)
 #+end_src
@@ -356,13 +358,12 @@ We define a function that gets executed every time this file is saved.
 ;; Since we don't want to disable org-confirm-babel-evaluate all
 ;; of the time, do it around the after-save-hook
 (defun rkn/org-babel-tangle-dont-ask ()
-  ;; Dynamic scoping to the rescue
-  (let ((org-confirm-babel-evaluate nil))
-    (org-babel-tangle)))
+  (when (string-equal (buffer-file-name) (expand-file-name "~/.dotfiles/emacs/.emacs.d/emacs-config.org"))
+    (let ((org-confirm-babel-evaluate nil))
+	(org-babel-tangle))))
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'rkn/org-babel-tangle-dont-ask
                                               'run-at-end 'only-in-org-mode)))
-
 #+end_src
 
 *** Block Templates
@@ -388,4 +389,19 @@ It's super nice to have a TOC for long org files (like this one) so it's great t
 #+end_src
 
 
-
+*** Fancy UI
+Make org-mode nicer to look at.
+#+begin_src emacs-lisp
+(use-package org-superstar
+  :after org
+  :hook (org-mode . org-superstar-mode)
+  :config 
+  (setq org-superstar-leading-bullet ?\s
+        org-superstar-leading-fallback ?\s
+        org-hide-leading-stars nil
+        org-superstar-todo-bullet-alist
+        '(("TODO" . 9744)
+          ("[ ]"  . 9744)
+          ("DONE" . 9745)
+          ("[X]"  . 9745))))
+#+end_src
