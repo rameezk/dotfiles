@@ -116,3 +116,55 @@ create_tcp_tunnel() {
         return 1
     fi
 }
+
+Cyan() {
+    printf "\e[96m%s\e[0m\n" "$@"
+}
+
+Red() {
+    printf "\e[31m%s\e[0m\n" "$@"
+}
+
+LightYellow() {
+    printf "\e[93m%s\e[0m\n" "$@"
+}
+
+LightGreen() {
+    printf "\e[92m%s\e[0m\n" "$@"
+}
+
+deploy_static_site_via_gh_pages() {
+    project_name="$1"
+
+    if [ -z "$project_name" ]; then
+        Red "Please provide a project name"
+        return 1
+    fi
+
+    if ! command -v hub >/dev/null 2>&1; then
+        Red "hub binary does not exist. please install it."
+        return 1
+    fi
+
+    Cyan "Creating a repo if it doesn't exist."
+    git init
+    git setup-personal-repo
+
+    Cyan "Creating repo on github. Will open in browser."
+    hub create -o
+
+    Cyan "Creating CNAME"
+    echo "$project_name.rameezkhan.dev" > CNAME
+
+    Cyan "Pushing sources"
+    git add .
+    git commit -m "Creating site"
+    git push
+    git checkout gh-pages || git checkout -b gh-pages
+    git publish
+    git checkout master
+
+    LightGreen "Done."
+    LightGreen "If you want to enforce HTTPS, please check the box in your repo's settings."
+    LightGreen "It can take up to 30 min for HTTPS to be available."
+}
