@@ -14,7 +14,7 @@
    '("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3"))
  '(objed-cursor-color "#ff5370")
  '(org-agenda-files
-   '("~/Dropbox/DigitalGarden/todoist.org" "~/Dropbox/DigitalGarden/inbox.org" "/home/rameezk/Dropbox/DigitalGarden/private-2021-03-26.org"))
+   '("~/Dropbox/DigitalGarden/todoist.org" "~/Dropbox/DigitalGarden/inbox.org" "/home/rameezk/Dropbox/DigitalGarden/private-2021-04-14.org"))
  '(package-selected-packages '(org-roam-server org-plus-contrib))
  '(pdf-view-midnight-colors '("#DCDCCC" . "#383838"))
  '(rustic-ansi-faces
