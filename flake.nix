@@ -9,7 +9,7 @@
   outputs = { self, ... }@inputs: {
     homeManagerConfigurations = {
       darwin = inputs.home-manager.lib.homeManagerConfiguration {
-        configuration = ./hosts/darwin/home.nix;
+        configuration = ./home.nix;
         system = "x86_64-linux";
       };
     };
