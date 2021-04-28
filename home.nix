@@ -53,6 +53,10 @@ in
       export GPG_TTY=(tty)
     '';
 
+    shellAbbrs = {
+      gcm = "git commit -m";
+    };
+
     plugins = [
       {
         name = "fish-gruvbox";
