@@ -9,7 +9,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
     workbook = home-manager.lib.homeManagerConfiguration {
       configuration = { ... }: {
         nixpkgs.overlays = [
