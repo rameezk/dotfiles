@@ -5,8 +5,7 @@ let
   homeDirectory = "/home/rameezk";
 
   secrets = import ./secrets/config.nix;
-in
-{
+in {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -65,25 +64,24 @@ in
       gcm = "git commit -m";
 
       # home-manager
-      hm-rm-old-generations = "home-manager generations | tail -n +2 | awk '{ print $5 }' | xargs home-manager remove-generations";
+      hm-rm-old-generations =
+        "home-manager generations | tail -n +2 | awk '{ print $5 }' | xargs home-manager remove-generations";
     };
 
-    plugins = [
-      {
-        name = "fish-gruvbox";
-        src = pkgs.fetchFromGitHub {
-          owner = "Jomik";
-          repo = "fish-gruvbox";
-          rev = "d8c0463518fb95bed8818a1e7fe5da20cffe6fbd";
-          sha256 = "0hkps4ddz99r7m52lwyzidbalrwvi7h2afpawh9yv6a226pjmck7";
-        };
-      }
-    ];
+    plugins = [{
+      name = "fish-gruvbox";
+      src = pkgs.fetchFromGitHub {
+        owner = "Jomik";
+        repo = "fish-gruvbox";
+        rev = "d8c0463518fb95bed8818a1e7fe5da20cffe6fbd";
+        sha256 = "0hkps4ddz99r7m52lwyzidbalrwvi7h2afpawh9yv6a226pjmck7";
+      };
+    }];
   };
 
   programs.git = {
     enable = true;
-    userName = secrets.userFullName;
+    userName = secrets.user.fullName;
   };
 
   # vim

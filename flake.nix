@@ -11,19 +11,14 @@
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs: {
     workbook = home-manager.lib.homeManagerConfiguration {
-      configuration = { ... }: {
-        imports =
-          [
-            ./home.nix
-          ];
-        };
+      configuration = { ... }: { imports = [ ./home.nix ]; };
 
-        system = "x86_64-linux";
-        homeDirectory = "/home/rameezk";
-        username = "rameezk";
-      };
-
-      rohan = self.workbook.activationPackage;
+      system = "x86_64-linux";
+      homeDirectory = "/home/rameezk";
+      username = "rameezk";
     };
 
-  }
+    rohan = self.workbook.activationPackage;
+  };
+
+}
