@@ -90,17 +90,20 @@ in {
     userName = secrets.user.fullName;
     userEmail = secrets.user.work.emailAddr;
     aliases = {
-      lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
+      lg =
+        "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
       st = "status";
       dc = "diff --cached";
       d = "diff";
-      publish = "!git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)";
-      delete-branches = "!f() { git branch | grep -v \"master\\|main\" | xargs git branch -d; }; f";
+      publish =
+        "!git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)";
+      delete-branches = ''
+        !f() { git branch | grep -v "master\|main" | xargs git branch -d; }; f'';
       pr-complete = "!f() { git checkout master && git pull --prune; }; f";
     };
     includes = [
-      { 
-        condition = "gitdir:~/code/personal/"; 
+      {
+        condition = "gitdir:~/code/personal/";
         contents = {
           user = {
             email = secrets.user.personal.emailAddr;
@@ -108,7 +111,7 @@ in {
           };
         };
       }
-      { 
+      {
         condition = "gitdir:~/.config/";
         contents = {
           user = {
@@ -119,16 +122,10 @@ in {
       }
     ];
     extraConfig = {
-      user = {
-        signingkey = secrets.user.work.gpgFingerprint;
-      };
-      commit = {
-        gpgsign = true;
-      };
+      user = { signingkey = secrets.user.work.gpgFingerprint; };
+      commit = { gpgsign = true; };
     };
-    ignores = [
-      "*~" "*.swp"
-    ];
+    ignores = [ "*~" "*.swp" ];
   };
 
   # vim
