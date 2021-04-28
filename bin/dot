@@ -1,0 +1,39 @@
+#!/usr/bin/env python
+
+import os
+import typer
+
+
+app = typer.Typer()
+dotfiles_dir = "~/.config/dotfiles"
+
+def info(msg: str):
+    typer.secho(msg, fg=typer.colors.MAGENTA)
+
+def success(msg: str):
+    typer.secho(msg, fg=typer.colors.BRIGHT_GREEN)
+
+def run_command(command: str):
+    info(f"> {command}")
+    return os.system(command)
+
+@app.command(help="Open dotfiles in $EDITOR")
+def edit():
+    run_command(f"vim {dotfiles_dir}/home.nix")
+
+@app.command(help="Rebuild configuration and activate it")
+def rebuild():
+    info("🔨 Rebuilding environment")
+    run_command(f"cd {dotfiles_dir} && nix build .#rohan")
+    info("✔️ Activating environment")
+    run_command(f"cd {dotfiles_dir} && ./result/activate")
+    success("✨ Done")
+
+@app.command(help="Choose a generation to rollback to")
+def rollback(help="Rollback configuration"):
+    info("Listing generations")
+    generation = run_command("$(home-manager generations | fzf | awk '{ print $7 }')/activate")
+    success("✨ Done")
+
+if __name__ == "__main__":
+    app()

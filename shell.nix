@@ -5,6 +5,7 @@ in pkgs.mkShell rec {
   name = "dotfiles";
   buildInputs = with pkgs; [
     nixfmt
-    python
+    python39
+    python39Packages.typer
   ];
 }

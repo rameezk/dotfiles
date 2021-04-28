@@ -57,6 +57,9 @@ in {
 
       # Make gpg-agent play nicely with tmux
       export GPG_TTY=(tty)
+
+      # dotfiles binaries
+      set PATH $PATH /home/rameezk/.config/dotfiles/bin
     '';
 
     shellAbbrs = {
@@ -166,6 +169,8 @@ in {
     jq # parsing JSON
     entr # file watching
     fzf # fuzzy file finder
+    htop # process manager
+    neofetch # nice system info viewer
 
     # git
     git
