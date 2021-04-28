@@ -3,17 +3,39 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager";
+    home-manager = {
+      url = "github:rycee/home-manager/master";
+      inputs.nixpkgs.follows = "/nixpkgs";
+    };
   };
 
-  outputs = { self, ... }@inputs: {
-    homeManagerConfigurations = {
-      darwin = inputs.home-manager.lib.homeManagerConfiguration {
-        configuration = ./home.nix;
+  # outputs = { self, ... }@inputs: {
+  #   homeManagerConfigurations = {
+  #     machine = inputs.home-manager.lib.homeManagerConfiguration {
+  #       configuration = ./home.nix;
+  #       system = "x86_64-linux";
+  #       homeDirectory = "/home/rameezk";
+  #       username = "rameezk";
+  #     };
+  #   };
+
+  # };
+
+  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
+    workbook = home-manager.lib.homeManagerConfiguration {
+      configuration = { ... }: {
+        imports =
+          [
+            ./home.nix
+          ];
+        };
+
         system = "x86_64-linux";
+        homeDirectory = "/home/rameezk";
+        username = "rameezk";
       };
+
+      rohan = self.workbook.activationPackage;
     };
 
-  };
-
-}
+  }

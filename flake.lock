@@ -2,37 +2,26 @@
   "nodes": {
     "home-manager": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1619558193,
         "narHash": "sha256-DljP5/9EX0eXEPhzCUFqFEHkkcFuXJBx1PTgcv0OgyM=",
-        "owner": "nix-community",
+        "owner": "rycee",
         "repo": "home-manager",
         "rev": "18ad12d52b8cebbb57013865eec2be5125de050a",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
+        "owner": "rycee",
+        "ref": "master",
         "repo": "home-manager",
         "type": "github"
       }
     },
     "nixpkgs": {
-      "locked": {
-        "lastModified": 1619607457,
-        "narHash": "sha256-FFKMXfeYtJlQc7NHRq2kIa8f906JiQl/Xk3zAvcJv+k=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "e7e72e070b9a82730e97134bf33d6a7e608a6bf3",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "type": "indirect"
-      }
-    },
-    "nixpkgs_2": {
       "locked": {
         "lastModified": 1619464443,
         "narHash": "sha256-R7WAb8EnkIJxxaF6GTHUPytjonhB4Zm0iatyWoW169A=",
@@ -51,7 +40,7 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs"
       }
     }
   },
