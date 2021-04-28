@@ -12,9 +12,6 @@
   outputs = { self, nixpkgs, home-manager, ... }@inputs: {
     workbook = home-manager.lib.homeManagerConfiguration {
       configuration = { ... }: {
-        nixpkgs.overlays = [
-          agenix.overlay
-        ];
         imports =
           [
             ./home.nix
