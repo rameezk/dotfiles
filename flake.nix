@@ -7,6 +7,10 @@
       url = "github:rycee/home-manager/master";
       inputs.nixpkgs.follows = "/nixpkgs";
     };
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   # outputs = { self, ... }@inputs: {
@@ -21,12 +25,13 @@
 
   # };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, agenix, ... }@inputs: {
     workbook = home-manager.lib.homeManagerConfiguration {
       configuration = { ... }: {
         imports =
           [
             ./home.nix
+            ./age.nix
           ];
         };
 
