@@ -55,6 +55,7 @@ in
 
     shellAbbrs = {
       gcm = "git commit -m";
+      hm-rm-old-generations = "home-manager generations | tail -n +2 | awk '{ print $5 }' | xargs home-manager remove-generations";
     };
 
     plugins = [
