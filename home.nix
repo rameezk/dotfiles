@@ -54,7 +54,15 @@ in
     '';
 
     shellAbbrs = {
+      # files
+      ls = "exa";
+      l = "exa -la --git";
+      tree = "ls --tree";
+
+      #git
       gcm = "git commit -m";
+
+      # home-manager
       hm-rm-old-generations = "home-manager generations | tail -n +2 | awk '{ print $5 }' | xargs home-manager remove-generations";
     };
 
@@ -97,6 +105,9 @@ in
       pager = "less -FR";
     };
   };
+
+  # exa
+  programs.exa.enable = true;
 
   # Packages
   home.packages = with pkgs; [
