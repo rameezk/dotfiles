@@ -84,6 +84,15 @@ in
     '';
   };
 
+  # bat
+  programs.bat = {
+    enable = true;
+    config = {
+      theme = "gruvbox-dark";
+      pager = "less -FR";
+    };
+  };
+
   # Packages
   home.packages = with pkgs; [
     # cli tools
