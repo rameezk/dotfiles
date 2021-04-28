@@ -1,14 +1,38 @@
 { config, pkgs, ... }:
 
+let
+  username = "rameezk";
+  homeDirectory = "/home/rameezk";
+in
 {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
-  home.username = "rameezk";
-  home.homeDirectory = "/home/rameezk";
+  home.username = username;
+  home.homeDirectory = homeDirectory;
 
+  # shell
+  programs.fish = {
+    enable = true;
+
+    shellInit = ''
+      # Disable fish greeting message
+      set fish_greeting
+
+      # Enable fenv for sourcing foreign environment variables. 
+      # This is needed for sourcing the Nix path below.
+      set -p fish_function_path ${pkgs.fishPlugins.foreign-env}/share/fish/vendor_functions.d
+
+      # nix
+      if test -e ${homeDirectory}/.nix-profile/etc/profile.d/nix.sh
+        fenv source ${homeDirectory}/.nix-profile/etc/profile.d/nix.sh
+      end
+    '';
+  };
+
+  # vim
   programs.vim = {
     enable = true;
     plugins = with pkgs.vimPlugins; [
