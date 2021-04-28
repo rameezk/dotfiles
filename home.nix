@@ -17,9 +17,12 @@ in
   programs.fish = {
     enable = true;
 
-    shellInit = ''
+    interactiveShellInit = ''
       # Disable fish greeting message
       set fish_greeting
+
+      # vi mode
+      fish_vi_key_bindings
 
       # Enable fenv for sourcing foreign environment variables. 
       # This is needed for sourcing the Nix path below.
@@ -29,7 +32,37 @@ in
       if test -e ${homeDirectory}/.nix-profile/etc/profile.d/nix.sh
         fenv source ${homeDirectory}/.nix-profile/etc/profile.d/nix.sh
       end
+
+      # editor
+      export EDITOR=vim
+
+      # colorscheme
+      theme_gruvbox dark medium
+
+      # direnv
+      eval (direnv hook fish)
+
+      # asdf
+      source ~/.asdf/asdf.fish
+
+      # pipx
+      set PATH $PATH /home/rameezk/.local/bin
+
+      # Make gpg-agent play nicely with tmux
+      export GPG_TTY=(tty)
     '';
+
+    plugins = [
+      {
+        name = "fish-gruvbox";
+        src = pkgs.fetchFromGitHub {
+          owner = "Jomik";
+          repo = "fish-gruvbox";
+          rev = "d8c0463518fb95bed8818a1e7fe5da20cffe6fbd";
+          sha256 = "0hkps4ddz99r7m52lwyzidbalrwvi7h2afpawh9yv6a226pjmck7";
+        };
+      }
+    ];
   };
 
   # vim
