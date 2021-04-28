@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   username = "rameezk";
@@ -83,7 +83,7 @@ in
 
   programs.git = {
     enable = true;
-    userName = secrets.user.name;
+    userName = secrets.userFullName;
   };
 
   # vim
