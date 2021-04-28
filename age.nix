@@ -1,5 +1,10 @@
-{ ... }:
+{ options, config, inputs, lib, pkgs, ... }:
 
+let inherit (inputs) agenix;
+  secretsDir = "./secrets";
+  secretsFile = "${secretsDir}/secrets.nix";
+in
 {
-  age.secrets.secret1.file = ../secrets/secret1.age;
+  imports = [ agenix.nixosModules.age ];
+  environment.systemPackages = [ agenix.defaultPackage.x86_64-linux ];
 }

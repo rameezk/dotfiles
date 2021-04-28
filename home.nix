@@ -79,12 +79,6 @@ in
     ];
   };
 
-  # git
-  programs.git = {
-    enable = true;
-    username = config.age;
-  };
-
   # vim
   programs.vim = {
     enable = true;
