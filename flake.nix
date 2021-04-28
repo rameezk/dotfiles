@@ -9,18 +9,6 @@
     };
   };
 
-  # outputs = { self, ... }@inputs: {
-  #   homeManagerConfigurations = {
-  #     machine = inputs.home-manager.lib.homeManagerConfiguration {
-  #       configuration = ./home.nix;
-  #       system = "x86_64-linux";
-  #       homeDirectory = "/home/rameezk";
-  #       username = "rameezk";
-  #     };
-  #   };
-
-  # };
-
   outputs = { self, nixpkgs, home-manager, ... }@inputs: {
     workbook = home-manager.lib.homeManagerConfiguration {
       configuration = { ... }: {
