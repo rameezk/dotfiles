@@ -7,24 +7,19 @@
       url = "github:rycee/home-manager/master";
       inputs.nixpkgs.follows = "/nixpkgs";
     };
-    agenix = {
-      url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "/nixpkgs";
-    };
   };
 
   outputs = { self, nixpkgs, home-manager, agenix, ... }@inputs: {
     workbook = home-manager.lib.homeManagerConfiguration {
-      configuration = { agenix, ... }: {
+      configuration = { ... }: {
+        nixpkgs.overlays = [
+          agenix.overlay
+        ];
         imports =
           [
             ./home.nix
           ];
         };
-
-        extraModules = [
-          ./age.nix
-        ];
 
         system = "x86_64-linux";
         homeDirectory = "/home/rameezk";
