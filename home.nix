@@ -3,6 +3,8 @@
 let
   username = "rameezk";
   homeDirectory = "/home/rameezk";
+
+  secrets = import ./secrets/config.nix;
 in
 {
   # Let Home Manager install and manage itself.
@@ -77,6 +79,11 @@ in
         };
       }
     ];
+  };
+
+  programs.git = {
+    enable = true;
+    userName = secrets.user.name;
   };
 
   # vim
