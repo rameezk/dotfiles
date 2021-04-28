@@ -13,15 +13,18 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, agenix, ... }@inputs: {
     workbook = home-manager.lib.homeManagerConfiguration {
-      configuration = { ... }: {
+      configuration = { agenix, ... }: {
         imports =
           [
             ./home.nix
-            ./age.nix
           ];
         };
+
+        extraModules = [
+          ./age.nix
+        ];
 
         system = "x86_64-linux";
         homeDirectory = "/home/rameezk";
