@@ -38,6 +38,7 @@ in
 
       # colorscheme
       theme_gruvbox dark medium
+      set -U fish_color_command b8bb26 # fish's default command color is a horrible dark blue, make it a nicer green
 
       # direnv
       eval (direnv hook fish)
