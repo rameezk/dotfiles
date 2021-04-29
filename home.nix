@@ -43,7 +43,7 @@ in {
       export EDITOR=vim
 
       # colorscheme
-      theme_gruvbox dark medium
+      theme_gruvbox dark hard
       set -U fish_color_command b8bb26 # fish's default command color is a horrible dark blue, make it a nicer green
 
       # direnv
@@ -60,6 +60,9 @@ in {
 
       # dotfiles binaries
       set PATH $PATH /home/rameezk/.config/dotfiles/bin
+
+      # source proxy
+      source ~/.proxyrc
     '';
 
     shellAbbrs = {
