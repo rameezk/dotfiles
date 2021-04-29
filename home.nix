@@ -69,7 +69,7 @@ in {
       # files
       ls = "exa";
       l = "exa -la --git";
-      tree = "ls --tree";
+      tree = "exa --tree";
 
       #git
       gcm = "git commit -m";
@@ -186,6 +186,9 @@ in {
     kubectl
     kubectx
     stern
+
+    # fish plugins
+    fishPlugins.pure
   ];
 
   # This value determines the Home Manager release that your
