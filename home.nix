@@ -18,7 +18,7 @@ in {
   programs.fish = {
     enable = true;
 
-    interactiveShellInit = ''
+    shellInit = ''
       # Disable fish greeting message
       set fish_greeting
 
@@ -72,6 +72,33 @@ in {
       # home-manager
       hm-rm-old-generations =
         "home-manager generations | tail -n +2 | awk '{ print $5 }' | xargs home-manager remove-generations";
+    };
+
+    functions = {
+      p = {
+        argumentNames = "args";
+        description = "open fzf to cd into a project directory";
+        body = ''
+          set -l cache_file "$HOME/.projects"
+          if test -z $args
+              if test -s "$cache_file"
+                  set -l chosen_dir (cat $cache_file | fzf)
+                  cd "$chosen_dir"
+              else
+                  bash -c "find ~/code -name .git -type d -prune | xargs readlink -f | xargs dirname > $cache_file"
+                  set -l chosen_dir (cat $cache_file | fzf)
+                  cd "$chosen_dir"
+              end
+          else
+              if [ $args = "-r" ]
+                  bash -c "find ~/code -name .git -type d -prune | xargs readlink -f | xargs dirname > $cache_file"
+                  set -l chosen_dir (cat $cache_file | fzf)
+                  cd "$chosen_dir"
+              end
+          end
+        '';
+      };
+
     };
 
     plugins = [
@@ -195,6 +222,9 @@ in {
 
     # fish plugins
     fishPlugins.pure
+
+    # emacs dependencies
+    sqlite # needed for org-roam
   ];
 
   # This value determines the Home Manager release that your
