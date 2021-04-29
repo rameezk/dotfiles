@@ -5,11 +5,6 @@ let
   homeDirectory = "/home/rameezk";
 
   secrets = import ./secrets/config.nix;
-
-  git-config-personal = pkgs.writeText "~/.config/git/config-personal" ''
-    [user]
-      email = ${secrets.user.personal.emailAddr}
-  '';
 in {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
