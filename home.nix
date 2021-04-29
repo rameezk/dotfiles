@@ -38,7 +38,6 @@ in {
       export EDITOR=vim
 
       # colorscheme
-      theme_gruvbox dark hard
       set -U fish_color_command b8bb26 # fish's default command color is a horrible dark blue, make it a nicer green
 
       # direnv
@@ -101,26 +100,15 @@ in {
 
     };
 
-    plugins = [
-      {
-        name = "fish-gruvbox";
-        src = pkgs.fetchFromGitHub {
-          owner = "Jomik";
-          repo = "fish-gruvbox";
-          rev = "d8c0463518fb95bed8818a1e7fe5da20cffe6fbd";
-          sha256 = "0hkps4ddz99r7m52lwyzidbalrwvi7h2afpawh9yv6a226pjmck7";
-        };
-      }
-      {
-        name = "z";
-        src = pkgs.fetchFromGitHub {
-          owner = "jethrokuan";
-          repo = "z";
-          rev = "d5500284077ebb12c306ea429e74c8d046aef5a0";
-          sha256 = "sha256-I2feYLp+oqVGjtaG5uftG0Lok5ye7G8oefZAMdzAeoo=";
-        };
-      }
-    ];
+    plugins = [{
+      name = "z";
+      src = pkgs.fetchFromGitHub {
+        owner = "jethrokuan";
+        repo = "z";
+        rev = "d5500284077ebb12c306ea429e74c8d046aef5a0";
+        sha256 = "sha256-I2feYLp+oqVGjtaG5uftG0Lok5ye7G8oefZAMdzAeoo=";
+      };
+    }];
   };
 
   # git
