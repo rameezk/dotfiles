@@ -75,6 +75,9 @@ in {
 
       # bat
       cat = "bat";
+
+      # shell
+      "reload!" = ''exec "$SHELL" -l'';
     };
 
     functions = {
@@ -212,6 +215,7 @@ in {
     # git
     git
     git-crypt # encrypting git repos transparently
+    pre-commit # a framework for dealing with git hooks
 
     # cloud
     azure-cli

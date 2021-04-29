@@ -1,0 +1,9 @@
+repos:
+- repo: local
+  hooks:
+    - id: nixfmt
+      name: nixfmt
+      entry: nixfmt
+      language: system
+      files: \.nix$
+      pass_filenames: true
