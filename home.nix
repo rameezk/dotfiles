@@ -79,15 +79,26 @@ in {
         "home-manager generations | tail -n +2 | awk '{ print $5 }' | xargs home-manager remove-generations";
     };
 
-    plugins = [{
-      name = "fish-gruvbox";
-      src = pkgs.fetchFromGitHub {
-        owner = "Jomik";
-        repo = "fish-gruvbox";
-        rev = "d8c0463518fb95bed8818a1e7fe5da20cffe6fbd";
-        sha256 = "0hkps4ddz99r7m52lwyzidbalrwvi7h2afpawh9yv6a226pjmck7";
-      };
-    }];
+    plugins = [
+      {
+        name = "fish-gruvbox";
+        src = pkgs.fetchFromGitHub {
+          owner = "Jomik";
+          repo = "fish-gruvbox";
+          rev = "d8c0463518fb95bed8818a1e7fe5da20cffe6fbd";
+          sha256 = "0hkps4ddz99r7m52lwyzidbalrwvi7h2afpawh9yv6a226pjmck7";
+        };
+      }
+      {
+        name = "z";
+        src = pkgs.fetchFromGitHub {
+          owner = "jethrokuan";
+          repo = "z";
+          rev = "d5500284077ebb12c306ea429e74c8d046aef5a0";
+          sha256 = "sha256-I2feYLp+oqVGjtaG5uftG0Lok5ye7G8oefZAMdzAeoo=";
+        };
+      }
+    ];
   };
 
   # git
