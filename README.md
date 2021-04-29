@@ -19,3 +19,17 @@ Symlink `home.nix` (not sure if symlinking makes sense yet).
 ```sh
 ln -sfv ./home.nix ~/.config/nixpkgs/home.nix
 ```
+
+## Nice to have
+### pre-commit hooks
+This repo is setup for git hooks using the the [pre-commit framework](https://pre-commit.com/). 
+
+Currently, hooks exist to format:
+- *.nix files using NixFmt
+- ./bin/dot file using Python black
+
+To install the hooks, run:
+
+```sh
+pre-commit install
+```

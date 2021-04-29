@@ -78,6 +78,9 @@ in {
 
       # shell
       "reload!" = ''exec "$SHELL" -l'';
+
+      # emacs
+      e = "emacsclient --no-wait";
     };
 
     functions = {
