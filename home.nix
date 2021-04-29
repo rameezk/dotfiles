@@ -233,6 +233,9 @@ in {
 
     # emacs dependencies
     sqlite # needed for org-roam
+
+    # markdown
+    multimarkdown
   ];
 
   # This value determines the Home Manager release that your
