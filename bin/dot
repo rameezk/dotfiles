@@ -4,9 +4,6 @@ import os
 import typer
 
 
-
-
-
 app = typer.Typer()
 dotfiles_dir = "~/.config/dotfiles"
 

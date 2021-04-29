@@ -10,6 +10,6 @@ repos:
     - id: black
       name: black
       entry: black
+      args: ["./bin/dot"]
       language: system
-      files: \.py$
-      pass_filenames: true
+      pass_filenames: false
