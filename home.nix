@@ -67,10 +67,14 @@ in {
 
       #git
       gcm = "git commit -m";
+      gco = "git checkout";
 
       # home-manager
       hm-rm-old-generations =
         "home-manager generations | tail -n +2 | awk '{ print $5 }' | xargs home-manager remove-generations";
+
+      # bat
+      cat = "bat";
     };
 
     functions = {
@@ -95,6 +99,15 @@ in {
                   cd "$chosen_dir"
               end
           end
+        '';
+      };
+
+      clone_e4m_repo = {
+        argumentNames = "repo_url";
+        description = "clone e4m repo to correct directory";
+        body = ''
+          set -l clone_to_path (echo "$repo_url" | sed 's/ssh:\/\/git@${secrets.git.work.e4m_base_url}/\/home\/rameezk\/code/')
+          git clone "$repo_url" "$clone_to_path"
         '';
       };
 
