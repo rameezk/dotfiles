@@ -204,6 +204,11 @@ in {
   # exa
   programs.exa.enable = true;
 
+  programs.emacs = {
+    enable = true;
+    package = pkgs.emacsGcc;
+  };
+
   # Packages
   home.packages = with pkgs; [
     # cli tools
