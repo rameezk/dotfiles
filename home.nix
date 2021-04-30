@@ -141,6 +141,7 @@ in {
       st = "status";
       dc = "diff --cached";
       d = "diff";
+      co = "checkout";
       publish =
         "!git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)";
       delete-branches = ''
@@ -241,6 +242,12 @@ in {
 
     # markdown
     multimarkdown
+
+    # spell checkiing
+    aspell
+    aspellDicts.en
+    aspellDicts.en-computers
+    aspellDicts.en-science
   ];
 
   # This value determines the Home Manager release that your
