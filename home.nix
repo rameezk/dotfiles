@@ -68,6 +68,7 @@ in {
       #git
       gcm = "git commit -m";
       gco = "git checkout";
+      grt = "cd (git rev-parse --show-toplevel)";
 
       # home-manager
       hm-rm-old-generations =
@@ -81,6 +82,11 @@ in {
 
       # emacs
       e = "emacsclient --no-wait";
+
+      # kubernetes
+      k = "kubectl";
+      kc = "kubectx";
+      kn = "kubens";
     };
 
     functions = {
@@ -116,7 +122,6 @@ in {
           git clone "$repo_url" "$clone_to_path"
         '';
       };
-
     };
 
     plugins = [{
@@ -147,6 +152,8 @@ in {
       delete-branches = ''
         !f() { git branch | grep -v "master\|main" | xargs git branch -d; }; f'';
       pr-complete = "!f() { git checkout master && git pull --prune; }; f";
+      generate-ignore =
+        ''!f() { curl -sL "https://www.gitignore.io/api/$1"; }; f'';
     };
     includes = [
       {
@@ -172,7 +179,7 @@ in {
       user = { signingkey = secrets.user.work.gpgFingerprint; };
       commit = { gpgsign = true; };
     };
-    ignores = [ "*~" "*.swp" ];
+    ignores = [ "*~" "*.swp" ".idea/" ];
   };
 
   # vim
