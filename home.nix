@@ -87,6 +87,7 @@ in {
       k = "kubectl";
       kc = "kubectx";
       kn = "kubens";
+      kw = "watch kubectl";
     };
 
     functions = {
