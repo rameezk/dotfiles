@@ -123,6 +123,14 @@ in {
           git clone "$repo_url" "$clone_to_path"
         '';
       };
+
+      mcd = {
+        argumentNames = "directory";
+        description = "create new directory and cd into it";
+        body = ''
+          mkdir -p "$directory" && cd "$directory";
+        '';
+      };
     };
 
     plugins = [{
