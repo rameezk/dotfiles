@@ -131,6 +131,15 @@ in {
           mkdir -p "$directory" && cd "$directory";
         '';
       };
+
+      k-exec-into = {
+        description = "interactively select a pod and shell to exec into";
+        body = ''
+          set -l pod (kubectl get pods --no-headers | awk '{print $1}' | fzf)
+          set -l shell (echo -e "bash\nsh\nzsh\nfish" | fzf)
+          kubectl exec -it $pod -- $shell
+        '';
+      };
     };
 
     plugins = [{
