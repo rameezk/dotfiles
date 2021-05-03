@@ -140,6 +140,20 @@ in {
           kubectl exec -it $pod -- $shell
         '';
       };
+
+      k-delete-pods-with-status = {
+        argumentNames = "pod_status";
+        description = "delete pods with a specific status";
+        body = ''
+          if [ -z "$pod_status" ]
+            echo "Please specify a status"
+            return 1
+          end
+
+          kubectl get pods | grep -i "$pod_status" | awk '{print $1}' | xargs kubectl delete pod
+        '';
+
+      };
     };
 
     plugins = [{
