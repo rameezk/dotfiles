@@ -43,9 +43,6 @@ in {
       # direnv
       eval (direnv hook fish)
 
-      # asdf
-      source ~/.asdf/asdf.fish
-
       # pipx
       set PATH $PATH /home/rameezk/.local/bin
 
