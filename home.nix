@@ -173,6 +173,7 @@ in {
       lg =
         "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
       st = "status";
+      br = "branch";
       dc = "diff --cached";
       d = "diff";
       co = "checkout";
@@ -284,6 +285,12 @@ in {
     aspellDicts.en
     aspellDicts.en-computers
     aspellDicts.en-science
+
+    # lang
+    ## python
+    python39
+    python39Packages.pip
+    python39Packages.pipx
   ];
 
   # This value determines the Home Manager release that your
