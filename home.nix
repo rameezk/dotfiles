@@ -54,6 +54,9 @@ in {
 
       # source proxy
       source ~/.proxyrc
+
+      # Fix gcc lib issues for certain python libs
+      set -x LD_LIBRARY_PATH (nix eval --raw nixpkgs#stdenv.cc.cc.lib)/lib
     '';
 
     shellAbbrs = {
@@ -291,6 +294,7 @@ in {
     # lang
     ## python
     python39
+    stdenv.cc.cc.lib
     python39Packages.pip
     python39Packages.pipx
   ];
