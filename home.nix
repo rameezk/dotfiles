@@ -257,6 +257,7 @@ in {
     fzf # fuzzy file finder
     htop # process manager
     neofetch # nice system info viewer
+    fd # a faster find
 
     # git
     git
@@ -273,6 +274,7 @@ in {
 
     # fish plugins
     fishPlugins.pure
+    fishPlugins.fzf-fish
 
     # emacs dependencies
     sqlite # needed for org-roam
