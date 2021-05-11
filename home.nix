@@ -56,7 +56,7 @@ in {
       source ~/.proxyrc
 
       # Fix gcc lib issues for certain python libs
-      set -x LD_LIBRARY_PATH (nix eval --raw nixpkgs#stdenv.cc.cc.lib)/lib
+      set -x LD_LIBRARY_PATH /nix/store/9ilyrqidrjbqvmnn8ykjc7lygdd86g7q-gcc-10.2.0-lib/lib
     '';
 
     shellAbbrs = {
