@@ -154,6 +154,27 @@ in {
         '';
 
       };
+
+      can_i_haz_internetz_plez = {
+        description = "check if connected to internet";
+        body = ''
+          set -l status_code (curl -s -o /dev/null -w "%{http_code}" https://www.ipecho.net/plain)
+
+          if [ "$status_code" = 200 ]
+            echo "       Yes"
+            echo "  |\---/|
+            | o_o |
+             \_^_/"
+            return 0
+          else
+            echo "       No"
+            echo "  |\---/|
+            | o_o |
+             \_^_/"
+            return 1
+          end
+        '';
+      };
     };
 
     plugins = [{
