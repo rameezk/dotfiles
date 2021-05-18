@@ -233,7 +233,7 @@ in {
       user = { signingkey = secrets.user.work.gpgFingerprint; };
       commit = { gpgsign = true; };
     };
-    ignores = [ "*~" "*.swp" ".idea/" ];
+    ignores = [ "*~" "*.swp" ".idea/" "*.orig" ];
   };
 
   # vim
@@ -318,6 +318,9 @@ in {
     stdenv.cc.cc.lib
     python39Packages.pip
     python39Packages.pipx
+
+    # media
+    ffmpeg
   ];
 
   # This value determines the Home Manager release that your
