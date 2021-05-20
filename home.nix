@@ -321,6 +321,9 @@ in {
 
     # media
     ffmpeg
+
+    # clojure
+    clojure
   ];
 
   # This value determines the Home Manager release that your
