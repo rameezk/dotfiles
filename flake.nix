@@ -8,14 +8,19 @@
       inputs.nixpkgs.follows = "/nixpkgs";
     };
     emacs-overlay.url = "github:nix-community/emacs-overlay/master";
+    nur.url = "github:nix-community/NUR";
   };
 
-  outputs = { self, nixpkgs, home-manager, emacs-overlay, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, emacs-overlay, nur, ... }@inputs: {
     workbook = home-manager.lib.homeManagerConfiguration {
       configuration = { ... }: {
-        nixpkgs.overlays = [ emacs-overlay.overlay ];
+        nixpkgs.overlays = [ emacs-overlay.overlay nur.overlay ];
 
-        imports = [ ./home.nix ];
+        imports = let
+          nur-no-pkgs = import nur {
+            nurpkgs = import nixpkgs { system = "x86_64-linux"; };
+          };
+        in [ nur-no-pkgs.repos.rycee.hmModules.emacs-init ./home.nix ];
       };
 
       system = "x86_64-linux";
