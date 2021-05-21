@@ -17,7 +17,6 @@
     '';
 
     usePackage = {
-
       evil = {
         enable = true;
         config = ''
@@ -25,6 +24,16 @@
         '';
       };
 
+      org = { enable = true; };
+
+      org-roam = {
+        enable = true;
+        hook = [ "(after-init . org-roam-mode)" ];
+        config = ''
+          (setq org-roam-directory "~/Dropbox/DigitalGarden")
+          (setq org-roam-graph-exclude-matcher '("inbox"))
+        '';
+      };
     };
   };
 }
