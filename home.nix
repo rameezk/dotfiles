@@ -6,7 +6,7 @@ let
 
   secrets = import ./secrets/config.nix;
 in {
-  imports = [ "./modules/editors/emacs" ];
+  imports = [ ./modules/editors/emacs ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
