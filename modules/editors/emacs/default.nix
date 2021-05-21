@@ -46,7 +46,7 @@
         config = ''
           (general-evil-setup t)
 
-          ;; keybindings
+          ;; global keybindings
           (general-define-key
             :keymaps '(normal insert visual emacs)
             :prefix "SPC"
@@ -59,6 +59,19 @@
             "nrd" 'org-roam-dailies-capture-today
             "nrD" 'org-roam-dailies-find-today
             "nrf" 'org-roam-find-file)
+        '';
+      };
+
+      nix-mode = {
+        enable = true;
+        mode = [ ''"\\.nix\\'"'' ];
+        # after = [ "company" ];
+        extraPackages = [
+          # pkgs.rnix-lsp
+          pkgs.nixpkgs-fmt
+        ];
+        config = ''
+          (setq nix-nixfmt-bin "${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt")
         '';
       };
 

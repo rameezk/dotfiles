@@ -237,7 +237,7 @@ in {
       user = { signingkey = secrets.user.work.gpgFingerprint; };
       commit = { gpgsign = true; };
     };
-    ignores = [ "*~" "*.swp" ".idea/" "*.orig" ];
+    ignores = [ "*~" "*.swp" ".idea/" "*.orig" ".#*" ];
   };
 
   # vim
