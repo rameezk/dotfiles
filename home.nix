@@ -6,6 +6,8 @@ let
 
   secrets = import ./secrets/config.nix;
 in {
+  # Opt-in to modules by including theme here.
+  #  Is there a better way to do this per machine?
   imports = [ ./modules/editors/emacs ];
 
   # Let Home Manager install and manage itself.

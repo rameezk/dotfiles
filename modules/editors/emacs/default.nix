@@ -2,9 +2,18 @@
 
   programs.emacs = {
     enable = true;
-
     package = pkgs.emacsGcc;
+  };
 
-    init = { enable = true; };
+  programs.emacs.init = {
+    enable = true;
+
+    # Turn on recommended garbage collection settings
+    recommendedGcSettings = true;
+
+    earlyInit = ''
+      ;; Don't blink cursor
+      (blink-cursor-mode 0)
+    '';
   };
 }
