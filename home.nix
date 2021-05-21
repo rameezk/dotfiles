@@ -6,6 +6,8 @@ let
 
   secrets = import ./secrets/config.nix;
 in {
+  imports = [ "./modules/editors/emacs" ];
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -265,11 +267,6 @@ in {
 
   # exa
   programs.exa.enable = true;
-
-  programs.emacs = {
-    enable = true;
-    package = pkgs.emacsGcc;
-  };
 
   # Packages
   home.packages = with pkgs; [
