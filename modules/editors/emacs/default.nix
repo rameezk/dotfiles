@@ -14,6 +14,20 @@
     earlyInit = ''
       ;; Don't blink cursor
       (blink-cursor-mode 0)
+
+      ;; Disable the menu bar
+      (push '(menu-bar-lines . 0) default-frame-alist)
+
+      ;; Disable the tool bar
+      (push '(tool-bar-lines . 0) default-frame-alist)
+
+      ;; Disable vertical scroll bars
+      (push '(vertical-scroll-bars . nil) default-frame-alist)
+    '';
+
+    postlude = ''
+      ;; font
+      (set-face-attribute 'default nil :font "JetbrainsMono Nerd Font" :height 160)
     '';
 
     usePackage = {
