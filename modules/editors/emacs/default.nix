@@ -15,5 +15,16 @@
       ;; Don't blink cursor
       (blink-cursor-mode 0)
     '';
+
+    usePackage = {
+
+      evil = {
+        enable = true;
+        config = ''
+          (evil-mode t)
+        '';
+      };
+
+    };
   };
 }
