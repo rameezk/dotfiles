@@ -65,6 +65,13 @@
         '';
       };
 
+      orderless = {
+        enable = true;
+        config = ''
+          (setq completion-styles '(orderless))
+        '';
+      };
+
       org = { enable = true; };
 
       org-roam = {
@@ -82,10 +89,20 @@
         hook = [ "(org-mode . (lambda () (org-superstar-mode 1)))" ];
       };
 
-      selectrum = {
+      savehist = {
         enable = true;
         config = ''
-          (selectrum-mode +1)
+          (savehist-mode)
+        '';
+      };
+
+      vertico = {
+        enable = true;
+        config = ''
+          (vertico-mode)
+
+          ;; cycle back to top of list when at bottom and vice versa
+          (setq vertico-cycle t)
         '';
       };
 
