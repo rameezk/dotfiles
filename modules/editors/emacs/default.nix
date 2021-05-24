@@ -34,6 +34,8 @@
     '';
 
     usePackage = {
+      consult = { enable = true; };
+
       evil = {
         enable = true;
         config = ''
@@ -74,6 +76,13 @@
         enable = true;
         after = [ "org" ];
         hook = [ "(org-mode . (lambda () (org-superstar-mode 1)))" ];
+      };
+
+      selectrum = {
+        enable = true;
+        config = ''
+          (selectrum-mode +1)
+        '';
       };
 
       which-key = {
