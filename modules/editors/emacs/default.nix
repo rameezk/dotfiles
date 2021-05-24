@@ -40,6 +40,20 @@
     usePackage = {
       consult = { enable = true; };
 
+      dashboard = {
+        enable = true;
+        config = ''
+          (dashboard-setup-startup-hook)
+        '';
+      };
+
+      doom-modeline = {
+        enable = true;
+        config = ''
+          (doom-modeline-mode 1)
+        '';
+      };
+
       evil = {
         enable = true;
         config = ''
