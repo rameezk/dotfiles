@@ -43,23 +43,7 @@
 
       general = {
         enable = true;
-        config = ''
-          (general-evil-setup t)
-
-          ;; global keybindings
-          (general-define-key
-            :keymaps '(normal insert visual emacs)
-            :prefix "SPC"
-            :global-prefix "M-SPC"
-
-            ;; org-roam
-            "n" '(:ignore t :which-key "note")
-            "nr" '(:ignore t :which-key "roam")
-            "nri" 'org-roam-insert
-            "nrd" 'org-roam-dailies-capture-today
-            "nrD" 'org-roam-dailies-find-today
-            "nrf" 'org-roam-find-file)
-        '';
+        config = builtins.readFile ./general-keybindings.el;
       };
 
       nix-mode = {
