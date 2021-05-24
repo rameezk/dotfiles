@@ -26,8 +26,13 @@ def run_command(command: str):
 
 
 @app.command(help="Open dotfiles in $EDITOR")
-def edit():
-    run_command(f"vim $(find {dotfiles_dir} -type f -not -path '*/\.git/*' | fzf)")
+def edit(vim: bool = False):
+    if vim:
+        editor = "vim"
+    else:
+        editor = "emacsclient --no-wait"
+
+    run_command(f"{editor} $(find {dotfiles_dir} -type f -not -path '*/\.git/*' | fzf)")
 
 
 @app.command(help="Rebuild configuration and activate it")
