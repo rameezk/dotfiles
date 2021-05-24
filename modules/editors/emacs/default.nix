@@ -31,6 +31,10 @@
 
       ;; font
       (set-face-attribute 'default nil :font "JetbrainsMono Nerd Font" :height 160)
+
+      ;; start server
+      (load "server")
+      (unless (server-running-p) (server-start))
     '';
 
     usePackage = {

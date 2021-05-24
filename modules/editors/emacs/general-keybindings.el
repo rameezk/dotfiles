@@ -23,3 +23,12 @@
 
   "m" '(:ignore t :which-key "nix")
   "mf" 'nix-format-buffer)
+
+;; org mode keybindings
+(general-define-key
+  :states 'normal
+  :prefix "SPC"
+  :keymaps 'org-mode-map 
+
+  "m" '(:ignore t :which-key "org")
+  "m." 'consult-outline)
