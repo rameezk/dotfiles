@@ -7,6 +7,9 @@
   :prefix "SPC"
   :global-prefix "M-SPC"
 
+  ;; searching
+  "/" 'consult-line
+
   ;; org-roam
   "n" '(:ignore t :which-key "note")
   "nr" '(:ignore t :which-key "roam")
@@ -32,3 +35,9 @@
 
   "m" '(:ignore t :which-key "org")
   "m." 'consult-outline)
+
+
+;; minimap mode keybindings
+(general-define-key
+  :keymaps 'minibuffer-local-map 
+  "M-h" 'backward-kill-word)

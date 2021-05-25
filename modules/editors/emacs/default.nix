@@ -112,9 +112,8 @@
 
       vertico = {
         enable = true;
-        init = "(vertico-mode)";
         config = ''
-          ;;(vertico-mode)
+          (vertico-mode)
 
           ;; cycle back to top of list when at bottom and vice versa
           (setq vertico-cycle t)
