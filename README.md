@@ -33,3 +33,6 @@ To install the hooks, run:
 ```sh
 pre-commit install
 ```
+
+## Emacs
+If you're interested in perusing my Emacs config you can do so [here](modules/editors/emacs/config/emacs.org).
