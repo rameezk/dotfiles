@@ -159,4 +159,26 @@
         (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'rkn/org-babel-tangle-dont-ask
 						     'run-at-end 'only-in-org-mode)))
       #+end_src
+*** Better org-mode bullets
+    I use =org-superstar= to make a bullets and sections look less ugly.
+    #+begin_src emacs-lisp
+      (use-package org-superstar
+	:config
+	(setq org-superstar-leading-bullet ?\s
+	      org-superstar-leading-fallback ?\s
+	      org-hide-leading-stars nil
+	      org-superstar-todo-bullet-alist
+	      '(("TODO" . 9744)
+		("[ ]"  . 9744)
+		("DONE" . 9745)
+		("[X]"  . 9745)))
+	:hook
+	(org-mode . (lambda () (org-superstar-mode 1)))
+	:after (org))
+    #+end_src
 
+*** org-mode
+    I use org-mode for managing this config and for tending to my Digital Garden.
+    #+begin_src emacs-lisp
+      (use-package org)
+    #+end_src

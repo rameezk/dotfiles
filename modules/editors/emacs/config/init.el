@@ -86,3 +86,19 @@
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'rkn/org-babel-tangle-dont-ask
 					     'run-at-end 'only-in-org-mode)))
+
+(use-package org-superstar
+  :config
+  (setq org-superstar-leading-bullet ?\s
+	org-superstar-leading-fallback ?\s
+	org-hide-leading-stars nil
+	org-superstar-todo-bullet-alist
+	'(("TODO" . 9744)
+	  ("[ ]"  . 9744)
+	  ("DONE" . 9745)
+	  ("[X]"  . 9745)))
+  :hook
+  (org-mode . (lambda () (org-superstar-mode 1)))
+  :after (org))
+
+(use-package org)
