@@ -1,0 +1,78 @@
+#+title Rameez's Emacs Config
+#+property: header-args:emacs-lisp :tangle ~/.config/dotfiles/modules/editors/emacs/config/init.el
+
+* Package Management
+** straight.el
+   I use [[https://github.com/raxod502/straight.el][straight.el]] to manage my packages.
+
+   We bootstrap straight.el with the following.
+   #+begin_src emacs-lisp
+      (defvar bootstrap-version)
+      (let ((bootstrap-file
+	     (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+	    (bootstrap-version 5))
+	(unless (file-exists-p bootstrap-file)
+	  (with-current-buffer
+	      (url-retrieve-synchronously
+	       "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+	       'silent 'inhibit-cookies)
+	    (goto-char (point-max))
+	    (eval-print-last-sexp)))
+	(load bootstrap-file nil 'nomessage))
+    #+end_src
+
+    I use the =use-package= straight integration to make switching back to =use-package= easier. First we install =use-package= with straight.el.
+    #+begin_src emacs-lisp
+      (straight-use-package 'use-package)
+    #+end_src
+
+    Then enable the straight.el use-package integration.
+    #+begin_src emacs-lisp
+      (setq straight-use-package-by-default t)
+    #+end_src
+
+    Now you can use =use-package= as you normally would.
+   
+* Interface
+** Font
+   #+begin_src emacs-lisp
+     (set-face-attribute 'default nil :font "JetbrainsMono Nerd Font" :height 160)
+   #+end_src
+* Keybindings
+** Evil
+   I grew up on Vim keybindings, so Evil at heart.
+   #+begin_src emacs-lisp
+     (use-package evil
+       :straight t
+       :init
+       (setq evil-want-integration t)
+       (setq evil-want-keybinding nil)
+       :config
+       (evil-mode t))
+   #+end_src
+* Languages
+** Org
+*** Babel
+**** Tangling
+***** Languages to tangle
+     In order to tangle certain languages we code blocks we need to define the following:
+     #+begin_src emacs-lisp
+       (org-babel-do-load-languages
+	'org-babel-load-languages
+	'((emacs-lisp . t)))
+     #+end_src
+
+***** Auto-tangling
+      To enable auto-tangling on save we define a custom function.
+      #+begin_src emacs-lisp
+        (defun rkn/org-babel-tangle-dont-ask ()
+	 (when (string-equal (buffer-file-name) (expand-file-name "~/.config/dotfiles/modules/editors/emacs/config/emacs.org"))
+	   (let ((org-confirm-babel-evaluate nil))
+	     (org-babel-tangle))))
+      #+end_src
+
+      We then invoke this function as an =org-mode-hook=.
+      #+begin_src emacs-lisp
+        (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'rkn/org-babel-tangle-dont-ask
+						     'run-at-end 'only-in-org-mode)))
+      #+end_src
