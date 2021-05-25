@@ -81,7 +81,16 @@
 	:config
 	(doom-modeline-mode 1))
     #+end_src
-    
+** Keybinding panel
+*** which-key
+    which-key is great for getting an overview of what keybindings are available.
+    #+begin_src emacs-lisp
+      (use-package which-key
+	:init (which-key-mode)
+	:diminish which-key-mode
+	:config
+	(setq which-key-idle-delay 0.3))
+    #+end_src
 ** Warnings
 *** Native-comp
    With native comp enabled there tends to be a lot of annoying warnings. To not go insane I'll turn this off.
@@ -89,7 +98,8 @@
     (setq comp-async-report-warnings-errors nil)
   #+end_src
 * Keybindings
-** Evil
+** Setup
+*** Evil
    I grew up on Vim keybindings, so Evil at heart.
    #+begin_src emacs-lisp
      (use-package evil
@@ -99,6 +109,65 @@
        :config
        (evil-mode t))
    #+end_src
+*** General
+   I use general to define various keymaps based on different modes. I also define a handy function to define various leader key mappings.
+
+   #+begin_src emacs-lisp
+	       (use-package general
+		 :config
+		 (general-evil-setup t)
+
+		 (general-create-definer rkn/keymap-define-global
+		   :keymaps '(normal insert visual emacs)
+		   :prefix "SPC"
+		   :global-prefix "M-SPC")
+
+     (general-create-definer rkn/keymap-define-map
+	 :states '(normal)
+	 :prefix "SPC"
+	 :global-prefix "M-SPC"))
+   #+end_src
+** Keymaps
+*** Global
+**** File
+     Handy keymaps for handling files.
+    #+begin_src emacs-lisp
+      (rkn/keymap-define-global
+	;; grep current file quickly
+	"/" 'consult-line)
+    #+end_src
+**** Buffers
+     Quick keybindings for dealing with buffers.
+    #+begin_src emacs-lisp
+      (rkn/keymap-define-global
+	"b" '(:ignore t :which-key "buffer")
+	"bb" 'consult-buffer)
+    #+end_src
+**** Notes
+    Dealing with notes. This includes org-roam only for now.
+    #+begin_src emacs-lisp
+      (rkn/keymap-define-global
+	"n" '(:ignore t :which-key "note")
+	"nr" '(:ignore t :which-key "roam")
+	"nrf" 'org-roam-find-file
+	"nri" 'org-roam-insert
+	"nrd" 'org-roam-dailies-capture-today
+	"nrD" 'org-roam-dailies-find-today)
+    #+end_src
+*** Org-Mode
+    #+begin_src emacs-lisp
+      (rkn/keymap-define-map
+       :keymaps 'org-mode-map 
+       "m" '(:ignore t :which-key "org")
+       "m SPC" 'consult-outline)
+    #+end_src
+*** Nix-Mode
+    #+begin_src emacs-lisp
+      (rkn/keymap-define-map
+       :keymaps 'nix-mode-map 
+       "m" '(:ignore t :which-key "nix")
+       "m f" 'nix-format-buffer)
+    #+end_src
 * Applications
 ** Completions
 *** Vertico
@@ -133,7 +202,21 @@
     #+begin_src emacs-lisp
       (use-package consult)
     #+end_src
+** Spell Checking
+*** aspell
+    Set ispell to use the aspell binary.
+    #+begin_src emacs-lisp
+      (setq ispell-program-name "aspell")
+    #+end_src
+    
 * Languages
+** Nix
+   #+begin_src emacs-lisp
+     (use-package nix-mode
+       :mode "\\.nix\\'"
+       :config
+       (setq nix-nixfmt-bin "/home/rameezk/.nix-profile/bin/nixfmt"))
+   #+end_src
 ** Org
 *** Babel
 **** Tangling
@@ -177,8 +260,42 @@
 	:after (org))
     #+end_src
 
-*** org-mode
+*** Org-Mode
     I use org-mode for managing this config and for tending to my Digital Garden.
     #+begin_src emacs-lisp
       (use-package org)
+    #+end_src
+*** Org-Roam
+    My Digital Garden (or second brain, if you will) is powered by org-roam.
+    #+begin_src emacs-lisp
+      (use-package org-roam
+	:hook 
+	(after-init . org-roam-mode)
+	:custom
+	(org-roam-directory "~/Dropbox/DigitalGarden")
+	:config
+	(setq org-roam-graph-exclude-matcher '("inbox")))
+    #+end_src
+**** Capture Templates
+***** Dailies
+      I use the dailies feature of org-roam to capture quick, journal like entries.
+      #+begin_src emacs-lisp
+	(setq org-roam-dailies-capture-templates
+	      '(("d"
+		 "daily"
+		 entry
+		 (function org-roam-capture--get-point)
+		 "* %<%H:%M> %?"
+		 :file-name "daily/%<%Y-%m-%d>"
+		 :head "#+TITLE: Daily - %<%A %Y-%m-%d>\n\n* %<%A> %<%Y-%m-%d>")))
+      #+end_src
+*** Headings Startup Visibility
+    Sometimes my org file are too long and I’d like to open them with headings collapsed.
+    #+begin_src emacs-lisp
+      (setq org-startup-folded t)
+    #+end_src
+*** Spell checking
+    Enable spell checking in org-mode.
+    #+begin_src emacs-lisp
+      (add-hook 'org-mode-hook 'flyspell-mode)
     #+end_src

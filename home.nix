@@ -274,6 +274,9 @@ in {
   home.packages = with pkgs; [
     nixUnstable
 
+    # nix
+    nixfmt
+
     # cli tools
     ripgrep # faster grepping
     tmux # terminal multiplexor

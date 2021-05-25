@@ -46,6 +46,12 @@
   :config
   (doom-modeline-mode 1))
 
+(use-package which-key
+  :init (which-key-mode)
+  :diminish which-key-mode
+  :config
+  (setq which-key-idle-delay 0.3))
+
 (setq comp-async-report-warnings-errors nil)
 
 (use-package evil
@@ -54,6 +60,46 @@
   (setq evil-want-keybinding nil)
   :config
   (evil-mode t))
+
+(use-package general
+	    :config
+	    (general-evil-setup t)
+
+	    (general-create-definer rkn/keymap-define-global
+	      :keymaps '(normal insert visual emacs)
+	      :prefix "SPC"
+	      :global-prefix "M-SPC")
+
+(general-create-definer rkn/keymap-define-map
+    :states '(normal)
+    :prefix "SPC"
+    :global-prefix "M-SPC"))
+
+(rkn/keymap-define-global
+  ;; grep current file quickly
+  "/" 'consult-line)
+
+(rkn/keymap-define-global
+  "b" '(:ignore t :which-key "buffer")
+  "bb" 'consult-buffer)
+
+(rkn/keymap-define-global
+  "n" '(:ignore t :which-key "note")
+  "nr" '(:ignore t :which-key "roam")
+  "nrf" 'org-roam-find-file
+  "nri" 'org-roam-insert
+  "nrd" 'org-roam-dailies-capture-today
+  "nrD" 'org-roam-dailies-find-today)
+
+(rkn/keymap-define-map
+ :keymaps 'org-mode-map 
+ "m" '(:ignore t :which-key "org")
+ "m SPC" 'consult-outline)
+
+(rkn/keymap-define-map
+ :keymaps 'nix-mode-map 
+ "m" '(:ignore t :which-key "nix")
+ "m f" 'nix-format-buffer)
 
 (use-package vertico
   :init
@@ -74,6 +120,13 @@
   (savehist-mode))
 
 (use-package consult)
+
+(setq ispell-program-name "aspell")
+
+(use-package nix-mode
+  :mode "\\.nix\\'"
+  :config
+  (setq nix-nixfmt-bin "/home/rameezk/.nix-profile/bin/nixfmt"))
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -102,3 +155,24 @@
   :after (org))
 
 (use-package org)
+
+(use-package org-roam
+  :hook 
+  (after-init . org-roam-mode)
+  :custom
+  (org-roam-directory "~/Dropbox/DigitalGarden")
+  :config
+  (setq org-roam-graph-exclude-matcher '("inbox")))
+
+(setq org-roam-dailies-capture-templates
+      '(("d"
+	 "daily"
+	 entry
+	 (function org-roam-capture--get-point)
+	 "* %<%H:%M> %?"
+	 :file-name "daily/%<%Y-%m-%d>"
+	 :head "#+TITLE: Daily - %<%A %Y-%m-%d>\n\n* %<%A> %<%Y-%m-%d>")))
+
+(setq org-startup-folded t)
+
+(add-hook 'org-mode-hook 'flyspell-mode)
