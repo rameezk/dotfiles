@@ -40,6 +40,26 @@
     Now you can use =use-package= as you normally would.
    
 * Interface
+** Startup Message
+   Disable startup message.
+   #+begin_src emacs-lisp
+     (setq inhibit-startup-message t)
+   #+end_src
+** Scrollbar
+   Disable the scrollbar
+   #+begin_src emacs-lisp
+     (scroll-bar-mode -1)
+   #+end_src
+** Toolbar
+   Disable the toolbar
+   #+begin_src emacs-lisp
+     (tool-bar-mode -1)
+   #+end_src
+** Menu bar
+   Disable the menu bar.
+   #+begin_src emacs-lisp
+     (menu-bar-mode -1)
+   #+end_src
 ** Font
    #+begin_src emacs-lisp
      (set-face-attribute 'default nil :font "JetbrainsMono Nerd Font" :height 160)
@@ -97,6 +117,7 @@
   #+begin_src emacs-lisp
     (setq comp-async-report-warnings-errors nil)
   #+end_src
+
 * Keybindings
 ** Setup
 *** Evil
@@ -108,6 +129,15 @@
        (setq evil-want-keybinding nil)
        :config
        (evil-mode t))
+   #+end_src
+
+   We also install =evil-collection= so other modes in Emacs work too. These include magit, calendar etc.
+   #+begin_src emacs-lisp
+     (use-package evil-collection
+       :after evil
+       :ensure t
+       :config
+       (evil-collection-init))
    #+end_src
 *** General
    I use general to define various keymaps based on different modes. I also define a handy function to define various leader key mappings.
@@ -135,6 +165,23 @@
       (rkn/keymap-define-global
 	;; grep current file quickly
 	"/" 'consult-line)
+    #+end_src
+**** Git
+     Git operations
+    #+begin_src emacs-lisp
+      (rkn/keymap-define-global
+	;; grep current file quickly
+	"g" '(:ignore t :which-key "git")
+	"g g" 'magit-status)
+    #+end_src
+**** Projects
+     Handing switching between projects, finding files in projects etc.
+    #+begin_src emacs-lisp
+      (rkn/keymap-define-global
+	;; grep current file quickly
+	"p" '(:ignore t :which-key "project")
+	"p p" 'projectile-switch-project
+	"SPC" 'projectile-find-file)
     #+end_src
 **** Buffers
      Quick keybindings for dealing with buffers.
@@ -208,7 +255,26 @@
     #+begin_src emacs-lisp
       (setq ispell-program-name "aspell")
     #+end_src
-    
+** Projects
+*** Projectile
+    For jumping between git projects quickly.
+    #+begin_src emacs-lisp
+      (use-package projectile
+	:diminish projectile-mode
+	:config
+	(projectile-mode))
+    #+end_src
+** VCS
+*** Git
+**** Magit
+     #+begin_src emacs-lisp
+       (use-package magit)
+     #+end_src
+**** GPG
+     Allow emacs to ask for GPG password.
+     #+begin_src emacs-lisp
+       (setq epa-pinentry-mode 'loopback)
+     #+end_src
 * Languages
 ** Nix
    #+begin_src emacs-lisp

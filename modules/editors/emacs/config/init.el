@@ -17,6 +17,14 @@
 
 (setq straight-use-package-by-default t)
 
+(setq inhibit-startup-message t)
+
+(scroll-bar-mode -1)
+
+(tool-bar-mode -1)
+
+(menu-bar-mode -1)
+
 (set-face-attribute 'default nil :font "JetbrainsMono Nerd Font" :height 160)
 
 (use-package doom-themes
@@ -61,6 +69,12 @@
   :config
   (evil-mode t))
 
+(use-package evil-collection
+  :after evil
+  :ensure t
+  :config
+  (evil-collection-init))
+
 (use-package general
 	    :config
 	    (general-evil-setup t)
@@ -78,6 +92,17 @@
 (rkn/keymap-define-global
   ;; grep current file quickly
   "/" 'consult-line)
+
+(rkn/keymap-define-global
+  ;; grep current file quickly
+  "g" '(:ignore t :which-key "git")
+  "g g" 'magit-status)
+
+(rkn/keymap-define-global
+  ;; grep current file quickly
+  "p" '(:ignore t :which-key "project")
+  "p p" 'projectile-switch-project
+  "SPC" 'projectile-find-file)
 
 (rkn/keymap-define-global
   "b" '(:ignore t :which-key "buffer")
@@ -122,6 +147,15 @@
 (use-package consult)
 
 (setq ispell-program-name "aspell")
+
+(use-package projectile
+  :diminish projectile-mode
+  :config
+  (projectile-mode))
+
+(use-package magit)
+
+(setq epa-pinentry-mode 'loopback)
 
 (use-package nix-mode
   :mode "\\.nix\\'"
