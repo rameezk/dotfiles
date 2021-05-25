@@ -1,3 +1,5 @@
+(server-start)
+
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -13,7 +15,65 @@
 
 (straight-use-package 'use-package)
 
+(setq straight-use-package-by-default t)
+
 (set-face-attribute 'default nil :font "JetbrainsMono Nerd Font" :height 160)
+
+(use-package doom-themes
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+	doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  ;;(load-theme 'doom-gruvbox t)
+
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))
+
+(use-package zenburn-theme
+  :config
+  (setq zenburn-use-variable-pitch t)
+;; scale headings in org-mode
+(setq zenburn-scale-org-headlines t)
+;; scale headings in outline-mode
+(setq zenburn-scale-outline-headlines t)
+
+;; enable theme
+(load-theme 'zenburn t))
+
+(use-package doom-modeline
+  :config
+  (doom-modeline-mode 1))
+
+(setq comp-async-report-warnings-errors nil)
+
+(use-package evil
+  :init
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
+  :config
+  (evil-mode t))
+
+(use-package vertico
+  :init
+  (vertico-mode)
+
+  ;; Wrap around list
+  (setq vertico-cycle t)
+  )
+
+(use-package orderless
+  :init
+  (setq completion-styles '(orderless)
+	completion-category-defaults nil
+	completion-category-overrides '((file (styles . (partial-completion))))))
+
+(use-package savehist
+  :init
+  (savehist-mode))
+
+(use-package consult)
 
 (org-babel-do-load-languages
  'org-babel-load-languages
