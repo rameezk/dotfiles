@@ -75,6 +75,10 @@
   :config
   (evil-collection-init))
 
+(use-package evil-commentary
+  :config
+  (evil-commentary-mode))
+
 (use-package general
 	    :config
 	    (general-evil-setup t)
@@ -89,13 +93,20 @@
     :prefix "SPC"
     :global-prefix "M-SPC"))
 
+(defun rkn/reload-emacs-config()
+    (interactive)
+    (load-file user-init-file))
+
 (rkn/keymap-define-global
   ;; grep current file quickly
   "/" 'consult-line
 
   "f" '(:ignore t :which-key "file")
   "f d" '(:ignore t :which-key "dot")
-  "f d e" '((lambda() (interactive)(find-file "~/.config/dotfiles/modules/editors/emacs/config/emacs.org")) :which-key "dot-edit"))
+  "f d e" '((lambda() (interactive)(find-file "~/.config/dotfiles/modules/editors/emacs/config/emacs.org")) :which-key "dot-edit")
+  "f d i" '((lambda() (interactive)(find-file user-init-file)) :which-key "dot-edit")
+  "f d r" '((lambda() (interactive)(rkn/reload-emacs-config)) :which-key "reload-emacs-config")
+  "f d R" '((lambda() (interactive)(shell-command "dot rebuild")(rkn/reload-emacs-config)) :which-key "reload-dotfiles"))
 
 (rkn/keymap-define-global
   ;; grep current file quickly
