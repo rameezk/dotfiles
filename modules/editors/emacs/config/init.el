@@ -235,7 +235,7 @@
 (setq org-roam-dailies-capture-templates
       '(("d"
 	 "daily"
-	 entry
+	 plain
 	 (function org-roam-capture--get-point)
 	 "** %<%H:%M> %?"
 	 :file-name "daily/%<%Y-%m-%d>"
