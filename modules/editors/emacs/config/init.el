@@ -120,6 +120,9 @@
   "nrd" 'org-roam-dailies-capture-today
   "nrD" 'org-roam-dailies-find-today)
 
+(general-define-key
+ "C-SPC" 'company-complete)
+
 (rkn/keymap-define-map
  :keymaps 'org-mode-map 
  "m" '(:ignore t :which-key "org")
@@ -149,6 +152,10 @@
   (savehist-mode))
 
 (use-package consult)
+
+(use-package company
+  :config
+  (global-company-mode))
 
 (setq ispell-program-name "aspell")
 
