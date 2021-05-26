@@ -401,7 +401,7 @@
 		 "daily"
 		 entry
 		 (function org-roam-capture--get-point)
-		 "* %<%H:%M> %?"
+		 "** %<%H:%M> %?"
 		 :file-name "daily/%<%Y-%m-%d>"
 		 :head "#+TITLE: Daily - %<%A %Y-%m-%d>\n\n* %<%A> %<%Y-%m-%d>")))
       #+end_src
