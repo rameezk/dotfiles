@@ -233,3 +233,5 @@
 (setq org-startup-folded t)
 
 (add-hook 'org-mode-hook 'flyspell-mode)
+
+(setq bookmark-fontify nil)

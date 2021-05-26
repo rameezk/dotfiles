@@ -401,3 +401,8 @@
     #+begin_src emacs-lisp
       (add-hook 'org-mode-hook 'flyspell-mode)
     #+end_src
+*** Fix stupid bookmark-fontify
+    Sometimes my org-capture's would have an ugly coloring.
+    #+begin_src emacs-lisp
+      (setq bookmark-fontify nil)
+    #+end_src
