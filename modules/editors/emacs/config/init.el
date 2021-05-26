@@ -91,7 +91,11 @@
 
 (rkn/keymap-define-global
   ;; grep current file quickly
-  "/" 'consult-line)
+  "/" 'consult-line
+
+  "f" '(:ignore t :which-key "file")
+  "f d" '(:ignore t :which-key "dot")
+  "f d e" '((lambda() (interactive)(find-file "~/.config/dotfiles/modules/editors/emacs/config/emacs.org")) :which-key "dot-edit"))
 
 (rkn/keymap-define-global
   ;; grep current file quickly
@@ -148,6 +152,10 @@
 
 (setq ispell-program-name "aspell")
 
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
+
 (use-package projectile
   :diminish projectile-mode
   :config
@@ -156,6 +164,14 @@
 (use-package magit)
 
 (setq epa-pinentry-mode 'loopback)
+
+(use-package clojure-mode
+  :after (flycheck-clj-kondo)
+  :ensure t
+  :config
+  (require 'flycheck-clj-kondo))
+
+(use-package flycheck-clj-kondo)
 
 (use-package nix-mode
   :mode "\\.nix\\'"

@@ -164,7 +164,11 @@
     #+begin_src emacs-lisp
       (rkn/keymap-define-global
 	;; grep current file quickly
-	"/" 'consult-line)
+	"/" 'consult-line
+
+	"f" '(:ignore t :which-key "file")
+	"f d" '(:ignore t :which-key "dot")
+	"f d e" '((lambda() (interactive)(find-file "~/.config/dotfiles/modules/editors/emacs/config/emacs.org")) :which-key "dot-edit"))
     #+end_src
 **** Git
      Git operations
@@ -255,6 +259,13 @@
     #+begin_src emacs-lisp
       (setq ispell-program-name "aspell")
     #+end_src
+** Syntax Checking
+*** Flycheck
+    #+begin_src emacs-lisp
+      (use-package flycheck
+	:ensure t
+	:init (global-flycheck-mode))
+    #+end_src
 ** Projects
 *** Projectile
     For jumping between git projects quickly.
@@ -276,6 +287,19 @@
        (setq epa-pinentry-mode 'loopback)
      #+end_src
 * Languages
+** Clojure
+*** Clojure-Mode
+    #+begin_src emacs-lisp
+      (use-package clojure-mode
+        :after (flycheck-clj-kondo)
+	:ensure t
+	:config
+	(require 'flycheck-clj-kondo))
+    #+end_src
+*** clj-kondo
+    #+begin_src emacs-lisp
+      (use-package flycheck-clj-kondo)
+    #+end_src
 ** Nix
    #+begin_src emacs-lisp
      (use-package nix-mode

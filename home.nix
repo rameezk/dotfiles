@@ -328,6 +328,7 @@ in {
 
     # clojure
     clojure
+    clj-kondo
   ];
 
   # This value determines the Home Manager release that your
