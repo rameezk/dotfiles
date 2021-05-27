@@ -67,7 +67,9 @@
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
   :config
-  (evil-mode t))
+  (evil-mode t)
+  (with-eval-after-load 'evil-maps
+    (define-key evil-motion-state-map (kbd "RET") nil)))
 
 (use-package evil-collection
   :after evil
@@ -246,3 +248,7 @@
 (add-hook 'org-mode-hook 'flyspell-mode)
 
 (setq bookmark-fontify nil)
+
+(use-package olivetti)
+
+(setq org-return-follows-link t)

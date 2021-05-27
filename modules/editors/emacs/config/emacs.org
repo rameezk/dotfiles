@@ -128,7 +128,9 @@
        (setq evil-want-integration t)
        (setq evil-want-keybinding nil)
        :config
-       (evil-mode t))
+       (evil-mode t)
+       (with-eval-after-load 'evil-maps
+	 (define-key evil-motion-state-map (kbd "RET") nil)))
    #+end_src
 
    We also install =evil-collection= so other modes in Emacs work too. These include magit, calendar etc.
@@ -419,4 +421,13 @@
     Sometimes my org-capture's would have an ugly coloring.
     #+begin_src emacs-lisp
       (setq bookmark-fontify nil)
+    #+end_src
+*** Centre org-mode for a nice writing experience
+    I use Olivetti for this
+    #+begin_src emacs-lisp
+      (use-package olivetti)
+    #+end_src
+*** Allow the enter key to follow links
+    #+begin_src emacs-lisp
+      (setq org-return-follows-link t)
     #+end_src
