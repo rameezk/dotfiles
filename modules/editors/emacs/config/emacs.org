@@ -121,106 +121,118 @@
 * Keybindings
 ** Setup
 *** Evil
-   I grew up on Vim keybindings, so Evil at heart.
-   #+begin_src emacs-lisp
-     (use-package evil
-       :init
-       (setq evil-want-integration t)
-       (setq evil-want-keybinding nil)
-       :config
-       (evil-mode t)
-       (with-eval-after-load 'evil-maps
-	 (define-key evil-motion-state-map (kbd "RET") nil)))
-   #+end_src
+    I grew up on Vim keybindings, so Evil at heart.
+    #+begin_src emacs-lisp
+      (use-package evil
+	:after (undo-tree)
+	:init
+	(setq evil-want-integration t)
+	(setq evil-want-keybinding nil)
+	:config
+	(evil-mode t)
+	(with-eval-after-load 'evil-maps
+	  (define-key evil-motion-state-map (kbd "RET") nil)))
+    #+end_src
 
-   We also install =evil-collection= so other modes in Emacs work too. These include magit, calendar etc.
-   #+begin_src emacs-lisp
-     (use-package evil-collection
-       :after evil
-       :ensure t
-       :config
-       (evil-collection-init))
-   #+end_src
+    We also install =evil-collection= so other modes in Emacs work too. These include magit, calendar etc.
+    #+begin_src emacs-lisp
+      (use-package evil-collection
+	:after evil
+	:ensure t
+	:config
+	(evil-collection-init))
+    #+end_src
 
-   =evil-commentary= provides a simular =gcc= keybinding as in Vim.
-   #+begin_src emacs-lisp
-     (use-package evil-commentary
-       :config
-       (evil-commentary-mode))
-   #+end_src
+    =evil-commentary= provides a simular =gcc= keybinding as in Vim.
+    #+begin_src emacs-lisp
+      (use-package evil-commentary
+	:config
+	(evil-commentary-mode))
+    #+end_src
+
+    For undo/redo to work nicely with Evil mode we use =undo-tree=.
+    #+begin_src emacs-lisp
+      (use-package undo-tree
+	:ensure t
+	:after evil
+	:diminish
+	:config
+	(evil-set-undo-system 'undo-tree)
+	(global-undo-tree-mode 1))   
+    #+end_src
 *** General
-   I use general to define various keymaps based on different modes. I also define a handy function to define various leader key mappings.
+    I use general to define various keymaps based on different modes. I also define a handy function to define various leader key mappings.
 
-   #+begin_src emacs-lisp
-	       (use-package general
-		 :config
-		 (general-evil-setup t)
+    #+begin_src emacs-lisp
+      (use-package general
+	:config
+	(general-evil-setup t)
 
-		 (general-create-definer rkn/keymap-define-global
-		   :keymaps '(normal insert visual emacs)
-		   :prefix "SPC"
-		   :global-prefix "M-SPC")
+	(general-create-definer rkn/keymap-define-global
+	  :keymaps '(normal insert visual emacs)
+	  :prefix "SPC"
+	  :global-prefix "M-SPC")
 
-     (general-create-definer rkn/keymap-define-map
-	 :states '(normal)
-	 :prefix "SPC"
-	 :global-prefix "M-SPC"))
-   #+end_src
+	(general-create-definer rkn/keymap-define-map
+	  :states '(normal)
+	  :prefix "SPC"
+	  :global-prefix "M-SPC"))
+    #+end_src
 ** Keymaps
 *** Global
 **** File
      Handy keymaps for handling files.
-    #+begin_src emacs-lisp
-      (defun rkn/reload-emacs-config()
-	  (interactive)
-	  (load-file user-init-file))
+     #+begin_src emacs-lisp
+       (defun rkn/reload-emacs-config()
+	 (interactive)
+	 (load-file user-init-file))
 
-      (rkn/keymap-define-global
-	;; grep current file quickly
-	"/" 'consult-line
+       (rkn/keymap-define-global
+	 ;; grep current file quickly
+	 "/" 'consult-line
 
-	"f" '(:ignore t :which-key "file")
-	"f d" '(:ignore t :which-key "dot")
-	"f d e" '((lambda() (interactive)(find-file "~/.config/dotfiles/modules/editors/emacs/config/emacs.org")) :which-key "dot-edit")
-	"f d i" '((lambda() (interactive)(find-file user-init-file)) :which-key "dot-edit")
-	"f d r" '((lambda() (interactive)(rkn/reload-emacs-config)) :which-key "reload-emacs-config")
-	"f d R" '((lambda() (interactive)(shell-command "dot rebuild")(rkn/reload-emacs-config)) :which-key "reload-dotfiles"))
-    #+end_src
+	 "f" '(:ignore t :which-key "file")
+	 "f d" '(:ignore t :which-key "dot")
+	 "f d e" '((lambda() (interactive)(find-file "~/.config/dotfiles/modules/editors/emacs/config/emacs.org")) :which-key "dot-edit")
+	 "f d i" '((lambda() (interactive)(find-file user-init-file)) :which-key "dot-edit")
+	 "f d r" '((lambda() (interactive)(rkn/reload-emacs-config)) :which-key "reload-emacs-config")
+	 "f d R" '((lambda() (interactive)(shell-command "dot rebuild")(rkn/reload-emacs-config)) :which-key "reload-dotfiles"))
+     #+end_src
 **** Git
      Git operations
-    #+begin_src emacs-lisp
-      (rkn/keymap-define-global
-	;; grep current file quickly
-	"g" '(:ignore t :which-key "git")
-	"g g" 'magit-status)
-    #+end_src
+     #+begin_src emacs-lisp
+       (rkn/keymap-define-global
+	 ;; grep current file quickly
+	 "g" '(:ignore t :which-key "git")
+	 "g g" 'magit-status)
+     #+end_src
 **** Projects
      Handing switching between projects, finding files in projects etc.
-    #+begin_src emacs-lisp
-      (rkn/keymap-define-global
-	;; grep current file quickly
-	"p" '(:ignore t :which-key "project")
-	"p p" 'projectile-switch-project
-	"SPC" 'projectile-find-file)
-    #+end_src
+     #+begin_src emacs-lisp
+       (rkn/keymap-define-global
+	 ;; grep current file quickly
+	 "p" '(:ignore t :which-key "project")
+	 "p p" 'projectile-switch-project
+	 "SPC" 'projectile-find-file)
+     #+end_src
 **** Buffers
      Quick keybindings for dealing with buffers.
-    #+begin_src emacs-lisp
-      (rkn/keymap-define-global
-	"b" '(:ignore t :which-key "buffer")
-	"bb" 'consult-buffer)
-    #+end_src
+     #+begin_src emacs-lisp
+       (rkn/keymap-define-global
+	 "b" '(:ignore t :which-key "buffer")
+	 "bb" 'consult-buffer)
+     #+end_src
 **** Notes
-    Dealing with notes. This includes org-roam only for now.
-    #+begin_src emacs-lisp
-      (rkn/keymap-define-global
-	"n" '(:ignore t :which-key "note")
-	"nr" '(:ignore t :which-key "roam")
-	"nrf" 'org-roam-find-file
-	"nri" 'org-roam-insert
-	"nrd" 'org-roam-dailies-capture-today
-	"nrD" 'org-roam-dailies-find-today)
-    #+end_src
+     Dealing with notes. This includes org-roam only for now.
+     #+begin_src emacs-lisp
+       (rkn/keymap-define-global
+	 "n" '(:ignore t :which-key "note")
+	 "nr" '(:ignore t :which-key "roam")
+	 "nrf" 'org-roam-find-file
+	 "nri" 'org-roam-insert
+	 "nrd" 'org-roam-dailies-capture-today
+	 "nrD" 'org-roam-dailies-find-today)
+     #+end_src
 **** Company
      #+begin_src emacs-lisp
        (general-define-key
@@ -229,16 +241,16 @@
 *** Org-Mode
     #+begin_src emacs-lisp
       (rkn/keymap-define-map
-       :keymaps 'org-mode-map 
-       "m" '(:ignore t :which-key "org")
-       "m SPC" 'consult-outline)
+	:keymaps 'org-mode-map 
+	"m" '(:ignore t :which-key "org")
+	"m SPC" 'consult-outline)
     #+end_src
 *** Nix-Mode
     #+begin_src emacs-lisp
       (rkn/keymap-define-map
-       :keymaps 'nix-mode-map 
-       "m" '(:ignore t :which-key "nix")
-       "m f" 'nix-format-buffer)
+	:keymaps 'nix-mode-map 
+	"m" '(:ignore t :which-key "nix")
+	"m f" 'nix-format-buffer)
     #+end_src
 * Applications
 ** Completions
@@ -319,7 +331,7 @@
 *** Clojure-Mode
     #+begin_src emacs-lisp
       (use-package clojure-mode
-        :after (flycheck-clj-kondo)
+	:after (flycheck-clj-kondo)
 	:ensure t
 	:config
 	(require 'flycheck-clj-kondo))
@@ -339,26 +351,26 @@
 *** Babel
 **** Tangling
 ***** Languages to tangle
-     In order to tangle certain languages we code blocks we need to define the following:
-     #+begin_src emacs-lisp
-       (org-babel-do-load-languages
-	'org-babel-load-languages
-	'((emacs-lisp . t)))
-     #+end_src
+      In order to tangle certain languages we code blocks we need to define the following:
+      #+begin_src emacs-lisp
+	(org-babel-do-load-languages
+	 'org-babel-load-languages
+	 '((emacs-lisp . t)))
+      #+end_src
 
 ***** Auto-tangling
       To enable auto-tangling on save we define a custom function.
       #+begin_src emacs-lisp
-        (defun rkn/org-babel-tangle-dont-ask ()
-	 (when (string-equal (buffer-file-name) (expand-file-name "~/.config/dotfiles/modules/editors/emacs/config/emacs.org"))
-	   (let ((org-confirm-babel-evaluate nil))
-	     (org-babel-tangle))))
+	(defun rkn/org-babel-tangle-dont-ask ()
+	  (when (string-equal (buffer-file-name) (expand-file-name "~/.config/dotfiles/modules/editors/emacs/config/emacs.org"))
+	    (let ((org-confirm-babel-evaluate nil))
+	      (org-babel-tangle))))
       #+end_src
 
       We then invoke this function as an =org-mode-hook=.
       #+begin_src emacs-lisp
-        (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'rkn/org-babel-tangle-dont-ask
-						     'run-at-end 'only-in-org-mode)))
+	(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'rkn/org-babel-tangle-dont-ask
+						      'run-at-end 'only-in-org-mode)))
       #+end_src
 *** Better org-mode bullets
     I use =org-superstar= to make a bullets and sections look less ugly.
@@ -432,3 +444,4 @@
     #+begin_src emacs-lisp
       (setq org-return-follows-link t)
     #+end_src
+

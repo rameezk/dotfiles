@@ -63,6 +63,7 @@
 (setq comp-async-report-warnings-errors nil)
 
 (use-package evil
+  :after (undo-tree)
   :init
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
@@ -81,23 +82,31 @@
   :config
   (evil-commentary-mode))
 
+(use-package undo-tree
+  :ensure t
+  :after evil
+  :diminish
+  :config
+  (evil-set-undo-system 'undo-tree)
+  (global-undo-tree-mode 1))
+
 (use-package general
-	    :config
-	    (general-evil-setup t)
+  :config
+  (general-evil-setup t)
 
-	    (general-create-definer rkn/keymap-define-global
-	      :keymaps '(normal insert visual emacs)
-	      :prefix "SPC"
-	      :global-prefix "M-SPC")
+  (general-create-definer rkn/keymap-define-global
+    :keymaps '(normal insert visual emacs)
+    :prefix "SPC"
+    :global-prefix "M-SPC")
 
-(general-create-definer rkn/keymap-define-map
+  (general-create-definer rkn/keymap-define-map
     :states '(normal)
     :prefix "SPC"
     :global-prefix "M-SPC"))
 
 (defun rkn/reload-emacs-config()
-    (interactive)
-    (load-file user-init-file))
+  (interactive)
+  (load-file user-init-file))
 
 (rkn/keymap-define-global
   ;; grep current file quickly
@@ -137,14 +146,14 @@
  "C-SPC" 'company-complete)
 
 (rkn/keymap-define-map
- :keymaps 'org-mode-map 
- "m" '(:ignore t :which-key "org")
- "m SPC" 'consult-outline)
+  :keymaps 'org-mode-map 
+  "m" '(:ignore t :which-key "org")
+  "m SPC" 'consult-outline)
 
 (rkn/keymap-define-map
- :keymaps 'nix-mode-map 
- "m" '(:ignore t :which-key "nix")
- "m f" 'nix-format-buffer)
+  :keymaps 'nix-mode-map 
+  "m" '(:ignore t :which-key "nix")
+  "m f" 'nix-format-buffer)
 
 (use-package vertico
   :init
@@ -203,12 +212,12 @@
  '((emacs-lisp . t)))
 
 (defun rkn/org-babel-tangle-dont-ask ()
- (when (string-equal (buffer-file-name) (expand-file-name "~/.config/dotfiles/modules/editors/emacs/config/emacs.org"))
-   (let ((org-confirm-babel-evaluate nil))
-     (org-babel-tangle))))
+  (when (string-equal (buffer-file-name) (expand-file-name "~/.config/dotfiles/modules/editors/emacs/config/emacs.org"))
+    (let ((org-confirm-babel-evaluate nil))
+      (org-babel-tangle))))
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'rkn/org-babel-tangle-dont-ask
-					     'run-at-end 'only-in-org-mode)))
+					      'run-at-end 'only-in-org-mode)))
 
 (use-package org-superstar
   :config
