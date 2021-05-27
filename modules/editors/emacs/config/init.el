@@ -202,6 +202,8 @@
 
 (use-package flycheck-clj-kondo)
 
+(use-package cider)
+
 (use-package nix-mode
   :mode "\\.nix\\'"
   :config

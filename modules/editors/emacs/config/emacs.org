@@ -340,6 +340,10 @@
     #+begin_src emacs-lisp
       (use-package flycheck-clj-kondo)
     #+end_src
+*** Cider
+    #+begin_src emacs-lisp
+      (use-package cider)
+    #+end_src
 ** Nix
    #+begin_src emacs-lisp
      (use-package nix-mode
