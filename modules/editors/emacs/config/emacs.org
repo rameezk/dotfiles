@@ -428,6 +428,7 @@
       (use-package olivetti)
     #+end_src
 *** Allow the enter key to follow links
+    The below variable needs to be in order to allow for =RET= to follow a link. If you are using Evil (like I am) you also need to unbind =RET= from Evil. This shouldn't matter since =RET= is not bound to anything useful anyway.
     #+begin_src emacs-lisp
       (setq org-return-follows-link t)
     #+end_src
