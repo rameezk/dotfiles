@@ -8,7 +8,7 @@ let
 in {
   # Opt-in to modules by including theme here.
   #  Is there a better way to do this per machine?
-  imports = [ ./modules/editors/emacs ];
+  imports = [ ./modules/editors/emacs ./modules/editors/vim ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -238,24 +238,6 @@ in {
       commit = { gpgsign = true; };
     };
     ignores = [ "*~" "*.swp" ".idea/" "*.orig" ".#*" ];
-  };
-
-  # vim
-  programs.vim = {
-    enable = true;
-    plugins = with pkgs.vimPlugins; [
-      vim-sensible
-      vim-airline
-      vim-commentary
-      gruvbox
-    ];
-    extraConfig = ''
-      set background=dark " Better colours for darker backgrounds
-      set number "Turn on line numbers
-      set cursorline " Highlight the current line the cursor is on
-      set visualbell " Turn on visual bell
-      colorscheme gruvbox " Turn on gruvbox colorscheme
-    '';
   };
 
   # bat
