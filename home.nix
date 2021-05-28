@@ -9,11 +9,24 @@ in {
   # Opt-in to modules by including theme here.
   #  Is there a better way to do this per machine?
   imports = [
+    # shell
+    ./modules/shell
+
+    # editors
     ./modules/editors/emacs
     ./modules/editors/vim
-    ./modules/shell/fish
+
+    # vcs
     ./modules/vcs/git
+
+    # lang
     ./modules/language/python
+    ./modules/language/clojure
+
+    # tools
+    ./modules/tool/azure
+    ./modules/tool/kubernetes
+    ./modules/tool/media
   ];
 
   # Let Home Manager install and manage itself.
@@ -37,39 +50,7 @@ in {
   programs.exa.enable = true;
 
   # Packages
-  home.packages = with pkgs; [
-    nixUnstable
-
-    # nix
-    nixfmt
-
-    # cloud
-    azure-cli
-
-    # kubernetes
-    kubectl
-    kubectx
-    stern
-
-    # emacs dependencies
-    sqlite # needed for org-roam
-
-    # markdown
-    multimarkdown
-
-    # spell checkiing
-    aspell
-    aspellDicts.en
-    aspellDicts.en-computers
-    aspellDicts.en-science
-
-    # media
-    ffmpeg
-
-    # clojure
-    clojure
-    clj-kondo
-  ];
+  home.packages = with pkgs; [ nixUnstable nixfmt ];
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
