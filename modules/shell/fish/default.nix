@@ -1,4 +1,10 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+
+let
+  username = "rameezk";
+  homeDirectory = "/home/rameezk";
+  secrets = import ../../../secrets/config.nix;
+in {
 
   programs.fish = {
     enable = true;
