@@ -8,8 +8,12 @@ let
 in {
   # Opt-in to modules by including theme here.
   #  Is there a better way to do this per machine?
-  imports =
-    [ ./modules/editors/emacs ./modules/editors/vim ./modules/shell/fish ];
+  imports = [
+    ./modules/editors/emacs
+    ./modules/editors/vim
+    ./modules/shell/fish
+    ./modules/language/python
+  ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -120,13 +124,6 @@ in {
     aspellDicts.en
     aspellDicts.en-computers
     aspellDicts.en-science
-
-    # lang
-    ## python
-    python39
-    stdenv.cc.cc.lib
-    python39Packages.pip
-    python39Packages.pipx
 
     # media
     ffmpeg
