@@ -109,10 +109,6 @@ in {
     kubectx
     stern
 
-    # fish plugins
-    fishPlugins.pure
-    fishPlugins.fzf-fish
-
     # emacs dependencies
     sqlite # needed for org-roam
 

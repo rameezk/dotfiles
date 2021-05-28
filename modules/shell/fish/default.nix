@@ -179,4 +179,6 @@ in {
     }];
   };
 
+  home.packages = with pkgs; [ fishPlugins.pure fishPlugins.fzf-fish ];
+
 }
