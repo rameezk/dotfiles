@@ -36,8 +36,15 @@ def edit(vim: bool = False):
 
 
 @app.command(help="Rebuild configuration and activate it")
-def rebuild():
+def rebuild(with_traces: bool = False):
     info("🔨 Rebuilding environment")
+
+    if with_traces:
+        info("Tracing on")
+        cmd = "cd {dotfiles_dir} && nix build --show-trace .#rohan"
+    else:
+        cmd = "cd {dotfiles_dir} && nix build .#rohan"
+
     exit_code = run_command(f"cd {dotfiles_dir} && nix build .#rohan")
     if exit_code == 0:
         info("✔️ Activating environment")
