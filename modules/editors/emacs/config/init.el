@@ -113,6 +113,7 @@
   "/" 'consult-line
 
   "f" '(:ignore t :which-key "file")
+  "f f" 'find-file
   "f d" '(:ignore t :which-key "dot")
   "f d e" '((lambda() (interactive)(find-file "~/.config/dotfiles/modules/editors/emacs/config/emacs.org")) :which-key "dot-edit")
   "f d i" '((lambda() (interactive)(find-file user-init-file)) :which-key "dot-edit")
