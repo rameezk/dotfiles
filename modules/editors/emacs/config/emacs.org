@@ -121,10 +121,20 @@
 * Keybindings
 ** Setup
 *** Evil
+    For undo/redo to work nicely with Evil mode we use =undo-tree=.
+    #+begin_src emacs-lisp
+      (use-package undo-tree
+	:ensure t
+	:after evil
+	:diminish
+	:config
+	(evil-set-undo-system 'undo-tree)
+	(global-undo-tree-mode 1))   
+    #+end_src
+    
     I grew up on Vim keybindings, so Evil at heart.
     #+begin_src emacs-lisp
       (use-package evil
-	:after (undo-tree)
 	:init
 	(setq evil-want-integration t)
 	(setq evil-want-keybinding nil)
@@ -137,10 +147,9 @@
     We also install =evil-collection= so other modes in Emacs work too. These include magit, calendar etc.
     #+begin_src emacs-lisp
       (use-package evil-collection
-	:after evil
-	:ensure t
-	:config
-	(evil-collection-init))
+    	:after evil
+    	:config
+    	(evil-collection-init))
     #+end_src
 
     =evil-commentary= provides a simular =gcc= keybinding as in Vim.
@@ -150,16 +159,6 @@
 	(evil-commentary-mode))
     #+end_src
 
-    For undo/redo to work nicely with Evil mode we use =undo-tree=.
-    #+begin_src emacs-lisp
-      (use-package undo-tree
-	:ensure t
-	:after evil
-	:diminish
-	:config
-	(evil-set-undo-system 'undo-tree)
-	(global-undo-tree-mode 1))   
-    #+end_src
 *** General
     I use general to define various keymaps based on different modes. I also define a handy function to define various leader key mappings.
 

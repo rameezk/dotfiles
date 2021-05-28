@@ -62,8 +62,15 @@
 
 (setq comp-async-report-warnings-errors nil)
 
+(use-package undo-tree
+  :ensure t
+  :after evil
+  :diminish
+  :config
+  (evil-set-undo-system 'undo-tree)
+  (global-undo-tree-mode 1))
+
 (use-package evil
-  :after (undo-tree)
   :init
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
@@ -74,21 +81,12 @@
 
 (use-package evil-collection
   :after evil
-  :ensure t
   :config
   (evil-collection-init))
 
 (use-package evil-commentary
   :config
   (evil-commentary-mode))
-
-(use-package undo-tree
-  :ensure t
-  :after evil
-  :diminish
-  :config
-  (evil-set-undo-system 'undo-tree)
-  (global-undo-tree-mode 1))
 
 (use-package general
   :config
