@@ -155,6 +155,16 @@
   "m" '(:ignore t :which-key "nix")
   "m f" 'nix-format-buffer)
 
+(rkn/keymap-define-map
+  :keymaps 'clojure-mode-map 
+  "m" '(:ignore t :which-key "clojure")
+  ;; cider
+  "m c" '(:ignore t :which-key "cider")
+  "m c c" 'cider-connect-clj
+  "m e" '(:ignore t :which-key "eval")
+  "m e e" 'cider-eval-last-sexp
+  "m e c" 'cider-eval-defun-to-comment)
+
 (use-package vertico
   :init
   (vertico-mode)
