@@ -1,6 +1,6 @@
 { pkgs, ... }:
 
-let secrets = import ./secrets/config.nix;
+let secrets = import ../../../secrets/config.nix;
 in {
   programs.git = {
     enable = true;
