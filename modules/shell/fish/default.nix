@@ -179,6 +179,18 @@ in {
     }];
   };
 
+  # bat
+  programs.bat = {
+    enable = true;
+    config = {
+      theme = "gruvbox-dark";
+      pager = "less -FR";
+    };
+  };
+
+  # exa
+  programs.exa.enable = true;
+
   home.packages = with pkgs; [ fishPlugins.pure fishPlugins.fzf-fish ];
 
 }

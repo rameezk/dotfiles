@@ -37,18 +37,6 @@ in {
   home.username = username;
   home.homeDirectory = homeDirectory;
 
-  # bat
-  programs.bat = {
-    enable = true;
-    config = {
-      theme = "gruvbox-dark";
-      pager = "less -FR";
-    };
-  };
-
-  # exa
-  programs.exa.enable = true;
-
   # Packages
   home.packages = with pkgs; [ nixUnstable nixfmt ];
 
