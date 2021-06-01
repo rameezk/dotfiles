@@ -8,26 +8,32 @@
       inputs.nixpkgs.follows = "/nixpkgs";
     };
     emacs-overlay.url = "github:nix-community/emacs-overlay/master";
-    nur.url = "github:nix-community/NUR";
   };
 
-  outputs = { self, nixpkgs, home-manager, emacs-overlay, nur, ... }@inputs: {
-    workbook = home-manager.lib.homeManagerConfiguration {
-      configuration = { ... }: {
-        nixpkgs.overlays = [ emacs-overlay.overlay nur.overlay ];
-
-        imports = let
-          nur-no-pkgs = import nur {
-            nurpkgs = import nixpkgs { system = "x86_64-linux"; };
+  outputs = { self, nixpkgs, home-manager, emacs-overlay, ... }@inputs:
+    let
+      mkMachines = { }: {
+        rohan = home-manager.lib.homeManagerConfiguration {
+          configuration = { ... }: {
+            nixpkgs.overlays = [ emacs-overlay.overlay ];
+            imports = [ ./home.nix ];
           };
-        in [ nur-no-pkgs.repos.rycee.hmModules.emacs-init ./home.nix ];
+          system = "x86_64-linux";
+          homeDirectory = "/home/rameezk";
+          username = "rameezk";
+        };
+        rivendell = home-manager.lib.homeManagerConfiguration {
+          configuration = { ... }: {
+            nixpkgs.overlays = [ emacs-overlay.overlay ];
+            imports = [ ./home.nix ];
+          };
+          system = "x86_64-darwin";
+          homeDirectory = "/Users/rameezk";
+          username = "rameezk";
+        };
       };
-
-      system = "x86_64-linux";
-      homeDirectory = "/home/rameezk";
-      username = "rameezk";
+    in {
+      machines = mkMachines { };
+      rohan = self.machines.rohan.activationPackage;
     };
-
-    rohan = self.workbook.activationPackage;
-  };
 }
