@@ -3,30 +3,28 @@
 let
   username = "rameezk";
   homeDirectory = "/home/rameezk";
-
-  secrets = import ./secrets/config.nix;
 in {
   # Opt-in to modules by including theme here.
   #  Is there a better way to do this per machine?
   imports = [
     # shell
-    ./modules/shell
+    ../../modules/shell
 
     # editors
-    ./modules/editors/emacs
-    ./modules/editors/vim
+    ../../modules/editors/emacs
+    ../../modules/editors/vim
 
     # vcs
-    ./modules/vcs/git
+    ../../modules/vcs/git
 
     # lang
-    ./modules/language/python
-    ./modules/language/clojure
+    ../../modules/language/python
+    ../../modules/language/clojure
 
     # tools
-    ./modules/tool/azure
-    ./modules/tool/kubernetes
-    ./modules/tool/media
+    ../../modules/tool/azure
+    ../../modules/tool/kubernetes
+    ../../modules/tool/media
   ];
 
   # Let Home Manager install and manage itself.
