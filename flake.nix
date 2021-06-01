@@ -13,15 +13,7 @@
   outputs = { self, nixpkgs, home-manager, emacs-overlay, ... }@inputs:
     let
       mkMachines = { }: {
-        rohan = home-manager.lib.homeManagerConfiguration {
-          configuration = { ... }: {
-            nixpkgs.overlays = [ emacs-overlay.overlay ];
-            imports = [ ./home.nix ];
-          };
-          system = "x86_64-linux";
-          homeDirectory = "/home/rameezk";
-          username = "rameezk";
-        };
+        rohan = import ./machines/rohan;
         rivendell = home-manager.lib.homeManagerConfiguration {
           configuration = { ... }: {
             nixpkgs.overlays = [ emacs-overlay.overlay ];
