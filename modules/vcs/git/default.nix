@@ -17,7 +17,7 @@ in {
       publish =
         "!git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)";
       delete-branches = ''
-        !f() { git branch | grep -v "master\|main" | xargs git branch -d; }; f'';
+        !f() { git branch --merged | grep -v "master\|main" | xargs git branch -d; }; f'';
       pr-complete = "!f() { git checkout master && git pull --prune; }; f";
       generate-ignore =
         ''!f() { curl -sL "https://www.gitignore.io/api/$1"; }; f'';
