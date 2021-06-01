@@ -34,6 +34,8 @@
       };
     in {
       machines = mkMachines { };
+
       rohan = self.machines.rohan.activationPackage;
+      rivendell = self.machines.rivendell.activationPackage;
     };
 }

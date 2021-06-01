@@ -25,6 +25,15 @@ def run_command(command: str):
     return os.system(command)
 
 
+def get_machine_name() -> str:
+    try:
+        with open(os.path.expanduser(f"{dotfiles_dir}/.machine"), "r") as f:
+            machine = f.read()
+            return machine
+    except:
+        return None
+
+
 @app.command(help="Open dotfiles in $EDITOR")
 def edit(vim: bool = False):
     if vim:
@@ -39,13 +48,21 @@ def edit(vim: bool = False):
 def rebuild(with_traces: bool = False):
     info("🔨 Rebuilding environment")
 
+    machine = get_machine_name()
+
+    if machine is None:
+        error(f"❌ No machine specified in {dotfiles_dir}/.machine")
+        raise typer.Exit(code=1)
+
+    flake_path = f"{machine}"
+
     if with_traces:
         info("Tracing on")
-        cmd = "cd {dotfiles_dir} && nix build --show-trace .#rohan"
+        cmd = f"cd {dotfiles_dir} && nix build --show-trace .#{flake_path}"
     else:
-        cmd = "cd {dotfiles_dir} && nix build .#rohan"
+        cmd = f"cd {dotfiles_dir} && nix build .#{flake_path}"
 
-    exit_code = run_command(f"cd {dotfiles_dir} && nix build .#rohan")
+    exit_code = run_command(f"cd {dotfiles_dir} && nix build .#{flake_path}")
     if exit_code == 0:
         info("✔️ Activating environment")
         run_command(f"cd {dotfiles_dir} && ./result/activate")
