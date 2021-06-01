@@ -1,6 +1,7 @@
 # Rohan
 
-| Item | Description |
-|------|-------------|
-| OS | MacOS |
-| Type | Personal |
+| Item    | Description |
+|---------|-------------|
+| OS      | MacOS       |
+| Version | Big Sur     |
+| Type    | Personal    |
