@@ -2,6 +2,6 @@
 
 | Item    | Description |
 |---------|-------------|
-| OS      | MacOS       |
-| Version | Big Sur     |
-| Type    | Personal    |
+| OS      | Ubuntu      |
+| Version | 20.04 WSL   |
+| Type    | Work        |
