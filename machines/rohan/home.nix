@@ -1,9 +1,6 @@
 { config, pkgs, lib, ... }:
 
-let
-  username = "rameezk";
-  homeDirectory = "/home/rameezk";
-in {
+{
   # Opt-in to modules by including theme here.
   #  Is there a better way to do this per machine?
   imports = [
@@ -29,11 +26,6 @@ in {
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-
-  # Home Manager needs a bit of information about you and the
-  # paths it should manage.
-  home.username = username;
-  home.homeDirectory = homeDirectory;
 
   # Packages
   home.packages = with pkgs; [ nixUnstable nixfmt ];
