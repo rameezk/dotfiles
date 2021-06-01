@@ -356,6 +356,30 @@
     #+begin_src emacs-lisp
       (use-package cider)
     #+end_src
+*** clj-refactor
+    #+begin_src emacs-lisp
+      (use-package clj-refactor
+	:ensure t
+	:init
+	(add-hook 'clojure-mode-hook 'clj-refactor-mode)
+	:diminish clj-refactor-mode)
+    #+end_src
+*** rainbow-delimiters
+    #+begin_src emacs-lisp
+      (use-package rainbow-delimiters
+	:ensure t
+	:init
+	(add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
+	:diminish rainbow-delimiters-mode)
+    #+end_src
+*** lispyville
+    #+begin_src emacs-lisp
+      (use-package lispyville
+	:init
+	(general-add-hook '(emacs-lisp-mode-hook lisp-mode-hook clojure-mode-hook) #'lispyville-mode)
+	:config
+	(lispyville-set-key-theme '(operators c-w additional)))
+    #+end_src
 ** Nix
    #+begin_src emacs-lisp
      (use-package nix-mode

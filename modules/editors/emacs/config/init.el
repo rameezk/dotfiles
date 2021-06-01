@@ -213,6 +213,24 @@
 
 (use-package cider)
 
+(use-package clj-refactor
+  :ensure t
+  :init
+  (add-hook 'clojure-mode-hook 'clj-refactor-mode)
+  :diminish clj-refactor-mode)
+
+(use-package rainbow-delimiters
+  :ensure t
+  :init
+  (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
+  :diminish rainbow-delimiters-mode)
+
+(use-package lispyville
+  :init
+  (general-add-hook '(emacs-lisp-mode-hook lisp-mode-hook clojure-mode-hook) #'lispyville-mode)
+  :config
+  (lispyville-set-key-theme '(operators c-w additional)))
+
 (use-package nix-mode
   :mode "\\.nix\\'"
   :config
