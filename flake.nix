@@ -25,7 +25,7 @@
         rivendell = home-manager.lib.homeManagerConfiguration {
           configuration = { ... }: {
             nixpkgs.overlays = [ emacs-overlay.overlay ];
-            imports = [ ./machines/rivdendell/home.nix ];
+            imports = [ ./machines/rivendell/home.nix ];
           };
           system = "x86_64-darwin";
           homeDirectory = "/Users/rameezk";
