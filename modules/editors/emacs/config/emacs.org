@@ -3,485 +3,460 @@
 
 * Server
 ** Start emacs-server on Emacs boot
-   Start the emacs server so ~emacsclient~ can connect to it.
-  #+begin_src emacs-lisp
-    (server-start)
-  #+end_src
+Start the emacs server so ~emacsclient~ can connect to it.
+#+begin_src emacs-lisp
+  (server-start)
+#+end_src
 * Package Management
 ** straight.el
-   I use [[https://github.com/raxod502/straight.el][straight.el]] to manage my packages.
+I use [[https://github.com/raxod502/straight.el][straight.el]] to manage my packages.
 
-   We bootstrap straight.el with the following.
-   #+begin_src emacs-lisp
-      (defvar bootstrap-version)
-      (let ((bootstrap-file
-	     (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-	    (bootstrap-version 5))
-	(unless (file-exists-p bootstrap-file)
-	  (with-current-buffer
-	      (url-retrieve-synchronously
-	       "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-	       'silent 'inhibit-cookies)
-	    (goto-char (point-max))
-	    (eval-print-last-sexp)))
-	(load bootstrap-file nil 'nomessage))
-    #+end_src
+Enable straight to use =use-package= by default before bootstrapping.
+#+begin_src emacs-lisp
+  (setq straight-use-package-by-default t)
+#+end_src
 
-    I use the =use-package= straight integration to make switching back to =use-package= easier. First we install =use-package= with straight.el.
-    #+begin_src emacs-lisp
-      (straight-use-package 'use-package)
-    #+end_src
+We bootstrap straight.el with the following.
+#+begin_src emacs-lisp
+  (defvar bootstrap-version)
+  (let ((bootstrap-file
+	 (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+	(bootstrap-version 5))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+	  (url-retrieve-synchronously
+	   "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+	   'silent 'inhibit-cookies)
+	(goto-char (point-max))
+	(eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
+#+end_src
 
-    Then enable the straight.el use-package integration.
-    #+begin_src emacs-lisp
-      (setq straight-use-package-by-default t)
-    #+end_src
-
-    Now you can use =use-package= as you normally would.
-   
+I use the =use-package= straight integration to make switching back to =use-package= easier. First we install =use-package= with straight.el.
+#+begin_src emacs-lisp
+  (straight-use-package 'use-package)
+#+end_src
 * Interface
 ** Startup Message
-   Disable startup message.
-   #+begin_src emacs-lisp
-     (setq inhibit-startup-message t)
-   #+end_src
+Disable startup message.
+#+begin_src emacs-lisp
+  (setq inhibit-startup-message t)
+#+end_src
 ** Scrollbar
-   Disable the scrollbar
-   #+begin_src emacs-lisp
-     (scroll-bar-mode -1)
-   #+end_src
+Disable the scrollbar
+#+begin_src emacs-lisp
+  (scroll-bar-mode -1)
+#+end_src
 ** Toolbar
-   Disable the toolbar
-   #+begin_src emacs-lisp
-     (tool-bar-mode -1)
-   #+end_src
+Disable the toolbar
+#+begin_src emacs-lisp
+  (tool-bar-mode -1)
+#+end_src
 ** Menu bar
-   Disable the menu bar.
-   #+begin_src emacs-lisp
-     (menu-bar-mode -1)
-   #+end_src
+Disable the menu bar.
+#+begin_src emacs-lisp
+  (menu-bar-mode -1)
+#+end_src
 ** Font
-   #+begin_src emacs-lisp
-     (set-face-attribute 'default nil :font "JetbrainsMono Nerd Font" :height 160)
-   #+end_src
+#+begin_src emacs-lisp
+  (set-face-attribute 'default nil :font "JetbrainsMono Nerd Font" :height 160)
+#+end_src
 ** Theme
 *** Doom Themes
-   I like Doom Themes because they offer the best integration with various syntaxes.
-   #+begin_src emacs-lisp
-     (use-package doom-themes
-       :config
-       ;; Global settings (defaults)
-       (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-	     doom-themes-enable-italic t) ; if nil, italics is universally disabled
-       ;;(load-theme 'doom-gruvbox t)
-
-       ;; Enable flashing mode-line on errors
-       (doom-themes-visual-bell-config)
-       ;; Corrects (and improves) org-mode's native fontification.
-       (doom-themes-org-config))
-   #+end_src
+I like Doom Themes because they offer the best integration with various syntaxes.
+#+begin_src emacs-lisp
+  (use-package doom-themes
+    :config
+    ;; Global settings (defaults)
+    (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+	  doom-themes-enable-italic t) ; if nil, italics is universally disabled
+    ;;(load-theme 'doom-gruvbox t)
+  
+    ;; Enable flashing mode-line on errors
+    (doom-themes-visual-bell-config)
+    ;; Corrects (and improves) org-mode's native fontification.
+    (doom-themes-org-config))
+#+end_src
 *** Zenburn
-    The GOAT.
-    #+begin_src emacs-lisp
-      (use-package zenburn-theme
-	:config
-	(setq zenburn-use-variable-pitch t)
-      ;; scale headings in org-mode
-      (setq zenburn-scale-org-headlines t)
-      ;; scale headings in outline-mode
-      (setq zenburn-scale-outline-headlines t)
-
-      ;; enable theme
-      (load-theme 'zenburn t))
-    #+end_src
+The GOAT.
+#+begin_src emacs-lisp
+  (use-package zenburn-theme
+    :config
+    (setq zenburn-use-variable-pitch t)
+    ;; scale headings in org-mode
+    (setq zenburn-scale-org-headlines t)
+    ;; scale headings in outline-mode
+    (setq zenburn-scale-outline-headlines t)
+  
+    ;; enable theme
+    (load-theme 'zenburn t))
+#+end_src
 ** Modeline
 *** Doom Modeline
-    #+begin_src emacs-lisp
-      (use-package doom-modeline
-	:config
-	(doom-modeline-mode 1))
-    #+end_src
+#+begin_src emacs-lisp
+  (use-package doom-modeline
+    :config
+    (doom-modeline-mode 1))
+#+end_src
 ** Keybinding panel
 *** which-key
-    which-key is great for getting an overview of what keybindings are available.
-    #+begin_src emacs-lisp
-      (use-package which-key
-	:init (which-key-mode)
-	:diminish which-key-mode
-	:config
-	(setq which-key-idle-delay 0.3))
-    #+end_src
+which-key is great for getting an overview of what keybindings are available.
+#+begin_src emacs-lisp
+  (use-package which-key
+    :init (which-key-mode)
+    :diminish which-key-mode
+    :config
+    (setq which-key-idle-delay 0.3))
+#+end_src
 ** Warnings
 *** Native-comp
-   With native comp enabled there tends to be a lot of annoying warnings. To not go insane I'll turn this off.
-  #+begin_src emacs-lisp
-    (setq comp-async-report-warnings-errors nil)
-  #+end_src
+With native comp enabled there tends to be a lot of annoying warnings. To not go insane I'll turn this off.
+#+begin_src emacs-lisp
+  (setq comp-async-report-warnings-errors nil)
+#+end_src
 
 * Keybindings
 ** Setup
 *** Evil
-    For undo/redo to work nicely with Evil mode we use =undo-tree=.
-    #+begin_src emacs-lisp
-      (use-package undo-tree
-	:ensure t
-	:after evil
-	:diminish
-	:config
-	(evil-set-undo-system 'undo-tree)
-	(global-undo-tree-mode 1))   
-    #+end_src
+For undo/redo to work nicely with Evil mode we use =undo-tree=.
+#+begin_src emacs-lisp
+  (use-package undo-tree
+    :ensure t
+    :after evil
+    :diminish
+    :config
+    (evil-set-undo-system 'undo-tree)
+    (global-undo-tree-mode 1))   
+#+end_src
     
-    I grew up on Vim keybindings, so Evil at heart.
-    #+begin_src emacs-lisp
-      (use-package evil
-	:init
-	(setq evil-want-integration t)
-	(setq evil-want-keybinding nil)
-	:config
-	(evil-mode t)
-	(with-eval-after-load 'evil-maps
-	  (define-key evil-motion-state-map (kbd "RET") nil)))
-    #+end_src
+I grew up on Vim keybindings, so Evil at heart.
+#+begin_src emacs-lisp
+  (use-package evil
+    :init
+    (setq evil-want-integration t)
+    (setq evil-want-keybinding nil)
+    :config
+    (evil-mode t)
+    (with-eval-after-load 'evil-maps
+      (define-key evil-motion-state-map (kbd "RET") nil)))
+#+end_src
 
-    We also install =evil-collection= so other modes in Emacs work too. These include magit, calendar etc.
-    #+begin_src emacs-lisp
-      (use-package evil-collection
-    	:after evil
-    	:config
-    	(evil-collection-init))
-    #+end_src
+We also install =evil-collection= so other modes in Emacs work too. These include magit, calendar etc.
+#+begin_src emacs-lisp
+  (use-package evil-collection
+    :after evil
+    :config
+    (evil-collection-init))
+#+end_src
 
-    =evil-commentary= provides a simular =gcc= keybinding as in Vim.
-    #+begin_src emacs-lisp
-      (use-package evil-commentary
-	:config
-	(evil-commentary-mode))
-    #+end_src
+=evil-commentary= provides a simular =gcc= keybinding as in Vim.
+#+begin_src emacs-lisp
+  (use-package evil-commentary
+    :config
+    (evil-commentary-mode))
+#+end_src
 
 *** General
-    I use general to define various keymaps based on different modes. I also define a handy function to define various leader key mappings.
+I use general to define various keymaps based on different modes. I also define a handy function to define various leader key mappings.
 
-    #+begin_src emacs-lisp
-      (use-package general
-	:config
-	(general-evil-setup t)
-
-	(general-create-definer rkn/keymap-define-global
-	  :keymaps '(normal insert visual emacs)
-	  :prefix "SPC"
-	  :global-prefix "M-SPC")
-
-	(general-create-definer rkn/keymap-define-map
-	  :states '(normal)
-	  :prefix "SPC"
-	  :global-prefix "M-SPC"))
-    #+end_src
+#+begin_src emacs-lisp
+  (use-package general
+    :config
+    (general-evil-setup t)
+  
+    (general-create-definer rkn/keymap-define-global
+      :keymaps '(normal insert visual emacs)
+      :prefix "SPC"
+      :global-prefix "M-SPC")
+  
+    (general-create-definer rkn/keymap-define-map
+      :states '(normal)
+      :prefix "SPC"
+      :global-prefix "M-SPC"))
+#+end_src
 ** Keymaps
 *** Global
 **** File
-     Handy keymaps for handling files.
-     #+begin_src emacs-lisp
-       (defun rkn/reload-emacs-config()
-	 (interactive)
-	 (load-file user-init-file))
-
-       (rkn/keymap-define-global
-	 ;; grep current file quickly
-	 "/" 'consult-line
-
-	 "f" '(:ignore t :which-key "file")
-         "f f" 'find-file
-	 "f d" '(:ignore t :which-key "dot")
-	 "f d e" '((lambda() (interactive)(find-file "~/.config/dotfiles/modules/editors/emacs/config/emacs.org")) :which-key "dot-edit")
-	 "f d i" '((lambda() (interactive)(find-file user-init-file)) :which-key "dot-edit")
-	 "f d r" '((lambda() (interactive)(rkn/reload-emacs-config)) :which-key "reload-emacs-config")
-	 "f d R" '((lambda() (interactive)(shell-command "dot rebuild")(rkn/reload-emacs-config)) :which-key "reload-dotfiles"))
-     #+end_src
+Handy keymaps for handling files.
+#+begin_src emacs-lisp
+  (defun rkn/reload-emacs-config()
+    (interactive)
+    (load-file user-init-file))
+  
+  (rkn/keymap-define-global
+    ;; grep current file quickly
+    "/" 'consult-line
+  
+    "f" '(:ignore t :which-key "file")
+    "f f" 'find-file
+    "f d" '(:ignore t :which-key "dot")
+    "f d e" '((lambda() (interactive)(find-file "~/.config/dotfiles/modules/editors/emacs/config/emacs.org")) :which-key "dot-edit")
+    "f d i" '((lambda() (interactive)(find-file user-init-file)) :which-key "dot-edit")
+    "f d r" '((lambda() (interactive)(rkn/reload-emacs-config)) :which-key "reload-emacs-config")
+    "f d R" '((lambda() (interactive)(shell-command "dot rebuild")(rkn/reload-emacs-config)) :which-key "reload-dotfiles"))
+#+end_src
 **** Git
-     Git operations
-     #+begin_src emacs-lisp
-       (rkn/keymap-define-global
-	 ;; grep current file quickly
-	 "g" '(:ignore t :which-key "git")
-	 "g g" 'magit-status)
-     #+end_src
+Git operations
+#+begin_src emacs-lisp
+  (rkn/keymap-define-global
+    ;; grep current file quickly
+    "g" '(:ignore t :which-key "git")
+    "g g" 'magit-status)
+#+end_src
 **** Projects
-     Handing switching between projects, finding files in projects etc.
-     #+begin_src emacs-lisp
-       (rkn/keymap-define-global
-	 ;; grep current file quickly
-	 "p" '(:ignore t :which-key "project")
-	 "p p" 'projectile-switch-project
-	 "SPC" 'projectile-find-file)
-     #+end_src
+Handing switching between projects, finding files in projects etc.
+#+begin_src emacs-lisp
+  (rkn/keymap-define-global
+    ;; grep current file quickly
+    "p" '(:ignore t :which-key "project")
+    "p p" 'projectile-switch-project
+    "SPC" 'projectile-find-file)
+#+end_src
 **** Buffers
-     Quick keybindings for dealing with buffers.
-     #+begin_src emacs-lisp
-       (rkn/keymap-define-global
-	 "b" '(:ignore t :which-key "buffer")
-	 "bb" 'consult-buffer)
-     #+end_src
+Quick keybindings for dealing with buffers.
+#+begin_src emacs-lisp
+  (rkn/keymap-define-global
+    "b" '(:ignore t :which-key "buffer")
+    "bb" 'consult-buffer)
+#+end_src
 **** Notes
-     Dealing with notes. This includes org-roam only for now.
-     #+begin_src emacs-lisp
-       (rkn/keymap-define-global
-	 "n" '(:ignore t :which-key "note")
-	 "nr" '(:ignore t :which-key "roam")
-	 "nrf" 'org-roam-find-file
-	 "nri" 'org-roam-insert
-	 "nrd" 'org-roam-dailies-capture-today
-	 "nrD" 'org-roam-dailies-find-today)
-     #+end_src
+Dealing with notes. This includes org-roam only for now.
+#+begin_src emacs-lisp
+  (rkn/keymap-define-global
+    "n" '(:ignore t :which-key "note")
+    "nr" '(:ignore t :which-key "roam")
+    "nrf" 'org-roam-find-file
+    "nri" 'org-roam-insert
+    "nrd" 'org-roam-dailies-capture-today
+    "nrD" 'org-roam-dailies-find-today)
+#+end_src
 **** Company
-     #+begin_src emacs-lisp
-       (general-define-key
-	"C-SPC" 'company-complete)
-     #+end_src
+#+begin_src emacs-lisp
+  (general-define-key
+   "C-SPC" 'company-complete)
+#+end_src
 *** Org-Mode
-    #+begin_src emacs-lisp
-      (rkn/keymap-define-map
-	:keymaps 'org-mode-map 
-	"m" '(:ignore t :which-key "org")
-	"m SPC" 'consult-outline)
-    #+end_src
+#+begin_src emacs-lisp
+  (rkn/keymap-define-map
+    :keymaps 'org-mode-map 
+    "m" '(:ignore t :which-key "org")
+    "m SPC" 'consult-outline)
+#+end_src
 *** Nix-Mode
-    #+begin_src emacs-lisp
-      (rkn/keymap-define-map
-	:keymaps 'nix-mode-map 
-	"m" '(:ignore t :which-key "nix")
-	"m f" 'nix-format-buffer)
-    #+end_src
+#+begin_src emacs-lisp
+  (rkn/keymap-define-map
+    :keymaps 'nix-mode-map 
+    "m" '(:ignore t :which-key "nix")
+    "m f" 'nix-format-buffer)
+#+end_src
 *** Clojure-Mode
-    #+begin_src emacs-lisp
-			(rkn/keymap-define-map
-			  :keymaps 'clojure-mode-map 
-			  "m" '(:ignore t :which-key "clojure")
-			  ;; cider
-			  "m c" '(:ignore t :which-key "cider")
-			  "m c c" 'cider-connect-clj
-			  "m e" '(:ignore t :which-key "eval")
-			  "m e e" 'cider-eval-last-sexp
-			  "m e c" 'cider-eval-defun-to-comment)
-    #+end_src
+#+begin_src emacs-lisp
+  (rkn/keymap-define-map
+    :keymaps 'clojure-mode-map 
+    "m" '(:ignore t :which-key "clojure")
+    ;; cider
+    "m c" '(:ignore t :which-key "cider")
+    "m c c" 'cider-connect-clj
+    "m e" '(:ignore t :which-key "eval")
+    "m e e" 'cider-eval-last-sexp
+    "m e c" 'cider-eval-defun-to-comment)
+#+end_src
 * Applications
 ** Completions
 *** Vertico
-    Use a lightweight completion engine such as vertico.
-    #+begin_src emacs-lisp
-      (use-package vertico
-	:init
-	(vertico-mode)
-
-	;; Wrap around list
-	(setq vertico-cycle t)
-	)
-    #+end_src
+Use a lightweight completion engine such as vertico.
+#+begin_src emacs-lisp
+  (use-package vertico
+    :init
+    (vertico-mode)
+  
+    ;; Wrap around list
+    (setq vertico-cycle t)
+    )
+#+end_src
 *** Orderless
-    Combine vertico with orderless for better completion typing. Typing a =SPC= after a completion narrows down a list some more.
-    #+begin_src emacs-lisp
-      (use-package orderless
-	:init
-	(setq completion-styles '(orderless)
-	      completion-category-defaults nil
-	      completion-category-overrides '((file (styles . (partial-completion))))))
-    #+end_src
+Combine vertico with orderless for better completion typing. Typing a =SPC= after a completion narrows down a list some more.
+#+begin_src emacs-lisp
+  (use-package orderless
+    :init
+    (setq completion-styles '(orderless)
+	  completion-category-defaults nil
+	  completion-category-overrides '((file (styles . (partial-completion))))))
+#+end_src
 *** Save History
-    This puts your last used command/completion to the top of the list.
-    #+begin_src emacs-lisp
-      (use-package savehist
-	:init
-	(savehist-mode))
-    #+end_src
+This puts your last used command/completion to the top of the list.
+#+begin_src emacs-lisp
+  (use-package savehist
+    :init
+    (savehist-mode))
+#+end_src
 *** Consult
-    Consult provides some extra completion for built-in emacs functions.
-    #+begin_src emacs-lisp
-      (use-package consult)
-    #+end_src
+Consult provides some extra completion for built-in emacs functions.
+#+begin_src emacs-lisp
+  (use-package consult)
+#+end_src
 *** Company
-    Company is a text completion framework for Emacs. It stands for "COMplete ANYthing".
-    #+begin_src emacs-lisp
-      (use-package company
-	:config
-	(global-company-mode))
-    #+end_src
+Company is a text completion framework for Emacs. It stands for "COMplete ANYthing".
+#+begin_src emacs-lisp
+  (use-package company
+    :config
+    (global-company-mode))
+#+end_src
 ** Spell Checking
 *** aspell
-    Set ispell to use the aspell binary.
-    #+begin_src emacs-lisp
-      (setq ispell-program-name "aspell")
-    #+end_src
+Set ispell to use the aspell binary.
+#+begin_src emacs-lisp
+  (setq ispell-program-name "aspell")
+#+end_src
 ** Syntax Checking
 *** Flycheck
-    #+begin_src emacs-lisp
-      (use-package flycheck
-	:ensure t
-	:init (global-flycheck-mode))
-    #+end_src
+#+begin_src emacs-lisp
+  (use-package flycheck
+    :ensure t
+    :init (global-flycheck-mode))
+#+end_src
 ** Projects
 *** Projectile
-    For jumping between git projects quickly.
-    #+begin_src emacs-lisp
-      (use-package projectile
-	:diminish projectile-mode
-	:config
-	(projectile-mode))
-    #+end_src
+For jumping between git projects quickly.
+#+begin_src emacs-lisp
+  (use-package projectile
+    :diminish projectile-mode
+    :config
+    (projectile-mode))
+#+end_src
 ** VCS
 *** Git
 **** Magit
-     #+begin_src emacs-lisp
-       (use-package magit)
-     #+end_src
+#+begin_src emacs-lisp
+  (use-package magit)
+#+end_src
 **** GPG
-     Allow emacs to ask for GPG password.
-     #+begin_src emacs-lisp
-       (setq epa-pinentry-mode 'loopback)
-     #+end_src
+Allow emacs to ask for GPG password.
+#+begin_src emacs-lisp
+  (setq epa-pinentry-mode 'loopback)
+#+end_src
 * Languages
 ** Clojure
 *** Clojure-Mode
-    #+begin_src emacs-lisp
-      (use-package clojure-mode
-	:after (flycheck-clj-kondo)
-	:ensure t
-	:config
-	(require 'flycheck-clj-kondo))
-    #+end_src
+#+begin_src emacs-lisp
+  (use-package clojure-mode
+    :after (flycheck-clj-kondo)
+    :ensure t
+    :config
+    (require 'flycheck-clj-kondo))
+#+end_src
 *** clj-kondo
-    #+begin_src emacs-lisp
-      (use-package flycheck-clj-kondo)
-    #+end_src
+#+begin_src emacs-lisp
+  (use-package flycheck-clj-kondo)
+#+end_src
 *** Cider
-    #+begin_src emacs-lisp
-      (use-package cider)
-    #+end_src
+#+begin_src emacs-lisp
+  (use-package cider)
+#+end_src
 *** clj-refactor
-    #+begin_src emacs-lisp
-      (use-package clj-refactor
-	:ensure t
-	:init
-	(add-hook 'clojure-mode-hook 'clj-refactor-mode)
-	:diminish clj-refactor-mode)
-    #+end_src
+#+begin_src emacs-lisp
+  (use-package clj-refactor
+    :ensure t
+    :init
+    (add-hook 'clojure-mode-hook 'clj-refactor-mode)
+    :diminish clj-refactor-mode)
+#+end_src
 *** rainbow-delimiters
-    #+begin_src emacs-lisp
-      (use-package rainbow-delimiters
-	:ensure t
-	:init
-	(add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
-	:diminish rainbow-delimiters-mode)
-    #+end_src
+#+begin_src emacs-lisp
+  (use-package rainbow-delimiters
+    :ensure t
+    :init
+    (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
+    :diminish rainbow-delimiters-mode)
+#+end_src
 *** lispyville
-    #+begin_src emacs-lisp
-      (use-package lispyville
-	:init
-	(general-add-hook '(emacs-lisp-mode-hook lisp-mode-hook clojure-mode-hook) #'lispyville-mode)
-	:config
-	(lispyville-set-key-theme '(operators c-w additional)))
-    #+end_src
+#+begin_src emacs-lisp
+  (use-package lispyville
+    :after (org)
+    :init
+    (general-add-hook '(emacs-lisp-mode-hook lisp-mode-hook clojure-mode-hook) #'lispyville-mode)
+    :config
+    (lispyville-set-key-theme '(operators c-w additional)))
+#+end_src
 ** Nix
-   #+begin_src emacs-lisp
-     (use-package nix-mode
-       :mode "\\.nix\\'"
-       :config
-       (setq nix-nixfmt-bin "/home/rameezk/.nix-profile/bin/nixfmt"))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package nix-mode
+    :mode "\\.nix\\'"
+    :config
+    (setq nix-nixfmt-bin "/home/rameezk/.nix-profile/bin/nixfmt"))
+#+end_src
 ** Org
-*** Babel
-**** Tangling
-***** Languages to tangle
-      In order to tangle certain languages we code blocks we need to define the following:
-      #+begin_src emacs-lisp
-	(org-babel-do-load-languages
-	 'org-babel-load-languages
-	 '((emacs-lisp . t)))
-      #+end_src
-
-***** Auto-tangling
-      To enable auto-tangling on save we define a custom function.
-      #+begin_src emacs-lisp
-	(defun rkn/org-babel-tangle-dont-ask ()
-	  (when (string-equal (buffer-file-name) (expand-file-name "~/.config/dotfiles/modules/editors/emacs/config/emacs.org"))
-	    (let ((org-confirm-babel-evaluate nil))
-	      (org-babel-tangle))))
-      #+end_src
-
-      We then invoke this function as an =org-mode-hook=.
-      #+begin_src emacs-lisp
-	(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'rkn/org-babel-tangle-dont-ask
-						      'run-at-end 'only-in-org-mode)))
-      #+end_src
-*** Better org-mode bullets
-    I use =org-superstar= to make a bullets and sections look less ugly.
-    #+begin_src emacs-lisp
-      (use-package org-superstar
-	:config
-	(setq org-superstar-leading-bullet ?\s
-	      org-superstar-leading-fallback ?\s
-	      org-hide-leading-stars nil
-	      org-superstar-todo-bullet-alist
-	      '(("TODO" . 9744)
-		("[ ]"  . 9744)
-		("DONE" . 9745)
-		("[X]"  . 9745)))
-	:hook
-	(org-mode . (lambda () (org-superstar-mode 1)))
-	:after (org))
-    #+end_src
-
 *** Org-Mode
-    I use org-mode for managing this config and for tending to my Digital Garden.
-    #+begin_src emacs-lisp
-      (use-package org)
-    #+end_src
+I use org-mode for managing this config and for tending to my Digital Garden.
+#+begin_src emacs-lisp
+  (use-package org)
+#+end_src
+*** Better org-mode bullets
+I use =org-superstar= to make a bullets and sections look less ugly.
+#+begin_src emacs-lisp
+  (use-package org-superstar
+    :after (org)
+    :config
+    (setq org-superstar-leading-bullet ?\s
+	  org-superstar-leading-fallback ?\s
+	  org-hide-leading-stars nil
+	  org-superstar-todo-bullet-alist
+	  '(("TODO" . 9744)
+	    ("[ ]"  . 9744)
+	    ("DONE" . 9745)
+	    ("[X]"  . 9745)))
+    :hook
+    (org-mode . (lambda () (org-superstar-mode 1))))
+#+end_src
+
 *** Org-Roam
-    My Digital Garden (or second brain, if you will) is powered by org-roam.
-    #+begin_src emacs-lisp
-      (use-package org-roam
-	:hook 
-	(after-init . org-roam-mode)
-	:custom
-	(org-roam-directory "~/Dropbox/DigitalGarden")
-	:config
-	(setq org-roam-graph-exclude-matcher '("inbox")))
-    #+end_src
+My Digital Garden (or second brain, if you will) is powered by org-roam.
+#+begin_src emacs-lisp
+  (use-package org-roam
+    :after (org)
+    :hook 
+    (after-init . org-roam-mode)
+    :custom
+    (org-roam-directory "~/Dropbox/DigitalGarden")
+    :config
+    (setq org-roam-graph-exclude-matcher '("inbox")))
+#+end_src
 **** Capture Templates
 ***** Dailies
-      I use the dailies feature of org-roam to capture quick, journal like entries.
-      #+begin_src emacs-lisp
-	(setq org-roam-dailies-capture-templates
-	      '(("d"
-		 "daily"
-		 plain
-		 (function org-roam-capture--get-point)
-		 "** %<%H:%M> %?"
-		 :file-name "daily/%<%Y-%m-%d>"
-		 :head "#+TITLE: Daily - %<%A %Y-%m-%d>\n\n* %<%A> %<%Y-%m-%d>")))
-      #+end_src
+I use the dailies feature of org-roam to capture quick, journal like entries.
+#+begin_src emacs-lisp
+  (setq org-roam-dailies-capture-templates
+	'(("d"
+	   "daily"
+	   plain
+	   (function org-roam-capture--get-point)
+	   "** %<%H:%M> %?"
+	   :file-name "daily/%<%Y-%m-%d>"
+	   :head "#+TITLE: Daily - %<%A %Y-%m-%d>\n\n* %<%A> %<%Y-%m-%d>")))
+#+end_src
 *** Headings Startup Visibility
-    Sometimes my org file are too long and I’d like to open them with headings collapsed.
-    #+begin_src emacs-lisp
-      (setq org-startup-folded t)
-    #+end_src
+Sometimes my org file are too long and I’d like to open them with headings collapsed.
+#+begin_src emacs-lisp
+  (setq org-startup-folded t)
+#+end_src
 *** Spell checking
-    Enable spell checking in org-mode.
-    #+begin_src emacs-lisp
-      (add-hook 'org-mode-hook 'flyspell-mode)
-    #+end_src
+Enable spell checking in org-mode.
+#+begin_src emacs-lisp
+  (add-hook 'org-mode-hook 'flyspell-mode)
+#+end_src
 *** Fix stupid bookmark-fontify
-    Sometimes my org-capture's would have an ugly coloring.
-    #+begin_src emacs-lisp
-      (setq bookmark-fontify nil)
-    #+end_src
+Sometimes my org-capture's would have an ugly coloring.
+#+begin_src emacs-lisp
+  (setq bookmark-fontify nil)
+#+end_src
 *** Centre org-mode for a nice writing experience
-    I use Olivetti for this
-    #+begin_src emacs-lisp
-      (use-package olivetti)
-    #+end_src
+I use Olivetti for this
+#+begin_src emacs-lisp
+  (use-package olivetti)
+#+end_src
 *** Allow the enter key to follow links
-    The below variable needs to be in order to allow for =RET= to follow a link. If you are using Evil (like I am) you also need to unbind =RET= from Evil. This shouldn't matter since =RET= is not bound to anything useful anyway.
-    #+begin_src emacs-lisp
-      (setq org-return-follows-link t)
-    #+end_src
+The below variable needs to be in order to allow for =RET= to follow a link. If you are using Evil (like I am) you also need to unbind =RET= from Evil. This shouldn't matter since =RET= is not bound to anything useful anyway.
+#+begin_src emacs-lisp
+  (setq org-return-follows-link t)
+#+end_src
 

@@ -1,5 +1,7 @@
 (server-start)
 
+(setq straight-use-package-by-default t)
+
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -14,8 +16,6 @@
   (load bootstrap-file nil 'nomessage))
 
 (straight-use-package 'use-package)
-
-(setq straight-use-package-by-default t)
 
 (setq inhibit-startup-message t)
 
@@ -42,13 +42,13 @@
 (use-package zenburn-theme
   :config
   (setq zenburn-use-variable-pitch t)
-;; scale headings in org-mode
-(setq zenburn-scale-org-headlines t)
-;; scale headings in outline-mode
-(setq zenburn-scale-outline-headlines t)
+  ;; scale headings in org-mode
+  (setq zenburn-scale-org-headlines t)
+  ;; scale headings in outline-mode
+  (setq zenburn-scale-outline-headlines t)
 
-;; enable theme
-(load-theme 'zenburn t))
+  ;; enable theme
+  (load-theme 'zenburn t))
 
 (use-package doom-modeline
   :config
@@ -226,6 +226,7 @@
   :diminish rainbow-delimiters-mode)
 
 (use-package lispyville
+  :after (org)
   :init
   (general-add-hook '(emacs-lisp-mode-hook lisp-mode-hook clojure-mode-hook) #'lispyville-mode)
   :config
@@ -236,19 +237,10 @@
   :config
   (setq nix-nixfmt-bin "/home/rameezk/.nix-profile/bin/nixfmt"))
 
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((emacs-lisp . t)))
-
-(defun rkn/org-babel-tangle-dont-ask ()
-  (when (string-equal (buffer-file-name) (expand-file-name "~/.config/dotfiles/modules/editors/emacs/config/emacs.org"))
-    (let ((org-confirm-babel-evaluate nil))
-      (org-babel-tangle))))
-
-(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'rkn/org-babel-tangle-dont-ask
-					      'run-at-end 'only-in-org-mode)))
+(use-package org)
 
 (use-package org-superstar
+  :after (org)
   :config
   (setq org-superstar-leading-bullet ?\s
 	org-superstar-leading-fallback ?\s
@@ -259,12 +251,10 @@
 	  ("DONE" . 9745)
 	  ("[X]"  . 9745)))
   :hook
-  (org-mode . (lambda () (org-superstar-mode 1)))
-  :after (org))
-
-(use-package org)
+  (org-mode . (lambda () (org-superstar-mode 1))))
 
 (use-package org-roam
+  :after (org)
   :hook 
   (after-init . org-roam-mode)
   :custom
