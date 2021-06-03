@@ -1,6 +1,10 @@
 #+TITLE: Rameez's Emacs Config
 #+PROPERTY: header-args:emacs-lisp :tangle ~/.config/dotfiles/modules/editors/emacs/config/init.el
 
+* Disable Native Comp Warnings
+#+begin_src emacs-lisp
+  (setq comp-async-report-warnings-errors nil)
+#+end_src
 * Server
 ** Start emacs-server on Emacs boot
 Start the emacs server so ~emacsclient~ can connect to it.
@@ -156,6 +160,14 @@ We also install =evil-collection= so other modes in Emacs work too. These includ
     (evil-commentary-mode))
 #+end_src
 
+Get a Vim surround equivalent.
+#+begin_src emacs-lisp
+  (use-package evil-surround
+  :after (evil)
+  :config
+  (global-evil-surround-mode 1))
+#+end_src
+
 *** General
 I use general to define various keymaps based on different modes. I also define a handy function to define various leader key mappings.
 
@@ -173,93 +185,6 @@ I use general to define various keymaps based on different modes. I also define 
       :states '(normal)
       :prefix "SPC"
       :global-prefix "M-SPC"))
-#+end_src
-** Keymaps
-*** Global
-**** File
-Handy keymaps for handling files.
-#+begin_src emacs-lisp
-  (defun rkn/reload-emacs-config()
-    (interactive)
-    (load-file user-init-file))
-  
-  (rkn/keymap-define-global
-    ;; grep current file quickly
-    "/" 'consult-line
-  
-    "f" '(:ignore t :which-key "file")
-    "f f" 'find-file
-    "f d" '(:ignore t :which-key "dot")
-    "f d e" '((lambda() (interactive)(find-file "~/.config/dotfiles/modules/editors/emacs/config/emacs.org")) :which-key "dot-edit")
-    "f d i" '((lambda() (interactive)(find-file user-init-file)) :which-key "dot-edit")
-    "f d r" '((lambda() (interactive)(rkn/reload-emacs-config)) :which-key "reload-emacs-config")
-    "f d R" '((lambda() (interactive)(shell-command "dot rebuild")(rkn/reload-emacs-config)) :which-key "reload-dotfiles"))
-#+end_src
-**** Git
-Git operations
-#+begin_src emacs-lisp
-  (rkn/keymap-define-global
-    ;; grep current file quickly
-    "g" '(:ignore t :which-key "git")
-    "g g" 'magit-status)
-#+end_src
-**** Projects
-Handing switching between projects, finding files in projects etc.
-#+begin_src emacs-lisp
-  (rkn/keymap-define-global
-    ;; grep current file quickly
-    "p" '(:ignore t :which-key "project")
-    "p p" 'projectile-switch-project
-    "SPC" 'projectile-find-file)
-#+end_src
-**** Buffers
-Quick keybindings for dealing with buffers.
-#+begin_src emacs-lisp
-  (rkn/keymap-define-global
-    "b" '(:ignore t :which-key "buffer")
-    "bb" 'consult-buffer)
-#+end_src
-**** Notes
-Dealing with notes. This includes org-roam only for now.
-#+begin_src emacs-lisp
-  (rkn/keymap-define-global
-    "n" '(:ignore t :which-key "note")
-    "nr" '(:ignore t :which-key "roam")
-    "nrf" 'org-roam-find-file
-    "nri" 'org-roam-insert
-    "nrd" 'org-roam-dailies-capture-today
-    "nrD" 'org-roam-dailies-find-today)
-#+end_src
-**** Company
-#+begin_src emacs-lisp
-  (general-define-key
-   "C-SPC" 'company-complete)
-#+end_src
-*** Org-Mode
-#+begin_src emacs-lisp
-  (rkn/keymap-define-map
-    :keymaps 'org-mode-map 
-    "m" '(:ignore t :which-key "org")
-    "m SPC" 'consult-outline)
-#+end_src
-*** Nix-Mode
-#+begin_src emacs-lisp
-  (rkn/keymap-define-map
-    :keymaps 'nix-mode-map 
-    "m" '(:ignore t :which-key "nix")
-    "m f" 'nix-format-buffer)
-#+end_src
-*** Clojure-Mode
-#+begin_src emacs-lisp
-  (rkn/keymap-define-map
-    :keymaps 'clojure-mode-map 
-    "m" '(:ignore t :which-key "clojure")
-    ;; cider
-    "m c" '(:ignore t :which-key "cider")
-    "m c c" 'cider-connect-clj
-    "m e" '(:ignore t :which-key "eval")
-    "m e e" 'cider-eval-last-sexp
-    "m e c" 'cider-eval-defun-to-comment)
 #+end_src
 * Applications
 ** Completions
@@ -385,6 +310,7 @@ Allow emacs to ask for GPG password.
     :config
     (setq nix-nixfmt-bin "/home/rameezk/.nix-profile/bin/nixfmt"))
 #+end_src
+
 ** Org
 *** Org-Mode
 I use org-mode for managing this config and for tending to my Digital Garden.
@@ -420,6 +346,15 @@ My Digital Garden (or second brain, if you will) is powered by org-roam.
     (org-roam-directory "~/Dropbox/DigitalGarden")
     :config
     (setq org-roam-graph-exclude-matcher '("inbox")))
+#+end_src
+
+A nice function that uses consult to search through all notes.
+#+begin_src emacs-lisp
+  (defun rkn/org-roam-rg-search ()
+    "Search org-roam directory using consult-ripgrep. With live-preview."
+    (interactive)
+    (let ((consult-ripgrep-command "rg --null --ignore-case --type org --line-buffered --color=always --max-columns=500 --no-heading --line-number . -e ARG OPTS"))
+      (consult-ripgrep org-roam-directory)))
 #+end_src
 **** Capture Templates
 ***** Dailies
@@ -458,5 +393,136 @@ I use Olivetti for this
 The below variable needs to be in order to allow for =RET= to follow a link. If you are using Evil (like I am) you also need to unbind =RET= from Evil. This shouldn't matter since =RET= is not bound to anything useful anyway.
 #+begin_src emacs-lisp
   (setq org-return-follows-link t)
+#+end_src
+*** Turn on indent mode everywhere
+#+begin_src emacs-lisp
+  (setq org-startup-indented t)
+#+end_src
+
+*** Babel
+**** Tangling
+***** Languages to tangle
+      In order to tangle certain languages we code blocks we need to define the following:
+      #+begin_src emacs-lisp
+	(org-babel-do-load-languages
+	 'org-babel-load-languages
+	 '((emacs-lisp . t)))
+      #+end_src
+
+***** Auto-tangling
+      To enable auto-tangling on save we define a custom function.
+      #+begin_src emacs-lisp
+	(defun rkn/org-babel-tangle-dont-ask ()
+	  (when (string-equal (buffer-file-name) (expand-file-name "~/.config/dotfiles/modules/editors/emacs/config/emacs.org"))
+	    (let ((org-confirm-babel-evaluate nil))
+	      (org-babel-tangle))))
+      #+end_src
+
+      We then invoke this function as an =org-mode-hook=.
+      #+begin_src emacs-lisp
+	(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'rkn/org-babel-tangle-dont-ask
+						      'run-at-end 'only-in-org-mode)))
+      #+end_src
+** Docker
+#+begin_src emacs-lisp
+  (use-package dockerfile-mode
+    :mode "Dockerfile\\'")
+#+end_src
+** Yaml
+#+begin_src emacs-lisp
+  (use-package yaml-mode
+    :mode "\\.(yml|yaml)\\'")
+#+end_src
+* Custom Keymaps
+** Keymaps
+*** Global
+**** File
+Handy keymaps for handling files.
+#+begin_src emacs-lisp
+  (defun rkn/reload-emacs-config()
+    (interactive)
+    (load-file user-init-file))
+  
+  (rkn/keymap-define-global
+    ;; grep current file quickly
+    "/" 'consult-line
+  
+    "f" '(:ignore t :which-key "file")
+    "f f" 'find-file
+    "f d" '(:ignore t :which-key "dot")
+    "f d e" '((lambda() (interactive)(find-file "~/.config/dotfiles/modules/editors/emacs/config/emacs.org")) :which-key "dot-edit")
+    "f d i" '((lambda() (interactive)(find-file user-init-file)) :which-key "dot-edit")
+    "f d r" '((lambda() (interactive)(rkn/reload-emacs-config)) :which-key "reload-emacs-config")
+    "f d R" '((lambda() (interactive)(shell-command "dot rebuild")(rkn/reload-emacs-config)) :which-key "reload-dotfiles"))
+#+end_src
+**** Git
+Git operations
+#+begin_src emacs-lisp
+  (rkn/keymap-define-global
+    ;; grep current file quickly
+    "g" '(:ignore t :which-key "git")
+    "g g" 'magit-status)
+#+end_src
+**** Projects
+Handing switching between projects, finding files in projects etc.
+#+begin_src emacs-lisp
+  (rkn/keymap-define-global
+    ;; grep current file quickly
+    "p" '(:ignore t :which-key "project")
+    "p p" 'projectile-switch-project
+    "SPC" 'projectile-find-file)
+#+end_src
+**** Buffers
+Quick keybindings for dealing with buffers.
+#+begin_src emacs-lisp
+  (rkn/keymap-define-global
+    "b" '(:ignore t :which-key "buffer")
+    "bb" 'consult-buffer)
+#+end_src
+**** Notes
+Dealing with notes. This includes org-roam only for now.
+#+begin_src emacs-lisp
+  (rkn/keymap-define-global
+    "n" '(:ignore t :which-key "note")
+    "nr" '(:ignore t :which-key "roam")
+    "nrf" 'org-roam-find-file
+    "nri" 'org-roam-insert
+    "nrd" 'org-roam-dailies-capture-today
+    "nrD" 'org-roam-dailies-find-today
+    "nrs" 'rkn/org-roam-rg-search)
+#+end_src
+**** Company
+#+begin_src emacs-lisp
+  (general-define-key
+   "C-SPC" 'company-complete)
+#+end_src
+*** Org-Mode
+#+begin_src emacs-lisp
+  (rkn/keymap-define-map
+    :keymaps 'org-mode-map 
+    "m" '(:ignore t :which-key "org")
+    "m SPC" 'consult-outline
+    "m c" '(:ignore t :which-key "clock")
+    "m c i" 'org-clock-in
+    "m c o" 'org-clock-out)
+#+end_src
+*** Nix-Mode
+#+begin_src emacs-lisp
+  (rkn/keymap-define-map
+    :keymaps 'nix-mode-map 
+    "m" '(:ignore t :which-key "nix")
+    "m f" 'nix-format-buffer)
+#+end_src
+*** Clojure-Mode
+#+begin_src emacs-lisp
+  (rkn/keymap-define-map
+    :keymaps 'clojure-mode-map 
+    "m" '(:ignore t :which-key "clojure")
+    ;; cider
+    "m c" '(:ignore t :which-key "cider")
+    "m c c" 'cider-connect-clj
+    "m e" '(:ignore t :which-key "eval")
+    "m e e" 'cider-eval-last-sexp
+    "m e c" 'cider-eval-defun-to-comment)
 #+end_src
 

@@ -1,3 +1,5 @@
+(setq comp-async-report-warnings-errors nil)
+
 (server-start)
 
 (setq straight-use-package-by-default t)
@@ -88,6 +90,11 @@
   :config
   (evil-commentary-mode))
 
+(use-package evil-surround
+:after (evil)
+:config
+(global-evil-surround-mode 1))
+
 (use-package general
   :config
   (general-evil-setup t)
@@ -101,68 +108,6 @@
     :states '(normal)
     :prefix "SPC"
     :global-prefix "M-SPC"))
-
-(defun rkn/reload-emacs-config()
-  (interactive)
-  (load-file user-init-file))
-
-(rkn/keymap-define-global
-  ;; grep current file quickly
-  "/" 'consult-line
-
-  "f" '(:ignore t :which-key "file")
-  "f f" 'find-file
-  "f d" '(:ignore t :which-key "dot")
-  "f d e" '((lambda() (interactive)(find-file "~/.config/dotfiles/modules/editors/emacs/config/emacs.org")) :which-key "dot-edit")
-  "f d i" '((lambda() (interactive)(find-file user-init-file)) :which-key "dot-edit")
-  "f d r" '((lambda() (interactive)(rkn/reload-emacs-config)) :which-key "reload-emacs-config")
-  "f d R" '((lambda() (interactive)(shell-command "dot rebuild")(rkn/reload-emacs-config)) :which-key "reload-dotfiles"))
-
-(rkn/keymap-define-global
-  ;; grep current file quickly
-  "g" '(:ignore t :which-key "git")
-  "g g" 'magit-status)
-
-(rkn/keymap-define-global
-  ;; grep current file quickly
-  "p" '(:ignore t :which-key "project")
-  "p p" 'projectile-switch-project
-  "SPC" 'projectile-find-file)
-
-(rkn/keymap-define-global
-  "b" '(:ignore t :which-key "buffer")
-  "bb" 'consult-buffer)
-
-(rkn/keymap-define-global
-  "n" '(:ignore t :which-key "note")
-  "nr" '(:ignore t :which-key "roam")
-  "nrf" 'org-roam-find-file
-  "nri" 'org-roam-insert
-  "nrd" 'org-roam-dailies-capture-today
-  "nrD" 'org-roam-dailies-find-today)
-
-(general-define-key
- "C-SPC" 'company-complete)
-
-(rkn/keymap-define-map
-  :keymaps 'org-mode-map 
-  "m" '(:ignore t :which-key "org")
-  "m SPC" 'consult-outline)
-
-(rkn/keymap-define-map
-  :keymaps 'nix-mode-map 
-  "m" '(:ignore t :which-key "nix")
-  "m f" 'nix-format-buffer)
-
-(rkn/keymap-define-map
-  :keymaps 'clojure-mode-map 
-  "m" '(:ignore t :which-key "clojure")
-  ;; cider
-  "m c" '(:ignore t :which-key "cider")
-  "m c c" 'cider-connect-clj
-  "m e" '(:ignore t :which-key "eval")
-  "m e e" 'cider-eval-last-sexp
-  "m e c" 'cider-eval-defun-to-comment)
 
 (use-package vertico
   :init
@@ -262,6 +207,12 @@
   :config
   (setq org-roam-graph-exclude-matcher '("inbox")))
 
+(defun rkn/org-roam-rg-search ()
+  "Search org-roam directory using consult-ripgrep. With live-preview."
+  (interactive)
+  (let ((consult-ripgrep-command "rg --null --ignore-case --type org --line-buffered --color=always --max-columns=500 --no-heading --line-number . -e ARG OPTS"))
+    (consult-ripgrep org-roam-directory)))
+
 (setq org-roam-dailies-capture-templates
       '(("d"
 	 "daily"
@@ -280,3 +231,89 @@
 (use-package olivetti)
 
 (setq org-return-follows-link t)
+
+(setq org-startup-indented t)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)))
+
+(defun rkn/org-babel-tangle-dont-ask ()
+  (when (string-equal (buffer-file-name) (expand-file-name "~/.config/dotfiles/modules/editors/emacs/config/emacs.org"))
+    (let ((org-confirm-babel-evaluate nil))
+      (org-babel-tangle))))
+
+(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'rkn/org-babel-tangle-dont-ask
+					      'run-at-end 'only-in-org-mode)))
+
+(use-package dockerfile-mode
+  :mode "Dockerfile\\'")
+
+(use-package yaml-mode
+  :mode "\\.(yml|yaml)\\'")
+
+(defun rkn/reload-emacs-config()
+  (interactive)
+  (load-file user-init-file))
+
+(rkn/keymap-define-global
+  ;; grep current file quickly
+  "/" 'consult-line
+
+  "f" '(:ignore t :which-key "file")
+  "f f" 'find-file
+  "f d" '(:ignore t :which-key "dot")
+  "f d e" '((lambda() (interactive)(find-file "~/.config/dotfiles/modules/editors/emacs/config/emacs.org")) :which-key "dot-edit")
+  "f d i" '((lambda() (interactive)(find-file user-init-file)) :which-key "dot-edit")
+  "f d r" '((lambda() (interactive)(rkn/reload-emacs-config)) :which-key "reload-emacs-config")
+  "f d R" '((lambda() (interactive)(shell-command "dot rebuild")(rkn/reload-emacs-config)) :which-key "reload-dotfiles"))
+
+(rkn/keymap-define-global
+  ;; grep current file quickly
+  "g" '(:ignore t :which-key "git")
+  "g g" 'magit-status)
+
+(rkn/keymap-define-global
+  ;; grep current file quickly
+  "p" '(:ignore t :which-key "project")
+  "p p" 'projectile-switch-project
+  "SPC" 'projectile-find-file)
+
+(rkn/keymap-define-global
+  "b" '(:ignore t :which-key "buffer")
+  "bb" 'consult-buffer)
+
+(rkn/keymap-define-global
+  "n" '(:ignore t :which-key "note")
+  "nr" '(:ignore t :which-key "roam")
+  "nrf" 'org-roam-find-file
+  "nri" 'org-roam-insert
+  "nrd" 'org-roam-dailies-capture-today
+  "nrD" 'org-roam-dailies-find-today
+  "nrs" 'rkn/org-roam-rg-search)
+
+(general-define-key
+ "C-SPC" 'company-complete)
+
+(rkn/keymap-define-map
+  :keymaps 'org-mode-map 
+  "m" '(:ignore t :which-key "org")
+  "m SPC" 'consult-outline
+  "m c" '(:ignore t :which-key "clock")
+  "m c i" 'org-clock-in
+  "m c o" 'org-clock-out)
+
+(rkn/keymap-define-map
+  :keymaps 'nix-mode-map 
+  "m" '(:ignore t :which-key "nix")
+  "m f" 'nix-format-buffer)
+
+(rkn/keymap-define-map
+  :keymaps 'clojure-mode-map 
+  "m" '(:ignore t :which-key "clojure")
+  ;; cider
+  "m c" '(:ignore t :which-key "cider")
+  "m c c" 'cider-connect-clj
+  "m e" '(:ignore t :which-key "eval")
+  "m e e" 'cider-eval-last-sexp
+  "m e c" 'cider-eval-defun-to-comment)
