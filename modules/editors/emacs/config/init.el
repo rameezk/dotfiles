@@ -184,6 +184,29 @@
 
 (use-package org)
 
+(setq current-journal-file (expand-file-name (format-time-string "~/Dropbox/DigitalGarden/journals/%Y-%m-%b.org")))
+(setq org-capture-templates
+      '(("p" "Day Planning" entry (file+olp+datetree current-journal-file)
+         "* Day Planning %U
+** Thoughts / diary / fleeting notes
+** Tasks for today [/]
+*** TODO %?
+** Tasks that will satisfy end-of-the-day me [/]
+** Focus Blocks
+** Habits [/]
+- [ ] Are you satisfied with the number of pomodori?
+- [ ] Did you tend to your Digital Garden?
+- [ ] Drink 8 glasses of water [/]
+  - [ ] Glass 1
+  - [ ] Glass 2
+  - [ ] Glass 3
+  - [ ] Glass 4
+  - [ ] Glass 5
+  - [ ] Glass 6
+  - [ ] Glass 7
+  - [ ] Glass 8"
+         )))
+
 (use-package org-superstar
   :after (org)
   :config
@@ -252,6 +275,13 @@
 (use-package yaml-mode
   :mode "\\.(yml|yaml)\\'")
 
+(use-package markdown-mode
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
+
 (defun rkn/reload-emacs-config()
   (interactive)
   (load-file user-init-file))
@@ -288,8 +318,8 @@
   "nr" '(:ignore t :which-key "roam")
   "nrf" 'org-roam-find-file
   "nri" 'org-roam-insert
-  "nrd" 'org-roam-dailies-capture-today
-  "nrD" 'org-roam-dailies-find-today
+  "nrc" 'org-capture
+  "nrd" '((lambda() (interactive)(find-file (format-time-string "~/Dropbox/DigitalGarden/journals/%Y-%m-%b.org"))) :which-key "Daily Journal")
   "nrs" 'rkn/org-roam-rg-search)
 
 (general-define-key
