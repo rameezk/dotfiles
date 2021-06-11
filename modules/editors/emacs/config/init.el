@@ -152,30 +152,43 @@
   :after (flycheck-clj-kondo)
   :ensure t
   :config
-  (require 'flycheck-clj-kondo))
+  (require 'flycheck-clj-kondo)
+  (add-hook 'clojure-mode-hook 'enable-paredit-mode)
+  (add-hook 'clojurescript-mode-hook 'enable-paredit-mode))
 
 (use-package flycheck-clj-kondo)
 
-(use-package cider)
+(use-package cider
+  :config
+  (setq clojure-indent-style 'align-arguments)
+  (setq clojure-align-forms-automatically t)
+  )
 
 (use-package clj-refactor
   :ensure t
   :init
   (add-hook 'clojure-mode-hook 'clj-refactor-mode)
+  (add-hook 'clojurescript-mode-hook 'clj-refactor-mode)
   :diminish clj-refactor-mode)
+
+(use-package aggressive-indent
+  :config
+  (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
+  (add-hook 'clojurescript-mode-hook #'aggressive-indent-mode))
 
 (use-package rainbow-delimiters
   :ensure t
   :init
   (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
+  (add-hook 'clojurescript-mode-hook 'rainbow-delimiters-mode)
   :diminish rainbow-delimiters-mode)
 
 (use-package lispyville
   :after (org)
   :init
-  (general-add-hook '(emacs-lisp-mode-hook lisp-mode-hook clojure-mode-hook) #'lispyville-mode)
+  (general-add-hook '(emacs-lisp-mode-hook lisp-mode-hook clojure-mode-hook clojurescript-mode-hook) #'lispyville-mode)
   :config
-  (lispyville-set-key-theme '(operators c-w additional)))
+  (lispyville-set-key-theme '(operators c-w additional commentary slurp/barf-cp)))
 
 (use-package nix-mode
   :mode "\\.nix\\'"
@@ -282,6 +295,8 @@
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
+(add-hook 'markdown-mode-hook 'flyspell-mode)
+
 (defun rkn/reload-emacs-config()
   (interactive)
   (load-file user-init-file))
@@ -344,6 +359,9 @@
   ;; cider
   "m c" '(:ignore t :which-key "cider")
   "m c c" 'cider-connect-clj
+  "m c s" 'cider-connect-cljs
   "m e" '(:ignore t :which-key "eval")
   "m e e" 'cider-eval-last-sexp
-  "m e c" 'cider-eval-defun-to-comment)
+  "m e c" 'cider-eval-defun-to-comment
+  "m r" '(:ignore t :which-key "repl")
+  "m r n" 'cider-repl-set-ns)

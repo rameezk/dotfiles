@@ -264,11 +264,13 @@ Allow emacs to ask for GPG password.
 ** Clojure
 *** Clojure-Mode
 #+begin_src emacs-lisp
-  (use-package clojure-mode
-    :after (flycheck-clj-kondo)
-    :ensure t
-    :config
-    (require 'flycheck-clj-kondo))
+    (use-package clojure-mode
+      :after (flycheck-clj-kondo)
+      :ensure t
+      :config
+      (require 'flycheck-clj-kondo)
+      (add-hook 'clojure-mode-hook 'enable-paredit-mode)
+      (add-hook 'clojurescript-mode-hook 'enable-paredit-mode))
 #+end_src
 *** clj-kondo
 #+begin_src emacs-lisp
@@ -276,7 +278,11 @@ Allow emacs to ask for GPG password.
 #+end_src
 *** Cider
 #+begin_src emacs-lisp
-  (use-package cider)
+  (use-package cider
+    :config
+    (setq clojure-indent-style 'align-arguments)
+    (setq clojure-align-forms-automatically t)
+    )
 #+end_src
 *** clj-refactor
 #+begin_src emacs-lisp
@@ -284,7 +290,15 @@ Allow emacs to ask for GPG password.
     :ensure t
     :init
     (add-hook 'clojure-mode-hook 'clj-refactor-mode)
+    (add-hook 'clojurescript-mode-hook 'clj-refactor-mode)
     :diminish clj-refactor-mode)
+#+end_src
+*** Aggressive-Indent mode
+#+begin_src emacs-lisp
+    (use-package aggressive-indent
+      :config
+      (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
+      (add-hook 'clojurescript-mode-hook #'aggressive-indent-mode))
 #+end_src
 *** rainbow-delimiters
 #+begin_src emacs-lisp
@@ -292,6 +306,7 @@ Allow emacs to ask for GPG password.
     :ensure t
     :init
     (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
+    (add-hook 'clojurescript-mode-hook 'rainbow-delimiters-mode)
     :diminish rainbow-delimiters-mode)
 #+end_src
 *** lispyville
@@ -299,9 +314,9 @@ Allow emacs to ask for GPG password.
   (use-package lispyville
     :after (org)
     :init
-    (general-add-hook '(emacs-lisp-mode-hook lisp-mode-hook clojure-mode-hook) #'lispyville-mode)
+    (general-add-hook '(emacs-lisp-mode-hook lisp-mode-hook clojure-mode-hook clojurescript-mode-hook) #'lispyville-mode)
     :config
-    (lispyville-set-key-theme '(operators c-w additional)))
+    (lispyville-set-key-theme '(operators c-w additional commentary slurp/barf-cp)))
 #+end_src
 ** Nix
 #+begin_src emacs-lisp
@@ -467,6 +482,11 @@ The below variable needs to be in order to allow for =RET= to follow a link. If 
            ("\\.markdown\\'" . markdown-mode))
     :init (setq markdown-command "multimarkdown"))
 #+end_src
+*** Spell checking
+Enable spell checking in org-mode.
+#+begin_src emacs-lisp
+  (add-hook 'markdown-mode-hook 'flyspell-mode)
+#+end_src
 * Custom Keymaps
 ** Keymaps
 *** Global
@@ -555,8 +575,11 @@ Dealing with notes. This includes org-roam only for now.
     ;; cider
     "m c" '(:ignore t :which-key "cider")
     "m c c" 'cider-connect-clj
+    "m c s" 'cider-connect-cljs
     "m e" '(:ignore t :which-key "eval")
     "m e e" 'cider-eval-last-sexp
-    "m e c" 'cider-eval-defun-to-comment)
+    "m e c" 'cider-eval-defun-to-comment
+    "m r" '(:ignore t :which-key "repl")
+    "m r n" 'cider-repl-set-ns)
 #+end_src
 
