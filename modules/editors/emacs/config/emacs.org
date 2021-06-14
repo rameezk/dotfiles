@@ -374,7 +374,12 @@ I use =org-superstar= to make a bullets and sections look less ugly.
     :hook
     (org-mode . (lambda () (org-superstar-mode 1))))
 #+end_src
-
+*** Autolist
+#+begin_src emacs-lisp
+  (use-package org-autolist
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-autolist-mode))))  
+#+end_src
 *** Org-Roam
 My Digital Garden (or second brain, if you will) is powered by org-roam.
 #+begin_src emacs-lisp

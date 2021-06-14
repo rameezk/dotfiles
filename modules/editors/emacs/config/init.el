@@ -234,6 +234,10 @@
   :hook
   (org-mode . (lambda () (org-superstar-mode 1))))
 
+(use-package org-autolist
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-autolist-mode))))
+
 (use-package org-roam
   :after (org)
   :hook 
