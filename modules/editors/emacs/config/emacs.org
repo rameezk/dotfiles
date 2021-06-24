@@ -449,9 +449,10 @@ The below variable needs to be in order to allow for =RET= to follow a link. If 
 ***** Languages to tangle
       In order to tangle certain languages we code blocks we need to define the following:
       #+begin_src emacs-lisp
-	(org-babel-do-load-languages
-	 'org-babel-load-languages
-	 '((emacs-lisp . t)))
+        (org-babel-do-load-languages
+         'org-babel-load-languages
+         '((emacs-lisp . t)
+           (python . t)))
       #+end_src
 
 ***** Auto-tangling

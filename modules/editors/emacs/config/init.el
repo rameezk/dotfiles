@@ -276,7 +276,8 @@
 
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((emacs-lisp . t)))
+ '((emacs-lisp . t)
+   (python . t)))
 
 (defun rkn/org-babel-tangle-dont-ask ()
   (when (string-equal (buffer-file-name) (expand-file-name "~/.config/dotfiles/modules/editors/emacs/config/emacs.org"))
