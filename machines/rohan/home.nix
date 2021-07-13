@@ -20,6 +20,7 @@
 
     # tools
     ../../modules/tool/azure
+    ../../modules/tool/aws
     ../../modules/tool/kubernetes
     ../../modules/tool/media
   ];
