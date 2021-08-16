@@ -79,6 +79,8 @@ in {
       kc = "kubectx";
       kn = "kubens";
       kw = "watch kubectl";
+      kdebug =
+        "kubectl run --rm -i -t debug --image=rameezk/debuggery --restart=Never";
     };
 
     functions = {
