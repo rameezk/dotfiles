@@ -117,6 +117,25 @@ in {
         '';
       };
 
+      open_repo_in_browser = {
+
+        description = "open a git remote in default browser";
+        body = ''
+          if [ ! -d ".git" ];
+            echo "[..] Not a git repo"
+            exit 1
+          end
+
+          set -l git_remote (git remote -v | head -n 1 | awk '{print $2}')
+
+          set -l browser_remote (echo $git_remote | sed 's/.*@/http:\/\//' | sed -E 's/:[0-9]+//g' | sed 's/\.com:/\.com\//' | sed 's/\.[^.]*$//')
+
+          echo "[..] Opening $browser_remote in default browser"
+          open "$browser_remote"
+        '';
+
+      };
+
       mcd = {
         argumentNames = "directory";
         description = "create new directory and cd into it";
