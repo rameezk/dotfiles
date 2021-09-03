@@ -131,7 +131,7 @@ in {
           set -l browser_remote (echo $git_remote | sed 's/.*@/http:\/\//' | sed -E 's/:[0-9]+//g' | sed 's/\.com:/\.com\//' | sed 's/\.[^.]*$//')
 
           echo "[..] Opening $browser_remote in default browser"
-          open "$browser_remote"
+          open "$browser_remote" > /dev/null 2>&1
         '';
 
       };
