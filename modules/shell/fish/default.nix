@@ -123,7 +123,7 @@ in {
         body = ''
           if [ ! -d ".git" ];
             echo "[..] Not a git repo"
-            exit 1
+            return 1
           end
 
           set -l git_remote (git remote -v | head -n 1 | awk '{print $2}')
