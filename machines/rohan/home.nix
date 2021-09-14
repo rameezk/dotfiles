@@ -17,7 +17,6 @@
     # lang
     ../../modules/language/python
     ../../modules/language/clojure
-    ../../modules/language/latex
 
     # tools
     ../../modules/tool/azure
