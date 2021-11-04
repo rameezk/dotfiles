@@ -24,6 +24,10 @@ in {
     };
     includes = [
       {
+        condition = "gitdir:${secrets.git.work.base_repo_dir}";
+        contents = { credential = { helper = "cache --timeout 18000"; }; };
+      }
+      {
         condition = "gitdir:~/code/personal/";
         contents = {
           user = {
