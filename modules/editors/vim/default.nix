@@ -7,6 +7,7 @@
       vim-airline
       vim-commentary
       gruvbox
+      nim-vim
     ];
     extraConfig = ''
       set background=dark " Better colours for darker backgrounds
