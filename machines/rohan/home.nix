@@ -17,6 +17,7 @@
     # lang
     ../../modules/language/python
     ../../modules/language/clojure
+    ../../modules/language/nim
 
     # tools
     ../../modules/tool/azure
