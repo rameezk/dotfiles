@@ -1,5 +1,5 @@
 { pkgs, ... }: {
 
-  home.packages = with pkgs; [ nim ];
+  home.packages = with pkgs; [ nim nimlsp ];
 
 }

@@ -234,6 +234,20 @@ Company is a text completion framework for Emacs. It stands for "COMplete ANYthi
     :config
     (global-company-mode))
 #+end_src
+*** LSP
+**** lsp-mode
+#+begin_src emacs-lisp
+  (use-package lsp-mode
+  :init
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  (setq lsp-keymap-prefix "C-c l")
+  :hook ((lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
+#+end_src
+**** lsp-ui
+#+begin_src emacs-lisp
+  (use-package lsp-ui :commands lsp-ui-mode)
+#+end_src
 ** Spell Checking
 *** aspell
 Set ispell to use the aspell binary.
@@ -324,6 +338,14 @@ Allow emacs to ask for GPG password.
     (general-add-hook '(emacs-lisp-mode-hook lisp-mode-hook clojure-mode-hook clojurescript-mode-hook) #'lispyville-mode)
     :config
     (lispyville-set-key-theme '(operators c-w additional commentary slurp/barf-cp)))
+#+end_src
+** Nim
+*** nim-mode
+#+begin_src emacs-lisp
+  (use-package nim-mode
+    :ensure t
+    :hook
+    (nim-mode . lsp))
 #+end_src
 ** Nix
 #+begin_src emacs-lisp

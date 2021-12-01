@@ -138,6 +138,15 @@
   :config
   (global-company-mode))
 
+(use-package lsp-mode
+:init
+;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+(setq lsp-keymap-prefix "C-c l")
+:hook ((lsp-mode . lsp-enable-which-key-integration))
+:commands lsp)
+
+(use-package lsp-ui :commands lsp-ui-mode)
+
 (setq ispell-program-name "aspell")
 
 (use-package flycheck
@@ -194,6 +203,11 @@
   (general-add-hook '(emacs-lisp-mode-hook lisp-mode-hook clojure-mode-hook clojurescript-mode-hook) #'lispyville-mode)
   :config
   (lispyville-set-key-theme '(operators c-w additional commentary slurp/barf-cp)))
+
+(use-package nim-mode
+  :ensure t
+  :hook
+  (nim-mode . lsp))
 
 (use-package nix-mode
   :mode "\\.nix\\'"
