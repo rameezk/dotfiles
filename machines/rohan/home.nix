@@ -18,6 +18,7 @@
     ../../modules/language/python
     ../../modules/language/clojure
     ../../modules/language/nim
+    ../../modules/language/nodejs
 
     # tools
     ../../modules/tool/azure
