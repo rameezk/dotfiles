@@ -1,1 +1,1 @@
-{ pkgs, ... }: { home.packages = with pkgs; [ clojure clj-kondo ]; }
+{ pkgs, ... }: { home.packages = with pkgs; [ clojure clj-kondo leiningen ]; }
