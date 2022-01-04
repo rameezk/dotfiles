@@ -19,6 +19,7 @@
     ../../modules/language/clojure
     ../../modules/language/nim
     ../../modules/language/nodejs
+    ../../modules/language/java
 
     # tools
     ../../modules/tool/azure
