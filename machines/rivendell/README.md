@@ -3,5 +3,6 @@
 | Item    | Description |
 |---------|-------------|
 | OS      | macOS       |
-| Version | Big Sur     |
+| Version | Catalina    |
+| Arch    | M1          |
 | Type    | Personal    |
