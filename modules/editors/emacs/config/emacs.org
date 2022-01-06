@@ -229,6 +229,13 @@ Consult provides some extra completion for built-in emacs functions.
 #+begin_src emacs-lisp
   (use-package consult)
 #+end_src
+*** Marginalia
+Provides helpful annotations to commands/functions. For files it also displays file permissions etc.
+#+begin_src emacs-lisp
+  (use-package marginalia
+    :init
+    (marginalia-mode))
+#+end_src
 *** Company
 Company is a text completion framework for Emacs. It stands for "COMplete ANYthing".
 #+begin_src emacs-lisp

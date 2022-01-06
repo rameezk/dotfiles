@@ -134,6 +134,10 @@
 
 (use-package consult)
 
+(use-package marginalia
+  :init
+  (marginalia-mode))
+
 (use-package company
   :config
   (global-company-mode))
