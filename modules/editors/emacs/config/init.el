@@ -112,7 +112,8 @@
   (general-create-definer rkn/keymap-define-map
     :states '(normal)
     :prefix "SPC"
-    :global-prefix "M-SPC"))
+    :global-prefix "M-SPC"
+    :major-modes t))
 
 (setq ispell-program-name "aspell")
 
@@ -388,11 +389,6 @@
   "m c o" 'org-clock-out)
 
 (rkn/keymap-define-map
-  :keymaps 'nix-mode-map 
-  "m" '(:ignore t :which-key "nix")
-  "m f" 'nix-format-buffer)
-
-(rkn/keymap-define-map
   :keymaps 'clojure-mode-map 
   "m" '(:ignore t :which-key "clojure")
   ;; cider
@@ -404,3 +400,8 @@
   "m e c" 'cider-eval-defun-to-comment
   "m r" '(:ignore t :which-key "repl")
   "m r n" 'cider-repl-set-ns)
+
+(rkn/keymap-define-map
+  :keymaps 'nix-mode-map
+  "m" '(:ignore t :which-key "nix")
+  "m f" 'nix-format-buffer)
