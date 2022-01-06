@@ -310,7 +310,11 @@ Company is a text completion framework for Emacs. It stands for "COMplete ANYthi
 **** GPG
 Allow emacs to ask for GPG password.
 #+begin_src emacs-lisp
-  (setq epa-pinentry-mode 'loopback)
+  (use-package pinentry
+    :config
+  
+    (setq epa-pinentry-mode 'loopback)
+    (pinentry-start))
 #+end_src
 * Languages
 ** Clojure

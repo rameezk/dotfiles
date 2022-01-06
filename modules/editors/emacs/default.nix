@@ -20,5 +20,8 @@
 
     # markdown
     multimarkdown
+
+    # gpg
+    pinentry-emacs
   ];
 }

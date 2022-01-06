@@ -175,7 +175,11 @@
 
 (use-package magit)
 
-(setq epa-pinentry-mode 'loopback)
+(use-package pinentry
+  :config
+
+  (setq epa-pinentry-mode 'loopback)
+  (pinentry-start))
 
 (use-package clojure-mode
   :after (flycheck-clj-kondo)
