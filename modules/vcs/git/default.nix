@@ -49,6 +49,7 @@ in {
     extraConfig = {
       user = { signingkey = secrets.user.work.gpgFingerprint; };
       commit = { gpgsign = true; };
+      init = { defaultBranch = "master"; };
     };
     ignores = [ "*~" "*.swp" ".idea/" "*.orig" ".#*" ];
   };
