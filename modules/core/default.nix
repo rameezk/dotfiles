@@ -1,3 +1,6 @@
 { pkgs, ... }: {
-  home.packages = with pkgs; [ nixfmt python39 python39Packages.typer ];
+  home.packages = with pkgs; [
+    nixfmt
+    (python39.withPackages (ps: with ps; [ typer ]))
+  ];
 }
