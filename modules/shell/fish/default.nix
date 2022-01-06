@@ -112,7 +112,7 @@ in {
         argumentNames = "repo_url";
         description = "clone e4m repo to correct directory";
         body = ''
-          set -l clone_to_path (echo "$repo_url" | sed 's/ssh:\/\/git@${secrets.git.work.e4m_base_url}/\/home\/rameezk\/code/' | sed 's/\.git//')
+          set -l clone_to_path (echo "$repo_url" | sed 's/https:\/\/${secrets.git.work.e4m_base_url}/\/home\/rameezk\/code/' | sed 's/\.git//')
           git clone "$repo_url" "$clone_to_path"
         '';
       };
