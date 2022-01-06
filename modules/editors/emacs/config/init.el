@@ -143,7 +143,9 @@
   :init
   (savehist-mode))
 
-(use-package consult)
+(use-package consult
+  :init
+  (setq consult-project-root-function #'projectile-project-root))
 
 (use-package marginalia
   :init

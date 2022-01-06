@@ -249,7 +249,9 @@ This puts your last used command/completion to the top of the list.
 *** Consult
 Consult provides some extra completion for built-in emacs functions.
 #+begin_src emacs-lisp
-  (use-package consult)
+  (use-package consult
+    :init
+    (setq consult-project-root-function #'projectile-project-root))
 #+end_src
 *** Marginalia
 Provides helpful annotations to commands/functions. For files it also displays file permissions etc.
