@@ -231,6 +231,7 @@ Consult provides some extra completion for built-in emacs functions.
 #+end_src
 *** Marginalia
 Provides helpful annotations to commands/functions. For files it also displays file permissions etc.
+
 #+begin_src emacs-lisp
   (use-package marginalia
     :init
