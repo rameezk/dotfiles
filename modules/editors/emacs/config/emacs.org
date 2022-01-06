@@ -1,6 +1,8 @@
 #+TITLE: Rameez's Emacs Config
 #+PROPERTY: header-args:emacs-lisp :tangle ~/.config/dotfiles/modules/editors/emacs/config/init.el
 
+* Introduction
+I've declared [[https://www.emacswiki.org/emacs/DotEmacsBankruptcy][configuration bankruptcy]] many times before this. Here's to hoping a literate configuration sticks.
 * Disable Native Comp Warnings
 #+begin_src emacs-lisp
   (setq comp-async-report-warnings-errors nil)
