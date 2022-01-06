@@ -11,9 +11,9 @@ As such I've declared my old .files as __old-school-thinking__. But you can stil
 
 ## Installation
 1. Clone this repo to `~/.config/dotfiles`
-```sh
-git clone git@github.com:rameezk/dotfiles.git ~/.config/dotfiles
-```
+   ```sh
+   git clone git@github.com:rameezk/dotfiles.git ~/.config/dotfiles
+   ```
 
 2. cd to `~/.config/dotfiles` and execute the following
 ```sh
