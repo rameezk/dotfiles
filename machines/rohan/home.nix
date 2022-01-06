@@ -4,6 +4,9 @@
   # Opt-in to modules by including theme here.
   #  Is there a better way to do this per machine?
   imports = [
+    # core (needed as a bare minimum)
+    ../../modules/core
+
     # shell
     ../../modules/shell
 
