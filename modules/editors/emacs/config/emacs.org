@@ -237,6 +237,24 @@ Provides helpful annotations to commands/functions. For files it also displays f
     :init
     (marginalia-mode))
 #+end_src
+**** Icons
+For some pretty eye candy.
+
+After installation you need to install icon fonts with:
+#+begin_quote
+M-x all-the-icons-install-fonts
+#+end_quote
+
+#+begin_src emacs-lisp
+  (use-package all-the-icons
+    :if (display-graphic-p))
+  
+  (use-package all-the-icons-completion
+    :init
+    (all-the-icons-completion-mode)
+    (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
+#+end_src
+
 *** Company
 Company is a text completion framework for Emacs. It stands for "COMplete ANYthing".
 #+begin_src emacs-lisp
