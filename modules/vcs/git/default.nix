@@ -54,6 +54,32 @@ in {
     ignores = [ "*~" "*.swp" ".idea/" "*.orig" ".#*" ];
   };
 
+  home.file.".gnupg/pinentry-switcher".source =
+    pkgs.writeShellScript "pinentry-switcher" ''
+      case $PINENTRY_USER_DATA in
+        emacs)
+          exec ~/.nix-profile/bin/pinentry-emacs "$@"
+          ;;
+        none)
+          exit 1
+          ;;
+        *)
+          exec pinentry-curses "$@"
+      esac
+    '';
+
+  home.file.".gnupg/gpg-agent.conf".text = ''
+    pinentry-program /home/rameezk/.gnupg/pinentry-switcher
+    allow-loopback-entry
+    default-cache-ttl 18000
+    max-cache-ttl 18000
+    enable-ssh-support
+  '';
+
+  home.file.".gnupg/gpg.conf".text = ''
+    use-agent
+  '';
+
   home.packages = with pkgs; [
     git-crypt # encrypting git repos transparently
     pre-commit # a framework for dealing with git hooks
