@@ -361,7 +361,7 @@
   ;; grep current file quickly
   "p" '(:ignore t :which-key "project")
   "p p" 'projectile-switch-project
-  "SPC" 'projectile-find-file)
+  "SPC" 'consult-find)
 
 (rkn/keymap-define-global
   "b" '(:ignore t :which-key "buffer")
