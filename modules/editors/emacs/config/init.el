@@ -212,7 +212,7 @@
 (use-package nix-mode
   :mode "\\.nix\\'"
   :config
-  (setq nix-nixfmt-bin "/home/rameezk/.nix-profile/bin/nixfmt"))
+  (setq nix-nixfmt-bin "~/.nix-profile/bin/nixfmt"))
 
 (use-package org)
 
@@ -261,6 +261,7 @@
   :after (org)
   :hook 
   (after-init . org-roam-mode)
+  (after-init . org-roam-db-autosync-mode)
   :custom
   (org-roam-directory "~/Dropbox/DigitalGarden")
   :config
@@ -355,8 +356,8 @@
 (rkn/keymap-define-global
   "n" '(:ignore t :which-key "note")
   "nr" '(:ignore t :which-key "roam")
-  "nrf" 'org-roam-find-file
-  "nri" 'org-roam-insert
+  "nrf" 'org-roam-node-find
+  "nri" 'org-roam-node-insert
   "nrc" 'org-capture
   "nrd" '((lambda() (interactive)(find-file (format-time-string "~/Dropbox/DigitalGarden/journals/%Y-%m-%b.org"))) :which-key "Daily Journal")
   "nrs" 'rkn/org-roam-rg-search)
