@@ -1,6 +1,7 @@
 { pkgs, ... }: {
-  home.packages = with pkgs; [
-    nixfmt
-    (python39.withPackages (ps: with ps; [ typer ]))
-  ];
+  home.packages = with pkgs;
+    [
+      # Needed to run dot binary
+      (python39.withPackages (ps: with ps; [ typer ]))
+    ];
 }
