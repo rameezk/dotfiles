@@ -374,6 +374,25 @@ Allow emacs to ask for GPG password.
     :config
     (lispyville-set-key-theme '(operators c-w additional commentary slurp/barf-cp)))
 #+end_src
+** Docker
+#+begin_src emacs-lisp
+  (use-package dockerfile-mode
+    :mode "Dockerfile\\'")
+#+end_src
+** Markdown
+#+begin_src emacs-lisp
+  (use-package markdown-mode
+    :commands (markdown-mode gfm-mode)
+    :mode (("README\\.md\\'" . gfm-mode)
+           ("\\.md\\'" . markdown-mode)
+           ("\\.markdown\\'" . markdown-mode))
+    :init (setq markdown-command "multimarkdown"))
+#+end_src
+*** Spell checking
+Enable spell checking in org-mode.
+#+begin_src emacs-lisp
+  (add-hook 'markdown-mode-hook 'flyspell-mode)
+#+end_src
 ** Nim
 *** nim-mode
 #+begin_src emacs-lisp
@@ -534,29 +553,26 @@ The below variable needs to be in order to allow for =RET= to follow a link. If 
 	(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'rkn/org-babel-tangle-dont-ask
 						      'run-at-end 'only-in-org-mode)))
       #+end_src
-** Docker
+** Python
+*** Use PyRight for Python LSP
 #+begin_src emacs-lisp
-  (use-package dockerfile-mode
-    :mode "Dockerfile\\'")
+  (use-package lsp-pyright
+    :ensure t
+    :hook (python-mode . (lambda ()
+                           (require 'lsp-pyright)
+                           (lsp))))  ; or lsp-deferred
+#+end_src
+*** Auto Formatting using Black
+#+begin_src emacs-lisp
+  (use-package python-black
+    :demand t
+    :after python
+    :hook (python-mode . python-black-on-save-mode))
 #+end_src
 ** Yaml
 #+begin_src emacs-lisp
   (use-package yaml-mode
     :mode "\\.(yml|yaml)\\'")
-#+end_src
-** Markdown
-#+begin_src emacs-lisp
-  (use-package markdown-mode
-    :commands (markdown-mode gfm-mode)
-    :mode (("README\\.md\\'" . gfm-mode)
-           ("\\.md\\'" . markdown-mode)
-           ("\\.markdown\\'" . markdown-mode))
-    :init (setq markdown-command "multimarkdown"))
-#+end_src
-*** Spell checking
-Enable spell checking in org-mode.
-#+begin_src emacs-lisp
-  (add-hook 'markdown-mode-hook 'flyspell-mode)
 #+end_src
 * Custom Keymaps
 ** Keymaps

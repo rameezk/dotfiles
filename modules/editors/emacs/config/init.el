@@ -223,6 +223,18 @@
   :config
   (lispyville-set-key-theme '(operators c-w additional commentary slurp/barf-cp)))
 
+(use-package dockerfile-mode
+  :mode "Dockerfile\\'")
+
+(use-package markdown-mode
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
+
+(add-hook 'markdown-mode-hook 'flyspell-mode)
+
 (use-package nim-mode
   :ensure t
   :hook
@@ -326,20 +338,19 @@
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'rkn/org-babel-tangle-dont-ask
 					      'run-at-end 'only-in-org-mode)))
 
-(use-package dockerfile-mode
-  :mode "Dockerfile\\'")
+(use-package lsp-pyright
+  :ensure t
+  :hook (python-mode . (lambda ()
+                         (require 'lsp-pyright)
+                         (lsp))))  ; or lsp-deferred
+
+(use-package python-black
+  :demand t
+  :after python
+  :hook (python-mode . python-black-on-save-mode))
 
 (use-package yaml-mode
   :mode "\\.(yml|yaml)\\'")
-
-(use-package markdown-mode
-  :commands (markdown-mode gfm-mode)
-  :mode (("README\\.md\\'" . gfm-mode)
-         ("\\.md\\'" . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode))
-  :init (setq markdown-command "multimarkdown"))
-
-(add-hook 'markdown-mode-hook 'flyspell-mode)
 
 (defun rkn/reload-emacs-config()
   (interactive)
