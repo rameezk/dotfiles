@@ -10,14 +10,25 @@ As such I've declared my old .files as __old-school-thinking__. But you can stil
 2. [Home Manager](https://github.com/nix-community/home-manager)
 
 ## Installation
-Clone this repo to `~/.config/dotfiles`
+1. Clone this repo to `~/.config/dotfiles`
 ```sh
 git clone git@github.com:rameezk/dotfiles.git ~/.config/dotfiles
 ```
 
-Symlink `home.nix` (not sure if symlinking makes sense yet).
+2. cd to `~/.config/dotfiles` and execute the following
 ```sh
-ln -sfv ./home.nix ~/.config/nixpkgs/home.nix
+nix-shell
+```
+This will give you the bare minimum packages to execute the `dot` binary in the next step.
+
+3. Specify machine in file `.machine`. You can find machines in the `./machines/` directory.
+```sh
+echo "<machine>" > .machine
+```
+
+4. Execute the environment rebuild
+```sh
+./bin/dot rebuild
 ```
 
 ## Nice to have
