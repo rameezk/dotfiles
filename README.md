@@ -16,20 +16,20 @@ As such I've declared my old .files as __old-school-thinking__. But you can stil
    ```
 
 2. cd to `~/.config/dotfiles` and execute the following
-```sh
-nix-shell
-```
-This will give you the bare minimum packages to execute the `dot` binary in the next step.
+   ```sh
+   nix-shell
+   ```
+   This will give you the bare minimum packages to execute the `dot` binary in the next step.
 
 3. Specify machine in file `.machine`. You can find machines in the `./machines/` directory.
-```sh
-echo "<machine>" > .machine
-```
+   ```sh
+   echo "<machine>" > .machine
+   ```
 
 4. Execute the environment rebuild
-```sh
-./bin/dot rebuild
-```
+   ```sh
+   ./bin/dot rebuild
+   ```
 
 ## Nice to have
 ### pre-commit hooks
