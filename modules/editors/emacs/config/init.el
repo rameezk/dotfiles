@@ -114,6 +114,17 @@
     :prefix "SPC"
     :global-prefix "M-SPC"))
 
+(setq ispell-program-name "aspell")
+
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
+
+(use-package projectile
+  :diminish projectile-mode
+  :config
+  (projectile-mode))
+
 (use-package vertico
   :init
   (vertico-mode)
@@ -158,17 +169,6 @@
 :commands lsp)
 
 (use-package lsp-ui :commands lsp-ui-mode)
-
-(setq ispell-program-name "aspell")
-
-(use-package flycheck
-  :ensure t
-  :init (global-flycheck-mode))
-
-(use-package projectile
-  :diminish projectile-mode
-  :config
-  (projectile-mode))
 
 (use-package magit)
 

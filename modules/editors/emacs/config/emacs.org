@@ -196,6 +196,28 @@ I use general to define various keymaps based on different modes. I also define 
       :global-prefix "M-SPC"))
 #+end_src
 * Applications
+** Spell Checking
+*** aspell
+Set ispell to use the aspell binary.
+#+begin_src emacs-lisp
+  (setq ispell-program-name "aspell")
+#+end_src
+** Syntax Checking
+*** Flycheck
+#+begin_src emacs-lisp
+  (use-package flycheck
+    :ensure t
+    :init (global-flycheck-mode))
+#+end_src
+** Projects
+*** Projectile
+For jumping between git projects quickly.
+#+begin_src emacs-lisp
+  (use-package projectile
+    :diminish projectile-mode
+    :config
+    (projectile-mode))
+#+end_src
 ** Completions
 *** Vertico
 Use a lightweight completion engine such as vertico.
@@ -275,28 +297,6 @@ Company is a text completion framework for Emacs. It stands for "COMplete ANYthi
 **** lsp-ui
 #+begin_src emacs-lisp
   (use-package lsp-ui :commands lsp-ui-mode)
-#+end_src
-** Spell Checking
-*** aspell
-Set ispell to use the aspell binary.
-#+begin_src emacs-lisp
-  (setq ispell-program-name "aspell")
-#+end_src
-** Syntax Checking
-*** Flycheck
-#+begin_src emacs-lisp
-  (use-package flycheck
-    :ensure t
-    :init (global-flycheck-mode))
-#+end_src
-** Projects
-*** Projectile
-For jumping between git projects quickly.
-#+begin_src emacs-lisp
-  (use-package projectile
-    :diminish projectile-mode
-    :config
-    (projectile-mode))
 #+end_src
 ** VCS
 *** Git
