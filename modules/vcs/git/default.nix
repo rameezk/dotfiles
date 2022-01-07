@@ -70,10 +70,11 @@ in {
 
   home.file.".gnupg/gpg-agent.conf".text = ''
     pinentry-program /home/rameezk/.gnupg/pinentry-switcher
-    allow-loopback-entry
     default-cache-ttl 18000
     max-cache-ttl 18000
     enable-ssh-support
+    allow-emacs-pinentry
+    allow-loopback-pinentry
   '';
 
   home.file.".gnupg/gpg.conf".text = ''
