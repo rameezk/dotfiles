@@ -27,7 +27,7 @@
   programs.home-manager.enable = true;
 
   # Packages
-  home.packages = with pkgs; [ nixUnstable nixfmt ];
+  home.packages = with pkgs; [ nixUnstable cachix nixfmt ];
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
