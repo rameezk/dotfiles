@@ -428,6 +428,13 @@ I use org-mode for managing this config and for tending to my Digital Garden.
 #+begin_src emacs-lisp
   (use-package org)
 #+end_src
+**** Fix source block indentation
+This fixes the strange indentation in src blocks after hitting the return key in org files.
+#+begin_src emacs-lisp
+(setq org-edit-src-content-indentation 0
+      org-src-tab-acts-natively t
+      org-src-preserve-indentation t)
+#+end_src
 *** Capture Templates
 #+begin_src emacs-lisp
   (setq current-journal-file (expand-file-name (format-time-string "~/Dropbox/DigitalGarden/journals/%Y-%m-%b.org")))
