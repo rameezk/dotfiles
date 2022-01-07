@@ -1,6 +1,1 @@
-{ pkgs, ... }: {
-  home.packages = with pkgs;
-    [
-      fira-code
-    ];
-}
+{ pkgs, ... }: { home.packages = with pkgs; [ fira-code ]; }

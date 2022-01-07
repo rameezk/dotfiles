@@ -1,6 +1,12 @@
 { config, pkgs, lib, ... }:
 
 {
+  # setup cachix
+  caches.cachix = [{
+    name = "nix-community";
+    sha256 = "00lpx4znr4dd0cc4w4q8fl97bdp7q19z1d3p50hcfxy26jz5g21g";
+  }];
+
   # Opt-in to modules by including theme here.
   #  Is there a better way to do this per machine?
   imports = [
@@ -12,7 +18,7 @@
 
     # editors
     ../../modules/editors/font
-    #../../modules/editors/emacs
+    ../../modules/editors/emacs
     ../../modules/editors/vim
 
     # vcs
