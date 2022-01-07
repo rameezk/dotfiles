@@ -5,13 +5,13 @@
 I've declared [[https://www.emacswiki.org/emacs/DotEmacsBankruptcy][configuration bankruptcy]] many times before this. Here's to hoping a literate configuration sticks.
 * Disable Native Comp Warnings
 #+begin_src emacs-lisp
-  (setq comp-async-report-warnings-errors nil)
+(setq comp-async-report-warnings-errors nil)
 #+end_src
 * Server
 ** Start emacs-server on Emacs boot
 Start the emacs server so ~emacsclient~ can connect to it.
 #+begin_src emacs-lisp
-  (server-start)
+(server-start)
 #+end_src
 * Package Management
 ** straight.el
@@ -19,113 +19,113 @@ I use [[https://github.com/raxod502/straight.el][straight.el]] to manage my pack
 
 Enable straight to use =use-package= by default before bootstrapping.
 #+begin_src emacs-lisp
-  (setq straight-use-package-by-default t)
+(setq straight-use-package-by-default t)
 #+end_src
 
 We bootstrap straight.el with the following.
 #+begin_src emacs-lisp
-  (defvar bootstrap-version)
-  (let ((bootstrap-file
-	 (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-	(bootstrap-version 5))
-    (unless (file-exists-p bootstrap-file)
-      (with-current-buffer
-	  (url-retrieve-synchronously
-	   "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-	   'silent 'inhibit-cookies)
-	(goto-char (point-max))
-	(eval-print-last-sexp)))
-    (load bootstrap-file nil 'nomessage))
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 #+end_src
 
 I use the =use-package= straight integration to make switching back to =use-package= easier. First we install =use-package= with straight.el.
 #+begin_src emacs-lisp
-  (straight-use-package 'use-package)
+(straight-use-package 'use-package)
 #+end_src
 * Interface
 ** Startup Message
 Disable startup message.
 #+begin_src emacs-lisp
-  (setq inhibit-startup-message t)
+(setq inhibit-startup-message t)
 #+end_src
 ** Scrollbar
 Disable the scrollbar
 #+begin_src emacs-lisp
-  (scroll-bar-mode -1)
+(scroll-bar-mode -1)
 #+end_src
 ** Toolbar
 Disable the toolbar
 #+begin_src emacs-lisp
-  (tool-bar-mode -1)
+(tool-bar-mode -1)
 #+end_src
 ** Menu bar
 Disable the menu bar.
 #+begin_src emacs-lisp
-  (menu-bar-mode -1)
+(menu-bar-mode -1)
 #+end_src
 ** Font
 #+begin_src emacs-lisp
-  (set-face-attribute 'default nil :font "JetbrainsMono Nerd Font" :height 160)
+(set-face-attribute 'default nil :font "JetbrainsMono Nerd Font" :height 160)
 #+end_src
 ** Theme
 *** Doom Themes
 I like Doom Themes because they offer the best integration with various syntaxes.
 #+begin_src emacs-lisp
-  ;; (use-package doom-themes
-  ;;   :config
-  ;;   ;; Global settings (defaults)
-  ;;   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-  ;;         doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  ;;   ;;(load-theme 'doom-gruvbox t)
-  
-  ;;   ;; Enable flashing mode-line on errors
-  ;;   (doom-themes-visual-bell-config)
-  ;;   ;; Corrects (and improves) org-mode's native fontification.
-  ;;   (doom-themes-org-config))
+;; (use-package doom-themes
+;;   :config
+;;   ;; Global settings (defaults)
+;;   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+;;         doom-themes-enable-italic t) ; if nil, italics is universally disabled
+;;   ;;(load-theme 'doom-gruvbox t)
+
+;;   ;; Enable flashing mode-line on errors
+;;   (doom-themes-visual-bell-config)
+;;   ;; Corrects (and improves) org-mode's native fontification.
+;;   (doom-themes-org-config))
 #+end_src
 *** Zenburn
 The GOAT.
 #+begin_src emacs-lisp
-  (use-package zenburn-theme
-    :config
-    (setq zenburn-use-variable-pitch t)
-    ;; scale headings in org-mode
-    (setq zenburn-scale-org-headlines t)
-    ;; scale headings in outline-mode
-    (setq zenburn-scale-outline-headlines t)
+(use-package zenburn-theme
+  :config
+  (setq zenburn-use-variable-pitch t)
+  ;; scale headings in org-mode
+  (setq zenburn-scale-org-headlines t)
+  ;; scale headings in outline-mode
+  (setq zenburn-scale-outline-headlines t)
   
-    ;; enable theme
-    (load-theme 'zenburn t))
+  ;; enable theme
+  (load-theme 'zenburn t))
 #+end_src
 *** Poet
 #+begin_src emacs-lisp
-  ;; (use-package poet-theme
-  ;;   :config
-  ;;   ;; enable theme
-  ;;   (load-theme 'poet t))
+;; (use-package poet-theme
+;;   :config
+;;   ;; enable theme
+;;   (load-theme 'poet t))
 #+end_src
 ** Modeline
 *** Doom Modeline
 #+begin_src emacs-lisp
-  (use-package doom-modeline
-    :config
-    (doom-modeline-mode 1))
+(use-package doom-modeline
+  :config
+  (doom-modeline-mode 1))
 #+end_src
 ** Keybinding panel
 *** which-key
 which-key is great for getting an overview of what keybindings are available.
 #+begin_src emacs-lisp
-  (use-package which-key
-    :init (which-key-mode)
-    :diminish which-key-mode
-    :config
-    (setq which-key-idle-delay 0.3))
+(use-package which-key
+  :init (which-key-mode)
+  :diminish which-key-mode
+  :config
+  (setq which-key-idle-delay 0.3))
 #+end_src
 ** Warnings
 *** Native-comp
 With native comp enabled there tends to be a lot of annoying warnings. To not go insane I'll turn this off.
 #+begin_src emacs-lisp
-  (setq comp-async-report-warnings-errors nil)
+(setq comp-async-report-warnings-errors nil)
 #+end_src
 
 * Keybindings
@@ -133,45 +133,45 @@ With native comp enabled there tends to be a lot of annoying warnings. To not go
 *** Evil
 For undo/redo to work nicely with Evil mode we use =undo-tree=.
 #+begin_src emacs-lisp
-  (use-package undo-tree
-    :ensure t
-    :after evil
-    :diminish
-    :config
-    (evil-set-undo-system 'undo-tree)
-    (global-undo-tree-mode 1))   
+(use-package undo-tree
+  :ensure t
+  :after evil
+  :diminish
+  :config
+  (evil-set-undo-system 'undo-tree)
+  (global-undo-tree-mode 1))   
 #+end_src
     
 I grew up on Vim keybindings, so Evil at heart.
 #+begin_src emacs-lisp
-  (use-package evil
-    :init
-    (setq evil-want-integration t)
-    (setq evil-want-keybinding nil)
-    :config
-    (evil-mode t)
-    (with-eval-after-load 'evil-maps
-      (define-key evil-motion-state-map (kbd "RET") nil)))
+(use-package evil
+  :init
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
+  :config
+  (evil-mode t)
+  (with-eval-after-load 'evil-maps
+    (define-key evil-motion-state-map (kbd "RET") nil)))
 #+end_src
 
 We also install =evil-collection= so other modes in Emacs work too. These include magit, calendar etc.
 #+begin_src emacs-lisp
-  (use-package evil-collection
-    :after evil
-    :config
-    (evil-collection-init))
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init))
 #+end_src
 
 =evil-commentary= provides a simular =gcc= keybinding as in Vim.
 #+begin_src emacs-lisp
-  (use-package evil-commentary
-    :config
-    (evil-commentary-mode))
+(use-package evil-commentary
+  :config
+  (evil-commentary-mode))
 #+end_src
 
 Get a Vim surround equivalent.
 #+begin_src emacs-lisp
-  (use-package evil-surround
+(use-package evil-surround
   :after (evil)
   :config
   (global-evil-surround-mode 1))
@@ -181,86 +181,86 @@ Get a Vim surround equivalent.
 I use general to define various keymaps based on different modes. I also define a handy function to define various leader key mappings.
 
 #+begin_src emacs-lisp
-  (use-package general
-    :config
-    (general-evil-setup t)
+(use-package general
+  :config
+  (general-evil-setup t)
   
-    (general-create-definer rkn/keymap-define-global
-      :keymaps '(normal insert visual emacs)
-      :prefix "SPC"
-      :global-prefix "M-SPC")
+  (general-create-definer rkn/keymap-define-global
+    :keymaps '(normal insert visual emacs)
+    :prefix "SPC"
+    :global-prefix "M-SPC")
   
-    (general-create-definer rkn/keymap-define-map
-      :states '(normal)
-      :prefix "SPC"
-      :global-prefix "M-SPC"
-      :major-modes t))
+  (general-create-definer rkn/keymap-define-map
+    :states '(normal)
+    :prefix "SPC"
+    :global-prefix "M-SPC"
+    :major-modes t))
 #+end_src
 * Applications
 ** Spell Checking
 *** aspell
 Set ispell to use the aspell binary.
 #+begin_src emacs-lisp
-  (setq ispell-program-name "aspell")
+(setq ispell-program-name "aspell")
 #+end_src
 ** Syntax Checking
 *** Flycheck
 #+begin_src emacs-lisp
-  (use-package flycheck
-    :ensure t
-    :init (global-flycheck-mode))
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
 #+end_src
 ** Projects
 *** Projectile
 For jumping between git projects quickly.
 #+begin_src emacs-lisp
-  (use-package projectile
-    :diminish projectile-mode
-    :config
-    (projectile-mode))
+(use-package projectile
+  :diminish projectile-mode
+  :config
+  (projectile-mode))
 #+end_src
 ** Completions
 *** Vertico
 Use a lightweight completion engine such as vertico.
 #+begin_src emacs-lisp
-  (use-package vertico
-    :init
-    (vertico-mode)
+(use-package vertico
+  :init
+  (vertico-mode)
   
-    ;; Wrap around list
-    (setq vertico-cycle t)
-    )
+  ;; Wrap around list
+  (setq vertico-cycle t)
+  )
 #+end_src
 *** Orderless
 Combine vertico with orderless for better completion typing. Typing a =SPC= after a completion narrows down a list some more.
 #+begin_src emacs-lisp
-  (use-package orderless
-    :init
-    (setq completion-styles '(orderless)
-	  completion-category-defaults nil
-	  completion-category-overrides '((file (styles . (partial-completion))))))
+(use-package orderless
+  :init
+  (setq completion-styles '(orderless)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles . (partial-completion))))))
 #+end_src
 *** Save History
 This puts your last used command/completion to the top of the list.
 #+begin_src emacs-lisp
-  (use-package savehist
-    :init
-    (savehist-mode))
+(use-package savehist
+  :init
+  (savehist-mode))
 #+end_src
 *** Consult
 Consult provides some extra completion for built-in emacs functions.
 #+begin_src emacs-lisp
-  (use-package consult
-    :init
-    (setq consult-project-root-function #'projectile-project-root))
+(use-package consult
+  :init
+  (setq consult-project-root-function #'projectile-project-root))
 #+end_src
 *** Marginalia
 Provides helpful annotations to commands/functions. For files it also displays file permissions etc.
 
 #+begin_src emacs-lisp
-  (use-package marginalia
-    :init
-    (marginalia-mode))
+(use-package marginalia
+  :init
+  (marginalia-mode))
 #+end_src
 **** Icons
 For some pretty eye candy.
@@ -271,26 +271,26 @@ M-x all-the-icons-install-fonts
 #+end_quote
 
 #+begin_src emacs-lisp
-  (use-package all-the-icons
-    :if (display-graphic-p))
-  
-  (use-package all-the-icons-completion
-    :init
-    (all-the-icons-completion-mode)
-    (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
+(use-package all-the-icons
+  :if (display-graphic-p))
+
+(use-package all-the-icons-completion
+  :init
+  (all-the-icons-completion-mode)
+  (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
 #+end_src
 
 *** Company
 Company is a text completion framework for Emacs. It stands for "COMplete ANYthing".
 #+begin_src emacs-lisp
-  (use-package company
-    :config
-    (global-company-mode))
+(use-package company
+  :config
+  (global-company-mode))
 #+end_src
 *** LSP
 **** lsp-mode
 #+begin_src emacs-lisp
-  (use-package lsp-mode
+(use-package lsp-mode
   :init
   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
   (setq lsp-keymap-prefix "C-c l")
@@ -299,134 +299,134 @@ Company is a text completion framework for Emacs. It stands for "COMplete ANYthi
 #+end_src
 **** lsp-ui
 #+begin_src emacs-lisp
-  (use-package lsp-ui :commands lsp-ui-mode)
+(use-package lsp-ui :commands lsp-ui-mode)
 #+end_src
 ** VCS
 *** Git
 **** Magit
 #+begin_src emacs-lisp
-  (use-package magit)
+(use-package magit)
 #+end_src
 **** GPG
 Allow emacs to ask for GPG password.
 #+begin_src emacs-lisp
-  (use-package pinentry
-    :config
+(use-package pinentry
+  :config
   
-    (setq epa-pinentry-mode 'loopback)
-    (pinentry-start))
+  (setq epa-pinentry-mode 'loopback)
+  (pinentry-start))
 #+end_src
 * Languages
 ** Clojure
 *** Clojure-Mode
 #+begin_src emacs-lisp
-  (use-package clojure-mode
-    :after (flycheck-clj-kondo)
-    :ensure t
-    :config
-    (require 'flycheck-clj-kondo)
-    (add-hook 'clojure-mode-hook 'enable-paredit-mode)
-    (add-hook 'clojure-mode-hook 'lsp)
-    (add-hook 'clojurescript-mode-hook 'enable-paredit-mode)
-    (add-hook 'clojurescript-mode-hook 'lsp)
-    (add-hook 'clojurec-mode-hook 'lsp)
+(use-package clojure-mode
+  :after (flycheck-clj-kondo)
+  :ensure t
+  :config
+  (require 'flycheck-clj-kondo)
+  (add-hook 'clojure-mode-hook 'enable-paredit-mode)
+  (add-hook 'clojure-mode-hook 'lsp)
+  (add-hook 'clojurescript-mode-hook 'enable-paredit-mode)
+  (add-hook 'clojurescript-mode-hook 'lsp)
+  (add-hook 'clojurec-mode-hook 'lsp)
   
-    (setq gc-cons-threshold (* 100 1024 1024)
-          read-process-output-max (* 1024 1024)
-          treemacs-space-between-root-nodes nil
-          company-minimum-prefix-length 1
-          lsp-lens-enable t
-          lsp-signature-auto-activate nil
-                                          ; lsp-enable-indentation nil ; uncomment to use cider indentation instead of lsp
-                                          ; lsp-enable-completion-at-point nil ; uncomment to use cider completion instead of lsp
-          ))
+  (setq gc-cons-threshold (* 100 1024 1024)
+        read-process-output-max (* 1024 1024)
+        treemacs-space-between-root-nodes nil
+        company-minimum-prefix-length 1
+        lsp-lens-enable t
+        lsp-signature-auto-activate nil
+                                        ; lsp-enable-indentation nil ; uncomment to use cider indentation instead of lsp
+                                        ; lsp-enable-completion-at-point nil ; uncomment to use cider completion instead of lsp
+        ))
 #+end_src
 *** clj-kondo
 #+begin_src emacs-lisp
-  (use-package flycheck-clj-kondo)
+(use-package flycheck-clj-kondo)
 #+end_src
 *** Cider
 #+begin_src emacs-lisp
-  (use-package cider
-    :config
-    (setq clojure-indent-style 'align-arguments)
-    (setq clojure-align-forms-automatically t)
-    )
+(use-package cider
+  :config
+  (setq clojure-indent-style 'align-arguments)
+  (setq clojure-align-forms-automatically t)
+  )
 #+end_src
 *** clj-refactor
 #+begin_src emacs-lisp
-  (use-package clj-refactor
-    :ensure t
-    :init
-    (add-hook 'clojure-mode-hook 'clj-refactor-mode)
-    (add-hook 'clojurescript-mode-hook 'clj-refactor-mode)
-    :diminish clj-refactor-mode)
+(use-package clj-refactor
+  :ensure t
+  :init
+  (add-hook 'clojure-mode-hook 'clj-refactor-mode)
+  (add-hook 'clojurescript-mode-hook 'clj-refactor-mode)
+  :diminish clj-refactor-mode)
 #+end_src
 *** Aggressive-Indent mode
 #+begin_src emacs-lisp
-    (use-package aggressive-indent
-      :config
-      (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
-      (add-hook 'clojurescript-mode-hook #'aggressive-indent-mode))
+(use-package aggressive-indent
+  :config
+  (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
+  (add-hook 'clojurescript-mode-hook #'aggressive-indent-mode))
 #+end_src
 *** rainbow-delimiters
 #+begin_src emacs-lisp
-  (use-package rainbow-delimiters
-    :ensure t
-    :init
-    (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
-    (add-hook 'clojurescript-mode-hook 'rainbow-delimiters-mode)
-    :diminish rainbow-delimiters-mode)
+(use-package rainbow-delimiters
+  :ensure t
+  :init
+  (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
+  (add-hook 'clojurescript-mode-hook 'rainbow-delimiters-mode)
+  :diminish rainbow-delimiters-mode)
 #+end_src
 *** lispyville
 #+begin_src emacs-lisp
-  (use-package lispyville
-    :after (org)
-    :init
-    (general-add-hook '(emacs-lisp-mode-hook lisp-mode-hook clojure-mode-hook clojurescript-mode-hook) #'lispyville-mode)
-    :config
-    (lispyville-set-key-theme '(operators c-w additional commentary slurp/barf-cp)))
+(use-package lispyville
+  :after (org)
+  :init
+  (general-add-hook '(emacs-lisp-mode-hook lisp-mode-hook clojure-mode-hook clojurescript-mode-hook) #'lispyville-mode)
+  :config
+  (lispyville-set-key-theme '(operators c-w additional commentary slurp/barf-cp)))
 #+end_src
 ** Docker
 #+begin_src emacs-lisp
-  (use-package dockerfile-mode
-    :mode "Dockerfile\\'")
+(use-package dockerfile-mode
+  :mode "Dockerfile\\'")
 #+end_src
 ** Markdown
 #+begin_src emacs-lisp
-  (use-package markdown-mode
-    :commands (markdown-mode gfm-mode)
-    :mode (("README\\.md\\'" . gfm-mode)
-           ("\\.md\\'" . markdown-mode)
-           ("\\.markdown\\'" . markdown-mode))
-    :init (setq markdown-command "multimarkdown"))
+(use-package markdown-mode
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
 #+end_src
 *** Spell checking
 Enable spell checking in org-mode.
 #+begin_src emacs-lisp
-  (add-hook 'markdown-mode-hook 'flyspell-mode)
+(add-hook 'markdown-mode-hook 'flyspell-mode)
 #+end_src
 ** Nim
 *** nim-mode
 #+begin_src emacs-lisp
-  (use-package nim-mode
-    :ensure t
-    :hook
-    (nim-mode . lsp))
+(use-package nim-mode
+  :ensure t
+  :hook
+  (nim-mode . lsp))
 #+end_src
 ** Nix
 #+begin_src emacs-lisp
-  (use-package nix-mode
-    :mode "\\.nix\\'"
-    :config
-    (setq nix-nixfmt-bin "~/.nix-profile/bin/nixfmt"))
+(use-package nix-mode
+  :mode "\\.nix\\'"
+  :config
+  (setq nix-nixfmt-bin "~/.nix-profile/bin/nixfmt"))
 #+end_src
 
 ** Org
 *** Org-Mode
 I use org-mode for managing this config and for tending to my Digital Garden.
 #+begin_src emacs-lisp
-  (use-package org)
+(use-package org)
 #+end_src
 **** Fix source block indentation
 This fixes the strange indentation in src blocks after hitting the return key in org files.
@@ -437,10 +437,10 @@ This fixes the strange indentation in src blocks after hitting the return key in
 #+end_src
 *** Capture Templates
 #+begin_src emacs-lisp
-  (setq current-journal-file (expand-file-name (format-time-string "~/Dropbox/DigitalGarden/journals/%Y-%m-%b.org")))
-  (setq org-capture-templates
-        '(("p" "Day Planning" entry (file+olp+datetree current-journal-file)
-           "* Day Planning %U
+(setq current-journal-file (expand-file-name (format-time-string "~/Dropbox/DigitalGarden/journals/%Y-%m-%b.org")))
+(setq org-capture-templates
+      '(("p" "Day Planning" entry (file+olp+datetree current-journal-file)
+         "* Day Planning %U
   ,** Thoughts / diary / fleeting notes
   ,** Tasks for today [/]
   ,*** TODO %?
@@ -458,141 +458,141 @@ This fixes the strange indentation in src blocks after hitting the return key in
     - [ ] Glass 6
     - [ ] Glass 7
     - [ ] Glass 8"
-           )))
+         )))
 #+end_src
 *** Better org-mode bullets
 I use =org-superstar= to make a bullets and sections look less ugly.
 #+begin_src emacs-lisp
-  (use-package org-superstar
-    :after (org)
-    :config
-    (setq org-superstar-leading-bullet ?\s
-	  org-superstar-leading-fallback ?\s
-	  org-hide-leading-stars nil
-	  org-superstar-todo-bullet-alist
-	  '(("TODO" . 9744)
-	    ("[ ]"  . 9744)
-	    ("DONE" . 9745)
-	    ("[X]"  . 9745)))
-    :hook
-    (org-mode . (lambda () (org-superstar-mode 1))))
+(use-package org-superstar
+  :after (org)
+  :config
+  (setq org-superstar-leading-bullet ?\s
+        org-superstar-leading-fallback ?\s
+        org-hide-leading-stars nil
+        org-superstar-todo-bullet-alist
+        '(("TODO" . 9744)
+          ("[ ]"  . 9744)
+          ("DONE" . 9745)
+          ("[X]"  . 9745)))
+  :hook
+  (org-mode . (lambda () (org-superstar-mode 1))))
 #+end_src
 *** Autolist
 #+begin_src emacs-lisp
-  (use-package org-autolist
-    :config
-    (add-hook 'org-mode-hook (lambda () (org-autolist-mode))))  
+(use-package org-autolist
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-autolist-mode))))  
 #+end_src
 *** Org-Roam
 My Digital Garden (or second brain, if you will) is powered by org-roam.
 #+begin_src emacs-lisp
-  (use-package org-roam
-    :after (org)
-    :hook 
-    (after-init . org-roam-mode)
-    (after-init . org-roam-db-autosync-mode)
-    :custom
-    (org-roam-directory "~/Dropbox/DigitalGarden")
-    :config
-    (setq org-roam-graph-exclude-matcher '("inbox")))
+(use-package org-roam
+  :after (org)
+  :hook 
+  (after-init . org-roam-mode)
+  (after-init . org-roam-db-autosync-mode)
+  :custom
+  (org-roam-directory "~/Dropbox/DigitalGarden")
+  :config
+  (setq org-roam-graph-exclude-matcher '("inbox")))
 #+end_src
 
 A nice function that uses consult to search through all notes.
 #+begin_src emacs-lisp
-  (defun rkn/org-roam-rg-search ()
-    "Search org-roam directory using consult-ripgrep. With live-preview."
-    (interactive)
-    (let ((consult-ripgrep-command "rg --null --ignore-case --type org --line-buffered --color=always --max-columns=500 --no-heading --line-number . -e ARG OPTS"))
-      (consult-ripgrep org-roam-directory)))
+(defun rkn/org-roam-rg-search ()
+  "Search org-roam directory using consult-ripgrep. With live-preview."
+  (interactive)
+  (let ((consult-ripgrep-command "rg --null --ignore-case --type org --line-buffered --color=always --max-columns=500 --no-heading --line-number . -e ARG OPTS"))
+    (consult-ripgrep org-roam-directory)))
 #+end_src
 **** Capture Templates
 ***** Dailies
 I use the dailies feature of org-roam to capture quick, journal like entries.
 #+begin_src emacs-lisp
-  (setq org-roam-dailies-capture-templates
-	'(("d"
-	   "daily"
-	   plain
-	   (function org-roam-capture--get-point)
-	   "** %<%H:%M> %?"
-	   :file-name "daily/%<%Y-%m-%d>"
-	   :head "#+TITLE: Daily - %<%A %Y-%m-%d>\n\n* %<%A> %<%Y-%m-%d>")))
+(setq org-roam-dailies-capture-templates
+      '(("d"
+         "daily"
+         plain
+         (function org-roam-capture--get-point)
+         "** %<%H:%M> %?"
+         :file-name "daily/%<%Y-%m-%d>"
+         :head "#+TITLE: Daily - %<%A %Y-%m-%d>\n\n* %<%A> %<%Y-%m-%d>")))
 #+end_src
 *** Headings Startup Visibility
 Sometimes my org file are too long and I’d like to open them with headings collapsed.
 #+begin_src emacs-lisp
-  (setq org-startup-folded t)
+(setq org-startup-folded t)
 #+end_src
 *** Spell checking
 Enable spell checking in org-mode.
 #+begin_src emacs-lisp
-  (add-hook 'org-mode-hook 'flyspell-mode)
+(add-hook 'org-mode-hook 'flyspell-mode)
 #+end_src
 *** Fix stupid bookmark-fontify
 Sometimes my org-capture's would have an ugly coloring.
 #+begin_src emacs-lisp
-  (setq bookmark-fontify nil)
+(setq bookmark-fontify nil)
 #+end_src
 *** Centre org-mode for a nice writing experience
 I use Olivetti for this
 #+begin_src emacs-lisp
-  (use-package olivetti)
+(use-package olivetti)
 #+end_src
 *** Allow the enter key to follow links
 The below variable needs to be in order to allow for =RET= to follow a link. If you are using Evil (like I am) you also need to unbind =RET= from Evil. This shouldn't matter since =RET= is not bound to anything useful anyway.
 #+begin_src emacs-lisp
-  (setq org-return-follows-link t)
+(setq org-return-follows-link t)
 #+end_src
 *** Turn on indent mode everywhere
 #+begin_src emacs-lisp
-  (setq org-startup-indented t)
+(setq org-startup-indented t)
 #+end_src
 
 *** Babel
 **** Tangling
 ***** Languages to tangle
-      In order to tangle certain languages we code blocks we need to define the following:
-      #+begin_src emacs-lisp
-        (org-babel-do-load-languages
-         'org-babel-load-languages
-         '((emacs-lisp . t)
-           (python . t)))
-      #+end_src
+In order to tangle certain languages we code blocks we need to define the following:
+#+begin_src emacs-lisp
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (python . t)))
+#+end_src
 
 ***** Auto-tangling
-      To enable auto-tangling on save we define a custom function.
-      #+begin_src emacs-lisp
-	(defun rkn/org-babel-tangle-dont-ask ()
-	  (when (string-equal (buffer-file-name) (expand-file-name "~/.config/dotfiles/modules/editors/emacs/config/emacs.org"))
-	    (let ((org-confirm-babel-evaluate nil))
-	      (org-babel-tangle))))
-      #+end_src
+To enable auto-tangling on save we define a custom function.
+#+begin_src emacs-lisp
+(defun rkn/org-babel-tangle-dont-ask ()
+  (when (string-equal (buffer-file-name) (expand-file-name "~/.config/dotfiles/modules/editors/emacs/config/emacs.org"))
+    (let ((org-confirm-babel-evaluate nil))
+      (org-babel-tangle))))
+#+end_src
 
-      We then invoke this function as an =org-mode-hook=.
-      #+begin_src emacs-lisp
-	(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'rkn/org-babel-tangle-dont-ask
-						      'run-at-end 'only-in-org-mode)))
-      #+end_src
+We then invoke this function as an =org-mode-hook=.
+#+begin_src emacs-lisp
+(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'rkn/org-babel-tangle-dont-ask
+                                              'run-at-end 'only-in-org-mode)))
+#+end_src
 ** Python
 *** Use PyRight for Python LSP
 #+begin_src emacs-lisp
-  (use-package lsp-pyright
-    :ensure t
-    :hook (python-mode . (lambda ()
-                           (require 'lsp-pyright)
-                           (lsp))))  ; or lsp-deferred
+(use-package lsp-pyright
+  :ensure t
+  :hook (python-mode . (lambda ()
+                         (require 'lsp-pyright)
+                         (lsp))))  ; or lsp-deferred
 #+end_src
 *** Auto Formatting using Black
 #+begin_src emacs-lisp
-  (use-package python-black
-    :demand t
-    :after python
-    :hook (python-mode . python-black-on-save-mode))
+(use-package python-black
+  :demand t
+  :after python
+  :hook (python-mode . python-black-on-save-mode))
 #+end_src
 ** Yaml
 #+begin_src emacs-lisp
-  (use-package yaml-mode
-    :mode "\\.(yml|yaml)\\'")
+(use-package yaml-mode
+  :mode "\\.(yml|yaml)\\'")
 #+end_src
 * Custom Keymaps
 ** Keymaps
@@ -600,92 +600,92 @@ The below variable needs to be in order to allow for =RET= to follow a link. If 
 **** File
 Handy keymaps for handling files.
 #+begin_src emacs-lisp
-  (defun rkn/reload-emacs-config()
-    (interactive)
-    (load-file user-init-file))
+(defun rkn/reload-emacs-config()
+  (interactive)
+  (load-file user-init-file))
+
+(rkn/keymap-define-global
+  ;; grep current file quickly
+  "/" 'consult-line
   
-  (rkn/keymap-define-global
-    ;; grep current file quickly
-    "/" 'consult-line
-  
-    "f" '(:ignore t :which-key "file")
-    "f f" 'find-file
-    "f d" '(:ignore t :which-key "dot")
-    "f d e" '((lambda() (interactive)(find-file "~/.config/dotfiles/modules/editors/emacs/config/emacs.org")) :which-key "dot-edit")
-    "f d i" '((lambda() (interactive)(find-file user-init-file)) :which-key "dot-edit")
-    "f d r" '((lambda() (interactive)(rkn/reload-emacs-config)) :which-key "reload-emacs-config")
-    "f d R" '((lambda() (interactive)(shell-command "dot rebuild")(rkn/reload-emacs-config)) :which-key "reload-dotfiles"))
+  "f" '(:ignore t :which-key "file")
+  "f f" 'find-file
+  "f d" '(:ignore t :which-key "dot")
+  "f d e" '((lambda() (interactive)(find-file "~/.config/dotfiles/modules/editors/emacs/config/emacs.org")) :which-key "dot-edit")
+  "f d i" '((lambda() (interactive)(find-file user-init-file)) :which-key "dot-edit")
+  "f d r" '((lambda() (interactive)(rkn/reload-emacs-config)) :which-key "reload-emacs-config")
+  "f d R" '((lambda() (interactive)(shell-command "dot rebuild")(rkn/reload-emacs-config)) :which-key "reload-dotfiles"))
 #+end_src
 **** Git
 Git operations
 #+begin_src emacs-lisp
-  (rkn/keymap-define-global
-    ;; grep current file quickly
-    "g" '(:ignore t :which-key "git")
-    "g g" 'magit-status)
+(rkn/keymap-define-global
+  ;; grep current file quickly
+  "g" '(:ignore t :which-key "git")
+  "g g" 'magit-status)
 #+end_src
 **** Projects
 Handing switching between projects, finding files in projects etc.
 #+begin_src emacs-lisp
-  (rkn/keymap-define-global
-    ;; grep current file quickly
-    "p" '(:ignore t :which-key "project")
-    "p p" 'projectile-switch-project
-    "SPC" 'consult-find)
+(rkn/keymap-define-global
+  ;; grep current file quickly
+  "p" '(:ignore t :which-key "project")
+  "p p" 'projectile-switch-project
+  "SPC" 'consult-find)
 #+end_src
 **** Buffers
 Quick keybindings for dealing with buffers.
 #+begin_src emacs-lisp
-  (rkn/keymap-define-global
-    "b" '(:ignore t :which-key "buffer")
-    "bb" 'consult-buffer)
+(rkn/keymap-define-global
+  "b" '(:ignore t :which-key "buffer")
+  "bb" 'consult-buffer)
 #+end_src
 **** Notes
 Dealing with notes. This includes org-roam only for now.
 #+begin_src emacs-lisp
-  (rkn/keymap-define-global
-    "n" '(:ignore t :which-key "note")
-    "nr" '(:ignore t :which-key "roam")
-    "nrf" 'org-roam-node-find
-    "nri" 'org-roam-node-insert
-    "nrc" 'org-capture
-    "nrd" '((lambda() (interactive)(find-file (format-time-string "~/Dropbox/DigitalGarden/journals/%Y-%m-%b.org"))) :which-key "Daily Journal")
-    "nrs" 'rkn/org-roam-rg-search)
+(rkn/keymap-define-global
+  "n" '(:ignore t :which-key "note")
+  "nr" '(:ignore t :which-key "roam")
+  "nrf" 'org-roam-node-find
+  "nri" 'org-roam-node-insert
+  "nrc" 'org-capture
+  "nrd" '((lambda() (interactive)(find-file (format-time-string "~/Dropbox/DigitalGarden/journals/%Y-%m-%b.org"))) :which-key "Daily Journal")
+  "nrs" 'rkn/org-roam-rg-search)
 #+end_src
 **** Company
 #+begin_src emacs-lisp
-  (general-define-key
-   "C-SPC" 'company-complete)
+(general-define-key
+ "C-SPC" 'company-complete)
 #+end_src
 *** Org-Mode
 #+begin_src emacs-lisp
-  (rkn/keymap-define-map
-    :keymaps 'org-mode-map 
-    "m" '(:ignore t :which-key "org")
-    "m SPC" 'consult-outline
-    "m c" '(:ignore t :which-key "clock")
-    "m c i" 'org-clock-in
-    "m c o" 'org-clock-out)
+(rkn/keymap-define-map
+  :keymaps 'org-mode-map 
+  "m" '(:ignore t :which-key "org")
+  "m SPC" 'consult-outline
+  "m c" '(:ignore t :which-key "clock")
+  "m c i" 'org-clock-in
+  "m c o" 'org-clock-out)
 #+end_src
 *** Clojure-Mode
 #+begin_src emacs-lisp
-  (rkn/keymap-define-map
-    :keymaps 'clojure-mode-map 
-    "m" '(:ignore t :which-key "clojure")
-    ;; cider
-    "m c" '(:ignore t :which-key "cider")
-    "m c c" 'cider-connect-clj
-    "m c s" 'cider-connect-cljs
-    "m e" '(:ignore t :which-key "eval")
-    "m e e" 'cider-eval-last-sexp
-    "m e c" 'cider-eval-defun-to-comment
-    "m r" '(:ignore t :which-key "repl")
-    "m r n" 'cider-repl-set-ns)
+(rkn/keymap-define-map
+  :keymaps 'clojure-mode-map 
+  "m" '(:ignore t :which-key "clojure")
+  ;; cider
+  "m c" '(:ignore t :which-key "cider")
+  "m c c" 'cider-connect-clj
+  "m c s" 'cider-connect-cljs
+  "m e" '(:ignore t :which-key "eval")
+  "m e e" 'cider-eval-last-sexp
+  "m e c" 'cider-eval-defun-to-comment
+  "m r" '(:ignore t :which-key "repl")
+  "m r n" 'cider-repl-set-ns)
 #+end_src
 *** Nix-Mode
 #+begin_src emacs-lisp
-  (rkn/keymap-define-map
-    :keymaps 'nix-mode-map
-    "m" '(:ignore t :which-key "nix")
-    "m f" 'nix-format-buffer)
+(rkn/keymap-define-map
+  :keymaps 'nix-mode-map
+  "m" '(:ignore t :which-key "nix")
+  "m f" 'nix-format-buffer)
 #+end_src
