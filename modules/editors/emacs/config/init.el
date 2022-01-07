@@ -388,7 +388,8 @@
 (rkn/keymap-define-global
   ;; grep current file quickly
   "g" '(:ignore t :which-key "git")
-  "g g" 'magit-status)
+  "g g" 'magit-status
+  "g b" 'magit-blame)
 
 (rkn/keymap-define-global
   ;; grep current file quickly
@@ -413,12 +414,14 @@
  "C-SPC" 'company-complete)
 
 (rkn/keymap-define-map
-  :keymaps 'org-mode-map 
+  :keymaps 'org-mode-map
   "m" '(:ignore t :which-key "org")
   "m SPC" 'consult-outline
   "m c" '(:ignore t :which-key "clock")
   "m c i" 'org-clock-in
-  "m c o" 'org-clock-out)
+  "m c o" 'org-clock-out
+  "m e" '(:ignore t :which-key "edit")
+  "m e s" 'org-edit-src-code)
 
 (rkn/keymap-define-map
   :keymaps 'clojure-mode-map 
