@@ -11,6 +11,7 @@
     #../../modules/shell
 
     # editors
+    ../../modules/editors/font
     #../../modules/editors/emacs
     ../../modules/editors/vim
 
@@ -19,7 +20,7 @@
 
     # lang
     ../../modules/language/python
-    ../../modules/language/clojure
+    #../../modules/language/clojure
   ];
 
   # Let Home Manager install and manage itself.
