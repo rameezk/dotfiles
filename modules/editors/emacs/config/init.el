@@ -69,6 +69,13 @@
 
 (setq comp-async-report-warnings-errors nil)
 
+(use-package page-break-lines)
+
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook))
+
 (use-package undo-tree
   :ensure t
   :after evil

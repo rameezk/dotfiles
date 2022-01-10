@@ -127,6 +127,16 @@ With native comp enabled there tends to be a lot of annoying warnings. To not go
 #+begin_src emacs-lisp
 (setq comp-async-report-warnings-errors nil)
 #+end_src
+** Startup Screen
+*** emacs-dashboard
+#+begin_src emacs-lisp
+(use-package page-break-lines)
+
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook))
+#+end_src
 
 * Keybindings
 ** Setup
