@@ -8,9 +8,11 @@
       inputs.nixpkgs.follows = "/nixpkgs";
     };
     emacs-overlay.url = "github:nix-community/emacs-overlay/master";
+    declarative-cachix.url = "github:jonascarpay/declarative-cachix/master";
   };
 
-  outputs = { self, nixpkgs, home-manager, emacs-overlay, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, emacs-overlay, declarative-cachix
+    , ... }@inputs:
     let
       mkMachines = { }: {
         rohan = home-manager.lib.homeManagerConfiguration {
@@ -25,7 +27,10 @@
         rivendell = home-manager.lib.homeManagerConfiguration {
           configuration = { ... }: {
             nixpkgs.overlays = [ emacs-overlay.overlay ];
-            imports = [ ./machines/rivendell/home.nix ];
+            imports = [
+              declarative-cachix.homeManagerModules.declarative-cachix
+              ./machines/rivendell/home.nix
+            ];
           };
           system = "x86_64-darwin";
           homeDirectory = "/Users/rameezk";
