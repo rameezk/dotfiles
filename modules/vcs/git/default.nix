@@ -50,6 +50,7 @@ in {
       user = { signingkey = secrets.user.work.gpgFingerprint; };
       commit = { gpgsign = true; };
       init = { defaultBranch = "master"; };
+      pull = { rebase = false; };
     };
     ignores = [ "*~" "*.swp" ".idea/" "*.orig" ".#*" ];
   };
