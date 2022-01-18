@@ -2,6 +2,8 @@
 
   imports = [ ./fish ];
 
+  programs.direnv = { enable = true; };
+
   home.packages = with pkgs; [
     ripgrep # faster grepping
     tmux # terminal multiplexor
