@@ -402,6 +402,7 @@
   ;; grep current file quickly
   "p" '(:ignore t :which-key "project")
   "p p" 'projectile-switch-project
+  "p s" 'consult-ripgrep
   "SPC" 'consult-find)
 
 (rkn/keymap-define-global
