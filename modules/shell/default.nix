@@ -15,8 +15,8 @@
 
         local VENV=$(poetry env list --full-path | cut -d' ' -f1)
         if [[ -z $VENV || ! -d $VENV/bin ]]; then
-            log_error 'No poetry virtual environment found. Use `poetry install` to create one first.'
-            exit 2
+            poetry install
+            local VENV=$(poetry env list --full-path | cut -d' ' -f1)
         fi
 
         export VIRTUAL_ENV=$VENV
