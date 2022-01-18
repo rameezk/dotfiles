@@ -198,7 +198,10 @@
   (add-hook 'clojurescript-mode-hook 'enable-paredit-mode)
   (add-hook 'clojurescript-mode-hook 'lsp)
   (add-hook 'clojurec-mode-hook 'lsp)
-  
+
+  (setq clojure-indent-style 'align-arguments)
+  (setq clojure-align-forms-automatically t)
+
   (setq gc-cons-threshold (* 100 1024 1024)
         read-process-output-max (* 1024 1024)
         treemacs-space-between-root-nodes nil
@@ -211,11 +214,7 @@
 
 (use-package flycheck-clj-kondo)
 
-(use-package cider
-  :config
-  (setq clojure-indent-style 'align-arguments)
-  (setq clojure-align-forms-automatically t)
-  )
+(use-package cider)
 
 (use-package clj-refactor
   :ensure t
@@ -272,26 +271,27 @@
       org-src-preserve-indentation t)
 
 (setq current-journal-file (expand-file-name (format-time-string "~/Dropbox/DigitalGarden/journals/%Y-%m-%b.org")))
+
 (setq org-capture-templates
       '(("p" "Day Planning" entry (file+olp+datetree current-journal-file)
-         "* Day Planning %U
-  ** Thoughts / diary / fleeting notes
-  ** Tasks for today [/]
-  *** TODO %?
-  ** Tasks that will satisfy end-of-the-day me [/]
-  ** Focus Blocks
-  ** Habits [/]
-  - [ ] Are you satisfied with the number of pomodori?
-  - [ ] Did you tend to your Digital Garden?
-  - [ ] Drink 8 glasses of water [/]
-    - [ ] Glass 1
-    - [ ] Glass 2
-    - [ ] Glass 3
-    - [ ] Glass 4
-    - [ ] Glass 5
-    - [ ] Glass 6
-    - [ ] Glass 7
-    - [ ] Glass 8"
+"* Day Planning %U
+** Thoughts / diary / fleeting notes
+** Tasks for today [/]
+*** TODO %?
+** Tasks that will satisfy end-of-the-day me [/]
+** Focus Blocks
+** Habits [/]
+- [ ] Are you satisfied with the number of pomodori?
+- [ ] Did you tend to your Digital Garden?
+- [ ] Drink 8 glasses of water [/]
+  - [ ] Glass 1
+  - [ ] Glass 2
+  - [ ] Glass 3
+  - [ ] Glass 4
+  - [ ] Glass 5
+  - [ ] Glass 6
+  - [ ] Glass 7
+  - [ ] Glass 8"
          )))
 
 (use-package org-superstar
