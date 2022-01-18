@@ -52,7 +52,7 @@ in {
       init = { defaultBranch = "master"; };
       pull = { rebase = false; };
     };
-    ignores = [ "*~" "*.swp" ".idea/" "*.orig" ".#*" ];
+    ignores = [ "*~" "*.swp" ".idea/" "*.orig" ".#*" ".direnv/" ];
   };
 
   home.file.".gnupg/pinentry-switcher".source =
