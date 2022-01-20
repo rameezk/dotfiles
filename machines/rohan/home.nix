@@ -13,6 +13,7 @@
     # editors
     ../../modules/editors/emacs
     ../../modules/editors/vim
+    ../../modules/editors/jetbrains
 
     # vcs
     ../../modules/vcs/git
