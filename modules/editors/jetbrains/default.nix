@@ -13,7 +13,7 @@
     set clipboard+=unnamedplus "use clipboard
 
     set incsearch "Incremental search
-    set ignorecase
+    set ignorecase "Ignore case
     set smartcase "Smart case matching
 
     let mapleader=" "
