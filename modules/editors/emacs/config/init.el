@@ -282,17 +282,7 @@
 ** Focus Blocks
 ** Habits [/]
 - [ ] Are you satisfied with the number of pomodori?
-- [ ] Did you tend to your Digital Garden?
-- [ ] Drink 8 glasses of water [/]
-  - [ ] Glass 1
-  - [ ] Glass 2
-  - [ ] Glass 3
-  - [ ] Glass 4
-  - [ ] Glass 5
-  - [ ] Glass 6
-  - [ ] Glass 7
-  - [ ] Glass 8"
-         )))
+- [ ] Did you tend to your Digital Garden?")))
 
 (use-package org-superstar
   :after (org)
