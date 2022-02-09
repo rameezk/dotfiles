@@ -270,6 +270,8 @@
       org-src-tab-acts-natively t
       org-src-preserve-indentation t)
 
+(add-hook 'org-mode-hook 'visual-line-mode)
+
 (setq current-journal-file (expand-file-name (format-time-string "~/Dropbox/DigitalGarden/journals/%Y-%m-%b.org")))
 
 (setq org-capture-templates
