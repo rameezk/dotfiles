@@ -379,6 +379,8 @@
   :after python
   :hook (python-mode . python-black-on-save-mode))
 
+(add-to-list 'auto-mode-alist '("\\Pipfile\\'" . conf-toml-mode))
+
 (use-package yaml-mode
   :mode "\\.(yml|yaml)\\'")
 

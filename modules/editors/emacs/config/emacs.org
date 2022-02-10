@@ -611,6 +611,11 @@ We then invoke this function as an =org-mode-hook=.
   :after python
   :hook (python-mode . python-black-on-save-mode))
 #+end_src
+*** Pipenv
+Pipfile should use =conf-toml-mode=.
+#+begin_src emacs-lisp
+(add-to-list 'auto-mode-alist '("\\Pipfile\\'" . conf-toml-mode))
+#+end_src
 ** Yaml
 #+begin_src emacs-lisp
 (use-package yaml-mode
