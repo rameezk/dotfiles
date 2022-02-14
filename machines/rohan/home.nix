@@ -24,6 +24,7 @@
     ../../modules/language/nim
     ../../modules/language/nodejs
     ../../modules/language/java
+    ../../modules/language/rust
 
     # tools
     ../../modules/tool/azure
