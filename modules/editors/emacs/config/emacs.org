@@ -621,6 +621,11 @@ Pipfile should use =conf-toml-mode=.
 (use-package yaml-mode
   :mode "\\.(yml|yaml)\\'")
 #+end_src
+** Rust
+*** rust-mode
+#+begin_src emacs-lisp
+(use-package rust-mode)
+#+end_src
 * Custom Keymaps
 ** Keymaps
 *** Global
