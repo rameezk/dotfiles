@@ -622,9 +622,9 @@ Pipfile should use =conf-toml-mode=.
   :mode "\\.(yml|yaml)\\'")
 #+end_src
 ** Rust
-*** rust-mode
+*** rustic
 #+begin_src emacs-lisp
-(use-package rust-mode)
+(use-package rustic)
 #+end_src
 * Custom Keymaps
 ** Keymaps

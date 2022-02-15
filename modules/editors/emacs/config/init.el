@@ -384,7 +384,7 @@
 (use-package yaml-mode
   :mode "\\.(yml|yaml)\\'")
 
-(use-package rust-mode)
+(use-package rustic)
 
 (defun rkn/reload-emacs-config()
   (interactive)
