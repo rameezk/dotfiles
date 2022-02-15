@@ -51,6 +51,7 @@ in {
       commit = { gpgsign = true; };
       init = { defaultBranch = "master"; };
       pull = { rebase = false; };
+      fetch = { prune = true; };
     };
     ignores = [ "*~" "*.swp" ".idea/" "*.orig" ".#*" ".direnv/" ];
   };
