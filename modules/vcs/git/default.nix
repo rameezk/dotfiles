@@ -52,6 +52,8 @@ in {
       init = { defaultBranch = "master"; };
       pull = { rebase = false; };
       fetch = { prune = true; };
+      pager = { difftool = true; };
+      diff = { external = "difft"; };
     };
     ignores = [ "*~" "*.swp" ".idea/" "*.orig" ".#*" ".direnv/" ];
   };
@@ -86,5 +88,6 @@ in {
   home.packages = with pkgs; [
     git-crypt # encrypting git repos transparently
     pre-commit # a framework for dealing with git hooks
+    difftastic # a better diffing tool that understand code syntax
   ];
 }
