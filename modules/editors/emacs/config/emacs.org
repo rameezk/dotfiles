@@ -626,6 +626,12 @@ Pipfile should use =conf-toml-mode=.
 #+begin_src emacs-lisp
 (use-package rustic)
 #+end_src
+** Terraform
+*** terraform-mode
+#+begin_src emacs-lisp
+(use-package terraform-mode)
+#+end_src
+
 * Custom Keymaps
 ** Keymaps
 *** Global

@@ -386,6 +386,8 @@
 
 (use-package rustic)
 
+(use-package terraform-mode)
+
 (defun rkn/reload-emacs-config()
   (interactive)
   (load-file user-init-file))
