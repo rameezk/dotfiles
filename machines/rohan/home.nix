@@ -32,6 +32,7 @@
     ../../modules/tool/kubernetes
     ../../modules/tool/helm
     ../../modules/tool/media
+    ../../modules/tool/terraform
   ];
 
   # Let Home Manager install and manage itself.
