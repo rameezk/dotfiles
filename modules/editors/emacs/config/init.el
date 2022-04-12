@@ -91,7 +91,8 @@
   :config
   (evil-mode t)
   (with-eval-after-load 'evil-maps
-    (define-key evil-motion-state-map (kbd "RET") nil)))
+    (define-key evil-motion-state-map (kbd "RET") nil))
+  (fset 'evil-visual-update-x-selection 'ignore))
 
 (use-package evil-collection
   :after evil

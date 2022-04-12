@@ -161,7 +161,8 @@ I grew up on Vim keybindings, so Evil at heart.
   :config
   (evil-mode t)
   (with-eval-after-load 'evil-maps
-    (define-key evil-motion-state-map (kbd "RET") nil)))
+    (define-key evil-motion-state-map (kbd "RET") nil))
+  (fset 'evil-visual-update-x-selection 'ignore))
 #+end_src
 
 We also install =evil-collection= so other modes in Emacs work too. These include magit, calendar etc.
