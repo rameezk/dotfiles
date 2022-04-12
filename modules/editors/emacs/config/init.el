@@ -253,6 +253,125 @@
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
+(add-hook 'markdown-mode-hook 'visual-line-mode)
+(add-hook 'gfm-mode-hook 'visual-line-mode)
+
+(setq current-journal-file (expand-file-name (format-time-string "~/Dropbox/DigitalGarden/journals/%Y-%m-%b.org")))
+
+(setq org-capture-templates
+      '(("p" "Day Planning" entry (file+olp+datetree current-journal-file)
+"* Day Planning %U
+** Thoughts / diary / fleeting notes
+** Tasks for today [/]
+*** TODO %?
+** Tasks that will satisfy end-of-the-day me [/]
+** Focus Blocks
+** Habits [/]
+- [ ] Are you satisfied with the number of pomodori?
+- [ ] Did you tend to your Digital Garden?")))
+
+(use-package org-superstar
+  :after (org)
+  :config
+  (setq org-superstar-leading-bullet ?\s
+        org-superstar-leading-fallback ?\s
+        org-hide-leading-stars nil
+        org-superstar-todo-bullet-alist
+        '(("TODO" . 9744)
+          ("[ ]"  . 9744)
+          ("DONE" . 9745)
+          ("[X]"  . 9745)))
+  :hook
+  (org-mode . (lambda () (org-superstar-mode 1))))
+
+(use-package org-autolist
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-autolist-mode))))
+
+(use-package org-roam
+  :after (org)
+  :hook 
+  (after-init . org-roam-mode)
+  (after-init . org-roam-db-autosync-mode)
+  :custom
+  (org-roam-directory "~/Dropbox/DigitalGarden")
+  :config
+  (setq org-roam-graph-exclude-matcher '("inbox")))
+
+(defun rkn/org-roam-rg-search ()
+  "Search org-roam directory using consult-ripgrep. With live-preview."
+  (interactive)
+  (let ((consult-ripgrep-command "rg --null --ignore-case --type org --line-buffered --color=always --max-columns=500 --no-heading --line-number . -e ARG OPTS"))
+    (consult-ripgrep org-roam-directory)))
+
+(setq org-roam-dailies-capture-templates
+      '(("d"
+         "daily"
+         plain
+         (function org-roam-capture--get-point)
+         "** %<%H:%M> %?"
+         :file-name "daily/%<%Y-%m-%d>"
+         :head "#+TITLE: Daily - %<%A %Y-%m-%d>\n\n* %<%A> %<%Y-%m-%d>")))
+
+(use-package org-roam-ui
+  :straight
+    (:host github :repo "org-roam/org-roam-ui" :branch "main" :files ("*.el" "out"))
+    :after org-roam
+;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
+;;         a hookable mode anymore, you're advised to pick something yourself
+;;         if you don't care about startup time, use
+;;  :hook (after-init . org-roam-ui-mode)
+    :config
+    (setq org-roam-ui-sync-theme t
+          org-roam-ui-follow t
+          org-roam-ui-update-on-save t
+          org-roam-ui-open-on-start t))
+
+(setq org-startup-folded t)
+
+(add-hook 'org-mode-hook 'flyspell-mode)
+
+(setq bookmark-fontify nil)
+
+(use-package olivetti)
+
+(setq org-return-follows-link t)
+
+(setq org-startup-indented t)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (python . t)))
+
+(defun rkn/org-babel-tangle-dont-ask ()
+  (when (string-equal (buffer-file-name) (expand-file-name "~/.config/dotfiles/modules/editors/emacs/config/emacs.org"))
+    (let ((org-confirm-babel-evaluate nil))
+      (org-babel-tangle))))
+
+(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'rkn/org-babel-tangle-dont-ask
+                                              'run-at-end 'only-in-org-mode)))
+
+(use-package lsp-pyright
+  :ensure t
+  :hook (python-mode . (lambda ()
+                         (require 'lsp-pyright)
+                         (lsp))))  ; or lsp-deferred
+
+(use-package python-black
+  :demand t
+  :after python
+  :hook (python-mode . python-black-on-save-mode))
+
+(add-to-list 'auto-mode-alist '("\\Pipfile\\'" . conf-toml-mode))
+
+(use-package yaml-mode
+  :mode "\\.(yml|yaml)\\'")
+
+(use-package rustic)
+
+(use-package terraform-mode)
+
 (add-hook 'markdown-mode-hook 'flyspell-mode)
 
 (use-package nim-mode
