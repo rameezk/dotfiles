@@ -54,5 +54,6 @@
 
       rohan = self.machines.rohan.activationPackage;
       rivendell = self.machines.rivendell.activationPackage;
+      gondor = self.machines.gondor.activationPackage;
     };
 }
