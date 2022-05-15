@@ -2,7 +2,7 @@
 
   programs.emacs = {
     enable = true;
-    package = pkgs.emacsGcc;
+    package = pkgs.emacsPgtk;
   };
 
   # Write init.el to the Nix store and symlink it to ~/.emacs.d/init.el
