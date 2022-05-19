@@ -6,6 +6,25 @@
   imports = [
     # core (needed as a bare minimum)
     ../../modules/core
+
+    # shell
+    ../../modules/shell
+
+    # editors
+    ../../modules/editors/vim
+    ../../modules/editors/emacs
+    ../../modules/editors/jetbrains
+
+    # vcs
+    ../../modules/vcs/git
+
+    # lang
+    ../../modules/language/python
+    ../../modules/language/nodejs
+
+    # tool
+    ../../modules/tool/aws
+    ../../modules/tool/kubernetes
   ];
 
   # Let Home Manager install and manage itself.
