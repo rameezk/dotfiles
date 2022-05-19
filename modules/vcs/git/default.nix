@@ -48,7 +48,7 @@ in {
     ];
     extraConfig = {
       user = { signingkey = secrets.user.work.gpgFingerprint; };
-      commit = { gpgsign = false; };
+      commit = { gpgsign = true; };
       init = { defaultBranch = "master"; };
       pull = { rebase = false; };
       fetch = { prune = true; };
@@ -60,6 +60,8 @@ in {
     };
     ignores = [ "*~" "*.swp" ".idea/" "*.orig" ".#*" ".direnv/" ];
   };
+
+  programs.gpg = { enable = true; };
 
   # home.file.".gnupg/pinentry-switcher".source =
   #   pkgs.writeShellScript "pinentry-switcher" ''
