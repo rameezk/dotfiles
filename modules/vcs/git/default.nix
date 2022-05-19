@@ -48,46 +48,50 @@ in {
     ];
     extraConfig = {
       user = { signingkey = secrets.user.work.gpgFingerprint; };
-      commit = { gpgsign = true; };
+      commit = { gpgsign = false; };
       init = { defaultBranch = "master"; };
       pull = { rebase = false; };
       fetch = { prune = true; };
       pager = { difftool = true; };
       diff = { external = "difft"; };
+      http."${secrets.git.work.base_url}" = {
+        sslCAInfo = secrets.git.work.ssl_ca_info;
+      };
     };
     ignores = [ "*~" "*.swp" ".idea/" "*.orig" ".#*" ".direnv/" ];
   };
 
-  home.file.".gnupg/pinentry-switcher".source =
-    pkgs.writeShellScript "pinentry-switcher" ''
-      case $PINENTRY_USER_DATA in
-        emacs)
-          exec ~/.nix-profile/bin/pinentry-emacs "$@"
-          ;;
-        none)
-          exit 1
-          ;;
-        *)
-          exec pinentry-curses "$@"
-      esac
-    '';
+  # home.file.".gnupg/pinentry-switcher".source =
+  #   pkgs.writeShellScript "pinentry-switcher" ''
+  #     case $PINENTRY_USER_DATA in
+  #       emacs)
+  #         exec ~/.nix-profile/bin/pinentry-emacs "$@"
+  #         ;;
+  #       none)
+  #         exit 1
+  #         ;;
+  #       *)
+  #         exec pinentry-curses "$@"
+  #     esac
+  #   '';
 
-  home.file.".gnupg/gpg-agent.conf".text = ''
-    pinentry-program /home/rameezk/.gnupg/pinentry-switcher
-    default-cache-ttl 18000
-    max-cache-ttl 18000
-    enable-ssh-support
-    allow-emacs-pinentry
-    allow-loopback-pinentry
-  '';
+  # home.file.".gnupg/gpg-agent.conf".text = ''
+  #   pinentry-program ~/.gnupg/pinentry-switcher
+  #   default-cache-ttl 18000
+  #   max-cache-ttl 18000
+  #   enable-ssh-support
+  #   allow-emacs-pinentry
+  #   allow-loopback-pinentry
+  # '';
 
-  home.file.".gnupg/gpg.conf".text = ''
-    use-agent
-  '';
+  # home.file.".gnupg/gpg.conf".text = ''
+  #   use-agent
+  # '';
 
   home.packages = with pkgs; [
     git-crypt # encrypting git repos transparently
     pre-commit # a framework for dealing with git hooks
     difftastic # a better diffing tool that understand code syntax
+    cacert # needed for self signed certs in git
   ];
 }
