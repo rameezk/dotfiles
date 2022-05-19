@@ -1,9 +1,6 @@
 { pkgs, ... }:
 
-let
-  username = "rameezk";
-  homeDirectory = "/home/rameezk";
-  secrets = import ../../../secrets/config.nix;
+let secrets = import ../../../secrets/config.nix;
 in {
 
   programs.fish = {
@@ -21,8 +18,8 @@ in {
       set -p fish_function_path ${pkgs.fishPlugins.foreign-env}/share/fish/vendor_functions.d
 
       # nix
-      if test -e ${homeDirectory}/.nix-profile/etc/profile.d/nix.sh
-        fenv source ${homeDirectory}/.nix-profile/etc/profile.d/nix.sh
+      if test -e ~/.nix-profile/etc/profile.d/nix.sh
+        fenv source ~/.nix-profile/etc/profile.d/nix.sh
       end
 
       # editor
@@ -32,16 +29,17 @@ in {
       set -U fish_color_command b8bb26 # fish's default command color is a horrible dark blue, make it a nicer green
 
       # direnv
-      eval (direnv hook fish)
+      # eval (direnv hook fish)
+      ${pkgs.direnv}/bin/direnv hook fish | source
 
       # pipx
-      set PATH $PATH /home/rameezk/.local/bin
+      set PATH $PATH ~/.local/bin
 
       # Make gpg-agent play nicely with tmux
       export GPG_TTY=(tty)
 
       # dotfiles binaries
-      set PATH $PATH /home/rameezk/.config/dotfiles/bin
+      set PATH $PATH ~/.config/dotfiles/bin
 
       # source proxy
       source ~/.proxyrc
@@ -112,7 +110,7 @@ in {
         argumentNames = "repo_url";
         description = "clone e4m repo to correct directory";
         body = ''
-          set -l clone_to_path (echo "$repo_url" | sed 's/https:\/\/${secrets.git.work.e4m_base_url}/\/home\/rameezk\/code/' | sed 's/\.git//')
+          set -l clone_to_path (echo "$repo_url" | sed 's/https:\/\/${secrets.git.work.e4m_base_url}/~\/code/' | sed 's/\.git//')
           git clone "$repo_url" "$clone_to_path"
           cd "$clone_to_path"
         '';

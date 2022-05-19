@@ -35,5 +35,6 @@
     neofetch # nice system info viewer
     fd # a faster find
     shellcheck # linting shell scripts
+    watch # watch and refresh commands
   ];
 }
