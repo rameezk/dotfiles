@@ -27,7 +27,7 @@
 
 (menu-bar-mode -1)
 
-(set-face-attribute 'default nil :font "JetbrainsMono Nerd Font" :height 160)
+(set-face-attribute 'default nil :font "JetbrainsMono Nerd Font" :height 180)
 
 ;; (use-package doom-themes
 ;;   :config

@@ -65,7 +65,7 @@ Disable the menu bar.
 #+end_src
 ** Font
 #+begin_src emacs-lisp
-(set-face-attribute 'default nil :font "JetbrainsMono Nerd Font" :height 160)
+(set-face-attribute 'default nil :font "JetbrainsMono Nerd Font" :height 180)
 #+end_src
 ** Theme
 *** Doom Themes
