@@ -25,7 +25,6 @@
     # tool
     ../../modules/tool/aws
     ../../modules/tool/kubernetes
-    ../../modules/tool/yabai
   ];
 
   # Let Home Manager install and manage itself.
