@@ -432,7 +432,8 @@
   :custom
   (org-roam-directory "~/Dropbox/DigitalGarden")
   :config
-  (setq org-roam-graph-exclude-matcher '("inbox")))
+  (setq org-roam-graph-exclude-matcher '("inbox"))
+  (setq org-roam-node-display-template "${title} ${tags}"))
 
 (defun rkn/org-roam-rg-search ()
   "Search org-roam directory using consult-ripgrep. With live-preview."

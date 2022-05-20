@@ -689,7 +689,8 @@ My Digital Garden (or second brain, if you will) is powered by org-roam.
   :custom
   (org-roam-directory "~/Dropbox/DigitalGarden")
   :config
-  (setq org-roam-graph-exclude-matcher '("inbox")))
+  (setq org-roam-graph-exclude-matcher '("inbox"))
+  (setq org-roam-node-display-template "${title} ${tags}"))
 #+end_src
 
 A nice function that uses consult to search through all notes.
