@@ -21,6 +21,7 @@
     # lang
     ../../modules/language/python
     ../../modules/language/nodejs
+    ../../modules/language/clojure
 
     # tool
     ../../modules/tool/aws
