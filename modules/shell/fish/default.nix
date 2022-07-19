@@ -187,6 +187,13 @@ in {
           end
         '';
       };
+
+      generate_uuid4 = {
+        description = "generate a uuid4";
+        body = ''
+          python -c "import uuid; print(str(uuid.uuid4()).strip(), end=\"\");"
+        '';
+      };
     };
 
     plugins = [{
