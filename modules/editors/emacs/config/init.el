@@ -464,6 +464,8 @@
           org-roam-ui-update-on-save t
           org-roam-ui-open-on-start t))
 
+(setq org-agenda-files '("~/Dropbox/DigitalGarden/journals/"))
+
 (setq org-startup-folded t)
 
 (add-hook 'org-mode-hook 'flyspell-mode)

@@ -679,6 +679,7 @@ I use =org-superstar= to make a bullets and sections look less ugly.
   (add-hook 'org-mode-hook (lambda () (org-autolist-mode))))  
 #+end_src
 *** Org-Roam
+**** Install org-roam package
 My Digital Garden (or second brain, if you will) is powered by org-roam.
 #+begin_src emacs-lisp
 (use-package org-roam
@@ -693,6 +694,7 @@ My Digital Garden (or second brain, if you will) is powered by org-roam.
   (setq org-roam-node-display-template "${title} ${tags}"))
 #+end_src
 
+**** Searching through notes
 A nice function that uses consult to search through all notes.
 #+begin_src emacs-lisp
 (defun rkn/org-roam-rg-search ()
@@ -730,6 +732,10 @@ For viewing nice graphs of links between org-roam nodes.
           org-roam-ui-follow t
           org-roam-ui-update-on-save t
           org-roam-ui-open-on-start t))
+#+end_src
+**** Adding journals to org-agenda
+#+begin_src emacs-lisp
+(setq org-agenda-files '("~/Dropbox/DigitalGarden/journals/"))
 #+end_src
 *** Headings Startup Visibility
 Sometimes my org file are too long and I’d like to open them with headings collapsed.
