@@ -792,6 +792,10 @@ We then invoke this function as an =org-mode-hook=.
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'rkn/org-babel-tangle-dont-ask
                                               'run-at-end 'only-in-org-mode)))
 #+end_src
+*** Org-Pomodoro
+#+begin_src emacs-lisp
+(use-package org-pomodoro)
+#+end_src
 ** Python
 *** Use PyRight for Python LSP
 #+begin_src emacs-lisp

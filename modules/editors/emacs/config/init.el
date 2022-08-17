@@ -491,6 +491,8 @@
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'rkn/org-babel-tangle-dont-ask
                                               'run-at-end 'only-in-org-mode)))
 
+(use-package org-pomodoro)
+
 (use-package lsp-pyright
   :ensure t
   :hook (python-mode . (lambda ()
