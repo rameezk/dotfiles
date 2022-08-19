@@ -194,6 +194,39 @@ in {
           python -c "import uuid; print(str(uuid.uuid4()).strip(), end=\"\");"
         '';
       };
+
+      aws-switch-role = {
+        description = "switch aws roles";
+        body = ''
+          set config_file "$HOME/.aws/aws-role-mappings.json"
+
+          if [ ! -s $config_file ];
+             echo "[..] Missing $config_file file"
+             return 1
+          end
+
+
+          set CHOSEN_ROLE (cat "$config_file" | jq -r ".roles | .[] | .text_to_display" | fzf)
+          set CHOSEN_ACCOUNT_ID_NUMBER (cat "$config_file" | jq -r ".roles | .[] | select(.text_to_display==\"$CHOSEN_ROLE\") | .account_id_number")
+          set CHOSEN_ROLE_NAME (cat "$config_file" | jq -r ".roles | .[] | select(.text_to_display==\"$CHOSEN_ROLE\") | .role_name")
+
+          if [ -z "$CHOSEN_ROLE" ];
+          	echo "[..] No CHOSEN_ROLE defined"
+          	return 1
+          end
+          if [ -z "$CHOSEN_ACCOUNT_ID_NUMBER" ];
+          	echo "[..] No CHOSEN_ACCOUNT_ID_NUMBER defined"
+          	return 1
+          end
+          if [ -z "$CHOSEN_ROLE_NAME" ];
+          	echo "[..] No CHOSEN_ROLE_NAME defined"
+          	return 1
+          end
+
+          open "https://signin.aws.amazon.com/switchrole?account=$CHOSEN_ACCOUNT_ID_NUMBER&roleName=$CHOSEN_ROLE_NAME&displayName=$CHOSEN_ROLE"
+          echo "[..] Opened in browser"
+        '';
+      };
     };
 
     plugins = [{
