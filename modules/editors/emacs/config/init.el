@@ -41,21 +41,25 @@
 ;;   ;; Corrects (and improves) org-mode's native fontification.
 ;;   (doom-themes-org-config))
 
-(use-package zenburn-theme
-  :config
-  (setq zenburn-use-variable-pitch t)
-  ;; scale headings in org-mode
-  (setq zenburn-scale-org-headlines t)
-  ;; scale headings in outline-mode
-  (setq zenburn-scale-outline-headlines t)
+;; (use-package zenburn-theme
+;;   :config
+;;   (setq zenburn-use-variable-pitch t)
+;;   ;; scale headings in org-mode
+;;   (setq zenburn-scale-org-headlines t)
+;;   ;; scale headings in outline-mode
+;;   (setq zenburn-scale-outline-headlines t)
   
-  ;; enable theme
-  (load-theme 'zenburn t))
+;;   ;; enable theme
+;;   (load-theme 'zenburn t))
 
 ;; (use-package poet-theme
 ;;   :config
 ;;   ;; enable theme
 ;;   (load-theme 'poet t))
+
+(use-package ef-themes
+  :config
+  (load-theme 'ef-summer t))
 
 (use-package doom-modeline
   :config
