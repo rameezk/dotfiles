@@ -19,7 +19,7 @@ in {
       delete-branches = ''
         !f() { git branch --merged | grep -v "master\|main" | xargs git branch -d; }; f'';
       prune-local-branches =
-        "!f() { git branch -vv | grep ': gone' | awk '{print $1}' | xargs -p git branch -D; }; f";
+        "!f() { git branch -vv | grep ': gone' | awk '{print $1}' | fzf -m | xargs git branch -D; }; f";
       pr-complete = "!f() { git checkout master && git pull --prune; }; f";
       generate-ignore =
         ''!f() { curl -sL "https://www.gitignore.io/api/$1"; }; f'';
