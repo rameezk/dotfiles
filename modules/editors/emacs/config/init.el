@@ -562,6 +562,9 @@
 (general-define-key
  "C-SPC" 'company-complete)
 
+(rkn/keymap-define-global
+  "a" 'org-agenda)
+
 (rkn/keymap-define-map
   :keymaps 'org-mode-map
   "m" '(:ignore t :which-key "org")

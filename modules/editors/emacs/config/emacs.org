@@ -905,6 +905,12 @@ Dealing with notes. This includes org-roam only for now.
 (general-define-key
  "C-SPC" 'company-complete)
 #+end_src
+**** Agenda
+This includes only =org-agenda= for now.
+#+begin_src emacs-lisp
+(rkn/keymap-define-global
+  "a" 'org-agenda)
+#+end_src
 *** Org-Mode
 #+begin_src emacs-lisp
 (rkn/keymap-define-map
