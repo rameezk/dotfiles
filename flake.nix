@@ -37,16 +37,20 @@
           username = "rameezk";
         };
         gondor = home-manager.lib.homeManagerConfiguration {
-          configuration = { ... }: {
-            nixpkgs.overlays = [ emacs-overlay.overlay ];
-            imports = [
-              declarative-cachix.homeManagerModules.declarative-cachix
-              ./machines/gondor/home.nix
-            ];
+          pkgs = import nixpkgs {
+            system = "aarch64-darwin";
+            overlays = [ emacs-overlay.overlay ];
           };
-          system = "aarch64-darwin";
-          homeDirectory = "/Users/qxy6675";
-          username = "qxy6675";
+          modules = [
+            declarative-cachix.homeManagerModules.declarative-cachix
+            ./machines/gondor/home.nix
+            {
+              home = {
+                username = "qxy6675";
+                homeDirectory = "/Users/qxy6675";
+              };
+            }
+          ];
         };
       };
     in {
