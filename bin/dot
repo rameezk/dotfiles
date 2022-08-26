@@ -2,6 +2,7 @@
 
 import os
 import typer
+import typing
 
 
 app = typer.Typer()
@@ -25,13 +26,13 @@ def run_command(command: str):
     return os.system(command)
 
 
-def get_machine_name() -> str:
+def get_machine_name() -> typing.Optional[str]:
     try:
         with open(os.path.expanduser(f"{dotfiles_dir}/.machine"), "r") as f:
             machine = f.read()
             return machine
     except:
-        return None
+        ...
 
 
 @app.command(help="Open dotfiles in $EDITOR")
@@ -58,11 +59,11 @@ def rebuild(with_traces: bool = False):
 
     if with_traces:
         info("Tracing on")
-        cmd = f"cd {dotfiles_dir} && nix build --show-trace .#{flake_path}"
+        cmd = f"cd {dotfiles_dir} && nix build --extra-experimental-features 'nix-command flakes' --show-trace .#{flake_path}"
     else:
-        cmd = f"cd {dotfiles_dir} && nix build .#{flake_path}"
+        cmd = f"cd {dotfiles_dir} && nix build --extra-experimental-features 'nix-command flakes' .#{flake_path}"
 
-    exit_code = run_command(f"cd {dotfiles_dir} && nix build .#{flake_path}")
+    exit_code = run_command(cmd)
     if exit_code == 0:
         info("✔️ Activating environment")
         run_command(f"cd {dotfiles_dir} && ./result/activate")
