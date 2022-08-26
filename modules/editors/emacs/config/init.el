@@ -59,7 +59,8 @@
 
 (use-package ef-themes
   :config
-  (load-theme 'ef-summer t))
+  (setq ef-themes-to-toggle '(ef-summer ef-winter))
+  (load-theme 'ef-winter :no-confirm))
 
 (use-package doom-modeline
   :config
@@ -564,6 +565,11 @@
 
 (rkn/keymap-define-global
   "a" 'org-agenda)
+
+(rkn/keymap-define-global
+  "t" '(:ignore t :which-key "toggle")
+  "tt" 'ef-themes-toggle
+  "tf" 'toggle-frame-fullscreen)
 
 (rkn/keymap-define-map
   :keymaps 'org-mode-map

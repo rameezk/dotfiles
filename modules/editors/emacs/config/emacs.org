@@ -109,7 +109,8 @@ See [[https://github.com/protesilaos/ef-themes][here]].
 #+begin_src emacs-lisp
 (use-package ef-themes
   :config
-  (load-theme 'ef-summer t))
+  (setq ef-themes-to-toggle '(ef-summer ef-winter))
+  (load-theme 'ef-winter :no-confirm))
 #+end_src
 ** Modeline
 *** Doom Modeline
@@ -910,6 +911,14 @@ This includes only =org-agenda= for now.
 #+begin_src emacs-lisp
 (rkn/keymap-define-global
   "a" 'org-agenda)
+#+end_src
+**** Toggles
+Global interface toggles.
+#+begin_src emacs-lisp
+(rkn/keymap-define-global
+  "t" '(:ignore t :which-key "toggle")
+  "tt" 'ef-themes-toggle
+  "tf" 'toggle-frame-fullscreen)
 #+end_src
 *** Org-Mode
 #+begin_src emacs-lisp
