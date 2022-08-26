@@ -35,6 +35,11 @@
   # Packages
   home.packages = with pkgs; [ nixUnstable nixfmt ];
 
+  # Add experimental features to nix configuration
+  home.file.nixConf.text = ''
+    experimental-features = nix-command flakes
+  '';
+
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
   # when a new Home Manager release introduces backwards
