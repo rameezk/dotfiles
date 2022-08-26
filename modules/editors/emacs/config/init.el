@@ -582,7 +582,8 @@
 (rkn/keymap-define-global
   "t" '(:ignore t :which-key "toggle")
   "tt" 'ef-themes-toggle
-  "tf" 'toggle-frame-fullscreen)
+  "tf" 'toggle-frame-fullscreen
+  "tl" 'linum-mode)
 
 (rkn/keymap-define-map
   :keymaps 'org-mode-map
