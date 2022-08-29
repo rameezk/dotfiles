@@ -12,9 +12,9 @@
   home.packages = with pkgs; [
     sqlite # needed for org-roam
 
-    # spell checkiing
+    # spell checking
     aspell
-    aspellDicts.en
+    aspellDicts.en # includes en_GB variant
     aspellDicts.en-computers
     aspellDicts.en-science
 
