@@ -27,6 +27,7 @@
     ../../modules/tool/aws
     ../../modules/tool/kubernetes
     ../../modules/tool/helm
+    ../../modules/tool/tmux
   ];
 
   # Let Home Manager install and manage itself.

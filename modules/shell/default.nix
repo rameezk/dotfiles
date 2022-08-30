@@ -27,7 +27,6 @@
 
   home.packages = with pkgs; [
     ripgrep # faster grepping
-    tmux # terminal multiplexor
     jq # parsing JSON
     entr # file watching
     fzf # fuzzy file finder
