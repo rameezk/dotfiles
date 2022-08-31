@@ -22,6 +22,9 @@ in {
         fenv source ~/.nix-profile/etc/profile.d/nix.sh
       end
 
+      # Set LANG properly
+      export LANG="en_ZA.utf8"
+
       # editor
       export EDITOR=vim
 
