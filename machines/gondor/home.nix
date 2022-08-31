@@ -28,6 +28,9 @@
     ../../modules/tool/kubernetes
     ../../modules/tool/helm
     ../../modules/tool/tmux
+
+    # networking
+    ../../modules/networking/proxy
   ];
 
   # Let Home Manager install and manage itself.
