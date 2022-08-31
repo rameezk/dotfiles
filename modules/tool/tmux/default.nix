@@ -67,7 +67,6 @@
         extraConfig = ''
           set -g @dracula-plugins "battery cpu-usage ram-usage time"
           set -g @dracula-show-powerline true
-          set -g @dracula-show-flags true
           set -g @dracula-border-contrast true
           set -g @dracula-show-left-icon "❐ #S#{prefix_highlight}#{?window_zoomed_flag, 🔍,}"
           set -g @dracula-show-timezone false
