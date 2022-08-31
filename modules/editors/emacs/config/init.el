@@ -172,7 +172,12 @@
 
 (use-package consult
   :init
-  (setq consult-project-root-function #'projectile-project-root))
+  (setq consult-project-root-function #'projectile-project-root)
+
+  :config
+  (setq consult-find-args (concat "find . "
+				  "-not ( -wholename */.git/* -prune ) "
+				  "-not ( -wholename */.venv/* -prune ) ")))
 
 (use-package marginalia
   :init

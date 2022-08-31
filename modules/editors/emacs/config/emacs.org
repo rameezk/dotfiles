@@ -284,7 +284,12 @@ Consult provides some extra completion for built-in emacs functions.
 #+begin_src emacs-lisp
 (use-package consult
   :init
-  (setq consult-project-root-function #'projectile-project-root))
+  (setq consult-project-root-function #'projectile-project-root)
+
+  :config
+  (setq consult-find-args (concat "find . "
+				  "-not ( -wholename */.git/* -prune ) "
+				  "-not ( -wholename */.venv/* -prune ) ")))
 #+end_src
 *** Marginalia
 Provides helpful annotations to commands/functions. For files it also displays file permissions etc.
