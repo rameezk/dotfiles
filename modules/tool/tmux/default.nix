@@ -18,6 +18,11 @@
       setw -g mouse on # Turn on mouse mode
       set-option -g xterm-keys on # Enable modifier keys
 
+      # Add two status lines, one blank to emulate white space. To provide some spacing above status line.
+      set-option -g status-position bottom
+      setw -g pane-border-status bottom
+      setw -g pane-border-format '#[fg=colour2] $ #{pane_current_command} '
+
       # Visual Notifications
       setw -g monitor-activity on 
       set -g visual-activity on
