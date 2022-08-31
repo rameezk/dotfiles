@@ -110,16 +110,6 @@ in {
         '';
       };
 
-      clone_e4m_repo = {
-        argumentNames = "repo_url";
-        description = "clone e4m repo to correct directory";
-        body = ''
-          set -l clone_to_path (echo "$repo_url" | sed 's#https://${secrets.git.work.e4m_base_url}#${secrets.git.work.code_directory}#' | sed 's/\.git//')
-          git clone "$repo_url" "$clone_to_path"
-          cd "$clone_to_path"
-        '';
-      };
-
       open_repo_in_browser = {
 
         description = "open a git remote in default browser";
