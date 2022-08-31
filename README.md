@@ -30,6 +30,9 @@ As such I've declared my old .files as __old-school-thinking__. But you can stil
    ```sh
    ./bin/dot rebuild
    ```
+   
+## Docs
+For other docs see `docs/` directory.
 
 ## Nice to have
 ### pre-commit hooks
