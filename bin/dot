@@ -42,7 +42,9 @@ def edit(vim: bool = False):
     else:
         editor = "emacsclient --no-wait"
 
-    run_command(f"{editor} $(find {dotfiles_dir} -type f -not -path '*/\.git/*' | fzf)")
+    run_command(
+        f"{editor} $(find {dotfiles_dir} -type f -not -path '*/.git/*' -not -path '*~' -not -path '*/.direnv/*' | fzf)"
+    )
 
 
 @app.command(help="Rebuild configuration and activate it")
