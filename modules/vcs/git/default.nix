@@ -23,6 +23,7 @@ in {
       pr-complete = "!f() { git checkout master && git pull --prune; }; f";
       generate-ignore =
         ''!f() { curl -sL "https://www.gitignore.io/api/$1"; }; f'';
+      open = "!f() { fish -c open_repo_in_browser; }; f";
     };
     includes = [
       {

@@ -114,14 +114,13 @@ in {
 
         description = "open a git remote in default browser";
         body = ''
-          if [ ! -d ".git" ];
-            echo "[..] Not a git repo"
-            return 1
-          end
-
           set -l git_remote (git remote -v | head -n 1 | awk '{print $2}')
 
-          set -l browser_remote (echo $git_remote | sed 's/.*@/http:\/\//' | sed -E 's/:[0-9]+//g' | sed 's/\.com:/\.com\//' | sed 's/\.[^.]*$//')
+          if string match -r '^git@.*$' $git_remote
+            set browser_remote (echo $git_remote | sed 's#:#/#' | sed 's#git@#http://#' | sed -E 's#.git$##')
+          else
+            set browser_remote (echo $git_remote | sed 's/.*@/http:\/\//' | sed -E 's/:[0-9]+//g' | sed 's/\.com:/\.com\//' | sed 's/\.[^.]*$//')
+          end
 
           echo "[..] Opening $browser_remote in default browser"
           open "$browser_remote" > /dev/null 2>&1
