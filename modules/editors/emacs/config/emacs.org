@@ -354,153 +354,6 @@ Allow emacs to ask for GPG password.
   (pinentry-start))
 #+end_src
 * Languages
-** Clojure
-*** Clojure-Mode
-#+begin_src emacs-lisp
-(use-package clojure-mode
-  :after (flycheck-clj-kondo)
-  :ensure t
-  :config
-  (require 'flycheck-clj-kondo)
-  (add-hook 'clojure-mode-hook 'enable-paredit-mode)
-  (add-hook 'clojure-mode-hook 'lsp)
-  (add-hook 'clojurescript-mode-hook 'enable-paredit-mode)
-  (add-hook 'clojurescript-mode-hook 'lsp)
-  (add-hook 'clojurec-mode-hook 'lsp)
-
-  (setq clojure-indent-style 'align-arguments)
-  (setq clojure-align-forms-automatically t)
-
-  (setq gc-cons-threshold (* 100 1024 1024)
-        read-process-output-max (* 1024 1024)
-        treemacs-space-between-root-nodes nil
-        company-minimum-prefix-length 1
-        lsp-lens-enable t
-        lsp-signature-auto-activate nil
-                                        ; lsp-enable-indentation nil ; uncomment to use cider indentation instead of lsp
-                                        ; lsp-enable-completion-at-point nil ; uncomment to use cider completion instead of lsp
-        ))
-#+end_src
-*** clj-kondo
-#+begin_src emacs-lisp
-(use-package flycheck-clj-kondo)
-#+end_src
-*** Cider
-#+begin_src emacs-lisp
-(use-package cider)
-#+end_src
-*** clj-refactor
-#+begin_src emacs-lisp
-(use-package clj-refactor
-  :ensure t
-  :init
-  (add-hook 'clojure-mode-hook 'clj-refactor-mode)
-  (add-hook 'clojurescript-mode-hook 'clj-refactor-mode)
-  :diminish clj-refactor-mode)
-#+end_src
-*** Aggressive-Indent mode
-#+begin_src emacs-lisp
-(use-package aggressive-indent
-  :config
-  (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
-  (add-hook 'clojurescript-mode-hook #'aggressive-indent-mode))
-#+end_src
-*** rainbow-delimiters
-#+begin_src emacs-lisp
-(use-package rainbow-delimiters
-  :ensure t
-  :init
-  (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
-  (add-hook 'clojurescript-mode-hook 'rainbow-delimiters-mode)
-  :diminish rainbow-delimiters-mode)
-#+end_src
-*** lispyville
-#+begin_src emacs-lisp
-(use-package lispyville
-  :after (org)
-  :init
-  (general-add-hook '(emacs-lisp-mode-hook lisp-mode-hook clojure-mode-hook clojurescript-mode-hook) #'lispyville-mode)
-  :config
-  (lispyville-set-key-theme '(operators c-w additional commentary slurp/barf-cp)))
-#+end_src
-** Docker
-#+begin_src emacs-lisp
-(use-package dockerfile-mode
-  :mode "Dockerfile\\'")
-#+end_src
-** Markdown
-#+begin_src emacs-lisp
-(use-package markdown-mode
-  :commands (markdown-mode gfm-mode)
-  :mode (("README\\.md\\'" . gfm-mode)
-         ("\\.md\\'" . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode))
-  :init (setq markdown-command "multimarkdown"))
-#+end_src
-*** Enable word wrapping
-Enable word and line wrapping in markdown modes using visual mode
-#+begin_src emacs-lisp
-(add-hook 'markdown-mode-hook 'visual-line-mode)
-(add-hook 'gfm-mode-hook 'visual-line-mode)
-#+end_src
-** Python
-*** Use PyRight for Python LSP
-#+begin_src emacs-lisp
-(use-package lsp-pyright
-  :ensure t
-  :hook (python-mode . (lambda ()
-                         (require 'lsp-pyright)
-                         (lsp))))  ; or lsp-deferred
-#+end_src
-*** Auto Formatting using Black
-#+begin_src emacs-lisp
-(use-package python-black
-  :demand t
-  :after python
-  :hook (python-mode . python-black-on-save-mode))
-#+end_src
-*** Pipenv
-Pipfile should use =conf-toml-mode=.
-#+begin_src emacs-lisp
-(add-to-list 'auto-mode-alist '("\\Pipfile\\'" . conf-toml-mode))
-#+end_src
-** Yaml
-#+begin_src emacs-lisp
-(use-package yaml-mode
-  :mode "\\.(yml|yaml)\\'")
-#+end_src
-** Rust
-*** rustic
-#+begin_src emacs-lisp
-(use-package rustic)
-#+end_src
-** Terraform
-*** terraform-mode
-#+begin_src emacs-lisp
-(use-package terraform-mode)
-#+end_src
-
-*** Spell checking
-Enable spell checking in org-mode.
-#+begin_src emacs-lisp
-(add-hook 'markdown-mode-hook 'flyspell-mode)
-#+end_src
-** Nim
-*** nim-mode
-#+begin_src emacs-lisp
-(use-package nim-mode
-  :ensure t
-  :hook
-  (nim-mode . lsp))
-#+end_src
-** Nix
-#+begin_src emacs-lisp
-(use-package nix-mode
-  :mode "\\.nix\\'"
-  :config
-  (setq nix-nixfmt-bin "~/.nix-profile/bin/nixfmt"))
-#+end_src
-
 ** Org
 *** Org-Mode
 I use org-mode for managing this config and for tending to my Digital Garden.
@@ -676,6 +529,153 @@ We then invoke this function as an =org-mode-hook=.
 #+begin_src emacs-lisp
 (use-package org-pomodoro)
 #+end_src
+** Clojure
+*** Clojure-Mode
+#+begin_src emacs-lisp
+(use-package clojure-mode
+  :after (flycheck-clj-kondo)
+  :ensure t
+  :config
+  (require 'flycheck-clj-kondo)
+  (add-hook 'clojure-mode-hook 'enable-paredit-mode)
+  (add-hook 'clojure-mode-hook 'lsp)
+  (add-hook 'clojurescript-mode-hook 'enable-paredit-mode)
+  (add-hook 'clojurescript-mode-hook 'lsp)
+  (add-hook 'clojurec-mode-hook 'lsp)
+
+  (setq clojure-indent-style 'align-arguments)
+  (setq clojure-align-forms-automatically t)
+
+  (setq gc-cons-threshold (* 100 1024 1024)
+        read-process-output-max (* 1024 1024)
+        treemacs-space-between-root-nodes nil
+        company-minimum-prefix-length 1
+        lsp-lens-enable t
+        lsp-signature-auto-activate nil
+                                        ; lsp-enable-indentation nil ; uncomment to use cider indentation instead of lsp
+                                        ; lsp-enable-completion-at-point nil ; uncomment to use cider completion instead of lsp
+        ))
+#+end_src
+*** clj-kondo
+#+begin_src emacs-lisp
+(use-package flycheck-clj-kondo)
+#+end_src
+*** Cider
+#+begin_src emacs-lisp
+(use-package cider)
+#+end_src
+*** clj-refactor
+#+begin_src emacs-lisp
+(use-package clj-refactor
+  :ensure t
+  :init
+  (add-hook 'clojure-mode-hook 'clj-refactor-mode)
+  (add-hook 'clojurescript-mode-hook 'clj-refactor-mode)
+  :diminish clj-refactor-mode)
+#+end_src
+*** Aggressive-Indent mode
+#+begin_src emacs-lisp
+(use-package aggressive-indent
+  :config
+  (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
+  (add-hook 'clojurescript-mode-hook #'aggressive-indent-mode))
+#+end_src
+*** rainbow-delimiters
+#+begin_src emacs-lisp
+(use-package rainbow-delimiters
+  :ensure t
+  :init
+  (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
+  (add-hook 'clojurescript-mode-hook 'rainbow-delimiters-mode)
+  :diminish rainbow-delimiters-mode)
+#+end_src
+*** lispyville
+#+begin_src emacs-lisp
+(use-package lispyville
+  :after (org)
+  :init
+  (general-add-hook '(emacs-lisp-mode-hook lisp-mode-hook clojure-mode-hook clojurescript-mode-hook) #'lispyville-mode)
+  :config
+  (lispyville-set-key-theme '(operators c-w additional commentary slurp/barf-cp)))
+#+end_src
+** Docker
+#+begin_src emacs-lisp
+(use-package dockerfile-mode
+  :mode "Dockerfile\\'")
+#+end_src
+** Markdown
+#+begin_src emacs-lisp
+(use-package markdown-mode
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
+#+end_src
+*** Enable word wrapping
+Enable word and line wrapping in markdown modes using visual mode
+#+begin_src emacs-lisp
+(add-hook 'markdown-mode-hook 'visual-line-mode)
+(add-hook 'gfm-mode-hook 'visual-line-mode)
+#+end_src
+** Python
+*** Use PyRight for Python LSP
+#+begin_src emacs-lisp
+(use-package lsp-pyright
+  :ensure t
+  :hook (python-mode . (lambda ()
+                         (require 'lsp-pyright)
+                         (lsp))))  ; or lsp-deferred
+#+end_src
+*** Auto Formatting using Black
+#+begin_src emacs-lisp
+(use-package python-black
+  :demand t
+  :after python
+  :hook (python-mode . python-black-on-save-mode))
+#+end_src
+*** Pipenv
+Pipfile should use =conf-toml-mode=.
+#+begin_src emacs-lisp
+(add-to-list 'auto-mode-alist '("\\Pipfile\\'" . conf-toml-mode))
+#+end_src
+** Yaml
+#+begin_src emacs-lisp
+(use-package yaml-mode
+  :mode "\\.(yml|yaml)\\'")
+#+end_src
+** Rust
+*** rustic
+#+begin_src emacs-lisp
+(use-package rustic)
+#+end_src
+** Terraform
+*** terraform-mode
+#+begin_src emacs-lisp
+(use-package terraform-mode)
+#+end_src
+
+*** Spell checking
+Enable spell checking in org-mode.
+#+begin_src emacs-lisp
+(add-hook 'markdown-mode-hook 'flyspell-mode)
+#+end_src
+** Nim
+*** nim-mode
+#+begin_src emacs-lisp
+(use-package nim-mode
+  :ensure t
+  :hook
+  (nim-mode . lsp))
+#+end_src
+** Nix
+#+begin_src emacs-lisp
+(use-package nix-mode
+  :mode "\\.nix\\'"
+  :config
+  (setq nix-nixfmt-bin "~/.nix-profile/bin/nixfmt"))
+#+end_src
+
 ** Python
 *** Use PyRight for Python LSP
 #+begin_src emacs-lisp

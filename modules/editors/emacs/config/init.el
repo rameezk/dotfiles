@@ -212,105 +212,6 @@
   (setq epa-pinentry-mode 'loopback)
   (pinentry-start))
 
-(use-package clojure-mode
-  :after (flycheck-clj-kondo)
-  :ensure t
-  :config
-  (require 'flycheck-clj-kondo)
-  (add-hook 'clojure-mode-hook 'enable-paredit-mode)
-  (add-hook 'clojure-mode-hook 'lsp)
-  (add-hook 'clojurescript-mode-hook 'enable-paredit-mode)
-  (add-hook 'clojurescript-mode-hook 'lsp)
-  (add-hook 'clojurec-mode-hook 'lsp)
-
-  (setq clojure-indent-style 'align-arguments)
-  (setq clojure-align-forms-automatically t)
-
-  (setq gc-cons-threshold (* 100 1024 1024)
-        read-process-output-max (* 1024 1024)
-        treemacs-space-between-root-nodes nil
-        company-minimum-prefix-length 1
-        lsp-lens-enable t
-        lsp-signature-auto-activate nil
-                                        ; lsp-enable-indentation nil ; uncomment to use cider indentation instead of lsp
-                                        ; lsp-enable-completion-at-point nil ; uncomment to use cider completion instead of lsp
-        ))
-
-(use-package flycheck-clj-kondo)
-
-(use-package cider)
-
-(use-package clj-refactor
-  :ensure t
-  :init
-  (add-hook 'clojure-mode-hook 'clj-refactor-mode)
-  (add-hook 'clojurescript-mode-hook 'clj-refactor-mode)
-  :diminish clj-refactor-mode)
-
-(use-package aggressive-indent
-  :config
-  (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
-  (add-hook 'clojurescript-mode-hook #'aggressive-indent-mode))
-
-(use-package rainbow-delimiters
-  :ensure t
-  :init
-  (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
-  (add-hook 'clojurescript-mode-hook 'rainbow-delimiters-mode)
-  :diminish rainbow-delimiters-mode)
-
-(use-package lispyville
-  :after (org)
-  :init
-  (general-add-hook '(emacs-lisp-mode-hook lisp-mode-hook clojure-mode-hook clojurescript-mode-hook) #'lispyville-mode)
-  :config
-  (lispyville-set-key-theme '(operators c-w additional commentary slurp/barf-cp)))
-
-(use-package dockerfile-mode
-  :mode "Dockerfile\\'")
-
-(use-package markdown-mode
-  :commands (markdown-mode gfm-mode)
-  :mode (("README\\.md\\'" . gfm-mode)
-         ("\\.md\\'" . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode))
-  :init (setq markdown-command "multimarkdown"))
-
-(add-hook 'markdown-mode-hook 'visual-line-mode)
-(add-hook 'gfm-mode-hook 'visual-line-mode)
-
-(use-package lsp-pyright
-  :ensure t
-  :hook (python-mode . (lambda ()
-                         (require 'lsp-pyright)
-                         (lsp))))  ; or lsp-deferred
-
-(use-package python-black
-  :demand t
-  :after python
-  :hook (python-mode . python-black-on-save-mode))
-
-(add-to-list 'auto-mode-alist '("\\Pipfile\\'" . conf-toml-mode))
-
-(use-package yaml-mode
-  :mode "\\.(yml|yaml)\\'")
-
-(use-package rustic)
-
-(use-package terraform-mode)
-
-(add-hook 'markdown-mode-hook 'flyspell-mode)
-
-(use-package nim-mode
-  :ensure t
-  :hook
-  (nim-mode . lsp))
-
-(use-package nix-mode
-  :mode "\\.nix\\'"
-  :config
-  (setq nix-nixfmt-bin "~/.nix-profile/bin/nixfmt"))
-
 (use-package org)
 
 (setq org-edit-src-content-indentation 0
@@ -419,6 +320,105 @@
                                               'run-at-end 'only-in-org-mode)))
 
 (use-package org-pomodoro)
+
+(use-package clojure-mode
+  :after (flycheck-clj-kondo)
+  :ensure t
+  :config
+  (require 'flycheck-clj-kondo)
+  (add-hook 'clojure-mode-hook 'enable-paredit-mode)
+  (add-hook 'clojure-mode-hook 'lsp)
+  (add-hook 'clojurescript-mode-hook 'enable-paredit-mode)
+  (add-hook 'clojurescript-mode-hook 'lsp)
+  (add-hook 'clojurec-mode-hook 'lsp)
+
+  (setq clojure-indent-style 'align-arguments)
+  (setq clojure-align-forms-automatically t)
+
+  (setq gc-cons-threshold (* 100 1024 1024)
+        read-process-output-max (* 1024 1024)
+        treemacs-space-between-root-nodes nil
+        company-minimum-prefix-length 1
+        lsp-lens-enable t
+        lsp-signature-auto-activate nil
+                                        ; lsp-enable-indentation nil ; uncomment to use cider indentation instead of lsp
+                                        ; lsp-enable-completion-at-point nil ; uncomment to use cider completion instead of lsp
+        ))
+
+(use-package flycheck-clj-kondo)
+
+(use-package cider)
+
+(use-package clj-refactor
+  :ensure t
+  :init
+  (add-hook 'clojure-mode-hook 'clj-refactor-mode)
+  (add-hook 'clojurescript-mode-hook 'clj-refactor-mode)
+  :diminish clj-refactor-mode)
+
+(use-package aggressive-indent
+  :config
+  (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
+  (add-hook 'clojurescript-mode-hook #'aggressive-indent-mode))
+
+(use-package rainbow-delimiters
+  :ensure t
+  :init
+  (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
+  (add-hook 'clojurescript-mode-hook 'rainbow-delimiters-mode)
+  :diminish rainbow-delimiters-mode)
+
+(use-package lispyville
+  :after (org)
+  :init
+  (general-add-hook '(emacs-lisp-mode-hook lisp-mode-hook clojure-mode-hook clojurescript-mode-hook) #'lispyville-mode)
+  :config
+  (lispyville-set-key-theme '(operators c-w additional commentary slurp/barf-cp)))
+
+(use-package dockerfile-mode
+  :mode "Dockerfile\\'")
+
+(use-package markdown-mode
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
+
+(add-hook 'markdown-mode-hook 'visual-line-mode)
+(add-hook 'gfm-mode-hook 'visual-line-mode)
+
+(use-package lsp-pyright
+  :ensure t
+  :hook (python-mode . (lambda ()
+                         (require 'lsp-pyright)
+                         (lsp))))  ; or lsp-deferred
+
+(use-package python-black
+  :demand t
+  :after python
+  :hook (python-mode . python-black-on-save-mode))
+
+(add-to-list 'auto-mode-alist '("\\Pipfile\\'" . conf-toml-mode))
+
+(use-package yaml-mode
+  :mode "\\.(yml|yaml)\\'")
+
+(use-package rustic)
+
+(use-package terraform-mode)
+
+(add-hook 'markdown-mode-hook 'flyspell-mode)
+
+(use-package nim-mode
+  :ensure t
+  :hook
+  (nim-mode . lsp))
+
+(use-package nix-mode
+  :mode "\\.nix\\'"
+  :config
+  (setq nix-nixfmt-bin "~/.nix-profile/bin/nixfmt"))
 
 (use-package lsp-pyright
   :ensure t
