@@ -574,7 +574,11 @@
   "nr" '(:ignore t :which-key "roam")
   "nrf" 'org-roam-node-find
   "nri" 'org-roam-node-insert
-  "nrc" 'org-capture
+  "nrc" '((lambda()
+	    (setq current-journal-file
+		  (expand-file-name
+		   (format-time-string "~/Dropbox/DigitalGarden/journals/%Y-%m-%b.org")))
+	    (interactive)(org-capture)) :which-key "org-capture")
   "nrd" '((lambda() (interactive)(find-file (format-time-string "~/Dropbox/DigitalGarden/journals/%Y-%m-%b.org"))) :which-key "Daily Journal")
   "nrs" 'rkn/org-roam-rg-search)
 
