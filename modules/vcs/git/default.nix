@@ -20,7 +20,6 @@ in {
         !f() { git branch --merged | grep -v "master\|main" | xargs git branch -d; }; f'';
       prune-local-branches =
         "!f() { git branch -vv | grep ': gone' | awk '{print $1}' | fzf -m | xargs git branch -D; }; f";
-      pr-complete = "!f() { git checkout master && git pull --prune; }; f";
       generate-ignore =
         ''!f() { curl -sL "https://www.gitignore.io/api/$1"; }; f'';
       open = "!f() { fish -c open_repo_in_browser; }; f";
@@ -52,7 +51,7 @@ in {
     extraConfig = {
       user = { signingkey = secrets.user.work.gpgFingerprint; };
       commit = { gpgsign = true; };
-      init = { defaultBranch = "master"; };
+      init = { defaultBranch = "main"; };
       pull = { rebase = false; };
       fetch = { prune = true; };
       pager = { difftool = true; };
