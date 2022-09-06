@@ -49,13 +49,25 @@ in {
       }
     ];
     extraConfig = {
+      core = { pager = "delta"; };
+      interactive = { diffFilter = "delta --color-only"; };
+      add.interactive = { useBuiltin = false; };
+      delta = {
+        navigate = true;
+        light = false;
+        side-by-side = true;
+        hyperlinks = true;
+        line-numbers = true;
+        syntax-theme = "Dracula";
+      };
+      diff = { colorMoved = "default"; };
+      merge = { conflictstyle = "diff3"; };
       user = { signingkey = secrets.user.work.gpgFingerprint; };
       commit = { gpgsign = true; };
       init = { defaultBranch = "main"; };
       pull = { rebase = false; };
       fetch = { prune = true; };
       pager = { difftool = true; };
-      diff = { external = "difft"; };
       http."${secrets.git.work.base_url}" = {
         sslCAInfo = secrets.git.work.ssl_ca_info;
       };
@@ -64,6 +76,18 @@ in {
   };
 
   programs.gpg = { enable = true; };
+
+  programs.lazygit = {
+    enable = true;
+
+    # settings = {
+    #   git.paging = {
+    #     colorArg = "always";
+    #     pager = "delta --dark --paging=never";
+
+    #   };
+    # };
+  };
 
   # home.file.".gnupg/pinentry-switcher".source =
   #   pkgs.writeShellScript "pinentry-switcher" ''
@@ -95,7 +119,7 @@ in {
   home.packages = with pkgs; [
     git-crypt # encrypting git repos transparently
     pre-commit # a framework for dealing with git hooks
-    difftastic # a better diffing tool that understand code syntax
+    delta # a better diffing tool pager
     cacert # needed for self signed certs in git
   ];
 }
