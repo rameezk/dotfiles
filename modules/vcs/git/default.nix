@@ -77,18 +77,6 @@ in {
 
   programs.gpg = { enable = true; };
 
-  programs.lazygit = {
-    enable = true;
-
-    # settings = {
-    #   git.paging = {
-    #     colorArg = "always";
-    #     pager = "delta --dark --paging=never";
-
-    #   };
-    # };
-  };
-
   # home.file.".gnupg/pinentry-switcher".source =
   #   pkgs.writeShellScript "pinentry-switcher" ''
   #     case $PINENTRY_USER_DATA in
