@@ -484,7 +484,8 @@
 		   (format-time-string "~/Dropbox/DigitalGarden/journals/%Y-%m-%b.org")))
 	    (interactive)(org-capture)) :which-key "org-capture")
   "nrd" '((lambda() (interactive)(find-file (format-time-string "~/Dropbox/DigitalGarden/journals/%Y-%m-%b.org"))) :which-key "Daily Journal")
-  "nrs" 'rkn/org-roam-rg-search)
+  "nrs" 'rkn/org-roam-rg-search
+  "nrb" 'org-roam-buffer-toggle)
 
 (general-define-key
  "C-SPC" 'company-complete)
