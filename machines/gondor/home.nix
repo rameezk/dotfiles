@@ -42,6 +42,8 @@
   # Add experimental features to nix configuration
   home.file.nixConf.text = ''
     experimental-features = nix-command flakes
+    keep-outputs = true
+    keep-derivations = true
   '';
 
   # This value determines the Home Manager release that your
