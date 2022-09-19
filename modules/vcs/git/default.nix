@@ -23,6 +23,8 @@ in {
       generate-ignore =
         ''!f() { curl -sL "https://www.gitignore.io/api/$1"; }; f'';
       open = "!f() { fish -c open_repo_in_browser; }; f";
+      latest-tag = "!git tag --sort version:refname | tail -n 1";
+      log-to-last-tag = "!f() { git log `git latest-tag`..HEAD --oneline; }; f";
     };
     includes = [
       {
