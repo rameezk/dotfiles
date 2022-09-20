@@ -13,4 +13,23 @@
     export no_proxy=localhost,127.0.0.1
     export NO_PROXY=localhost,127.0.0.1
   '';
+
+  home.file.".m2/settings.xml".text = ''
+    <settings>
+        <proxies>
+            <proxy>
+                <id>proxy</id>
+                <active>true</active>
+                <protocol>http</protocol>
+                <host>localhost</host>
+                <port>3128</port>
+                <nonProxyHosts>localhost|127.0.0.1</nonProxyHosts>
+            </proxy>
+        </proxies>
+    </settings>
+  '';
+
+  home.file.".npmrc".text = ''
+    proxy=http://localhost:3128/
+  '';
 }
