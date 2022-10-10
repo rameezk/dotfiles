@@ -1,12 +1,6 @@
 { config, pkgs, lib, ... }:
 
 {
-  # setup cachix
-  caches.cachix = [{
-    name = "nix-community";
-    sha256 = "00lpx4znr4dd0cc4w4q8fl97bdp7q19z1d3p50hcfxy26jz5g21g";
-  }];
-
   # Opt-in to modules by including theme here.
   #  Is there a better way to do this per machine?
   imports = [
@@ -14,26 +8,43 @@
     ../../modules/core
 
     # shell
-    #../../modules/shell
+    ../../modules/shell
 
     # editors
-    ../../modules/editors/font
-    ../../modules/editors/emacs
     ../../modules/editors/vim
+    #../../modules/editors/emacs
+    #../../modules/editors/jetbrains
 
     # vcs
     #../../modules/vcs/git
 
     # lang
     ../../modules/language/python
+    #../../modules/language/nodejs
     #../../modules/language/clojure
+
+    # tool
+    #../../modules/tool/aws
+    #../../modules/tool/kubernetes
+    #../../modules/tool/helm
+    ../../modules/tool/tmux
+
+    # networking
+    #../../modules/networking/proxy
   ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
   # Packages
-  home.packages = with pkgs; [ nixUnstable cachix nixfmt ];
+  home.packages = with pkgs; [ nixUnstable nixfmt ];
+
+  # Add experimental features to nix configuration
+  home.file.nixConf.text = ''
+    experimental-features = nix-command flakes
+    keep-outputs = true
+    keep-derivations = true
+  '';
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage

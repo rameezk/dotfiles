@@ -25,16 +25,20 @@
           username = "rameezk";
         };
         rivendell = home-manager.lib.homeManagerConfiguration {
-          configuration = { ... }: {
-            nixpkgs.overlays = [ emacs-overlay.overlay ];
-            imports = [
-              declarative-cachix.homeManagerModules.declarative-cachix
-              ./machines/rivendell/home.nix
-            ];
+          pkgs = import nixpkgs {
+            system = "aarch64-darwin";
+            overlays = [ emacs-overlay.overlay ];
           };
-          system = "x86_64-darwin";
-          homeDirectory = "/Users/rameezk";
-          username = "rameezk";
+          modules = [
+            declarative-cachix.homeManagerModules.declarative-cachix
+            ./machines/rivendell/home.nix
+            {
+              home = {
+                username = "qxy6675";
+                homeDirectory = "/Users/qxy6675";
+              };
+            }
+          ];
         };
         gondor = home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
