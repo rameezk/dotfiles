@@ -83,6 +83,9 @@ in {
       kw = "watch kubectl";
       kdebug =
         "kubectl run --rm -i -t debug --image=rameezk/debuggery --restart=Never";
+
+      # Nix
+      "," = "nix run nixpkgs#";
     };
 
     functions = {
