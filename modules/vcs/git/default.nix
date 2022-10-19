@@ -111,5 +111,6 @@ in {
     pre-commit # a framework for dealing with git hooks
     delta # a better diffing tool pager
     cacert # needed for self signed certs in git
+    gh # github cli
   ];
 }
