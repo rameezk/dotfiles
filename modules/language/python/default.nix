@@ -12,13 +12,7 @@
       };
     }))
     python310Packages.pipx
-    (pipenv.overrideAttrs (_: {
-      src = pkgs.python310Packages.fetchPypi {
-        version = "2022.1.8";
-        pname = "pipenv";
-        sha256 = "sha256-+E1xGSObIqsqwrj7x9YZ2Dz0ETUgbXKhfE8VHNpSn9A=";
-      };
-    }))
+    pipenv
   ];
 
 }
