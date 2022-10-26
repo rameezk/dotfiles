@@ -85,4 +85,15 @@
       }
     ];
   };
+
+  home.file."boot-tmux.sh" = {
+    executable = true;
+    text = ''
+      #!/usr/bin/env bash
+
+      echo "[..] Booting tmux"
+      tmux attach -t base || tmux new -s base
+    '';
+  };
+
 }
