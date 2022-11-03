@@ -1,15 +1,21 @@
 { pkgs, ... }:
 
-{
+let
+  proxy_protocol = "http";
+  proxy_host = "localhost";
+  proxy_port = "3128";
+  proxy_full_addr = "${proxy_protocol}://${proxy_host}:${proxy_port}/";
+in {
   home.file.".proxyrc".text = ''
-    export HTTP_PROXY=http://localhost:3128
-    export https_proxy=http://localhost:3128
-    export HTTPS_PROXY=http://localhost:3128
-    export ftp_proxy=http://localhost:3128
-    export FTP_PROXY=http://localhost:3128
-    export all_proxy=http://localhost:3128
-    export ALL_PROXY=http://localhost:3128
-    export NIX_CURL_FLAGS="-x $proxy"
+    export HTTP_PROXY=${proxy_full_addr}
+    export http_proxy=${proxy_full_addr}
+    export https_proxy=${proxy_full_addr}
+    export HTTPS_PROXY=${proxy_full_addr}
+    export ftp_proxy=${proxy_full_addr}
+    export FTP_PROXY=${proxy_full_addr}
+    export all_proxy=${proxy_full_addr}
+    export ALL_PROXY=${proxy_full_addr}
+    export NIX_CURL_FLAGS="-x ${proxy_full_addr}"
     export no_proxy=localhost,127.0.0.1
     export NO_PROXY=localhost,127.0.0.1
   '';
@@ -20,16 +26,12 @@
             <proxy>
                 <id>proxy</id>
                 <active>true</active>
-                <protocol>http</protocol>
-                <host>localhost</host>
-                <port>3128</port>
+                <protocol>${proxy_protocol}</protocol>
+                <host>${proxy_host}</host>
+                <port>${proxy_port}</port>
                 <nonProxyHosts>localhost|127.0.0.1</nonProxyHosts>
             </proxy>
         </proxies>
     </settings>
-  '';
-
-  home.file.".npmrc".text = ''
-    proxy=http://localhost:3128/
   '';
 }
