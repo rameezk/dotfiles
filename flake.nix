@@ -34,8 +34,8 @@
             ./machines/rivendell/home.nix
             {
               home = {
-                username = "qxy6675";
-                homeDirectory = "/Users/qxy6675";
+                username = "rameezk";
+                homeDirectory = "/Users/rameezk";
               };
             }
           ];
