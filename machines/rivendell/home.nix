@@ -9,11 +9,11 @@
 
     # editors
     ../../modules/editors/vim
-    #../../modules/editors/emacs
+    ../../modules/editors/emacs
     #../../modules/editors/jetbrains
 
     # vcs
-    #../../modules/vcs/git
+    ../../modules/vcs/git
 
     # lang
     ../../modules/language/python
