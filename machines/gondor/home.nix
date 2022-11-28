@@ -19,6 +19,7 @@
     ../../modules/language/python
     ../../modules/language/nodejs
     ../../modules/language/clojure
+    ../../modules/language/rust
 
     # tool
     ../../modules/tool/aws
