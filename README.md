@@ -31,7 +31,14 @@ As such I've declared my old .files as __old-school-thinking__. But you can stil
    ./bin/dot rebuild
    ```
    
-## Docs
+## Upgrading Packages
+Upgrade the flake and rebuild environment:
+```shell
+nix flake update
+dot rebuild
+```
+
+## Other Docs
 For other docs see `docs/` directory.
 
 ## Nice to have
