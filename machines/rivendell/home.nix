@@ -34,14 +34,22 @@
   programs.home-manager.enable = true;
 
   # Packages
-  home.packages = with pkgs; [ nixUnstable nixfmt ];
+  home.packages = with pkgs; [
+    nixUnstable
+    nixfmt
 
-  # Add experimental features to nix configuration
-  home.file.nixConf.text = ''
-    experimental-features = nix-command flakes
-    keep-outputs = true
-    keep-derivations = true
-  '';
+    # ensure we always have the correct version of nix installed
+    config.nix.package
+  ];
+
+  nix = {
+    package = pkgs.nix;
+    settings.experimental-features = [ "nix-command" "flakes" ];
+    extraOptions = ''
+      keep-outputs = true
+      keep-derivations = true
+    '';
+  };
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
