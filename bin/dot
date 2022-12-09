@@ -1,5 +1,5 @@
 #! /usr/bin/env nix-shell
-#! nix-shell --pure -i python -p "python310.withPackages (ps: [ps.typer])" nix git git-crypt curl cacert
+#! nix-shell --pure -i python -p "python310.withPackages (ps: [ps.typer])" nix git git-crypt curl cacert fzf
 
 import os
 import typer
