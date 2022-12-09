@@ -25,11 +25,20 @@
     '';
   };
 
+  programs.fzf = {
+    enable = true;
+    enableFishIntegration = true;
+  };
+
+  programs.navi = {
+    enable = true;
+    enableFishIntegration = true;
+  };
+
   home.packages = with pkgs; [
     ripgrep # faster grepping
     jq # parsing JSON
     entr # file watching
-    fzf # fuzzy file finder
     htop # process manager
     neofetch # nice system info viewer
     fd # a faster find
