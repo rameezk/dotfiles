@@ -25,6 +25,8 @@ in {
       open = "!f() { fish -c open_repo_in_browser; }; f";
       latest-tag = "!git tag --sort version:refname | tail -n 1";
       log-to-last-tag = "!f() { git log `git latest-tag`..HEAD --oneline; }; f";
+      ignore-nix-shell =
+        "!f() { grep -qxF 'shell.nix' `git rev-parse --show-toplevel`/.git/info/exclude || echo 'shell.nix' >> `git rev-parse --show-toplevel`/.git/info/exclude; }; f";
     };
     includes = [
       {
