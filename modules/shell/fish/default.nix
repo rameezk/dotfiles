@@ -50,6 +50,9 @@ in {
       # Fix gcc lib issues for certain python libs
       # Only needed on WSL Ubuntu for some reason
       # set -x LD_LIBRARY_PATH /nix/store/9ilyrqidrjbqvmnn8ykjc7lygdd86g7q-gcc-10.2.0-lib/lib:/nix/store/1l4r0r4ab3v3a3ppir4jwiah3icalk9d-zlib-1.2.11/lib
+
+      # Set ripgrep configuration file
+      set -x RIPGREP_CONFIG_PATH ~/.ripgreprc
     '';
 
     shellAbbrs = {

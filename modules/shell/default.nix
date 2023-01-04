@@ -35,6 +35,16 @@
     enableFishIntegration = true;
   };
 
+  home.file.".ripgreprc".text = ''
+    --hidden
+    --glob=!.git/*
+    --max-columns=150
+    --max-columns-preview
+    --smart-case
+    --colors=line:none
+    --colors=line:style:bold
+  '';
+
   home.packages = with pkgs; [
     ripgrep # faster grepping
     jq # parsing JSON
