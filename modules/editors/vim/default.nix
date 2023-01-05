@@ -15,6 +15,7 @@
       set cursorline " Highlight the current line the cursor is on
       set visualbell " Turn on visual bell
       colorscheme gruvbox " Turn on gruvbox colorscheme
+      set backspace=indent,eol,start " More powerfull backspacing
     '';
   };
 
