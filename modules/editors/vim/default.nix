@@ -8,6 +8,7 @@
       vim-commentary
       gruvbox
       nim-vim
+      vim-terraform
     ];
     extraConfig = ''
       set background=dark " Better colours for darker backgrounds
