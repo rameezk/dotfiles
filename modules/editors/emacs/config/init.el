@@ -323,11 +323,6 @@
 
 (setq org-agenda-custom-commands
       '(
-
-	("n" "Agenda and all TODOs"
-	 agenda ""
-	 ((alltodo "")))
-
 	("c" . "My Custom Agendas")
 
 	("cu" "Unscheduled TODO"
@@ -338,11 +333,16 @@
 	 nil)
 
 	("cw" "Weekly Review"
-	 agenda ""
-	 ((org-agenda-start-day "-7d")
-	  (org-agenda-span 14)
-	  (org-agenda-start-on-weekday 1)
-	  (org-agenda-archives-mode t)))))
+	 ((agenda ""
+		  ((org-agenda-start-day "-7d")
+		   (org-agenda-span 14)
+		   (org-agenda-start-on-weekday 1)
+		   (org-agenda-archives-mode t)))
+	  (alltodo "")))
+
+	("n" "Agenda and all TODOs"
+	 ((agenda #1="")
+	  (alltodo #1#)))))
 
 (use-package clojure-mode
   :after (flycheck-clj-kondo)

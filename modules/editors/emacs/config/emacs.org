@@ -531,15 +531,10 @@ We then invoke this function as an =org-mode-hook=.
 #+end_src
 *** Org-Agenda
 **** Custom Agenda Views
-***** WTF have I been working on
+Helpful to see what I've been working on or plan to work on.
 #+begin_src emacs-lisp
 (setq org-agenda-custom-commands
       '(
-
-	("n" "Agenda and all TODOs"
-	 agenda ""
-	 ((alltodo "")))
-
 	("c" . "My Custom Agendas")
 
 	("cu" "Unscheduled TODO"
@@ -550,11 +545,16 @@ We then invoke this function as an =org-mode-hook=.
 	 nil)
 
 	("cw" "Weekly Review"
-	 agenda ""
-	 ((org-agenda-start-day "-7d")
-	  (org-agenda-span 14)
-	  (org-agenda-start-on-weekday 1)
-	  (org-agenda-archives-mode t)))))
+	 ((agenda ""
+		  ((org-agenda-start-day "-7d")
+		   (org-agenda-span 14)
+		   (org-agenda-start-on-weekday 1)
+		   (org-agenda-archives-mode t)))
+	  (alltodo "")))
+
+	("n" "Agenda and all TODOs"
+	 ((agenda #1="")
+	  (alltodo #1#)))))
 #+end_src
 
 ** Clojure
