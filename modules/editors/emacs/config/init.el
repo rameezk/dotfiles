@@ -321,6 +321,29 @@
 
 (use-package org-pomodoro)
 
+(setq org-agenda-custom-commands
+      '(
+
+	("n" "Agenda and all TODOs"
+	 agenda ""
+	 ((alltodo "")))
+
+	("c" . "My Custom Agendas")
+
+	("cu" "Unscheduled TODO"
+	 ((todo ""
+		((org-agenda-overriding-header "\nUnscheduled TODO")
+		 (org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp)))))
+	 nil
+	 nil)
+
+	("cw" "Weekly Review"
+	 agenda ""
+	 ((org-agenda-start-day "-7d")
+	  (org-agenda-span 14)
+	  (org-agenda-start-on-weekday 1)
+	  (org-agenda-archives-mode t)))))
+
 (use-package clojure-mode
   :after (flycheck-clj-kondo)
   :ensure t
