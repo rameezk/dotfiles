@@ -411,6 +411,8 @@
 (add-hook 'markdown-mode-hook 'visual-line-mode)
 (add-hook 'gfm-mode-hook 'visual-line-mode)
 
+(add-hook 'markdown-mode-hook 'flyspell-mode)
+
 (use-package lsp-pyright
   :ensure t
   :hook (python-mode . (lambda ()
@@ -430,8 +432,6 @@
 (use-package rustic)
 
 (use-package terraform-mode)
-
-(add-hook 'markdown-mode-hook 'flyspell-mode)
 
 (use-package nim-mode
   :ensure t
@@ -442,26 +442,6 @@
   :mode "\\.nix\\'"
   :config
   (setq nix-nixfmt-bin "~/.nix-profile/bin/nixfmt"))
-
-(use-package lsp-pyright
-  :ensure t
-  :hook (python-mode . (lambda ()
-                         (require 'lsp-pyright)
-                         (lsp))))  ; or lsp-deferred
-
-(use-package python-black
-  :demand t
-  :after python
-  :hook (python-mode . python-black-on-save-mode))
-
-(add-to-list 'auto-mode-alist '("\\Pipfile\\'" . conf-toml-mode))
-
-(use-package yaml-mode
-  :mode "\\.(yml|yaml)\\'")
-
-(use-package rustic)
-
-(use-package terraform-mode)
 
 (defun rkn/reload-emacs-config()
   (interactive)

@@ -646,6 +646,12 @@ Enable word and line wrapping in markdown modes using visual mode
 (add-hook 'markdown-mode-hook 'visual-line-mode)
 (add-hook 'gfm-mode-hook 'visual-line-mode)
 #+end_src
+
+*** Spell checking
+Enable spell checking in markdown-mode.
+#+begin_src emacs-lisp
+(add-hook 'markdown-mode-hook 'flyspell-mode)
+#+end_src
 ** Python
 *** Use PyRight for Python LSP
 #+begin_src emacs-lisp
@@ -683,11 +689,6 @@ Pipfile should use =conf-toml-mode=.
 (use-package terraform-mode)
 #+end_src
 
-*** Spell checking
-Enable spell checking in org-mode.
-#+begin_src emacs-lisp
-(add-hook 'markdown-mode-hook 'flyspell-mode)
-#+end_src
 ** Nim
 *** nim-mode
 #+begin_src emacs-lisp
@@ -702,43 +703,6 @@ Enable spell checking in org-mode.
   :mode "\\.nix\\'"
   :config
   (setq nix-nixfmt-bin "~/.nix-profile/bin/nixfmt"))
-#+end_src
-
-** Python
-*** Use PyRight for Python LSP
-#+begin_src emacs-lisp
-(use-package lsp-pyright
-  :ensure t
-  :hook (python-mode . (lambda ()
-                         (require 'lsp-pyright)
-                         (lsp))))  ; or lsp-deferred
-#+end_src
-*** Auto Formatting using Black
-#+begin_src emacs-lisp
-(use-package python-black
-  :demand t
-  :after python
-  :hook (python-mode . python-black-on-save-mode))
-#+end_src
-*** Pipenv
-Pipfile should use =conf-toml-mode=.
-#+begin_src emacs-lisp
-(add-to-list 'auto-mode-alist '("\\Pipfile\\'" . conf-toml-mode))
-#+end_src
-** Yaml
-#+begin_src emacs-lisp
-(use-package yaml-mode
-  :mode "\\.(yml|yaml)\\'")
-#+end_src
-** Rust
-*** rustic
-#+begin_src emacs-lisp
-(use-package rustic)
-#+end_src
-** Terraform
-*** terraform-mode
-#+begin_src emacs-lisp
-(use-package terraform-mode)
 #+end_src
 
 * Custom Keymaps
