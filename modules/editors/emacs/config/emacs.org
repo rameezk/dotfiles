@@ -4,6 +4,7 @@
 * Introduction
 I've declared [[https://www.emacswiki.org/emacs/DotEmacsBankruptcy][configuration bankruptcy]] many times before this. Here's to hoping a literate configuration sticks.
 * Disable Native Comp Warnings
+With native comp enabled there tends to be a lot of annoying warnings. To not go insane I'll turn this off.
 #+begin_src emacs-lisp
 (setq comp-async-report-warnings-errors nil)
 #+end_src
@@ -141,12 +142,6 @@ which-key is great for getting an overview of what keybindings are available.
   :diminish which-key-mode
   :config
   (setq which-key-idle-delay 0.3))
-#+end_src
-** Warnings
-*** Native-comp
-With native comp enabled there tends to be a lot of annoying warnings. To not go insane I'll turn this off.
-#+begin_src emacs-lisp
-(setq comp-async-report-warnings-errors nil)
 #+end_src
 ** Startup Screen
 *** emacs-dashboard
@@ -372,6 +367,16 @@ Enable word and line wrapping in org-mode using visual mode
 #+begin_src emacs-lisp
 (add-hook 'org-mode-hook 'visual-line-mode)
 #+end_src
+**** Additional TODO keywords
+#+begin_src emacs-lisp
+(setq org-todo-keywords
+      '((sequence "TODO" "BLOCKED" "DONE")))
+
+(setq org-todo-keyword-faces
+      '(("TODO" . org-warning)
+	("BLOCKED" . "red"))
+#+end_src
+
 *** Capture Templates
 #+begin_src emacs-lisp
 (setq current-journal-file (expand-file-name (format-time-string "~/Dropbox/DigitalGarden/journals/%Y-%m-%b.org")))

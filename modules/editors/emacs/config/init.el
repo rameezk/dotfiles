@@ -85,8 +85,6 @@
   :config
   (setq which-key-idle-delay 0.3))
 
-(setq comp-async-report-warnings-errors nil)
-
 (use-package page-break-lines)
 
 (use-package dashboard
@@ -219,6 +217,13 @@
       org-src-preserve-indentation t)
 
 (add-hook 'org-mode-hook 'visual-line-mode)
+
+(setq org-todo-keywords
+      '((sequence "TODO" "BLOCKED" "DONE")))
+
+(setq org-todo-keyword-faces
+      '(("TODO" . org-warning)
+	("BLOCKED" . "red"))
 
 (setq current-journal-file (expand-file-name (format-time-string "~/Dropbox/DigitalGarden/journals/%Y-%m-%b.org")))
 
