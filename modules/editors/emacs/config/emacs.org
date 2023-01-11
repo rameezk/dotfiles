@@ -374,7 +374,7 @@ Enable word and line wrapping in org-mode using visual mode
 
 (setq org-todo-keyword-faces
       '(("TODO" . org-warning)
-	("BLOCKED" . "red"))
+	("BLOCKED" . "red")))
 #+end_src
 
 *** Capture Templates

@@ -223,7 +223,7 @@
 
 (setq org-todo-keyword-faces
       '(("TODO" . org-warning)
-	("BLOCKED" . "red"))
+	("BLOCKED" . "red")))
 
 (setq current-journal-file (expand-file-name (format-time-string "~/Dropbox/DigitalGarden/journals/%Y-%m-%b.org")))
 
