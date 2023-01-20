@@ -124,6 +124,14 @@
   :config
   (global-evil-surround-mode 1))
 
+(use-package evil-org
+  :ensure t
+  :after org
+  :hook (org-mode . (lambda () evil-org-mode))
+  :config
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
+
 (use-package general
   :config
   (general-evil-setup t)

@@ -204,6 +204,17 @@ Get a Vim surround equivalent.
   (global-evil-surround-mode 1))
 #+end_src
 
+Use Evil in org-mode and org-mode agenda. For keybindings see [[https://github.com/Somelauw/evil-org-mode/blob/master/doc/keythemes.org][here]].
+#+begin_src emacs-lisp
+(use-package evil-org
+  :ensure t
+  :after org
+  :hook (org-mode . (lambda () evil-org-mode))
+  :config
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
+#+end_src
+
 *** General
 I use general to define various keymaps based on different modes. I also define a handy function to define various leader key mappings.
 
