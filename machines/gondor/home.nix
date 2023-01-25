@@ -38,13 +38,7 @@
   programs.home-manager.enable = true;
 
   # Packages
-  home.packages = with pkgs; [
-    nixUnstable
-    nixfmt
-
-    # Ensure we have the correct version of Nix installed
-    config.nix.package
-  ];
+  home.packages = with pkgs; [ nixUnstable nixfmt ];
 
   nix = {
     package = pkgs.nix;
