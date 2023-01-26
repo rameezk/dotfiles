@@ -10,8 +10,9 @@
   home.file.".emacs.d/init.el".text = builtins.readFile ./config/init.el;
 
   home.packages = with pkgs; [
-    gcc # needed to compile sqlite for org-roam
-    sqlite # needed for org-roam
+    # needed to compile sqlite for org-roam
+    # for MacOS for some reason you also need to run `xcode-select --install` for some reason
+    gcc
 
     # spell checking
     aspell

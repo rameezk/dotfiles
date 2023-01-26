@@ -19,6 +19,11 @@
 
 (straight-use-package 'use-package)
 
+(use-package exec-path-from-shell
+  :config
+  (setq exec-path-from-shell-variables '("PATH" "SHELL"))
+  (exec-path-from-shell-initialize))
+
 (setq inhibit-startup-message t)
 
 (scroll-bar-mode -1)

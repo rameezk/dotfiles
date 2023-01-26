@@ -43,6 +43,13 @@ I use the =use-package= straight integration to make switching back to =use-pack
 #+begin_src emacs-lisp
 (straight-use-package 'use-package)
 #+end_src
+* Read PATH properly
+#+begin_src emacs-lisp
+(use-package exec-path-from-shell
+  :config
+  (setq exec-path-from-shell-variables '("PATH" "SHELL"))
+  (exec-path-from-shell-initialize))
+#+end_src
 * Interface
 ** Startup Message
 Disable startup message.
