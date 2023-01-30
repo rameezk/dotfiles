@@ -1,5 +1,5 @@
 { pkgs, ... }: {
 
-  home.packages = with pkgs; [ rustc ];
+  home.packages = with pkgs; [ rustc cargo ];
 
 }
