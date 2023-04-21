@@ -1,1 +1,1 @@
-{ pkgs, ... }: { home.packages = with pkgs; [ kubectl kubectx stern k9s ]; }
+{ pkgs, ... }: { home.packages = with pkgs; [ kubectl kubectx k9s ]; }
