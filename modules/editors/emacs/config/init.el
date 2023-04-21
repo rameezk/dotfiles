@@ -1,3 +1,4 @@
+(defvar native-comp-deferred-compilation-deny-list nil)
 (setq comp-async-report-warnings-errors nil)
 
 (server-start)

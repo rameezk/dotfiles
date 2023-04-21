@@ -6,6 +6,7 @@ I've declared [[https://www.emacswiki.org/emacs/DotEmacsBankruptcy][configuratio
 * Disable Native Comp Warnings
 With native comp enabled there tends to be a lot of annoying warnings. To not go insane I'll turn this off.
 #+begin_src emacs-lisp
+(defvar native-comp-deferred-compilation-deny-list nil)
 (setq comp-async-report-warnings-errors nil)
 #+end_src
 * Server
