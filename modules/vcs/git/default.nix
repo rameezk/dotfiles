@@ -27,6 +27,8 @@ in {
       log-to-last-tag = "!f() { git log `git latest-tag`..HEAD --oneline; }; f";
       ignore-nix-shell =
         "!f() { grep -qxF 'shell.nix' `git rev-parse --show-toplevel`/.git/info/exclude || echo 'shell.nix' >> `git rev-parse --show-toplevel`/.git/info/exclude; }; f";
+      rebase-commits-in-branch =
+        "!f() { git rebase -i HEAD~`git cherry -v main | wc -l`; }; f";
     };
     includes = [
       {
