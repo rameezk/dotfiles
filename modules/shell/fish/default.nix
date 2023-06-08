@@ -53,6 +53,9 @@ in {
 
       # Set ripgrep configuration file
       set -x RIPGREP_CONFIG_PATH ~/.ripgreprc
+
+      # Set PyCharm path on MacOS
+      set PATH $PATH /Applications/PyCharm.app/Contents/MacOS
     '';
 
     shellAbbrs = {
