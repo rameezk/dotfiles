@@ -30,8 +30,8 @@
     # networking
     ../../modules/networking/proxy
 
-    # OS
-    ../../modules/os/macos
+    # MacOS
+    ../../modules/os/macos/window-management
   ];
 
   # Let Home Manager install and manage itself.
