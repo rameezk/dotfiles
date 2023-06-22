@@ -39,7 +39,7 @@ dot rebuild
 ```
 
 ## Other Docs
-For other docs see `docs/` directory.
+For other docs see [docs](./docs) directory.
 
 ## Nice to have
 ### pre-commit hooks
