@@ -30,6 +30,9 @@
       yabai -m config mouse_action2 resize
       yabai -m mouse_drop_action swap
 
+      # managed apps
+      yabai -m rule --add app=Emacs manage=on space=9
+
       # ignored apps
       yabai -m rule --add app="^System Settings$" manage=off
       yabai -m rule --add app="^Calculator$" manage=off
