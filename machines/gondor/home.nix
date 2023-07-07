@@ -18,14 +18,14 @@
     # lang
     ../../modules/language/python
     ../../modules/language/nodejs
-    ../../modules/language/clojure
-    ../../modules/language/rust
 
     # tool
     ../../modules/tool/aws
     ../../modules/tool/kubernetes
     ../../modules/tool/helm
     ../../modules/tool/tmux
+    ../../modules/tool/terraform
+    ../../modules/tool/secret-management
 
     # networking
     ../../modules/networking/proxy
