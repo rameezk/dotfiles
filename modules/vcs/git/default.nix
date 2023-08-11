@@ -79,7 +79,7 @@ in {
         sslCAInfo = secrets.git.work.ssl_ca_info;
       };
     };
-    ignores = [ "*~" "*.swp" "*.orig" ".#*" ".direnv/" ".DS_Store" ];
+    ignores = [ "*~" "*.swp" "*.orig" ".#*" ".direnv/" ".DS_Store" ".idea/" ];
   };
 
   programs.gpg = { enable = true; };
