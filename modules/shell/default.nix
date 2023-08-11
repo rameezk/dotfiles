@@ -54,5 +54,6 @@
     fd # a faster find
     shellcheck # linting shell scripts
     watch # watch and refresh commands
+    tldr # tldr shell commands
   ];
 }
