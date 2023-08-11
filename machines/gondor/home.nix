@@ -24,8 +24,8 @@
     ../../modules/tool/kubernetes
     ../../modules/tool/helm
     ../../modules/tool/tmux
-    ../../modules/tool/terraform
     ../../modules/tool/secret-management
+    ../../modules/tool/package-management
 
     # networking
     ../../modules/networking/proxy

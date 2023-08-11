@@ -56,6 +56,9 @@ in {
 
       # Set PyCharm path on MacOS
       set PATH $PATH /Applications/PyCharm.app/Contents/MacOS
+
+      # Setup ASDF
+      source ~/.nix-profile/share/asdf-vm/asdf.fish
     '';
 
     shellAbbrs = {
