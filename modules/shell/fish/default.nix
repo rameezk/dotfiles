@@ -13,9 +13,13 @@ in {
       # vi mode
       fish_vi_key_bindings
 
+      # Enable fenv for sourcing foreign environment variables. 
+      # This is needed for sourcing the Nix path below.
+      set -p fish_function_path ${pkgs.fishPlugins.foreign-env}/share/fish/vendor_functions.d
+
       # nix
       if test -e ~/.nix-profile/etc/profile.d/nix.sh
-        bass source ~/.nix-profile/etc/profile.d/nix.sh
+        fenv source ~/.nix-profile/etc/profile.d/nix.sh
       end
 
       # Set LANG properly
