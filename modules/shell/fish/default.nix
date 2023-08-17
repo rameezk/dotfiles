@@ -58,7 +58,9 @@ in {
       set PATH $PATH /Applications/PyCharm.app/Contents/MacOS
 
       # Setup ASDF
-      source ~/.nix-profile/share/asdf-vm/asdf.fish
+      if test -e ~/.nix-profile/share/asdf-vm/asdf.fish
+        source ~/.nix-profile/share/asdf-vm/asdf.fish
+      end
     '';
 
     shellAbbrs = {
