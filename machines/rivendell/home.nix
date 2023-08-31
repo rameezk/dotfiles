@@ -10,24 +10,17 @@
     # editors
     ../../modules/editors/vim
     ../../modules/editors/emacs
-    #../../modules/editors/jetbrains
+    ../../modules/editors/jetbrains
 
     # vcs
     ../../modules/vcs/git
 
     # lang
     ../../modules/language/python
-    #../../modules/language/nodejs
-    #../../modules/language/clojure
 
     # tool
-    #../../modules/tool/aws
-    #../../modules/tool/kubernetes
-    #../../modules/tool/helm
+    ../../modules/tool/aws
     ../../modules/tool/tmux
-
-    # networking
-    #../../modules/networking/proxy
   ];
 
   # Let Home Manager install and manage itself.
