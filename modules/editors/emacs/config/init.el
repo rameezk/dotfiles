@@ -271,48 +271,6 @@
   :config
   (add-hook 'org-mode-hook (lambda () (org-autolist-mode))))
 
-(use-package org-roam
-  :after (org)
-  :hook 
-  (after-init . org-roam-mode)
-  (after-init . org-roam-db-autosync-mode)
-  :custom
-  (org-roam-directory "~/Dropbox/DigitalGarden")
-  :config
-  (setq org-roam-graph-exclude-matcher '("inbox"))
-  (setq org-roam-node-display-template "${title} ${tags}"))
-
-(defun rkn/org-roam-rg-search ()
-  "Search org-roam directory using consult-ripgrep. With live-preview."
-  (interactive)
-  (let ((consult-ripgrep-command "rg --null --ignore-case --type org --line-buffered --color=always --max-columns=500 --no-heading --line-number . -e ARG OPTS"))
-    (consult-ripgrep org-roam-directory)))
-
-(setq org-roam-dailies-capture-templates
-      '(("d"
-         "daily"
-         plain
-         (function org-roam-capture--get-point)
-         "** %<%H:%M> %?"
-         :file-name "daily/%<%Y-%m-%d>"
-         :head "#+TITLE: Daily - %<%A %Y-%m-%d>\n\n* %<%A> %<%Y-%m-%d>")))
-
-(use-package org-roam-ui
-  :straight
-    (:host github :repo "org-roam/org-roam-ui" :branch "main" :files ("*.el" "out"))
-    :after org-roam
-;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
-;;         a hookable mode anymore, you're advised to pick something yourself
-;;         if you don't care about startup time, use
-;;  :hook (after-init . org-roam-ui-mode)
-    :config
-    (setq org-roam-ui-sync-theme t
-          org-roam-ui-follow t
-          org-roam-ui-update-on-save t
-          org-roam-ui-open-on-start t))
-
-(setq org-agenda-files '("~/Dropbox/DigitalGarden/journals/"))
-
 (setq org-startup-folded t)
 
 (add-hook 'org-mode-hook 'flyspell-mode)
@@ -494,20 +452,6 @@
 (rkn/keymap-define-global
   "b" '(:ignore t :which-key "buffer")
   "bb" 'consult-buffer)
-
-(rkn/keymap-define-global
-  "n" '(:ignore t :which-key "note")
-  "nr" '(:ignore t :which-key "roam")
-  "nrf" 'org-roam-node-find
-  "nri" 'org-roam-node-insert
-  "nrc" '((lambda()
-	    (setq current-journal-file
-		  (expand-file-name
-		   (format-time-string "~/Dropbox/DigitalGarden/journals/%Y-%m-%b.org")))
-	    (interactive)(org-capture)) :which-key "org-capture")
-  "nrd" '((lambda() (interactive)(find-file (format-time-string "~/Dropbox/DigitalGarden/journals/%Y-%m-%b.org"))) :which-key "Daily Journal")
-  "nrs" 'rkn/org-roam-rg-search
-  "nrb" 'org-roam-buffer-toggle)
 
 (general-define-key
  "C-SPC" 'company-complete)

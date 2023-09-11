@@ -435,65 +435,6 @@ I use =org-superstar= to make a bullets and sections look less ugly.
   :config
   (add-hook 'org-mode-hook (lambda () (org-autolist-mode))))  
 #+end_src
-*** Org-Roam
-**** Install org-roam package
-My Digital Garden (or second brain, if you will) is powered by org-roam.
-#+begin_src emacs-lisp
-(use-package org-roam
-  :after (org)
-  :hook 
-  (after-init . org-roam-mode)
-  (after-init . org-roam-db-autosync-mode)
-  :custom
-  (org-roam-directory "~/Dropbox/DigitalGarden")
-  :config
-  (setq org-roam-graph-exclude-matcher '("inbox"))
-  (setq org-roam-node-display-template "${title} ${tags}"))
-#+end_src
-
-**** Searching through notes
-A nice function that uses consult to search through all notes.
-#+begin_src emacs-lisp
-(defun rkn/org-roam-rg-search ()
-  "Search org-roam directory using consult-ripgrep. With live-preview."
-  (interactive)
-  (let ((consult-ripgrep-command "rg --null --ignore-case --type org --line-buffered --color=always --max-columns=500 --no-heading --line-number . -e ARG OPTS"))
-    (consult-ripgrep org-roam-directory)))
-#+end_src
-**** Capture Templates
-***** Dailies
-I use the dailies feature of org-roam to capture quick, journal like entries.
-#+begin_src emacs-lisp
-(setq org-roam-dailies-capture-templates
-      '(("d"
-         "daily"
-         plain
-         (function org-roam-capture--get-point)
-         "** %<%H:%M> %?"
-         :file-name "daily/%<%Y-%m-%d>"
-         :head "#+TITLE: Daily - %<%A %Y-%m-%d>\n\n* %<%A> %<%Y-%m-%d>")))
-#+end_src
-**** Org Roam UI
-For viewing nice graphs of links between org-roam nodes.
-#+begin_src emacs-lisp
-(use-package org-roam-ui
-  :straight
-    (:host github :repo "org-roam/org-roam-ui" :branch "main" :files ("*.el" "out"))
-    :after org-roam
-;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
-;;         a hookable mode anymore, you're advised to pick something yourself
-;;         if you don't care about startup time, use
-;;  :hook (after-init . org-roam-ui-mode)
-    :config
-    (setq org-roam-ui-sync-theme t
-          org-roam-ui-follow t
-          org-roam-ui-update-on-save t
-          org-roam-ui-open-on-start t))
-#+end_src
-**** Adding journals to org-agenda
-#+begin_src emacs-lisp
-(setq org-agenda-files '("~/Dropbox/DigitalGarden/journals/"))
-#+end_src
 *** Headings Startup Visibility
 Sometimes my org file are too long and I’d like to open them with headings collapsed.
 #+begin_src emacs-lisp
@@ -776,23 +717,6 @@ Quick keybindings for dealing with buffers.
 (rkn/keymap-define-global
   "b" '(:ignore t :which-key "buffer")
   "bb" 'consult-buffer)
-#+end_src
-**** Notes
-Dealing with notes. This includes org-roam only for now.
-#+begin_src emacs-lisp
-(rkn/keymap-define-global
-  "n" '(:ignore t :which-key "note")
-  "nr" '(:ignore t :which-key "roam")
-  "nrf" 'org-roam-node-find
-  "nri" 'org-roam-node-insert
-  "nrc" '((lambda()
-	    (setq current-journal-file
-		  (expand-file-name
-		   (format-time-string "~/Dropbox/DigitalGarden/journals/%Y-%m-%b.org")))
-	    (interactive)(org-capture)) :which-key "org-capture")
-  "nrd" '((lambda() (interactive)(find-file (format-time-string "~/Dropbox/DigitalGarden/journals/%Y-%m-%b.org"))) :which-key "Daily Journal")
-  "nrs" 'rkn/org-roam-rg-search
-  "nrb" 'org-roam-buffer-toggle)
 #+end_src
 **** Company
 #+begin_src emacs-lisp
