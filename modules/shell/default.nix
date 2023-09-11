@@ -45,6 +45,16 @@
     --colors=line:style:bold
   '';
 
+  programs.bat = {
+    enable = true;
+    config = {
+      theme = "gruvbox-dark";
+      pager = "less -FR";
+    };
+  };
+
+  programs.eza.enable = true;
+
   home.packages = with pkgs; [
     ripgrep # faster grepping
     jq # parsing JSON

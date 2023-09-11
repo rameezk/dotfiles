@@ -65,9 +65,9 @@ in {
 
     shellAbbrs = {
       # files
-      ls = "exa";
-      l = "exa -la --git";
-      tree = "exa --tree";
+      ls = "eza";
+      l = "eza -la --git";
+      tree = "eza --tree";
 
       #git
       gcm = "git commit -m";
@@ -246,22 +246,11 @@ in {
     }];
   };
 
-  # bat
-  programs.bat = {
+  programs.starship = {
     enable = true;
-    config = {
-      theme = "gruvbox-dark";
-      pager = "less -FR";
-    };
+    enableFishIntegration = true;
   };
 
-  # exa
-  programs.exa.enable = true;
-
-  home.packages = with pkgs; [
-    fishPlugins.pure
-    fishPlugins.fzf-fish
-    fishPlugins.bass
-  ];
+  home.packages = with pkgs; [ fishPlugins.fzf-fish fishPlugins.bass ];
 
 }
