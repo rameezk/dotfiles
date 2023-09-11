@@ -249,6 +249,7 @@ in {
   programs.starship = {
     enable = true;
     enableFishIntegration = true;
+    settings = { docker_context = { disabled = true; }; };
   };
 
   home.packages = with pkgs; [ fishPlugins.fzf-fish fishPlugins.bass ];
