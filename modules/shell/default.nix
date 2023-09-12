@@ -65,5 +65,7 @@
     shellcheck # linting shell scripts
     watch # watch and refresh commands
     tldr # tldr shell commands
+
+    meslo-lgs-nf # shell font
   ];
 }

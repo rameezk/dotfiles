@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 let secrets = import ../../../secrets/config.nix;
 in {
@@ -249,7 +249,84 @@ in {
   programs.starship = {
     enable = true;
     enableFishIntegration = true;
-    settings = { docker_context = { disabled = true; }; };
+    settings = {
+      scan_timeout = 10;
+
+      format = lib.concatStrings [
+        "[](#9A348E)"
+        "$status"
+        "$cmd_duration"
+        "$username"
+        "[](bg:#DA627D fg:#9A348E)"
+        "$directory"
+        "[](fg:#DA627D bg:#86BBD8)"
+        "$git_branch"
+        "$git_status"
+        "[](fg:#86BBD8 bg:#06969A)"
+        "$python"
+        "[](fg:#06969A bg:#33658A)"
+        "$nix_shell"
+        "[ ](fg:#33658A)"
+      ];
+
+      status = {
+        style = "bg:#9A348E";
+        format = "[$symbol $common_meaning$signal_name$maybe_int ]($style)";
+        map_symbol = true;
+        disabled = false;
+      };
+
+      cmd_duration = {
+        style = "bg:#9A348E";
+        format = "[$duration ]($style)";
+      };
+
+      username = {
+        show_always = true;
+        style_user = "bg:#9A348E";
+        style_root = "bg:#9A348E";
+        format = "[ ]($style)";
+        disabled = false;
+      };
+
+      directory = {
+        style = "bg:#DA627D";
+        format = "[ $path ]($style)";
+        truncation_length = 3;
+        truncation_symbol = "…/";
+      };
+
+      python = {
+        symbol = " ";
+        style = "bg:#06969A";
+        format = "[ $symbol ($version) (($virtualenv))]($style)";
+      };
+
+      aws = {
+        symbol = " ";
+        style = "bg:#86BBD8";
+        format = "[ $symbol ($version) ]($style)";
+      };
+
+      git_branch = {
+        symbol = "";
+        style = "bg:#86BBD8";
+        format = "[ $symbol $branch ]($style)";
+      };
+
+      git_status = {
+        style = "bg:#86BBD8";
+        format = "[$all_status$ahead_behind ]($style)";
+      };
+
+      nix_shell = {
+        symbol = "󱄅 ";
+        style = "bg:#33658A";
+        format = "[ $symbol $name ]($style)";
+        heuristic = false;
+      };
+
+    };
   };
 
   home.packages = with pkgs; [ fishPlugins.fzf-fish fishPlugins.bass ];
