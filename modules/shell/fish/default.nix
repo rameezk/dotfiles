@@ -253,21 +253,15 @@ in {
       scan_timeout = 10;
 
       format = lib.concatStrings [
-        "[](#9A348E)"
-        "$status"
-        "$cmd_duration"
-        "$username"
-        "[](bg:#DA627D fg:#9A348E)"
-        "$directory"
-        "[](fg:#DA627D bg:#86BBD8)"
-        "$git_branch"
-        "$git_status"
-        "[](fg:#86BBD8 bg:#06969A)"
-        "$python"
-        "[](fg:#06969A bg:#33658A)"
-        "$nix_shell"
-        "[ ](fg:#33658A)"
+        "[┌──](#9A348E)$status$cmd_duration$username[](bg:#DA627D fg:#9A348E)$directory[](fg:#DA627D bg:#86BBD8)$git_branch$git_status[](fg:#86BBD8 bg:#06969A)$python[](fg:#06969A bg:#33658A)$nix_shell[](fg:#33658A bg:#f19066)$aws[](fg:#f19066)$line_break"
+        "[└─](#9A348E)$character"
       ];
+
+      aws = {
+        style = "bg:#f19066";
+        format = "[ $symbol($profile)]($style)";
+        symbol = " ";
+      };
 
       status = {
         style = "bg:#9A348E";
@@ -275,6 +269,8 @@ in {
         map_symbol = true;
         disabled = false;
       };
+
+      character = { vimcmd_symbol = "[❮](blue)"; };
 
       cmd_duration = {
         style = "bg:#9A348E";
@@ -300,12 +296,6 @@ in {
         symbol = " ";
         style = "bg:#06969A";
         format = "[ $symbol ($version) (($virtualenv))]($style)";
-      };
-
-      aws = {
-        symbol = " ";
-        style = "bg:#86BBD8";
-        format = "[ $symbol ($version) ]($style)";
       };
 
       git_branch = {
