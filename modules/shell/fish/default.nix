@@ -31,10 +31,6 @@ in {
       # colorscheme
       set -U fish_color_command b8bb26 # fish's default command color is a horrible dark blue, make it a nicer green
 
-      # direnv
-      # eval (direnv hook fish)
-      ${pkgs.direnv}/bin/direnv hook fish | source
-
       # pipx
       set PATH $PATH ~/.local/bin
 
