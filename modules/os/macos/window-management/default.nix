@@ -37,6 +37,9 @@
       yabai -m rule --add app="^System Settings$" manage=off
       yabai -m rule --add app="^Calculator$" manage=off
       yabai -m rule --add app="^Cisco AnyConnect.*$" manage=off
+
+      # ms teams
+      yabai -m signal --add event=window_created action='yabai -m query --windows --window $YABAI_WINDOW_ID | jq -e ".\"can-resize\"" || yabai -m window $YABAI_WINDOW_ID --toggle float' app="Microsoft Teams classic"
     '';
   };
 
