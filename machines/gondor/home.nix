@@ -9,7 +9,6 @@
 
     # editors
     ../../modules/editors/vim
-    ../../modules/editors/emacs
     ../../modules/editors/jetbrains
 
     # vcs
