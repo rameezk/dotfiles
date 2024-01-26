@@ -22,6 +22,24 @@
         export POETRY_ACTIVE=1
         PATH_add "$VENV/bin"
       }
+
+      layout_pdm() {
+        if [ ! -f "pyproject.toml" ]; then
+          log_status "No pyproject.toml found. Execute \`pmd init\` to create a \`$PYPROJECT_TOML\` first."
+        fi
+
+        VIRTUAL_ENV=$(pdm venv list | grep "^\*"  | awk -F" " '{print $3}')
+
+        if [ -z "$VIRTUAL_ENV" ] || [ ! -d "$VIRTUAL_ENV" ]; then
+          log_status "No virtual environment exists. Executing \`pdm info\` to create one."
+          pdm info
+          VIRTUAL_ENV=$(pdm venv list | grep "^\*"  | awk -F" " '{print $3}')
+        fi
+
+        PATH_add "$VIRTUAL_ENV/bin"
+        export PDM_ACTIVE=1
+        export VIRTUAL_ENV
+      }
     '';
   };
 
