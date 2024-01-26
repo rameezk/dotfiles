@@ -20,8 +20,6 @@
 
     # tool
     ../../modules/tool/aws
-    ../../modules/tool/kubernetes
-    ../../modules/tool/helm
     ../../modules/tool/tmux
     ../../modules/tool/secret-management
     ../../modules/tool/package-management
