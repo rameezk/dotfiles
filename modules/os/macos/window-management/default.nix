@@ -40,6 +40,7 @@
 
       # ms teams
       yabai -m signal --add event=window_created action='yabai -m query --windows --window $YABAI_WINDOW_ID | jq -e ".\"can-resize\"" || yabai -m window $YABAI_WINDOW_ID --toggle float' app="Microsoft Teams classic"
+      yabai -m signal --add event=window_created action='yabai -m query --windows --window $YABAI_WINDOW_ID | jq -e ".\"can-resize\"" || yabai -m window $YABAI_WINDOW_ID --toggle float' app="Microsoft Teams (work or school)"
     '';
   };
 
