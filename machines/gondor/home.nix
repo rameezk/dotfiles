@@ -17,7 +17,6 @@
     # lang
     ../../modules/language/python
     ../../modules/language/nodejs
-    ../../modules/language/java
 
     # tool
     ../../modules/tool/aws
