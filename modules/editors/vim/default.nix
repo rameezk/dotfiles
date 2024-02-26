@@ -17,7 +17,7 @@
       set visualbell " Turn on visual bell
       colorscheme gruvbox " Turn on gruvbox colorscheme
       set backspace=indent,eol,start " More powerfull backspacing
-      set formatoptions-=cro " Turn off inserting a comment on the next line if the current line has one
+      au BufEnter * set fo-=c fo-=r fo-=o " Turn off inserting a comment on the next line if the current line has one
     '';
   };
 
