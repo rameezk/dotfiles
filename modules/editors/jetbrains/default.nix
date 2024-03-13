@@ -16,6 +16,8 @@
     set ignorecase "Ignore case
     set smartcase "Smart case matching
 
+    set relativenumber "turn on relative line numbers
+
     let mapleader=" "
 
     " always make these typos
