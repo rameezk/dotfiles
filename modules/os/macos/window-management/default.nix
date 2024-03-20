@@ -73,6 +73,9 @@
       shift + alt - h : ${yabai} -m window --swap west
       shift + alt - l : ${yabai} -m window --swap east
 
+      # toggle horizonal/vertical split
+      shift + alt - x : ${yabai} -m window --toggle split
+
       # move windows to displays
       shift + alt - s : ${yabai} -m window --display west; ${yabai} -m display --focus west;
       shift + alt - g : ${yabai} -m window --display east; ${yabai} -m display --focus east;
