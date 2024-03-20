@@ -17,6 +17,7 @@
     set smartcase "Smart case matching
 
     set relativenumber "turn on relative line numbers
+    set number "turn on current line number
 
     let mapleader=" "
 
