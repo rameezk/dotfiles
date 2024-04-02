@@ -73,6 +73,12 @@
       shift + alt - h : ${yabai} -m window --swap west
       shift + alt - l : ${yabai} -m window --swap east
 
+      # warp windows
+      shift + ctrl + alt - j : ${yabai} -m window --warp south
+      shift + ctrl + alt - k : ${yabai} -m window --warp north
+      shift + ctrl + alt - h : ${yabai} -m window --warp west
+      shift + ctrl + alt - l : ${yabai} -m window --warp east
+
       # toggle horizonal/vertical split
       shift + alt - x : ${yabai} -m window --toggle split
 
