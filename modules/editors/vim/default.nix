@@ -9,6 +9,7 @@
       gruvbox
       nim-vim
       vim-terraform
+      vim-signify # show modified lines for VSC in the gutter
     ];
     extraConfig = ''
       set background=dark " Better colours for darker backgrounds
