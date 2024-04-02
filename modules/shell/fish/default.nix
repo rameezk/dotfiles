@@ -96,6 +96,10 @@ in {
 
       # Nix
       "," = "nix run nixpkgs#";
+
+      # terraform and terrgrunt
+      tf = "terraform";
+      tg = "terragrunt";
     };
 
     functions = {
