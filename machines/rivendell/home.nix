@@ -27,10 +27,10 @@
   programs.home-manager.enable = true;
 
   # Packages
-  home.packages = with pkgs; [ nixUnstable nixfmt ];
+  home.packages = with pkgs; [ nixVersions.latest nixfmt-classic ];
 
   nix = {
-    package = pkgs.nix;
+    package = pkgs.nixVersions.latest;
     settings.experimental-features = [ "nix-command" "flakes" ];
     extraOptions = ''
       keep-outputs = true

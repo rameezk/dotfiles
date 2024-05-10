@@ -36,7 +36,7 @@
   programs.home-manager.enable = true;
 
   # Packages
-  home.packages = with pkgs; [ nixUnstable nixfmt ];
+  home.packages = with pkgs; [ nixVersions.latest nixfmt-classic ];
 
   # Add experimental features to nix configuration
   home.file.nixConf.text = ''
