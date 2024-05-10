@@ -16,6 +16,9 @@
       # new window opens in the bottom/right 
       yabai -m config window_placement second_child
 
+      # floating windows are always on top (default: off)
+      yabai -m config window_topmost off
+
       # padding/gaps
       yabai -m config top_padding 12
       yabai -m config bottom_padding 12
