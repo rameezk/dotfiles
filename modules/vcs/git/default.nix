@@ -32,6 +32,8 @@ in {
       done =
         "!f() { git checkout main && git pull -p && git prune-local-branches ; }; f";
       sha = "rev-parse HEAD";
+      create-gh-pr =
+        "!f() { gh pr create -a @me --title $(git rev-parse --abbrev-ref HEAD); }; f";
     };
     includes = [
       {
