@@ -17,6 +17,7 @@
     # lang
     ../../modules/language/python
     ../../modules/language/nodejs
+    ../../modules/language/java
 
     # tool
     ../../modules/tool/aws
@@ -30,6 +31,18 @@
     # MacOS
     ../../modules/os/macos/window-management
   ];
+
+  proxy = {
+    enable = true;
+    protocol = "http";
+    host = "localhost";
+    port = 3128;
+  };
+
+  java = {
+    enable = true;
+    manageJDK = false;
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
