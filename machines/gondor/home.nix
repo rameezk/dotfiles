@@ -1,6 +1,10 @@
 { config, pkgs, lib, ... }:
 
-{
+let
+  proxyProtocol = "http";
+  proxyHost = "localhost";
+  proxyPort = 3128;
+in {
   # Opt-in to modules by including theme here.
   #  Is there a better way to do this per machine?
   imports = [
@@ -34,14 +38,19 @@
 
   proxy = {
     enable = true;
-    protocol = "http";
-    host = "localhost";
-    port = 3128;
+    protocol = proxyProtocol;
+    host = proxyHost;
+    port = proxyPort;
   };
 
   java = {
     enable = true;
     manageJDK = false;
+
+    enableProxy = true;
+    proxyProtocol = proxyProtocol;
+    proxyHost = proxyHost;
+    proxyPort = proxyPort;
   };
 
   # Let Home Manager install and manage itself.

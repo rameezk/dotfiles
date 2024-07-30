@@ -45,21 +45,5 @@ in {
       export no_proxy=localhost,127.0.0.1
       export NO_PROXY=localhost,127.0.0.1
     '';
-
-    home.file.".m2/settings.xml".text = ''
-      <settings>
-      <proxies>
-          <proxy>
-              <id>proxy</id>
-              <active>true</active>
-              <protocol>${cfg.protocol}</protocol>
-              <host>${cfg.host}</host>
-              <port>${toString cfg.port}</port>
-              <nonProxyHosts>localhost|127.0.0.1</nonProxyHosts>
-          </proxy>
-      </proxies>
-      </settings>
-    '';
-
   });
 }
