@@ -16,11 +16,18 @@
 
     # lang
     ../../modules/language/python
+    ../../modules/language/java
 
     # tool
     ../../modules/tool/aws
     ../../modules/tool/tmux
+    ../../modules/tool/package-management
   ];
+
+  java = {
+    enable = true;
+    manageJDK = false;
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
