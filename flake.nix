@@ -17,8 +17,8 @@
     declarative-cachix.url = "github:jonascarpay/declarative-cachix/master";
   };
 
-  outputs = { self, nixpkgs, nix-darwin, home-manager, emacs-overlay, declarative-cachix
-    , ... }@inputs:
+  outputs = { self, nixpkgs, nix-darwin, home-manager, emacs-overlay
+    , declarative-cachix, ... }@inputs:
     let
       mkMachines = { }: {
         rohan = home-manager.lib.homeManagerConfiguration {
@@ -63,38 +63,6 @@
           ];
         };
       };
-
-      configuration = {pkgs, ... }: {
-        environment.systemPackages = [ pkgs.neovim ];
-
-        # Auto upgrade nix package and the daemon service.
-        services.nix-daemon.enable = true;
-        # nix.package = pkgs.nix;
-
-        # Necessary for using flakes on this system.
-        nix.settings.experimental-features = "nix-command flakes";
-
-        users.users.rameezk.home = "/Users/rameezk";
-
-        # Create /etc/zshrc that loads the nix-darwin environment.
-        # programs.zsh.enable = true;  # default shell on catalina
-        programs.fish.enable = true;
-
-        # Set Git commit hash for darwin-version.
-        system.configurationRevision = self.rev or self.dirtyRev or null;
-
-        security.pam.enableSudoTouchIdAuth = true;
-        system.defaults = {
-          dock.autohide = true;
-        };
-
-        # Used for backwards compatibility, please read the changelog before changing.
-        # $ darwin-rebuild changelog
-        system.stateVersion = 4;
-
-        # The platform the configuration will be used on.
-        nixpkgs.hostPlatform = "aarch64-darwin";
-      };
     in {
       machines = mkMachines { };
 
@@ -103,11 +71,10 @@
 
       darwinConfigurations."Rameezs-MacBook-Air" = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
-        modules = [ 
-          configuration
-          home-manager.darwinModules.home-manager {
-            home-manager.users.rameezk = import ./machines/rivendell/home.nix;
-          }
+        modules = [
+          home-manager.darwinModules.home-manager
+          { home-manager.users.rameezk = import ./machines/rivendell/home.nix; }
+          ./machines/rivendell
         ];
       };
       darwinPackages = self.darwinConfigurations."Rameezs-MacBook-Air".pkgs;
