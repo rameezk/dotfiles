@@ -35,14 +35,14 @@
   # Packages
   home.packages = with pkgs; [ nixVersions.latest nixfmt-classic ];
 
-  nix = {
-    package = pkgs.nixVersions.latest;
-    settings.experimental-features = [ "nix-command" "flakes" ];
-    extraOptions = ''
-      keep-outputs = true
-      keep-derivations = true
-    '';
-  };
+  # nix = {
+  #   package = pkgs.nixVersions.latest;
+  #   settings.experimental-features = [ "nix-command" "flakes" ];
+  #   extraOptions = ''
+  #     keep-outputs = true
+  #     keep-derivations = true
+  #   '';
+  # };
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
