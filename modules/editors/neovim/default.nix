@@ -10,20 +10,44 @@
       {
         plugin = tokyonight-nvim;
         type = "lua";
+        config = # lua
+          ''
+                local fg_gutter = "#627E97"
+
+                require("tokyonight").setup({
+                        style = "night",
+                        on_colors = function(colors)
+                        colors.fg_gutter = fg_gutter
+                        end,
+                        })
+
+            vim.cmd([[colorscheme tokyonight]])
+          '';
+      }
+      {
+        plugin = nvim-treesitter.withAllGrammars;
+        type = "lua";
         config = ''
-              local fg_gutter = "#627E97"
+                  local parser_install_dir = vim.fn.stdpath("cache") .. "/treesitters"
+                  vim.fn.mkdir(parser_install_dir, "p")
+                  vim.opt.runtimepath:append(parser_install_dir)
+          	require'nvim-treesitter.configs'.setup {
+                  parser_install_dir = parser_install_dir,
+                  ensure_installed = {},
+          		-- Install parsers synchronously (only applied to `ensure_installed`)
+          		sync_install = false,
 
-              require("tokyonight").setup({
-                      style = "night",
-                      on_colors = function(colors)
-                      colors.fg_gutter = fg_gutter
-                      end,
-                      })
+          		-- Automatically install missing parsers when entering buffer
+          		-- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+          		auto_install = true,
 
-          vim.cmd([[colorscheme tokyonight]])
+          		highlight = {
+          		  enable = true,
+          		  additional_vim_regex_highlighting = false,
+          		},
+          	}     
         '';
       }
-      { plugin = nvim-treesitter.withAllGrammars; }
     ];
 
     extraLuaConfig = ''
