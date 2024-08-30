@@ -8,7 +8,7 @@
     ../../modules/shell
 
     # editors
-    ../../modules/editors/vim
+    ../../modules/editors/neovim
     ../../modules/editors/jetbrains
 
     # vcs
