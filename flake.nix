@@ -9,15 +9,20 @@
 
     home-manager = {
       url = "github:rycee/home-manager/master";
-      inputs.nixpkgs.follows = "/nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     emacs-overlay.url = "github:nix-community/emacs-overlay/master";
 
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     declarative-cachix.url = "github:jonascarpay/declarative-cachix/master";
   };
 
-  outputs = { self, nixpkgs, nix-darwin, home-manager, emacs-overlay
+  outputs = { self, nixpkgs, nix-darwin, home-manager, emacs-overlay, nixvim
     , declarative-cachix, ... }@inputs:
     let
       mkMachines = { }: {
@@ -53,6 +58,7 @@
           };
           modules = [
             declarative-cachix.homeManagerModules.declarative-cachix
+            nixvim.homeManagerModules.nixvim
             ./machines/gondor/home.nix
             {
               home = {
