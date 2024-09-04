@@ -35,22 +35,6 @@
           homeDirectory = "/home/rameezk";
           username = "rameezk";
         };
-        rivendell = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-            system = "aarch64-darwin";
-            overlays = [ emacs-overlay.overlay ];
-          };
-          modules = [
-            declarative-cachix.homeManagerModules.declarative-cachix
-            ./machines/rivendell/home.nix
-            {
-              home = {
-                username = "rameezk";
-                homeDirectory = "/Users/rameezk";
-              };
-            }
-          ];
-        };
         gondor = home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
             system = "aarch64-darwin";
@@ -79,7 +63,12 @@
         system = "aarch64-darwin";
         modules = [
           home-manager.darwinModules.home-manager
-          { home-manager.users.rameezk = import ./machines/rivendell/home.nix; }
+          {
+            home-manager = {
+                sharedModules = [ nixvim.homeManagerModules.nixvim ];
+                users.rameezk = import ./machines/rivendell/home.nix;
+            };
+          }
           ./machines/rivendell
         ];
       };

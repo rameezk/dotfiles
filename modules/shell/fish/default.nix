@@ -328,6 +328,9 @@ in {
     };
   };
 
-  home.packages = with pkgs; [ fishPlugins.fzf-fish fishPlugins.bass ];
+  home.packages = with pkgs; [ 
+      #fishPlugins.fzf-fish 
+      fishPlugins.bass 
+  ];
 
 }
