@@ -73,5 +73,12 @@
         ];
       };
       darwinPackages = self.darwinConfigurations."Rameezs-MacBook-Air".pkgs;
+
+      devShells.default = mkShell {
+        nativeBuildInputs = with pkgs; [ fish git neovim ];
+        shellHook = with pkgs; ''
+            export EDITOR=vim
+        '';
+      };
     };
 }
