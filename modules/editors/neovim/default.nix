@@ -25,30 +25,30 @@
       lualine.enable = true;
       transparent.enable = true;
 
-      # lsp = {
-      #     enable = true;
-      #     servers = {
-      #         nixd.enable = true;
-      #         lua-ls.enable = true;
-      #         java-language-server.enable = true;
-      #     };
-      # };
-      #
-      # cmp = {
-      #     enable = true;
-      #     autoEnableSources = true;
-      # };
-      #
-      # treesitter = {
-      #     enable = true;
-      #     settings = {
-      #         auto_install = true;
-      #         ensure_installed = "all";
-      #         highlight = { enable = true; };
-      #         indent.enable = true;
-      #         sync_install = false;
-      #     };
-      # };
+      lsp = {
+          enable = true;
+          servers = {
+              nixd.enable = true;
+              lua-ls.enable = true;
+              java-language-server.enable = true;
+          };
+      };
+
+      cmp = {
+          enable = true;
+          autoEnableSources = true;
+      };
+
+      treesitter = {
+          enable = true;
+          settings = {
+              auto_install = true;
+              ensure_installed = "all";
+              highlight = { enable = true; };
+              indent.enable = true;
+              sync_install = false;
+          };
+      };
     };
 
     opts = {

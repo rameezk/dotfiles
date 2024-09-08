@@ -2,6 +2,16 @@
 
   imports = [ ./fish ];
 
+  home.file.".config/wezterm/wezterm.lua".text = # lua
+  ''
+  local wezterm = require 'wezterm'
+  local config = wezterm.config_builder()
+  config.color_scheme = 'tokyonight_moon'
+  config.font = wezterm.font 'JetBrains Mono'
+  config.font_size = 15;
+  return config
+  '';
+
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
