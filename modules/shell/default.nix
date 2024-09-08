@@ -97,7 +97,6 @@
 
     meslo-lgs-nf # shell font
 
-    expect # needed to use unbuffer (helps with preserving colors for nom)
     nix-output-monitor # nice colored output tree when building nix packages
   ];
 }
