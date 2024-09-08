@@ -27,7 +27,10 @@ in {
 
     security.pam.enableSudoTouchIdAuth = true;
     system.defaults = { 
-        dock.autohide = true;
+        dock = {
+            autohide = true;
+            show-recents = false;
+        };
 
         # Might require you to logout to take effect
         NSGlobalDomain = {
