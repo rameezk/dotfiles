@@ -57,6 +57,7 @@ in {
 
         casks = [
             "alfred"
+            "slack"
             "wezterm"
             "zoom"
         ];
