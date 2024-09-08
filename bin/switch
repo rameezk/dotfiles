@@ -1,0 +1,3 @@
+#!/usr/bin/env fish
+
+unbuffer darwin-rebuild switch --flake . &| nom

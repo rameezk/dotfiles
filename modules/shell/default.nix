@@ -9,6 +9,7 @@
   config.color_scheme = 'tokyonight_moon'
   config.font = wezterm.font 'JetBrains Mono'
   config.font_size = 15;
+  config.window_background_opacity = 0.95;
   return config
   '';
 
@@ -95,5 +96,8 @@
     tldr # tldr shell commands
 
     meslo-lgs-nf # shell font
+
+    expect # needed to use unbuffer (helps with preserving colors for nom)
+    nix-output-monitor # nice colored output tree when building nix packages
   ];
 }
