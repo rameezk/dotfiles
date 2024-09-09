@@ -5,13 +5,9 @@ let
     proxyHost = "localhost";
     proxyPort = 3128;
 in {
-    # Opt-in to modules by including theme here.
-    #  Is there a better way to do this per machine?
     imports = [
         ../../modules
     ];
-
-    cloud.aws.enable = true;
 
     network.proxy = {
         enable = true;
@@ -19,6 +15,8 @@ in {
         host = proxyHost;
         port = proxyPort;
     };
+
+    cloud.aws.enable = true;
 
     shell.enable = true;
 
@@ -46,7 +44,7 @@ in {
     # Let Home Manager install and manage itself.
     programs.home-manager.enable = true;
 
-    # Packages
+    # Other Packages
     home.packages = with pkgs; [ 
         nixVersions.latest 
         nixfmt-classic 
