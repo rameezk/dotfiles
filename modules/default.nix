@@ -1,5 +1,6 @@
 { ... }: {
 	imports = [ 
+        ./cloud
         ./editor 
         ./font
         ./language

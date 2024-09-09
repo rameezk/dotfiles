@@ -1,16 +1,22 @@
-{ pkgs, ... }: {
+{ pkgs, lib, config, ... }: {
 
-  programs.tmux = {
-    enable = true;
+    options = {
+        tmux.enable = lib.mkEnableOption "enable tmux";
+    };
 
-    clock24 = true; # Use a 24 hour clock
-    baseIndex = 1; # Start window count at 1
-    historyLimit = 100000; # max lines held in history
-    keyMode = "vi"; # use VI keybindings
-    prefix = "C-Space"; # Use CTRL-SPACE as prefix
-    terminal = "screen-256color";
+    config = lib.mkIf config.tmux.enable {
 
-    extraConfig = ''
+        programs.tmux = {
+            enable = true;
+
+            clock24 = true; # Use a 24 hour clock
+            baseIndex = 1; # Start window count at 1
+            historyLimit = 100000; # max lines held in history
+            keyMode = "vi"; # use VI keybindings
+            prefix = "C-Space"; # Use CTRL-SPACE as prefix
+            terminal = "screen-256color";
+
+            extraConfig = ''
       set -g set-titles on
       set -g set-titles-string '#(whoami)::#h'
       set -g status-interval 1 # quicker status line updates
@@ -59,17 +65,17 @@
 
       # Sync panes
       bind e set-window-option synchronize-panes \; display-message "Toggled pane synchronisation"
-    '';
+            '';
 
-    plugins = with pkgs.tmuxPlugins; [
-      sessionist
-      {
-        plugin = yank;
-        extraConfig = "set -g @yank_selection_mouse 'clipboard'";
-      }
-      {
-        plugin = dracula;
-        extraConfig = ''
+            plugins = with pkgs.tmuxPlugins; [
+                sessionist
+                {
+                    plugin = yank;
+                    extraConfig = "set -g @yank_selection_mouse 'clipboard'";
+                }
+                {
+                    plugin = dracula;
+                    extraConfig = ''
           set -g @dracula-plugins "battery cpu-usage ram-usage time"
           set -g @dracula-show-powerline true
           set -g @dracula-border-contrast true
@@ -81,19 +87,19 @@
           set -g @dracula-cpu-usage-label ﬙
           set -g @dracula-ram-usage-label 
           set -g @dracula-battery-label 
-        '';
-      }
-    ];
-  };
+                    '';
+                }
+            ];
+        };
 
-  home.file."boot-tmux.sh" = {
-    executable = true;
-    text = ''
+        home.file."boot-tmux.sh" = {
+            executable = true;
+            text = ''
       #!/usr/bin/env bash
 
       echo "[..] Booting tmux"
       tmux attach -t base || tmux new -s base
-    '';
-  };
-
+            '';
+        };
+    };
 }

@@ -1,6 +1,9 @@
 { pkgs, lib, config, ... }: {
 
-    imports = [ ./fish ];
+    imports = [ 
+        ./fish 
+        ./tmux
+    ];
 
     options = {
         shell.enable = lib.mkEnableOption "enable shell";
@@ -9,6 +12,7 @@
     config = lib.mkIf config.shell.enable {
 
         fish.enable = true;
+        tmux.enable = true;
 
         xdg.configFile."wezterm/wezterm.lua".text = # lua
             ''

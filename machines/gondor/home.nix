@@ -9,13 +9,9 @@ in {
     #  Is there a better way to do this per machine?
     imports = [
         ../../modules
-
-        # tool
-        ../../modules/tool/aws
-        ../../modules/tool/tmux
-        ../../modules/tool/secret-management
-        ../../modules/tool/package-management
     ];
+
+    cloud.aws.enable = true;
 
     network.proxy = {
         enable = true;
@@ -51,7 +47,11 @@ in {
     programs.home-manager.enable = true;
 
     # Packages
-    home.packages = with pkgs; [ nixVersions.latest nixfmt-classic ];
+    home.packages = with pkgs; [ 
+        nixVersions.latest 
+        nixfmt-classic 
+        asdf-vm 
+    ];
 
     nix = {
         package = pkgs.nixVersions.latest;
