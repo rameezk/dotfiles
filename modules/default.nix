@@ -3,5 +3,6 @@
         ./editor 
         ./font
         ./language
+        ./shell
     ];
 }

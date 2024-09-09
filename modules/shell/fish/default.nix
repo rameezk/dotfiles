@@ -1,12 +1,15 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }: {
 
-let secrets = import ../../../secrets/config.nix;
-in {
+    options = {
+        fish.enable = lib.mkEnableOption "enable fish";
+    };
 
-  programs.fish = {
-    enable = true;
+    config = lib.mkIf config.fish.enable {
 
-    shellInit = ''
+        programs.fish = {
+            enable = true;
+
+            shellInit = ''
       # Disable fish greeting message
       set fish_greeting
 
@@ -60,53 +63,53 @@ in {
       if test -e ~/.nix-profile/share/asdf-vm/asdf.fish
         source ~/.nix-profile/share/asdf-vm/asdf.fish
       end
-    '';
+            '';
 
-    shellAbbrs = {
-      # files
-      ls = "eza";
-      l = "eza -la --git";
-      tree = "eza --tree";
+            shellAbbrs = {
+                # files
+                ls = "eza";
+                l = "eza -la --git";
+                tree = "eza --tree";
 
-      #git
-      gcm = "git commit -m";
-      gco = "git checkout";
-      grt = "cd (git rev-parse --show-toplevel)";
+                #git
+                gcm = "git commit -m";
+                gco = "git checkout";
+                grt = "cd (git rev-parse --show-toplevel)";
 
-      # home-manager
-      hm-rm-old-generations =
-        "home-manager generations | tail -n +2 | awk '{ print $5 }' | xargs home-manager remove-generations";
+                # home-manager
+                hm-rm-old-generations =
+                    "home-manager generations | tail -n +2 | awk '{ print $5 }' | xargs home-manager remove-generations";
 
-      # bat
-      cat = "bat";
+                # bat
+                cat = "bat";
 
-      # shell
-      "reload!" = ''exec "$SHELL" -l'';
+                # shell
+                "reload!" = ''exec "$SHELL" -l'';
 
-      # emacs
-      e = "emacsclient --no-wait";
+                # emacs
+                e = "emacsclient --no-wait";
 
-      # kubernetes
-      k = "kubectl";
-      kc = "kubectx";
-      kn = "kubens";
-      kw = "watch kubectl";
-      kdebug =
-        "kubectl run --rm -i -t debug --image=rameezk/debuggery --restart=Never";
+                # kubernetes
+                k = "kubectl";
+                kc = "kubectx";
+                kn = "kubens";
+                kw = "watch kubectl";
+                kdebug =
+                    "kubectl run --rm -i -t debug --image=rameezk/debuggery --restart=Never";
 
-      # Nix
-      "," = "nix run nixpkgs#";
+                # Nix
+                "," = "nix run nixpkgs#";
 
-      # terraform and terrgrunt
-      tf = "terraform";
-      tg = "terragrunt";
-    };
+                # terraform and terrgrunt
+                tf = "terraform";
+                tg = "terragrunt";
+            };
 
-    functions = {
-      p = {
-        argumentNames = "args";
-        description = "open fzf to cd into a project directory";
-        body = ''
+            functions = {
+                p = {
+                    argumentNames = "args";
+                    description = "open fzf to cd into a project directory";
+                    body = ''
           set -l cache_file "$HOME/.projects"
           if test -z $args
               if test -s "$cache_file"
@@ -124,13 +127,13 @@ in {
                   cd "$chosen_dir"
               end
           end
-        '';
-      };
+                    '';
+                };
 
-      open_repo_in_browser = {
+                open_repo_in_browser = {
 
-        description = "open a git remote in default browser";
-        body = ''
+                    description = "open a git remote in default browser";
+                    body = ''
           set -l git_remote (git remote -v | head -n 1 | awk '{print $2}')
 
           if string match -r '^git@.*$' $git_remote
@@ -141,44 +144,44 @@ in {
 
           echo "[..] Opening $browser_remote in default browser"
           open "$browser_remote" > /dev/null 2>&1
-        '';
+                    '';
 
-      };
+                };
 
-      mcd = {
-        argumentNames = "directory";
-        description = "create new directory and cd into it";
-        body = ''
+                mcd = {
+                    argumentNames = "directory";
+                    description = "create new directory and cd into it";
+                    body = ''
           mkdir -p "$directory" && cd "$directory";
-        '';
-      };
+                    '';
+                };
 
-      k-exec-into = {
-        description = "interactively select a pod and shell to exec into";
-        body = ''
+                k-exec-into = {
+                    description = "interactively select a pod and shell to exec into";
+                    body = ''
           set -l pod (kubectl get pods --no-headers | awk '{print $1}' | fzf)
           set -l shell (echo -e "bash\nsh\nzsh\nfish" | fzf)
           kubectl exec -it $pod -- $shell
-        '';
-      };
+                    '';
+                };
 
-      k-delete-pods-with-status = {
-        argumentNames = "pod_status";
-        description = "delete pods with a specific status";
-        body = ''
+                k-delete-pods-with-status = {
+                    argumentNames = "pod_status";
+                    description = "delete pods with a specific status";
+                    body = ''
           if [ -z "$pod_status" ]
             echo "Please specify a status"
             return 1
           end
 
           kubectl get pods | grep -i "$pod_status" | awk '{print $1}' | xargs kubectl delete pod
-        '';
+                    '';
 
-      };
+                };
 
-      can_i_haz_internetz_plez = {
-        description = "check if connected to internet";
-        body = ''
+                can_i_haz_internetz_plez = {
+                    description = "check if connected to internet";
+                    body = ''
           set -l status_code (curl -s -o /dev/null -w "%{http_code}" https://www.ipecho.net/plain)
 
           if [ "$status_code" = 200 ]
@@ -194,19 +197,19 @@ in {
              \_^_/"
             return 1
           end
-        '';
-      };
+                    '';
+                };
 
-      generate_uuid4 = {
-        description = "generate a uuid4";
-        body = ''
+                generate_uuid4 = {
+                    description = "generate a uuid4";
+                    body = ''
           python -c "import uuid; print(str(uuid.uuid4()).strip(), end=\"\");"
-        '';
-      };
+                    '';
+                };
 
-      aws-switch-role = {
-        description = "switch aws roles";
-        body = ''
+                aws-switch-role = {
+                    description = "switch aws roles";
+                    body = ''
           set config_file "$HOME/.aws/aws-role-mappings.json"
 
           if [ ! -s $config_file ];
@@ -220,117 +223,118 @@ in {
           set CHOSEN_ROLE_NAME (cat "$config_file" | jq -r ".roles | .[] | select(.text_to_display==\"$CHOSEN_ROLE\") | .role_name")
 
           if [ -z "$CHOSEN_ROLE" ];
-          	echo "[..] No CHOSEN_ROLE defined"
-          	return 1
+            echo "[..] No CHOSEN_ROLE defined"
+            return 1
           end
           if [ -z "$CHOSEN_ACCOUNT_ID_NUMBER" ];
-          	echo "[..] No CHOSEN_ACCOUNT_ID_NUMBER defined"
-          	return 1
+            echo "[..] No CHOSEN_ACCOUNT_ID_NUMBER defined"
+            return 1
           end
           if [ -z "$CHOSEN_ROLE_NAME" ];
-          	echo "[..] No CHOSEN_ROLE_NAME defined"
-          	return 1
+            echo "[..] No CHOSEN_ROLE_NAME defined"
+            return 1
           end
 
           open "https://signin.aws.amazon.com/switchrole?account=$CHOSEN_ACCOUNT_ID_NUMBER&roleName=$CHOSEN_ROLE_NAME&displayName=$CHOSEN_ROLE"
           echo "[..] Opened in browser"
-        '';
-      };
+                    '';
+                };
+            };
+
+            plugins = [{
+                name = "z";
+                src = pkgs.fetchFromGitHub {
+                    owner = "jethrokuan";
+                    repo = "z";
+                    rev = "d5500284077ebb12c306ea429e74c8d046aef5a0";
+                    sha256 = "sha256-I2feYLp+oqVGjtaG5uftG0Lok5ye7G8oefZAMdzAeoo=";
+                };
+            }];
+        };
+
+        programs.starship = {
+            enable = true;
+            enableFishIntegration = true;
+            settings = {
+                scan_timeout = 10;
+
+                format = lib.concatStrings [
+                    "[┌──](#9A348E)$status$cmd_duration$username[](bg:#DA627D fg:#9A348E)$directory[](fg:#DA627D bg:#86BBD8)$git_branch$git_status[](fg:#86BBD8 bg:#06969A)$python[](fg:#06969A bg:#33658A)$nix_shell[](fg:#33658A bg:#f19066)$aws$terraform[](fg:#f19066)$line_break"
+                    "[└─](#9A348E)$character"
+                ];
+
+                aws = {
+                    style = "bg:#f19066";
+                    format = "[ $symbol($profile)]($style)";
+                    symbol = " ";
+                };
+
+                terraform = {
+                    style = "bg:#f19066";
+                    format = "[ $symbol($version) ($workspace)]($style)";
+                    symbol = "󱁢 ";
+                };
+
+                status = {
+                    style = "bg:#9A348E";
+                    format = "[$symbol $common_meaning$signal_name$maybe_int ]($style)";
+                    map_symbol = true;
+                    disabled = false;
+                };
+
+                character = { vimcmd_symbol = "[❮](blue)"; };
+
+                cmd_duration = {
+                    style = "bg:#9A348E";
+                    format = "[$duration ]($style)";
+                };
+
+                username = {
+                    show_always = true;
+                    style_user = "bg:#9A348E";
+                    style_root = "bg:#9A348E";
+                    format = "[ ]($style)";
+                    disabled = false;
+                };
+
+                directory = {
+                    style = "bg:#DA627D";
+                    format = "[ $path ]($style)";
+                    truncation_length = 3;
+                    truncation_symbol = "…/";
+                };
+
+                python = {
+                    symbol = " ";
+                    style = "bg:#06969A";
+                    format = "[ $symbol ($version) (($virtualenv))]($style)";
+                };
+
+                git_branch = {
+                    symbol = "";
+                    style = "bg:#86BBD8";
+                    format = "[ $symbol $branch ]($style)";
+                };
+
+                git_status = {
+                    style = "bg:#86BBD8";
+                    format = "[$all_status$ahead_behind ]($style)";
+                };
+
+                nix_shell = {
+                    symbol = "󱄅 ";
+                    style = "bg:#33658A";
+                    format = "[ $symbol $name ]($style)";
+                    heuristic = false;
+                };
+
+            };
+        };
+
+        home.packages = with pkgs; [ 
+            #fishPlugins.fzf-fish 
+            fishPlugins.bass 
+        ];
     };
-
-    plugins = [{
-      name = "z";
-      src = pkgs.fetchFromGitHub {
-        owner = "jethrokuan";
-        repo = "z";
-        rev = "d5500284077ebb12c306ea429e74c8d046aef5a0";
-        sha256 = "sha256-I2feYLp+oqVGjtaG5uftG0Lok5ye7G8oefZAMdzAeoo=";
-      };
-    }];
-  };
-
-  programs.starship = {
-    enable = true;
-    enableFishIntegration = true;
-    settings = {
-      scan_timeout = 10;
-
-      format = lib.concatStrings [
-        "[┌──](#9A348E)$status$cmd_duration$username[](bg:#DA627D fg:#9A348E)$directory[](fg:#DA627D bg:#86BBD8)$git_branch$git_status[](fg:#86BBD8 bg:#06969A)$python[](fg:#06969A bg:#33658A)$nix_shell[](fg:#33658A bg:#f19066)$aws$terraform[](fg:#f19066)$line_break"
-        "[└─](#9A348E)$character"
-      ];
-
-      aws = {
-        style = "bg:#f19066";
-        format = "[ $symbol($profile)]($style)";
-        symbol = " ";
-      };
-
-      terraform = {
-        style = "bg:#f19066";
-        format = "[ $symbol($version) ($workspace)]($style)";
-        symbol = "󱁢 ";
-      };
-
-      status = {
-        style = "bg:#9A348E";
-        format = "[$symbol $common_meaning$signal_name$maybe_int ]($style)";
-        map_symbol = true;
-        disabled = false;
-      };
-
-      character = { vimcmd_symbol = "[❮](blue)"; };
-
-      cmd_duration = {
-        style = "bg:#9A348E";
-        format = "[$duration ]($style)";
-      };
-
-      username = {
-        show_always = true;
-        style_user = "bg:#9A348E";
-        style_root = "bg:#9A348E";
-        format = "[ ]($style)";
-        disabled = false;
-      };
-
-      directory = {
-        style = "bg:#DA627D";
-        format = "[ $path ]($style)";
-        truncation_length = 3;
-        truncation_symbol = "…/";
-      };
-
-      python = {
-        symbol = " ";
-        style = "bg:#06969A";
-        format = "[ $symbol ($version) (($virtualenv))]($style)";
-      };
-
-      git_branch = {
-        symbol = "";
-        style = "bg:#86BBD8";
-        format = "[ $symbol $branch ]($style)";
-      };
-
-      git_status = {
-        style = "bg:#86BBD8";
-        format = "[$all_status$ahead_behind ]($style)";
-      };
-
-      nix_shell = {
-        symbol = "󱄅 ";
-        style = "bg:#33658A";
-        format = "[ $symbol $name ]($style)";
-        heuristic = false;
-      };
-
-    };
-  };
-
-  home.packages = with pkgs; [ 
-      #fishPlugins.fzf-fish 
-      fishPlugins.bass 
-  ];
 
 }

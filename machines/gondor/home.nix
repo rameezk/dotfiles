@@ -10,9 +10,6 @@ in {
     imports = [
         ../../modules
 
-        # shell
-        ../../modules/shell
-
         # vcs
         ../../modules/vcs/git
 
@@ -35,6 +32,8 @@ in {
         host = proxyHost;
         port = proxyPort;
     };
+
+    shell.enable = true;
 
     editor.neovim.enable = true;
     editor.jetbrains-vim-mode.enable = true;
