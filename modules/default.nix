@@ -6,5 +6,6 @@
         ./network
         ./os
         ./shell
+        ./vcs
     ];
 }

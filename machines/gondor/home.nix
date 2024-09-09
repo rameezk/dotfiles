@@ -10,9 +10,6 @@ in {
     imports = [
         ../../modules
 
-        # vcs
-        ../../modules/vcs/git
-
         # tool
         ../../modules/tool/aws
         ../../modules/tool/tmux
@@ -28,6 +25,8 @@ in {
     };
 
     shell.enable = true;
+
+    vcs.git.enable = true;
 
     editor.neovim.enable = true;
     editor.jetbrains-vim-mode.enable = true;
