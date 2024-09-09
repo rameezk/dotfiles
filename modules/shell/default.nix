@@ -22,6 +22,7 @@
           config.font = wezterm.font 'JetBrains Mono'
           config.font_size = 15;
           config.window_background_opacity = 0.95;
+          config.native_macos_fullscreen_mode = false;
           return config
           '';
 
