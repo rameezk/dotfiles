@@ -1,48 +1,34 @@
 { inputs, pkgs, ... }:
 
 {
-    # Opt-in to modules by including theme here.
-    #  Is there a better way to do this per machine?
     imports = [
-        # shell
-        ../../modules/shell
-
-        # editors
-        ../../modules/editors/neovim
-        ../../modules/editors/jetbrains
-
-        # vcs
-        ../../modules/vcs/git
-
-        # lang
-        ../../modules/language/python
-        ../../modules/language/java
-
-        # tool
-        ../../modules/tool/aws
-        ../../modules/tool/tmux
-        ../../modules/tool/package-management
+        ../../modules
     ];
 
-    java = {
-        enable = true;
-        manageJDK = false;
+    shell.enable = true;
+
+    editor = {
+        neovim.enable = true;
+        jetbrains-vim-mode.enable = true;
     };
+
+    vcs.git.enable = true;
+
+    language = {
+        python.enable = true;
+        java = {
+            enable = true;
+            manageJDK = false;
+        };
+    };
+
+    cloud.aws.enable = true;
 
     # Let Home Manager install and manage itself.
     programs.home-manager.enable = true;
 
     # Packages
-    home.packages = with pkgs; [ nixVersions.latest nixfmt-classic ];
-
-    # nix = {
-    #   package = pkgs.nixVersions.latest;
-    #   settings.experimental-features = [ "nix-command" "flakes" ];
-    #   extraOptions = ''
-    #     keep-outputs = true
-    #     keep-derivations = true
-    #   '';
-    # };
+    home.packages = with pkgs; [ nixVersions.latest nixfmt-classic asdf-vm ];
 
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
@@ -55,7 +41,6 @@
     home.stateVersion = "20.09";
 
     sops = {
-        # defaultSopsFile = ../../secrets/secrets.yaml;
         defaultSopsFile = "${builtins.toString inputs.mysecrets}/secrets.yaml";
         validateSopsFiles = false;
 
