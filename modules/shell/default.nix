@@ -1,22 +1,22 @@
 { pkgs, ... }: {
 
-  imports = [ ./fish ];
+    imports = [ ./fish ];
 
-  home.file.".config/wezterm/wezterm.lua".text = # lua
-  ''
-  local wezterm = require 'wezterm'
-  local config = wezterm.config_builder()
-  config.color_scheme = 'tokyonight_moon'
-  config.font = wezterm.font 'JetBrains Mono'
-  config.font_size = 15;
-  config.window_background_opacity = 0.95;
-  return config
-  '';
+    home.file.".config/wezterm/wezterm.lua".text = # lua
+    ''
+          local wezterm = require 'wezterm'
+          local config = wezterm.config_builder()
+          config.color_scheme = 'tokyonight_moon'
+          config.font = wezterm.font 'JetBrains Mono'
+          config.font_size = 15;
+          config.window_background_opacity = 0.95;
+          return config
+    '';
 
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-    stdlib = ''
+    programs.direnv = {
+        enable = true;
+        nix-direnv.enable = true;
+        stdlib = ''
       layout_poetry() {
         if [[ ! -f pyproject.toml ]]; then
             log_error 'No pyproject.toml found. Use `poetry new` or `poetry init` to create one first.'
@@ -51,20 +51,20 @@
         export PDM_ACTIVE=1
         export VIRTUAL_ENV
       }
-    '';
-  };
+        '';
+    };
 
-  programs.fzf = {
-    enable = true;
-    enableFishIntegration = true;
-  };
+    programs.fzf = {
+        enable = true;
+        enableFishIntegration = true;
+    };
 
-  programs.navi = {
-    enable = true;
-    enableFishIntegration = true;
-  };
+    programs.navi = {
+        enable = true;
+        enableFishIntegration = true;
+    };
 
-  home.file.".ripgreprc".text = ''
+    home.file.".ripgreprc".text = ''
     --hidden
     --glob=!.git/*
     --max-columns=150
@@ -72,31 +72,35 @@
     --smart-case
     --colors=line:none
     --colors=line:style:bold
-  '';
+    '';
 
-  programs.bat = {
-    enable = true;
-    config = {
-      theme = "gruvbox-dark";
-      pager = "less -FR";
+    programs.bat = {
+        enable = true;
+        config = {
+            theme = "gruvbox-dark";
+            pager = "less -FR";
+        };
     };
-  };
 
-  programs.eza.enable = true;
+    programs.eza = {
+        enable = true;
+        icons = true;
+        git = true;
+    };
 
-  home.packages = with pkgs; [
-    ripgrep # faster grepping
-    jq # parsing JSON
-    entr # file watching
-    htop # process manager
-    neofetch # nice system info viewer
-    fd # a faster find
-    shellcheck # linting shell scripts
-    watch # watch and refresh commands
-    tldr # tldr shell commands
+    home.packages = with pkgs; [
+        ripgrep # faster grepping
+        jq # parsing JSON
+        entr # file watching
+        htop # process manager
+        neofetch # nice system info viewer
+        fd # a faster find
+        shellcheck # linting shell scripts
+        watch # watch and refresh commands
+        tldr # tldr shell commands
 
-    meslo-lgs-nf # shell font
+        meslo-lgs-nf # shell font
 
-    nix-output-monitor # nice colored output tree when building nix packages
-  ];
+        nix-output-monitor # nice colored output tree when building nix packages
+    ];
 }
