@@ -2,9 +2,9 @@
 
 with lib;
 
-let cfg = config.java;
+let cfg = config.language.java;
 in {
-  options.java = {
+  options.language.java = {
     enable = mkOption {
       type = types.bool;
       default = false;

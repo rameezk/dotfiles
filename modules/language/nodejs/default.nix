@@ -1,5 +1,9 @@
-{ pkgs, ... }: {
+{ pkgs, lib, config, ... }: {
+    options = {
+        language.nodejs.enable = lib.mkEnableOption "enable nodejs";
+    };
 
-  home.packages = with pkgs; [ nodejs ];
-
+    config = lib.mkIf config.language.nodejs.enable {
+        home.packages = with pkgs; [ nodejs ];
+    };
 }

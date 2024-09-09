@@ -1,13 +1,16 @@
-{ pkgs, ... }: {
+{ pkgs, lib, config, ... }: {
+    options = {
+        language.python.enable = lib.mkEnableOption "enable python";
+    };
 
-  home.packages = with pkgs; [
-    (python312.withPackages (ps:
-      with ps;
-      [
-        # pip # seems to be broken
-        pipx # Yes, yes I know it's bad to install things globally.
-      ]))
-    stdenv.cc.cc.lib
-  ];
-
+    config = lib.mkIf config.language.python.enable {
+        home.packages = with pkgs; [
+            (python312.withPackages (ps:
+                with ps;
+                [
+                    pipx
+                ]))
+            stdenv.cc.cc.lib
+        ];
+    };
 }

@@ -2,5 +2,6 @@
 	imports = [ 
         ./editor 
         ./font
+        ./language
     ];
 }

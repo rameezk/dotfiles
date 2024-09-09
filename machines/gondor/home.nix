@@ -16,11 +16,6 @@ in {
         # vcs
         ../../modules/vcs/git
 
-        # lang
-        ../../modules/language/python
-        ../../modules/language/nodejs
-        ../../modules/language/java
-
         # tool
         ../../modules/tool/aws
         ../../modules/tool/tmux
@@ -41,7 +36,14 @@ in {
         port = proxyPort;
     };
 
-    java = {
+    editor.neovim.enable = true;
+    editor.jetbrains-vim-mode.enable = true;
+
+    fonts.enable = true;
+
+    language.python.enable = true;
+    language.nodejs.enable = true;
+    language.java = {
         enable = true;
         manageJDK = false;
 
@@ -50,11 +52,6 @@ in {
         proxyHost = proxyHost;
         proxyPort = proxyPort;
     };
-
-    editor.neovim.enable = true;
-    editor.jetbrains-vim-mode.enable = true;
-
-    fonts.enable = true;
 
     # Let Home Manager install and manage itself.
     programs.home-manager.enable = true;
