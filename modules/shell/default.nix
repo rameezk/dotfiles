@@ -10,7 +10,7 @@
 
         fish.enable = true;
 
-        home.file.".config/wezterm/wezterm.lua".text = # lua
+        xdg.configFile."wezterm/wezterm.lua".text = # lua
             ''
           local wezterm = require 'wezterm'
           local config = wezterm.config_builder()

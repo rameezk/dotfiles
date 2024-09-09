@@ -1,14 +1,18 @@
-{ pkgs, ... }: {
+{ pkgs, lib, config, ... }: {
+    options = {
+        macos.window-management.enable = lib.mkEnableOption "enable macos window window-management";
+    };
 
-  home.packages = with pkgs; [
-    skhd # keyboard hotkey daemon
-    yabai # i3wm alternative
-  ];
+    config = lib.mkIf config.macos.window-management.enable {
+        home.packages = with pkgs; [
+            skhd # keyboard hotkey daemon
+            yabai # i3wm alternative
+        ];
 
-  home.file.yabai = {
-    executable = true;
-    target = ".config/yabai/yabairc";
-    text = ''
+        home.file.yabai = {
+            executable = true;
+            target = ".config/yabai/yabairc";
+            text = ''
       # layout
       # bsp = binary space partitioning. Can do bsp, stack or float
       yabai -m config layout bsp
@@ -44,13 +48,13 @@
       # ms teams
       yabai -m signal --add event=window_created action='yabai -m query --windows --window $YABAI_WINDOW_ID | jq -e ".\"can-resize\"" || yabai -m window $YABAI_WINDOW_ID --toggle float' app="Microsoft Teams classic"
       yabai -m signal --add event=window_created action='yabai -m query --windows --window $YABAI_WINDOW_ID | jq -e ".\"can-resize\"" || yabai -m window $YABAI_WINDOW_ID --toggle float' app="Microsoft Teams (work or school)"
-    '';
-  };
+            '';
+        };
 
-  home.file.skhd = {
-    target = ".config/skhd/skhdrc";
-    text = let yabai = "${pkgs.yabai}/bin/yabai";
-    in ''
+        home.file.skhd = {
+            target = ".config/skhd/skhdrc";
+            text = let yabai = "${pkgs.yabai}/bin/yabai";
+            in ''
       # changing window focus within space
       alt - j : ${yabai} -m window --focus south
       alt - k : ${yabai} -m window --focus north
@@ -107,7 +111,7 @@
       cmd + shift + alt + ctrl - q : ${yabai} --stop-service;
       # start yabai 
       cmd + shift + alt + ctrl - s : ${yabai} --start-service;
-    '';
-  };
-
+            '';
+        };
+    };
 }

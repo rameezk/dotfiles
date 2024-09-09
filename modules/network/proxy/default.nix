@@ -1,11 +1,11 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 with lib;
 
-let cfg = config.proxy;
+let cfg = config.network.proxy;
 in {
   options = {
-    proxy = {
+    network.proxy = {
       enable = mkOption {
         type = types.bool;
         default = false;

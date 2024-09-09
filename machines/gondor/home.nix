@@ -18,15 +18,9 @@ in {
         ../../modules/tool/tmux
         ../../modules/tool/secret-management
         ../../modules/tool/package-management
-
-        # networking
-        ../../modules/networking/proxy
-
-        # MacOS
-        ../../modules/os/macos/window-management
     ];
 
-    proxy = {
+    network.proxy = {
         enable = true;
         protocol = proxyProtocol;
         host = proxyHost;
@@ -51,6 +45,8 @@ in {
         proxyHost = proxyHost;
         proxyPort = proxyPort;
     };
+
+    macos.window-management.enable = true;
 
     # Let Home Manager install and manage itself.
     programs.home-manager.enable = true;
