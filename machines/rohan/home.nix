@@ -43,7 +43,6 @@
   # Packages
   home.packages = with pkgs; [
     nixVersions.latest
-    nixfmt-classic
   ];
 
   # Add experimental features to nix configuration
