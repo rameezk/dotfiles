@@ -1,11 +1,12 @@
-{ ... }: {
-    imports = [
-        ./clojure
-        ./java
-        ./latex
-        ./nim
-        ./nodejs
-        ./python
-        ./rust
-    ];
+{ ... }:
+{
+  imports = [
+    ./clojure
+    ./java
+    ./latex
+    ./nim
+    ./nodejs
+    ./python
+    ./rust
+  ];
 }

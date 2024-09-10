@@ -1,5 +1,6 @@
-{ ... }: {
-    imports = [
-        ./macos
-    ];
+{ ... }:
+{
+  imports = [
+    ./macos
+  ];
 }

@@ -1,6 +1,7 @@
-{ ... }: {
-    imports = [
-        ./aws
-        ./azure
-    ];
+{ ... }:
+{
+  imports = [
+    ./aws
+    ./azure
+  ];
 }

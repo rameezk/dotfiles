@@ -1,8 +1,9 @@
-{ ... }: {
-	imports = [
-        ./emacs
-        ./jetbrains-vim-mode
-        ./neovim 
-        ./vim
-    ];
+{ ... }:
+{
+  imports = [
+    ./emacs
+    ./jetbrains-vim-mode
+    ./neovim
+    ./vim
+  ];
 }

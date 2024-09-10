@@ -1,5 +1,6 @@
-{ ... }: {
-    imports = [
-        ./proxy
-    ];
+{ ... }:
+{
+  imports = [
+    ./proxy
+  ];
 }

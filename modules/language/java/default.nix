@@ -1,9 +1,16 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
-let cfg = config.language.java;
-in {
+let
+  cfg = config.language.java;
+in
+{
   options.language.java = {
     enable = mkOption {
       type = types.bool;
@@ -24,7 +31,10 @@ in {
     };
 
     proxyProtocol = mkOption {
-      type = types.enum [ "http" "https" ];
+      type = types.enum [
+        "http"
+        "https"
+      ];
       default = "http";
       description = "Proxy protocol to be used. Either http or https";
     };
@@ -42,45 +52,47 @@ in {
     };
   };
 
-  config = mkIf cfg.enable (let
+  config = mkIf cfg.enable (
+    let
 
-    gradleConfig = ''
-      org.gradle.daemon=false
-      org.gradle.jvmargs=-Xmx4096M
+      gradleConfig = ''
+        org.gradle.daemon=false
+        org.gradle.jvmargs=-Xmx4096M
 
-      ${optionalString cfg.enableProxy ''
-        systemProp.http.proxyHost=${cfg.proxyHost}
-        systemProp.http.proxyPort=${toString cfg.proxyPort}
-        systemProp.https.proxyHost=${cfg.proxyHost}
-        systemProp.https.proxyPort=${toString cfg.proxyPort}
-      ''}
-    '';
+        ${optionalString cfg.enableProxy ''
+          systemProp.http.proxyHost=${cfg.proxyHost}
+          systemProp.http.proxyPort=${toString cfg.proxyPort}
+          systemProp.https.proxyHost=${cfg.proxyHost}
+          systemProp.https.proxyPort=${toString cfg.proxyPort}
+        ''}
+      '';
 
-    mavenConfig = ''
-      <settings>
-      ${optionalString cfg.enableProxy ''
-        <proxies>
-            <proxy>
-                <id>proxy</id>
-                <active>true</active>
-                <protocol>${cfg.proxyProtocol}</protocol>
-                <host>${cfg.proxyHost}</host>
-                <port>${toString cfg.proxyPort}</port>
-                <nonProxyHosts>localhost|127.0.0.1</nonProxyHosts>
-            </proxy>
-        </proxies>
-      ''}
-      </settings>
-    '';
+      mavenConfig = ''
+        <settings>
+        ${optionalString cfg.enableProxy ''
+          <proxies>
+              <proxy>
+                  <id>proxy</id>
+                  <active>true</active>
+                  <protocol>${cfg.proxyProtocol}</protocol>
+                  <host>${cfg.proxyHost}</host>
+                  <port>${toString cfg.proxyPort}</port>
+                  <nonProxyHosts>localhost|127.0.0.1</nonProxyHosts>
+              </proxy>
+          </proxies>
+        ''}
+        </settings>
+      '';
 
-  in {
+    in
+    {
 
-    home.file.".gradle/gradle.properties".text = gradleConfig;
+      home.file.".gradle/gradle.properties".text = gradleConfig;
 
-    home.file.".m2/settings.xml".text = mavenConfig;
+      home.file.".m2/settings.xml".text = mavenConfig;
 
-    home.packages = mkIf cfg.manageJDK [ pkgs.openjdk ];
+      home.packages = mkIf cfg.manageJDK [ pkgs.openjdk ];
 
-  });
+    }
+  );
 }
-

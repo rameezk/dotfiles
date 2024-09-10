@@ -2,8 +2,10 @@
 
 with lib;
 
-let cfg = config.network.proxy;
-in {
+let
+  cfg = config.network.proxy;
+in
+{
   options = {
     network.proxy = {
       enable = mkOption {
@@ -13,7 +15,10 @@ in {
       };
 
       protocol = mkOption {
-        type = types.enum [ "http" "https" ];
+        type = types.enum [
+          "http"
+          "https"
+        ];
         description = "Protocol to be used. Either http or https";
       };
 
@@ -29,21 +34,24 @@ in {
     };
   };
 
-  config = mkIf cfg.enable (let
-    proxy_full_addr = "${cfg.protocol}://${cfg.host}:${toString cfg.port}/";
-  in {
-    home.file.".proxyrc".text = ''
-      export HTTP_PROXY=${proxy_full_addr}
-      export http_proxy=${proxy_full_addr}
-      export https_proxy=${proxy_full_addr}
-      export HTTPS_PROXY=${proxy_full_addr}
-      export ftp_proxy=${proxy_full_addr}
-      export FTP_PROXY=${proxy_full_addr}
-      export all_proxy=${proxy_full_addr}
-      export ALL_PROXY=${proxy_full_addr}
-      export NIX_CURL_FLAGS="-x ${proxy_full_addr}"
-      export no_proxy=localhost,127.0.0.1
-      export NO_PROXY=localhost,127.0.0.1
-    '';
-  });
+  config = mkIf cfg.enable (
+    let
+      proxy_full_addr = "${cfg.protocol}://${cfg.host}:${toString cfg.port}/";
+    in
+    {
+      home.file.".proxyrc".text = ''
+        export HTTP_PROXY=${proxy_full_addr}
+        export http_proxy=${proxy_full_addr}
+        export https_proxy=${proxy_full_addr}
+        export HTTPS_PROXY=${proxy_full_addr}
+        export ftp_proxy=${proxy_full_addr}
+        export FTP_PROXY=${proxy_full_addr}
+        export all_proxy=${proxy_full_addr}
+        export ALL_PROXY=${proxy_full_addr}
+        export NIX_CURL_FLAGS="-x ${proxy_full_addr}"
+        export no_proxy=localhost,127.0.0.1
+        export NO_PROXY=localhost,127.0.0.1
+      '';
+    }
+  );
 }

@@ -1,12 +1,13 @@
-{ ... }: {
-	imports = [ 
-        ./cloud
-        ./editor 
-        ./font
-        ./language
-        ./network
-        ./os
-        ./shell
-        ./vcs
-    ];
+{ ... }:
+{
+  imports = [
+    ./cloud
+    ./editor
+    ./font
+    ./language
+    ./network
+    ./os
+    ./shell
+    ./vcs
+  ];
 }
