@@ -48,7 +48,6 @@ in
   # Other Packages
   home.packages = with pkgs; [
     nixVersions.latest
-    nixfmt-classic
     asdf-vm
   ];
 

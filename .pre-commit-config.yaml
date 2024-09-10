@@ -7,9 +7,3 @@ repos:
       language: system
       files: \.nix$
       pass_filenames: true
-    - id: black
-      name: black
-      entry: black
-      args: ["./bin/dot"]
-      language: system
-      pass_filenames: false

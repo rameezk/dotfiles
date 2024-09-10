@@ -46,10 +46,6 @@
 
     declarative-cachix.url = "github:jonascarpay/declarative-cachix/master";
 
-    alejandra = {
-      url = "github:kamadorueda/alejandra/3.0.0";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -170,11 +166,6 @@
 
       devShells = forAllSystems devShell;
 
-      # formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt-rfc-style;
       formatter = forAllSystems mkFormatter;
-      # formatter = {
-      #   "aarch64-darwin" = nixpkgs.legacyPackages.aarch64-darwin.nixfmt-rfc-style;
-      # };
-      # formatter.aarch64-darwin = inputs.alejandra.defaultPackage.aarch64-darwin;
     };
 }
