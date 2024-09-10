@@ -23,6 +23,7 @@
               end
             '';
           transparent = true;
+          terminal_colors = true;
         };
       };
 
