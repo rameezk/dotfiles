@@ -4,6 +4,8 @@ let
   proxyProtocol = "http";
   proxyHost = "localhost";
   proxyPort = 3128;
+
+  secrets = import ../../secrets/config.nix;
 in
 {
   imports = [
@@ -21,7 +23,22 @@ in
 
   shell.enable = true;
 
-  vcs.git.enable = true;
+  vcs.git = {
+    enable = true;
+    userName = "Rameez Khan";
+    userEmail = secrets.user.work.emailAddr;
+    signingKey = "FB1E24B0094A24D8";
+    extraSigningKeys = [
+      {
+        email = "rameezkhan.sa@gmail.com";
+        signingKey = "FA38EE525EC823AF";
+        paths = [
+          "~/code/personal/"
+          "~/.config/"
+        ];
+      }
+    ];
+  };
 
   editor.neovim.enable = true;
   editor.jetbrains-vim-mode.enable = true;
