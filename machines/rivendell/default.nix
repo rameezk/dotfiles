@@ -61,6 +61,8 @@ in
 
     casks = [
       "alfred"
+      "chatgpt"
+      "obsidian"
       "slack"
       "wezterm"
       "zoom"
