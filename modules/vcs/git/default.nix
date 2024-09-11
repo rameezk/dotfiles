@@ -6,18 +6,72 @@
 }:
 
 let
-  secrets = import ../../../secrets/config.nix;
-in
-{
-  options = {
-    vcs.git.enable = lib.mkEnableOption "enable git";
+  cfg = config.vcs.git;
+
+  extraSigningKeyModule = lib.types.submodule {
+    options = {
+
+      email = lib.mkOption {
+        type = lib.types.str;
+      };
+
+      signingKey = lib.mkOption {
+        type = lib.types.str;
+      };
+
+      paths = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+      };
+
+    };
   };
 
-  config = lib.mkIf config.vcs.git.enable {
+  mkIncludeSettings = email: signingkey: path: {
+    condition = "gitdir:" + path;
+    contents = {
+      user = {
+        email = email;
+        signingkey = signingkey;
+      };
+    };
+  };
+
+  forAllExtraSigningKeys =
+    func: data: lib.concatMap (item: map (path: func item.email item.signingKey path) item.paths) data;
+
+in
+{
+  options.vcs.git = {
+
+    enable = lib.mkEnableOption "enable git";
+
+    userName = lib.mkOption {
+      type = lib.types.str;
+      description = "User name to use.";
+    };
+
+    userEmail = lib.mkOption {
+      type = lib.types.str;
+      description = "User email to use.";
+    };
+
+    signingKey = lib.mkOption {
+      type = lib.types.str;
+      description = "Signing key to use.";
+    };
+
+    extraSigningKeys = lib.mkOption {
+      type = lib.types.listOf extraSigningKeyModule;
+      default = [ ];
+    };
+
+  };
+
+  config = lib.mkIf cfg.enable {
     programs.git = {
       enable = true;
-      userName = secrets.user.fullName;
-      userEmail = secrets.user.work.emailAddr;
+      userName = cfg.userName;
+      userEmail = cfg.userEmail;
       aliases = {
         lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
         st = "status";
@@ -39,34 +93,7 @@ in
         sha = "rev-parse HEAD";
         create-gh-pr = "!f() { gh pr create -a @me --title $(git rev-parse --abbrev-ref HEAD); }; f";
       };
-      includes = [
-        {
-          condition = "gitdir:${secrets.git.work.base_repo_dir}";
-          contents = {
-            credential = {
-              helper = "cache --timeout 18000";
-            };
-          };
-        }
-        {
-          condition = "gitdir:~/code/personal/";
-          contents = {
-            user = {
-              email = secrets.user.personal.emailAddr;
-              signingkey = secrets.user.personal.gpgFingerprint;
-            };
-          };
-        }
-        {
-          condition = "gitdir:~/.config/";
-          contents = {
-            user = {
-              email = secrets.user.personal.emailAddr;
-              signingkey = secrets.user.personal.gpgFingerprint;
-            };
-          };
-        }
-      ];
+      includes = forAllExtraSigningKeys mkIncludeSettings cfg.extraSigningKeys;
       extraConfig = {
         core = {
           pager = "delta";
@@ -92,7 +119,7 @@ in
           conflictstyle = "diff3";
         };
         user = {
-          signingkey = secrets.user.work.gpgFingerprint;
+          signingkey = cfg.signingKey;
         };
         commit = {
           gpgsign = true;
@@ -108,9 +135,6 @@ in
         };
         pager = {
           difftool = true;
-        };
-        http."${secrets.git.work.base_url}" = {
-          sslCAInfo = secrets.git.work.ssl_ca_info;
         };
       };
       ignores = [

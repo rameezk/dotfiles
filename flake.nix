@@ -40,8 +40,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     mysecrets = {
-      url = "git+ssh://git@github.com/rameezk/nix-secrets.git?ref=main&shallow=1";
-      flake = false;
+      url = "git+ssh://git@github.com/rameezk/nix-secrets.git";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     declarative-cachix.url = "github:jonascarpay/declarative-cachix/master";

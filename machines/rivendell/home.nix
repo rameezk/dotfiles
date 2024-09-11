@@ -5,6 +5,23 @@
     ../../modules
   ];
 
+  sops = {
+    defaultSopsFile = "${builtins.toString inputs.mysecrets}/secrets.yaml";
+    validateSopsFiles = false;
+
+    age.keyFile = "/Users/rameezk/.config/sops/age/keys.txt";
+
+    secrets = {
+      "private_keys/ssh/rameezk" = {
+        path = "/Users/rameezk/.ssh/id_ed25519";
+        mode = "0600";
+      };
+      "private_keys/gpg/rameezk" = {
+        path = "/Users/rameezk/.config/gpg/rameezk_private.gpg";
+      };
+    };
+  };
+
   shell.enable = true;
 
   editor = {
@@ -12,7 +29,12 @@
     jetbrains-vim-mode.enable = true;
   };
 
-  vcs.git.enable = true;
+  vcs.git = {
+    enable = true;
+    userName = "Rameez Khan";
+    userEmail = "rameezkhan.sa@gmail.com";
+    signingKey = "014309F6FA6BCC50";
+  };
 
   language = {
     python.enable = true;
@@ -43,20 +65,4 @@
   # changes in each release.
   home.stateVersion = "20.09";
 
-  sops = {
-    defaultSopsFile = "${builtins.toString inputs.mysecrets}/secrets.yaml";
-    validateSopsFiles = false;
-
-    age.keyFile = "/Users/rameezk/.config/sops/age/keys.txt";
-
-    secrets = {
-      "private_keys/ssh/rameezk" = {
-        path = "/Users/rameezk/.ssh/id_ed25519";
-        mode = "0600";
-      };
-      "private_keys/gpg/rameezk" = {
-        path = "/Users/rameezk/.config/gpg/rameezk_private.gpg";
-      };
-    };
-  };
 }
