@@ -37,8 +37,12 @@ in
     NSGlobalDomain = {
       "com.apple.swipescrolldirection" = false;
       "com.apple.keyboard.fnState" = true;
-      InitialKeyRepeat = 0;
-      KeyRepeat = 0;
+
+      # 120, 90, 60, 30, 12, 6, 2
+      KeyRepeat = 2;
+
+      # 120, 94, 68, 35, 25, 15
+      InitialKeyRepeat = 15;
     };
   };
 
