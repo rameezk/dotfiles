@@ -13,23 +13,23 @@
       vimAlias = true;
       vimdiffAlias = true;
 
-      colorschemes.tokyonight = {
+      colorschemes.catppuccin = {
         enable = true;
         settings = {
-          on_colors = # lua
-            ''
-              function(colors)
-                  colors.fg_gutter = "#627E97"
-              end
-            '';
-          transparent = true;
-          terminal_colors = true;
+          transparent_background = true;
+          flavour = "frappe";
+          integrations = {
+            cmp = true;
+            gitsigns = true;
+            treesitter = true;
+          };
         };
       };
 
       plugins = {
         lualine.enable = true;
         transparent.enable = true;
+        gitsigns.enable = true;
 
         lsp = {
           enable = true;
