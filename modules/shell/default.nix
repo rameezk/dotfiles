@@ -105,7 +105,7 @@
     programs.bat = {
       enable = true;
       config = {
-        theme = "gruvbox-dark";
+        # theme = "gruvbox-dark";
         pager = "less -FR";
       };
     };

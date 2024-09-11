@@ -46,6 +46,8 @@
 
     declarative-cachix.url = "github:jonascarpay/declarative-cachix/master";
 
+    catppuccin.url = "github:catppuccin/nix";
+
   };
 
   outputs =
@@ -152,6 +154,7 @@
               sharedModules = [
                 inputs.nixvim.homeManagerModules.nixvim
                 inputs.sops-nix.homeManagerModules.sops
+                inputs.catppuccin.homeManagerModules.catppuccin
               ];
               users.rameezk = import ./machines/rivendell/home.nix;
               extraSpecialArgs = {

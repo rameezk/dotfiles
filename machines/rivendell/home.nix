@@ -22,6 +22,11 @@
     };
   };
 
+  catppuccin = {
+    enable = true;
+    flavor = "frappe";
+  };
+
   shell.enable = true;
 
   editor = {
