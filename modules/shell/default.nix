@@ -30,11 +30,9 @@
         config.font = wezterm.font 'JetBrains Mono'
         config.font_size = 15;
 
+        config.hide_tab_bar_if_only_one_tab = true
+
         local dimmer = { brightness = 0.03 }
-        config.enable_scroll_bar = true
-        config.colors = {
-          scrollbar_thumb = 'white',
-        }
         config.background = {
           {
             source = {File = '${../../wallpapers/forest.jpg}'},
