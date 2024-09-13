@@ -68,6 +68,7 @@ in
       "chatgpt"
       "obsidian"
       "slack"
+      "todoist"
       "wezterm"
       "zoom"
     ];
