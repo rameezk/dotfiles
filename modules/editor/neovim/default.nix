@@ -105,6 +105,9 @@
         ignorecase = true;
         smartcase = true;
         incsearch = true;
+
+        splitright = true;
+        splitbelow = true;
       };
 
       keymaps = [
