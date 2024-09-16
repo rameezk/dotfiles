@@ -136,6 +136,9 @@ in
         pager = {
           difftool = true;
         };
+        rebase = {
+          autoStash = true;
+        };
       };
       ignores = [
         "*~"
