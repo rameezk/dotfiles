@@ -128,7 +128,7 @@ in
           defaultBranch = "main";
         };
         pull = {
-          rebase = false;
+          rebase = true;
         };
         fetch = {
           prune = true;
