@@ -126,6 +126,11 @@
           key = "<leader>fs";
           action = "<cmd>Telescope live_grep<cr>";
         }
+        {
+          mode = "n";
+          key = "<leader>h";
+          action = "<cmd>noh<cr>";
+        }
       ];
     };
   };
