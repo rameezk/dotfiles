@@ -85,53 +85,10 @@
         mapleader = " ";
       };
 
-      opts = {
-        background = "dark";
-        termguicolors = true;
+      opts = import ./opts.nix { };
 
-        relativenumber = true;
-        number = true;
-        cursorline = true;
+      keymaps = import ./keymaps.nix { };
 
-        tabstop = 4;
-        softtabstop = 4;
-        shiftwidth = 4;
-        expandtab = true;
-
-        wrap = false;
-
-        backspace = "indent,eol,start";
-
-        ignorecase = true;
-        smartcase = true;
-        incsearch = true;
-
-        splitright = true;
-        splitbelow = true;
-      };
-
-      keymaps = [
-        {
-          mode = "n";
-          key = "<leader>fe";
-          action = "<cmd>Explore<cr>";
-        }
-        {
-          mode = "n";
-          key = "<leader>ff";
-          action = "<cmd>Telescope find_files<cr>";
-        }
-        {
-          mode = "n";
-          key = "<leader>fs";
-          action = "<cmd>Telescope live_grep<cr>";
-        }
-        {
-          mode = "n";
-          key = "<leader>h";
-          action = "<cmd>noh<cr>";
-        }
-      ];
     };
   };
 }
