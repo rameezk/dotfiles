@@ -78,9 +78,12 @@
         tree = "eza --tree";
 
         #git
-        gcm = "git commit -m";
+        g = "git";
+        gp = "git pull";
         gco = "git checkout";
+        gcm = "git commit -m";
         grt = "cd (git rev-parse --show-toplevel)";
+        gs = "git status";
 
         # home-manager
         hm-rm-old-generations = "home-manager generations | tail -n +2 | awk '{ print $5 }' | xargs home-manager remove-generations";
