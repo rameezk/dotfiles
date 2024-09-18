@@ -20,4 +20,17 @@
     key = "<leader>h";
     action = "<cmd>noh<cr>";
   }
+  {
+    mode = "n";
+    key = "<leader>Y";
+    action = ''"*Y'';
+  }
+  {
+    mode = [
+      "n"
+      "v"
+    ];
+    key = "<leader>y";
+    action = ''"*y'';
+  }
 ]
