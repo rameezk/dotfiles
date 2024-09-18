@@ -37,8 +37,8 @@
   vcs.git = {
     enable = true;
     userName = "Rameez Khan";
-    userEmail = "rameezkhan.sa@gmail.com";
-    signingKey = "014309F6FA6BCC50";
+    userEmail = "rameez@rameezkhan.dev";
+    signingKey = "B18F680AF21C6B4A";
   };
 
   language = {
