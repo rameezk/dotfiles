@@ -68,6 +68,7 @@ in
       "chatgpt"
       "google-chrome"
       "obsidian"
+      "proton-mail"
       "slack"
       "todoist"
       "wezterm"
