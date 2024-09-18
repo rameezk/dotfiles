@@ -38,7 +38,7 @@
         export EDITOR=vim
 
         # colorscheme
-        set -U fish_color_command b8bb26 # fish's default command color is a horrible dark blue, make it a nicer green
+        # set -U fish_color_command b8bb26 # fish's default command color is a horrible dark blue, make it a nicer green
 
         # pipx
         set PATH $PATH ~/.local/bin
@@ -52,18 +52,8 @@
         # source proxy
         source ~/.proxyrc
 
-        # Fix gcc lib issues for certain python libs
-        # Only needed on WSL Ubuntu for some reason
-        # set -x LD_LIBRARY_PATH /nix/store/9ilyrqidrjbqvmnn8ykjc7lygdd86g7q-gcc-10.2.0-lib/lib:/nix/store/1l4r0r4ab3v3a3ppir4jwiah3icalk9d-zlib-1.2.11/lib
-
         # Set ripgrep configuration file
         set -x RIPGREP_CONFIG_PATH ~/.ripgreprc
-
-        # Set PyCharm path on MacOS
-        set PATH $PATH /Applications/PyCharm.app/Contents/MacOS
-
-        # Set IntelliJ path on MacOS
-        set PATH $PATH /Applications/IntelliJ\ IDEA.app/Contents/MacOS/
 
         # Setup ASDF
         if test -e ~/.nix-profile/share/asdf-vm/asdf.fish
@@ -94,9 +84,6 @@
         # shell
         "reload!" = ''exec "$SHELL" -l'';
 
-        # emacs
-        e = "emacsclient --no-wait";
-
         # kubernetes
         k = "kubectl";
         kc = "kubectx";
@@ -113,30 +100,6 @@
       };
 
       functions = {
-        p = {
-          argumentNames = "args";
-          description = "open fzf to cd into a project directory";
-          body = ''
-            set -l cache_file "$HOME/.projects"
-            if test -z $args
-                if test -s "$cache_file"
-                    set -l chosen_dir (cat $cache_file | fzf)
-                    cd "$chosen_dir"
-                else
-                    bash -c "find ~/code -name .git -type d -prune | xargs readlink -f | xargs dirname > $cache_file"
-                    set -l chosen_dir (cat $cache_file | fzf)
-                    cd "$chosen_dir"
-                end
-            else
-                if [ $args = "-r" ]
-                    bash -c "find ~/code -name .git -type d -prune | xargs readlink -f | xargs dirname > $cache_file"
-                    set -l chosen_dir (cat $cache_file | fzf)
-                    cd "$chosen_dir"
-                end
-            end
-          '';
-        };
-
         open_repo_in_browser = {
 
           description = "open a git remote in default browser";
@@ -211,39 +174,6 @@
           description = "generate a uuid4";
           body = ''
             python -c "import uuid; print(str(uuid.uuid4()).strip(), end=\"\");"
-          '';
-        };
-
-        aws-switch-role = {
-          description = "switch aws roles";
-          body = ''
-            set config_file "$HOME/.aws/aws-role-mappings.json"
-
-            if [ ! -s $config_file ];
-               echo "[..] Missing $config_file file"
-               return 1
-            end
-
-
-            set CHOSEN_ROLE (cat "$config_file" | jq -r ".roles | .[] | .text_to_display" | fzf)
-            set CHOSEN_ACCOUNT_ID_NUMBER (cat "$config_file" | jq -r ".roles | .[] | select(.text_to_display==\"$CHOSEN_ROLE\") | .account_id_number")
-            set CHOSEN_ROLE_NAME (cat "$config_file" | jq -r ".roles | .[] | select(.text_to_display==\"$CHOSEN_ROLE\") | .role_name")
-
-            if [ -z "$CHOSEN_ROLE" ];
-              echo "[..] No CHOSEN_ROLE defined"
-              return 1
-            end
-            if [ -z "$CHOSEN_ACCOUNT_ID_NUMBER" ];
-              echo "[..] No CHOSEN_ACCOUNT_ID_NUMBER defined"
-              return 1
-            end
-            if [ -z "$CHOSEN_ROLE_NAME" ];
-              echo "[..] No CHOSEN_ROLE_NAME defined"
-              return 1
-            end
-
-            open "https://signin.aws.amazon.com/switchrole?account=$CHOSEN_ACCOUNT_ID_NUMBER&roleName=$CHOSEN_ROLE_NAME&displayName=$CHOSEN_ROLE"
-            echo "[..] Opened in browser"
           '';
         };
       };
@@ -343,7 +273,7 @@
     };
 
     home.packages = with pkgs; [
-      #fishPlugins.fzf-fish 
+      # fishPlugins.fzf-fish 
       fishPlugins.bass
     ];
   };
