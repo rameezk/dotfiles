@@ -83,6 +83,7 @@ in
     #
     masApps = {
       "1password" = 1333542190;
+      "adguard" = 1440147259;
     };
   };
 
