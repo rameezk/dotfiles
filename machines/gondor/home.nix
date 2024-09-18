@@ -66,6 +66,7 @@ in
   home.packages = with pkgs; [
     nixVersions.latest
     asdf-vm
+    sops
   ];
 
   nix = {
