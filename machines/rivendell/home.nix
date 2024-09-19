@@ -22,9 +22,9 @@
     };
   };
 
-  catppuccin = {
+  theme.catppuccin = {
     enable = true;
-    flavor = "frappe";
+    flavour = "frappe";
   };
 
   shell.enable = true;

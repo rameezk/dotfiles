@@ -9,6 +9,7 @@
     ./network
     ./os
     ./shell
+    ./theme
     ./vcs
   ];
 
