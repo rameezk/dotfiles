@@ -4,25 +4,52 @@
   config,
   ...
 }:
+let
+  cfg = config.tmux;
+
+  catppuccinThemeEnabled = config.theme.catppuccin.enable or false;
+in
 {
 
-  options = {
-    tmux.enable = lib.mkEnableOption "enable tmux";
+  options.tmux = {
+    enable = lib.mkEnableOption "enable tmux";
   };
 
-  config = lib.mkIf config.tmux.enable {
+  config = lib.mkIf cfg.enable {
 
     programs.tmux = {
       enable = true;
+
+      catppuccin = lib.mkIf catppuccinThemeEnabled {
+        enable = true;
+        extraConfig = ''
+          set -g @catppuccin_window_right_separator "█ "
+          set -g @catppuccin_window_number_position "right"
+          set -g @catppuccin_window_middle_separator " | "
+
+          set -g @catppuccin_window_default_fill "none"
+
+          set -g @catppuccin_window_current_fill "all"
+
+          set -g @catppuccin_status_modules_right "date_time session"
+
+          set -g @catppuccin_status_left_separator "█"
+          set -g @catppuccin_status_right_separator "█"
+
+          set -g @catppuccin_date_time_text "%a %d/%m %H:%M"
+        '';
+      };
 
       clock24 = true; # Use a 24 hour clock
       baseIndex = 1; # Start window count at 1
       historyLimit = 100000; # max lines held in history
       keyMode = "vi"; # use VI keybindings
       prefix = "C-Space"; # Use CTRL-SPACE as prefix
-      terminal = "screen-256color";
+      terminal = "tmux-256color";
 
       extraConfig = ''
+        set -ga terminal-overrides ",*256col*:Tc" # fix colours
+
         set -g set-titles on
         set -g set-titles-string '#(whoami)::#h'
         set -g status-interval 1 # quicker status line updates
@@ -33,7 +60,8 @@
         # Add two status lines, one blank to emulate white space. To provide some spacing above status line.
         set-option -g status-position bottom
         setw -g pane-border-status bottom
-        setw -g pane-border-format '#[fg=colour2] $ #{pane_current_command} '
+        # setw -g pane-border-format '#[fg=colour2] $ #{pane_current_command} '
+        set-option -g pane-active-border-style fg=blue
 
         # Visual Notifications
         setw -g monitor-activity on 
@@ -74,26 +102,9 @@
       '';
 
       plugins = with pkgs.tmuxPlugins; [
-        sessionist
         {
           plugin = yank;
           extraConfig = "set -g @yank_selection_mouse 'clipboard'";
-        }
-        {
-          plugin = dracula;
-          extraConfig = ''
-            set -g @dracula-plugins "battery cpu-usage ram-usage time"
-            set -g @dracula-show-powerline true
-            set -g @dracula-border-contrast true
-            set -g @dracula-show-left-icon "❐ #S#{prefix_highlight}#{?window_zoomed_flag, 🔍,}"
-            set -g @dracula-show-timezone false
-            set -g @dracula-military-time true
-            set -g @dracula-show-left-sep 
-            set -g @dracula-show-right-sep 
-            set -g @dracula-cpu-usage-label ﬙
-            set -g @dracula-ram-usage-label 
-            set -g @dracula-battery-label 
-          '';
         }
       ];
     };
