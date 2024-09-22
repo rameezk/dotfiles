@@ -31,14 +31,7 @@
         transparent.enable = true;
         gitsigns.enable = true;
 
-        lsp = {
-          enable = true;
-          servers = {
-            nixd.enable = true;
-            lua-ls.enable = true;
-            java-language-server.enable = true;
-          };
-        };
+        lsp = import ./lsp.nix { };
 
         cmp-path.enable = true;
         cmp-nvim-lsp.enable = true;
