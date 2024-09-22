@@ -28,7 +28,7 @@
 
   swapfile = false;
   backup = false;
-  undodir = "~/.config/vim/undodir";
+  undodir = "/Users/rameezk/.config/vim/undodir";
   undofile = true;
 
   scrolloff = 8;
