@@ -27,6 +27,8 @@
     flavour = "frappe";
   };
 
+  fonts.enable = true;
+
   shell.enable = true;
 
   editor = {

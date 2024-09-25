@@ -11,9 +11,8 @@
 
   config = lib.mkIf config.fonts.enable {
     home.packages = with pkgs; [
-      fira-code
       meslo-lgs-nf
+      hackgen-nf-font
     ];
-
   };
 }

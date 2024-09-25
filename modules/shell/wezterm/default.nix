@@ -17,8 +17,11 @@ in
 
         config.color_scheme = 'Catppuccin Frappe'
 
-        config.font = wezterm.font 'JetBrains Mono'
-        config.font_size = 16;
+        config.font = wezterm.font_with_fallback { 
+          'MesloLGS NF',
+          'JetBrains Mono'
+        }
+        config.font_size = 16
 
         config.hide_tab_bar_if_only_one_tab = true
 
