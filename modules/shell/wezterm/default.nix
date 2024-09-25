@@ -23,6 +23,16 @@ in
         }
         config.font_size = 16
 
+        config.native_macos_fullscreen_mode = true
+
+        config.keys = {
+          {
+            key = 'Enter',
+            mods = 'CMD',
+            action = wezterm.action.ToggleFullScreen,
+          },
+        }
+
         config.hide_tab_bar_if_only_one_tab = true
 
         local dimmer = { brightness = 0.03 }
