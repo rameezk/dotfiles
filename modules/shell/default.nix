@@ -9,6 +9,7 @@
   imports = [
     ./fish
     ./tmux
+    ./wezterm
   ];
 
   options = {
@@ -19,30 +20,7 @@
 
     fish.enable = true;
     tmux.enable = true;
-
-    xdg.configFile."wezterm/wezterm.lua".text = # lua
-      ''
-        local wezterm = require 'wezterm'
-        local config = wezterm.config_builder()
-
-        config.color_scheme = 'Catppuccin Frappe'
-
-        config.font = wezterm.font 'JetBrains Mono'
-        config.font_size = 15;
-
-        config.hide_tab_bar_if_only_one_tab = true
-
-        local dimmer = { brightness = 0.03 }
-        config.background = {
-          {
-            source = {File = '${../../wallpapers/forest.jpg}'},
-            hsb = dimmer
-          }
-        }
-        -- config.window_background_opacity = 0.95;
-
-        return config
-      '';
+    terminal.wezterm.enable = true;
 
     programs.direnv = {
       enable = true;
@@ -123,11 +101,6 @@
       fd # a faster find
       shellcheck # linting shell scripts
       watch # watch and refresh commands
-      tldr # tldr shell commands
-
-      meslo-lgs-nf # shell font
-
-      nix-output-monitor # nice colored output tree when building nix packages
     ];
   };
 }
