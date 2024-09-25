@@ -79,7 +79,7 @@
         mapleader = " ";
       };
 
-      opts = import ./opts.nix { };
+      opts = import ./opts.nix { inherit config; };
 
       keymaps = import ./keymaps.nix { };
 

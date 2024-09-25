@@ -1,4 +1,7 @@
-{ ... }:
+{ config, ... }:
+let
+  numSpaces = 4;
+in
 {
   background = "dark";
   termguicolors = true;
@@ -7,9 +10,9 @@
   number = true;
   cursorline = true;
 
-  tabstop = 4;
-  softtabstop = 4;
-  shiftwidth = 4;
+  tabstop = numSpaces;
+  softtabstop = numSpaces;
+  shiftwidth = numSpaces;
   expandtab = true;
 
   smartindent = true;
@@ -28,7 +31,7 @@
 
   swapfile = false;
   backup = false;
-  undodir = "/Users/rameezk/.config/vim/undodir";
+  undodir = "${config.xdg.configHome}/vim/undodir";
   undofile = true;
 
   scrolloff = 8;
