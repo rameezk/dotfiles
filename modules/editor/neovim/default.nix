@@ -30,6 +30,7 @@
         lualine.enable = true;
         transparent.enable = true;
         gitsigns.enable = true;
+        web-devicons.enable = true;
 
         lsp = import ./lsp.nix { };
 
