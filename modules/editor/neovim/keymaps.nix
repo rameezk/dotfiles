@@ -33,4 +33,9 @@
     key = "<leader>y";
     action = ''"*y'';
   }
+  {
+    mode = "x";
+    key = "<leader>p";
+    action = ''"_dP'';
+  }
 ]
