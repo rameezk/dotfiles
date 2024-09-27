@@ -10,6 +10,7 @@
     ./fish
     ./tmux
     ./wezterm
+    ./starship
   ];
 
   options = {
@@ -21,6 +22,7 @@
     fish.enable = true;
     tmux.enable = true;
     terminal.wezterm.enable = true;
+    prompt.starship.enable = true;
 
     programs.direnv = {
       enable = true;

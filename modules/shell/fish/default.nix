@@ -11,7 +11,6 @@
   };
 
   config = lib.mkIf config.fish.enable {
-
     programs.fish = {
       enable = true;
 
@@ -189,87 +188,6 @@
           };
         }
       ];
-    };
-
-    programs.starship = {
-      enable = true;
-      enableFishIntegration = true;
-      settings = {
-        scan_timeout = 10;
-
-        format = lib.concatStrings [
-          "[┌──](#9A348E)$status$cmd_duration$username[](bg:#DA627D fg:#9A348E)$directory[](fg:#DA627D bg:#86BBD8)$git_branch$git_status[](fg:#86BBD8 bg:#06969A)$python[](fg:#06969A bg:#33658A)$nix_shell[](fg:#33658A bg:#f19066)$aws$terraform[](fg:#f19066)$line_break"
-          "[└─](#9A348E)$character"
-        ];
-
-        aws = {
-          style = "bg:#f19066";
-          format = "[ $symbol($profile)]($style)";
-          symbol = " ";
-        };
-
-        terraform = {
-          style = "bg:#f19066";
-          format = "[ $symbol($version) ($workspace)]($style)";
-          symbol = "󱁢 ";
-        };
-
-        status = {
-          style = "bg:#9A348E";
-          format = "[$symbol $common_meaning$signal_name$maybe_int ]($style)";
-          map_symbol = true;
-          disabled = false;
-        };
-
-        character = {
-          vimcmd_symbol = "[❮](blue)";
-        };
-
-        cmd_duration = {
-          style = "bg:#9A348E";
-          format = "[$duration ]($style)";
-        };
-
-        username = {
-          show_always = true;
-          style_user = "bg:#9A348E";
-          style_root = "bg:#9A348E";
-          format = "[ ]($style)";
-          disabled = false;
-        };
-
-        directory = {
-          style = "bg:#DA627D";
-          format = "[ $path ]($style)";
-          truncation_length = 3;
-          truncation_symbol = "…/";
-        };
-
-        python = {
-          symbol = " ";
-          style = "bg:#06969A";
-          format = "[ $symbol ($version) (($virtualenv))]($style)";
-        };
-
-        git_branch = {
-          symbol = "";
-          style = "bg:#86BBD8";
-          format = "[ $symbol $branch ]($style)";
-        };
-
-        git_status = {
-          style = "bg:#86BBD8";
-          format = "[$all_status$ahead_behind ]($style)";
-        };
-
-        nix_shell = {
-          symbol = "󱄅 ";
-          style = "bg:#33658A";
-          format = "[ $symbol $name ]($style)";
-          heuristic = false;
-        };
-
-      };
     };
 
     home.packages = with pkgs; [
