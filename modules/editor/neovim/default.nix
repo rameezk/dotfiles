@@ -31,6 +31,7 @@
         transparent.enable = true;
         gitsigns.enable = true;
         web-devicons.enable = true;
+        telescope.enable = true;
 
         lsp = import ./lsp.nix { };
 
@@ -71,7 +72,16 @@
           };
         };
 
-        telescope.enable = true;
+        harpoon = {
+          enable = true;
+          enableTelescope = true;
+          keymaps = {
+            addFile = "<leader>a";
+            toggleQuickMenu = "<C-e>";
+            navNext = "<C-M-n>";
+            navPrev = "<C-M-p>";
+          };
+        };
 
       };
 

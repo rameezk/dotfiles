@@ -25,6 +25,7 @@ in
 
         config.native_macos_fullscreen_mode = true
 
+        config.bypass_mouse_reporting_modifiers = 'CMD'
         config.keys = {
           {
             key = 'Enter',
