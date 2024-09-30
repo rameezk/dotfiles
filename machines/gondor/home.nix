@@ -12,6 +12,11 @@ in
     ../../modules
   ];
 
+  theme.catppuccin = {
+    enable = true;
+    flavour = "frappe";
+  };
+
   network.proxy = {
     enable = true;
     protocol = proxyProtocol;

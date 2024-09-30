@@ -113,6 +113,7 @@
             modules = [
               inputs.declarative-cachix.homeManagerModules.declarative-cachix
               inputs.nixvim.homeManagerModules.nixvim
+              inputs.catppuccin.homeManagerModules.catppuccin
               ./machines/gondor/home.nix
               {
                 home = {
