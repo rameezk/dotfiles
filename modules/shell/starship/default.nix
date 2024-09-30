@@ -22,6 +22,8 @@ in
         truncation_symbol = "…/";
       };
 
+      docker_context.disabled = true;
+
       # symbols
       aws.symbol = "  ";
       buf.symbol = " ";
