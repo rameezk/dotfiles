@@ -2,10 +2,12 @@
 {
   enable = true;
   servers = {
-    nixd.enable = true;
-    lua-ls.enable = true;
     java-language-server.enable = true;
-    pyright.enable = true;
+    lua-ls.enable = true;
     marksman.enable = true;
+    nixd.enable = true;
+    pyright.enable = true;
+    terraformls.enable = true;
+    tflint.enable = true;
   };
 }
