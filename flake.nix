@@ -34,6 +34,10 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
+    homebrew-nikitabobko-tap = {
+      url = "github:nikitabobko/homebrew-tap";
+      flake = false;
+    };
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -145,6 +149,7 @@
                 "homebrew/homebrew-core" = inputs.homebrew-core;
                 "homebrew/homebrew-cask" = inputs.homebrew-cask;
                 "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
+                "nikitabobko/homebrew-tap" = inputs.homebrew-nikitabobko-tap;
               };
               mutableTaps = false;
               autoMigrate = true;

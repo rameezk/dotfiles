@@ -65,7 +65,7 @@ in
   macos.window-management.enable = true;
 
   # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+  programs.home-manager.yabai.enable = true;
 
   # Other Packages
   home.packages = with pkgs; [
