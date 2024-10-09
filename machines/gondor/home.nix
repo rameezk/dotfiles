@@ -62,10 +62,10 @@ in
     proxyPort = proxyPort;
   };
 
-  macos.window-management.enable = true;
+  macos.window-management.aerospace.enable = true;
 
   # Let Home Manager install and manage itself.
-  programs.home-manager.yabai.enable = true;
+  programs.home-manager.enable = true;
 
   # Other Packages
   home.packages = with pkgs; [
