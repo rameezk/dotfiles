@@ -88,6 +88,7 @@ in
         log-to-last-tag = "!f() { git log `git latest-tag`..HEAD --oneline; }; f";
         ignore-nix-shell = "!f() { grep -qxF 'shell.nix' `git rev-parse --show-toplevel`/.git/info/exclude || echo 'shell.nix' >> `git rev-parse --show-toplevel`/.git/info/exclude; }; f";
         rebase-commits-in-branch = "!f() { git rebase -i HEAD~$(git cherry -v main | wc -l | xargs); }; f";
+        rebase-branch = "!f() { git checkout main; git pull; git checkout -; git rebase main; }; f";
         rc = "rebase-commits-in-branch";
         done = "!f() { git checkout main && git pull -p && git prune-local-branches ; }; f";
         sha = "rev-parse HEAD";
