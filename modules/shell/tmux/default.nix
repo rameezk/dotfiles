@@ -80,6 +80,11 @@ in
         unbind-key |
         bind | split-window -h -c "#{pane_current_path}"
 
+        # Session management
+        unbind-key C
+        bind C command-prompt -p "New Session:" "new-session -A -s '%%'"
+        bind K confirm kill-session
+
         unbind-key j
         bind-key j select-pane -D
         unbind-key k
