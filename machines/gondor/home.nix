@@ -52,6 +52,7 @@ in
 
   language.python.enable = true;
   language.nodejs.enable = true;
+  language.clojure.enable = true;
   language.java = {
     enable = true;
     manageJDK = false;
