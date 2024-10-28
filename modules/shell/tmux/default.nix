@@ -1,5 +1,6 @@
 {
   pkgs,
+  pkgs-pinned-for-tmux,
   lib,
   config,
   ...
@@ -19,6 +20,8 @@ in
 
     programs.tmux = {
       enable = true;
+
+      package = pkgs-pinned-for-tmux.tmux;
 
       catppuccin = lib.mkIf catppuccinThemeEnabled {
         enable = true;
