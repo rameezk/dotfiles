@@ -169,6 +169,9 @@
               users.rameezk = import ./machines/rivendell/home.nix;
               extraSpecialArgs = {
                 inherit inputs;
+                pkgs-pinned-for-tmux = import inputs.nixpkgs-pinned-for-tmux {
+                  system = "aarch64-darwin";
+                };
               };
             };
           }

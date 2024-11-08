@@ -16,7 +16,11 @@ in
 
   nix.gc = {
     automatic = true;
-    dates = "weekly";
+    interval = {
+      Weekday = 3;
+      Hour = 8;
+      Minute = 0;
+    };
     options = "--delete-older-than 14d";
   };
 
