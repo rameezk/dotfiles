@@ -93,6 +93,7 @@ in
         done = "!f() { git checkout main && git pull -p && git prune-local-branches ; }; f";
         sha = "rev-parse HEAD";
         create-gh-pr = "!f() { gh pr create -a @me --title $(git rev-parse --abbrev-ref HEAD); }; f";
+        copy-gh-pr-url = "!f() {  gh pr view --json url | jq -r '.url' | xargs echo -n | pbcopy; }; f";
       };
       includes = forAllExtraSigningKeys mkIncludeSettings cfg.extraSigningKeys;
       extraConfig = {
