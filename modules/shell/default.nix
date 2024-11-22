@@ -94,6 +94,11 @@
       git = true;
     };
 
+    programs.zoxide = {
+      enable = true;
+      enableFishIntegration = true;
+    };
+
     home.packages = with pkgs; [
       ripgrep # faster grepping
       jq # parsing JSON

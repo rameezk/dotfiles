@@ -177,17 +177,6 @@
         };
       };
 
-      plugins = [
-        {
-          name = "z";
-          src = pkgs.fetchFromGitHub {
-            owner = "jethrokuan";
-            repo = "z";
-            rev = "d5500284077ebb12c306ea429e74c8d046aef5a0";
-            sha256 = "sha256-I2feYLp+oqVGjtaG5uftG0Lok5ye7G8oefZAMdzAeoo=";
-          };
-        }
-      ];
     };
 
     home.packages = with pkgs; [
