@@ -40,8 +40,6 @@ in
         '';
       };
 
-      sensibleOnTop = false; # disable the tmux sensible plugin since it was causing issues with loading the fish shell
-
       clock24 = true; # Use a 24 hour clock
       baseIndex = 1; # Start window count at 1
       historyLimit = 100000; # max lines held in history
@@ -50,6 +48,10 @@ in
       terminal = "tmux-256color";
 
       extraConfig = ''
+        # Workaround to fix https://github.com/tmux-plugins/tmux-sensible/issues/74
+        # Can remove once PR https://github.com/tmux-plugins/tmux-sensible/pull/75 is merged
+        set -g default-command '$SHELL'
+
         set -ga terminal-overrides ",*256col*:Tc" # fix colours
 
         set -g set-titles on
