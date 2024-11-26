@@ -1,6 +1,5 @@
 {
   pkgs,
-  pkgs-pinned-for-tmux,
   lib,
   config,
   ...
@@ -21,8 +20,6 @@ in
     programs.tmux = {
       enable = true;
 
-      package = pkgs-pinned-for-tmux.tmux;
-
       catppuccin = lib.mkIf catppuccinThemeEnabled {
         enable = true;
         extraConfig = ''
@@ -42,6 +39,8 @@ in
           set -g @catppuccin_date_time_text "%a %d/%m %H:%M"
         '';
       };
+
+      sensibleOnTop = false; # disable the tmux sensible plugin since it was causing issues with loading the fish shell
 
       clock24 = true; # Use a 24 hour clock
       baseIndex = 1; # Start window count at 1

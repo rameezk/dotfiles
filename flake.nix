@@ -4,8 +4,6 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    nixpkgs-pinned-for-tmux.url = "github:nixos/nixpkgs/9357f4f23713673f310988025d9dc261c20e70c6";
-
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -125,11 +123,6 @@
                 };
               }
             ];
-            extraSpecialArgs = {
-              pkgs-pinned-for-tmux = import inputs.nixpkgs-pinned-for-tmux {
-                system = "aarch64-darwin";
-              };
-            };
           };
         };
     in
@@ -169,9 +162,6 @@
               users.rameezk = import ./machines/rivendell/home.nix;
               extraSpecialArgs = {
                 inherit inputs;
-                pkgs-pinned-for-tmux = import inputs.nixpkgs-pinned-for-tmux {
-                  system = "aarch64-darwin";
-                };
               };
             };
           }

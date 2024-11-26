@@ -179,10 +179,6 @@
 
     };
 
-    home.packages = with pkgs; [
-      # fishPlugins.fzf-fish 
-      fishPlugins.bass
-    ];
   };
 
 }
