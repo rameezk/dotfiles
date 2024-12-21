@@ -91,6 +91,7 @@ in
       "chatgpt"
       "claude"
       "google-chrome"
+      "keymapp"
       "nikitabobko/tap/aerospace"
       "obsidian"
       "proton-mail"
