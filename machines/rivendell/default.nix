@@ -91,6 +91,8 @@ in
       "chatgpt"
       "claude"
       "google-chrome"
+      "intellij-idea-ce"
+      "jabra-direct"
       "keymapp"
       "nikitabobko/tap/aerospace"
       "obsidian"

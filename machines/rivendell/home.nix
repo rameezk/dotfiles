@@ -49,7 +49,7 @@
     python.enable = true;
     java = {
       enable = true;
-      manageJDK = false;
+      manageJDK = true;
     };
   };
 
