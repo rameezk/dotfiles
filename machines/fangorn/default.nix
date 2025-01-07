@@ -82,6 +82,7 @@ in
       "alfred"
       "claude"
       "google-chrome"
+      "jabra-direct"
       "keymapp"
       "nikitabobko/tap/aerospace"
       "obsidian"
