@@ -170,6 +170,43 @@
       };
       darwinPackages = self.darwinConfigurations."rivendell".pkgs;
 
+      darwinConfigurations."fangorn" = inputs.nix-darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        specialArgs = inputs;
+        modules = [
+          inputs.home-manager.darwinModules.home-manager
+          inputs.nix-homebrew.darwinModules.nix-homebrew
+          {
+            nix-homebrew = {
+              user = "rameezk";
+              enable = true;
+              taps = {
+                "homebrew/homebrew-core" = inputs.homebrew-core;
+                "homebrew/homebrew-cask" = inputs.homebrew-cask;
+                "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
+                "nikitabobko/homebrew-tap" = inputs.homebrew-nikitabobko-tap;
+              };
+              mutableTaps = false;
+              autoMigrate = true;
+            };
+          }
+          {
+            home-manager = {
+              sharedModules = [
+                inputs.nixvim.homeManagerModules.nixvim
+                inputs.sops-nix.homeManagerModules.sops
+                inputs.catppuccin.homeManagerModules.catppuccin
+              ];
+              users.rameezk = import ./machines/fangorn/home.nix;
+              extraSpecialArgs = {
+                inherit inputs;
+              };
+            };
+          }
+          ./machines/fangorn
+        ];
+      };
+
       devShells = forAllSystems devShell;
 
       formatter = forAllSystems mkFormatter;
