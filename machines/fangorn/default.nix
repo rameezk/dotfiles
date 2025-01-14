@@ -81,9 +81,12 @@ in
     casks = [
       "alfred"
       "claude"
+      "elgato-control-center"
       "google-chrome"
+      "intellij-idea"
       "jabra-direct"
       "keymapp"
+      "microsoft-teams"
       "nikitabobko/tap/aerospace"
       "obsidian"
       "proton-mail"
