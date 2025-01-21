@@ -13,6 +13,9 @@
     home.packages = with pkgs; [
       meslo-lgs-nf
       hackgen-nf-font
+
+      jetbrains-mono
+      pkgs.nerd-fonts.jetbrains-mono
     ];
   };
 }
