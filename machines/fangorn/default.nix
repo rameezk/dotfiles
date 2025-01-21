@@ -81,11 +81,14 @@ in
     casks = [
       "alfred"
       "claude"
+      "clop"
+      "docker"
       "elgato-control-center"
       "google-chrome"
       "intellij-idea"
       "jabra-direct"
       "keymapp"
+      "microsoft-outlook"
       "microsoft-teams"
       "nikitabobko/tap/aerospace"
       "obsidian"
@@ -106,6 +109,7 @@ in
     masApps = {
       "1password" = 1333542190;
       "adguard" = 1440147259;
+      "dato" = 1470584107;
     };
   };
 
