@@ -46,6 +46,7 @@ in
     dock = {
       autohide = true;
       show-recents = false;
+      mru-spaces = false;
     };
 
     # Might require you to logout to take effect
