@@ -84,6 +84,7 @@ in
         prune-local-branches = "!f() { git branch -vv | grep ': gone' | awk '{print $1}' | fzf -m | xargs git branch -D; }; f";
         generate-ignore = ''!f() { curl -sL "https://www.gitignore.io/api/$1"; }; f'';
         open = "!f() { fish -c open_repo_in_browser; }; f";
+        open-pr = "!f() { gh pr view --web; }; f";
         latest-tag = "!git tag --sort version:refname | tail -n 1";
         log-to-last-tag = "!f() { git log `git latest-tag`..HEAD --oneline; }; f";
         ignore-nix-shell = "!f() { grep -qxF 'shell.nix' `git rev-parse --show-toplevel`/.git/info/exclude || echo 'shell.nix' >> `git rev-parse --show-toplevel`/.git/info/exclude; }; f";
