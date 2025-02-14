@@ -31,7 +31,7 @@
 
   shell.enable = true;
 
-  macos.window-management.aerospace.enable = true;
+  macos.window-management.yabai.enable = true;
 
   editor = {
     neovim.enable = true;
