@@ -31,9 +31,9 @@ sketchybar --bar height=37    \
 # https://felixkratz.github.io/SketchyBar/config/items
 
 sketchybar --default icon.font="SF Pro:Semibold:15.0" \
-                     icon.color=$WHITE \
+                     icon.color=$MAUVE \
                      label.font="SF Pro:Semibold:15.0" \
-                     label.color=$WHITE \
+                     label.color=$MAUVE \
                      background.color=$ITEM_BG_COLOR \
                      background.corner_radius=5 \
                      background.height=24 \

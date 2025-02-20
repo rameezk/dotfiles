@@ -2,10 +2,20 @@
 
 export WHITE=0xffffffff
 
+
 # -- Teal Scheme --
+# export BAR_COLOR=0xff001f30
+# export ITEM_BG_COLOR=0xff003547
+# export ACCENT_COLOR=0xff2cf9ed
+
+# -- Catpuccin Frappe Teal Scheme --
 export BAR_COLOR=0xff001f30
 export ITEM_BG_COLOR=0xff003547
-export ACCENT_COLOR=0xff2cf9ed
+export ACCENT_COLOR=0xff81c8be
+export MAUVE=0xffca9ee6
+export PEACH=0xffef9f76
+export YELLOW=0xffe5c890
+export GREEN=0xffa6d189
 
 # -- Gray Scheme --
 # export BAR_COLOR=0xff101314
