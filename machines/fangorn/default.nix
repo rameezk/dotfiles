@@ -105,6 +105,7 @@ in
       "zoom"
       "sf-symbols"
       "spotify"
+      "1password"
     ];
 
     # These app IDs are from using the mas CLI app
@@ -115,7 +116,6 @@ in
     # $ mas search <app name>
     #
     masApps = {
-      "1password" = 1333542190;
       "adguard" = 1440147259;
       "dato" = 1470584107;
     };
