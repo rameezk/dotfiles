@@ -104,6 +104,7 @@ in
       "wezterm"
       "zoom"
       "sf-symbols"
+      "spotify"
     ];
 
     # These app IDs are from using the mas CLI app
