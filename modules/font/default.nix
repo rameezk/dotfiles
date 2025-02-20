@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  inputs,
   ...
 }:
 {
@@ -14,8 +15,13 @@
       meslo-lgs-nf
       hackgen-nf-font
 
+      inputs.sf-fonts.packages.${pkgs.system}.sf-pro-nerd
+
+      sketchybar-app-font
+
       jetbrains-mono
       pkgs.nerd-fonts.jetbrains-mono
+      pkgs.nerd-fonts.hack
     ];
   };
 }

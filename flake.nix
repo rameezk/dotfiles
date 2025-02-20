@@ -52,6 +52,11 @@
 
     catppuccin.url = "github:catppuccin/nix";
 
+    sf-fonts = {
+      url = "github:Lyndeno/apple-fonts.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =

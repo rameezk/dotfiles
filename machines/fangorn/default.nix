@@ -103,6 +103,7 @@ in
       "todoist"
       "wezterm"
       "zoom"
+      "sf-symbols"
     ];
 
     # These app IDs are from using the mas CLI app
@@ -117,6 +118,27 @@ in
       "adguard" = 1440147259;
       "dato" = 1470584107;
     };
+  };
+
+  services.sketchybar = {
+    enable = true;
+    package = pkgs.sketchybar;
+  };
+
+  services.skhd = {
+    enable = true;
+  };
+
+  services.yabai = {
+    enable = true;
+    enableScriptingAddition = true;
+  };
+
+  services.jankyborders = {
+    enable = true;
+    active_color = "0xff2cf9ed";
+    inactive_color = "0xff414550";
+    width = 4.5;
   };
 
 }
