@@ -2,6 +2,9 @@
 
 function icon_map() {
   case "$1" in
+  "Cursor")
+    icon_result=":cursor:"
+    ;;
   "Claude")
     icon_result=":claude:"
     ;;
