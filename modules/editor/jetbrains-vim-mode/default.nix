@@ -7,6 +7,16 @@
   config = lib.mkIf config.editor.jetbrains-vim-mode.enable {
     home.file.".ideavimrc".text = # vim
       ''
+
+        function! ToggleRelativeLineNumbers()
+          if(&relativenumber == 1)
+            set norelativenumber
+            set number
+          else
+            set relativenumber
+          endif
+        endfunction
+
         syntax on "Turn on syntax highlighting
 
         " plugins
@@ -40,6 +50,8 @@
         :nmap <leader>cl gcc
         :nnoremap <leader>wv :vsplit <CR>
         :nnoremap <leader>ws :split <CR>
+
+        :nnoremap <leader>tl :call ToggleRelativeLineNumbers()<CR>
       '';
   };
 }
