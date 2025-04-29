@@ -75,12 +75,6 @@
         harpoon = {
           enable = true;
           enableTelescope = true;
-          keymaps = {
-            addFile = "<leader>a";
-            toggleQuickMenu = "<C-e>";
-            navNext = "<C-M-n>";
-            navPrev = "<C-M-p>";
-          };
         };
 
       };

@@ -56,4 +56,17 @@
     key = "K";
     action = ":m '<-2<CR>gv=gv";
   }
+
+  # harpoon
+  {
+    mode = "n";
+    key = "<leader>a";
+    action.__raw = "function() require'harpoon':list():add() end";
+  }
+  {
+    mode = "n";
+    key = "<C-e>";
+    action.__raw = "function() require'harpoon'.ui:toggle_quick_menu(require'harpoon':list()) end";
+  }
+
 ]

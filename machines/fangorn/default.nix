@@ -4,22 +4,20 @@ let
   user = "rameezk";
 in
 {
-  services.nix-daemon.enable = true;
 
-  nix.settings = {
-    experimental-features = "nix-command flakes";
-  };
-
-  nix.optimise.automatic = true;
-
-  nix.gc = {
-    automatic = true;
-    interval = {
-      Weekday = 3;
-      Hour = 8;
-      Minute = 0;
-    };
-    options = "--delete-older-than 14d";
+  nix = {
+    enable = false; # # let determinate installer manage the nix daemon
+    settings.experimental-features = "nix-command flakes";
+    # optimise.automatic = true;
+    # gc = {
+    #   automatic = true;
+    #   interval = {
+    #     Weekday = 3;
+    #     Hour = 8;
+    #     Minute = 0;
+    #   };
+    #   options = "--delete-older-than 14d";
+    # };
   };
 
   users.users.rameezk = {
@@ -33,7 +31,7 @@ in
   programs.fish.enable = true;
 
   # enable touchID for sudo
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
   environment = {
     etc."pam.d/sudo_local".text = ''
       # Managed by Nix Darwin
