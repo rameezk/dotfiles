@@ -49,6 +49,7 @@
       enable = true;
       manageJDK = false;
     };
+    nodejs.enable = true;
   };
 
   cloud = {
