@@ -4,6 +4,58 @@
   config,
   ...
 }:
+let
+  proxyEnabled = config.network.proxy.enable or false;
+
+  proxyConfig = lib.optionalString proxyEnabled ''
+    source ~/.proxyrc
+  '';
+
+  baseShellInit = ''
+    # Disable fish greeting message
+    set fish_greeting
+
+    # vi mode
+    fish_vi_key_bindings
+
+    # Enable fenv for sourcing foreign environment variables. 
+    # This is needed for sourcing the Nix path below.
+    set -p fish_function_path ${pkgs.fishPlugins.foreign-env}/share/fish/vendor_functions.d
+
+    # nix
+    if test -e ~/.nix-profile/etc/profile.d/nix.sh
+      fenv source ~/.nix-profile/etc/profile.d/nix.sh
+    end
+
+    # Set LANG properly
+    export LANG="en_ZA.utf8"
+
+    # editor
+    export EDITOR=vim
+
+    # colorscheme
+    # set -U fish_color_command b8bb26 # fish's default command color is a horrible dark blue, make it a nicer green
+
+    # pipx
+    set PATH $PATH ~/.local/bin
+
+    # Make gpg-agent play nicely with tmux
+    export GPG_TTY=(tty)
+
+    # dotfiles binaries
+    set PATH $PATH ~/.config/dotfiles/bin
+
+    # Set ripgrep configuration file
+    set -x RIPGREP_CONFIG_PATH ~/.ripgreprc
+
+    # Setup ASDF
+    if test -e ~/.nix-profile/share/asdf-vm/asdf.fish
+      source ~/.nix-profile/share/asdf-vm/asdf.fish
+    end
+  '';
+
+  shellInit = baseShellInit + proxyConfig;
+in
 {
 
   options = {
@@ -14,51 +66,7 @@
     programs.fish = {
       enable = true;
 
-      shellInit = ''
-        # Disable fish greeting message
-        set fish_greeting
-
-        # vi mode
-        fish_vi_key_bindings
-
-        # Enable fenv for sourcing foreign environment variables. 
-        # This is needed for sourcing the Nix path below.
-        set -p fish_function_path ${pkgs.fishPlugins.foreign-env}/share/fish/vendor_functions.d
-
-        # nix
-        if test -e ~/.nix-profile/etc/profile.d/nix.sh
-          fenv source ~/.nix-profile/etc/profile.d/nix.sh
-        end
-
-        # Set LANG properly
-        export LANG="en_ZA.utf8"
-
-        # editor
-        export EDITOR=vim
-
-        # colorscheme
-        # set -U fish_color_command b8bb26 # fish's default command color is a horrible dark blue, make it a nicer green
-
-        # pipx
-        set PATH $PATH ~/.local/bin
-
-        # Make gpg-agent play nicely with tmux
-        export GPG_TTY=(tty)
-
-        # dotfiles binaries
-        set PATH $PATH ~/.config/dotfiles/bin
-
-        # source proxy
-        source ~/.proxyrc
-
-        # Set ripgrep configuration file
-        set -x RIPGREP_CONFIG_PATH ~/.ripgreprc
-
-        # Setup ASDF
-        if test -e ~/.nix-profile/share/asdf-vm/asdf.fish
-          source ~/.nix-profile/share/asdf-vm/asdf.fish
-        end
-      '';
+      shellInit = shellInit;
 
       shellAbbrs = {
         # files
