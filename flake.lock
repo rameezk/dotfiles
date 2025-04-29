@@ -150,11 +150,11 @@
     "homebrew-cask": {
       "flake": false,
       "locked": {
-        "lastModified": 1745931849,
-        "narHash": "sha256-Lci4CjCyQ5Zg4ls2K9Tra7zeJVsl4O/6MeoZxMz7eqw=",
+        "lastModified": 1745938456,
+        "narHash": "sha256-Q7urHQbeITzaarWEmPYHTWwJ9DgoRqhHsCeNWggV8MQ=",
         "owner": "homebrew",
         "repo": "homebrew-cask",
-        "rev": "3f57c3ee47d639716bdff52f4763a90328a2346f",
+        "rev": "7c542cd0f526ec5b315997e19d6434f7d0640d0f",
         "type": "github"
       },
       "original": {
@@ -166,11 +166,11 @@
     "homebrew-core": {
       "flake": false,
       "locked": {
-        "lastModified": 1745931160,
-        "narHash": "sha256-V0J42QBlZGIBypT/hwBPx3WZK7KWHWL6XPJ7/R06C4A=",
+        "lastModified": 1745938266,
+        "narHash": "sha256-sCqIeIJZOfNUtajNEvmALomq/voik1Vz0OJfpbB+qzs=",
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "rev": "d25b54f11f5cb03a491159c1c5b4b382e05b0304",
+        "rev": "52c5d481bad5dc5dc8d3fd0c05a1c5d4e95c3e27",
         "type": "github"
       },
       "original": {
@@ -403,11 +403,11 @@
         "nuschtosSearch": "nuschtosSearch"
       },
       "locked": {
-        "lastModified": 1745915766,
-        "narHash": "sha256-Fe9YN3lzpNEW7lhh4DeWaD1fznCDlxruEYOa38Om22U=",
+        "lastModified": 1745927529,
+        "narHash": "sha256-9ofvr5N24TOLjJTkUNdoaHE20l/+r04/9PMw4tmj6dE=",
         "owner": "nix-community",
         "repo": "nixvim",
-        "rev": "9caeb51238748d885a91562e753d41b74155ff59",
+        "rev": "944a3168813367bb71389c53b94992f69b5be79f",
         "type": "github"
       },
       "original": {

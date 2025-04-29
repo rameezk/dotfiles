@@ -200,7 +200,7 @@
               sharedModules = [
                 inputs.nixvim.homeManagerModules.nixvim
                 inputs.sops-nix.homeManagerModules.sops
-                inputs.catppuccin.homeManagerModules.catppuccin
+                inputs.catppuccin.homeModules.catppuccin
               ];
               users.rameezk = import ./machines/fangorn/home.nix;
               extraSpecialArgs = {
