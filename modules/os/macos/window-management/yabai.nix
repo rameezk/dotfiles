@@ -95,26 +95,29 @@ in
         if [[ $num_spaces -gt 7 ]]; then
             yabai -m space --destroy 9
             yabai -m space --destroy 8
+            yabai -m space --destroy 7
         fi
+
+        sleep 1
 
         if [[ $num_displays -eq 1 ]]; then
             yabai -m space 6 --display 1
-            yabai -m space 7 --display 1
         fi
 
         if [[ $num_displays -eq 2 ]]; then
             yabai -m space 6 --display 2
-            yabai -m space 7 --display 2
         fi
 
         if [[ $num_displays -eq 3 ]]; then
-            yabai -m space 6 --display 2
-            yabai -m space 7 --display 3
+            yabai -m space 4 --display 2
+            yabai -m space 5 --display 2
+            yabai -m space 6 --display 3
         fi
 
-        move_app_to_space "Slack" 6
-        move_app_to_space "Microsoft Teams" 6
-        move_app_to_space "Microsoft Outlook" 7
+        move_app_to_space "WezTerm" 4
+        move_app_to_space "Slack" 4
+        move_app_to_space "Microsoft Teams" 4
+        move_app_to_space "Microsoft Outlook" 6
 
         sleep 1
         sketchybar --reload
@@ -132,23 +135,22 @@ in
           local name="$2"
           local space=
           echo "setup space $idx : $name"
-        
+
           space=$(yabai -m query --spaces --space "$idx")
           if [ -z "$space" ]; then
             yabai -m space --create
           fi
-        
+
           yabai -m space "$idx" --label "$name"
         }
-        
+
         setup_space 1 web
         setup_space 2 code
         setup_space 3 blank
         setup_space 4 terminal
         setup_space 5 productivity
         setup_space 6 messaging
-        setup_space 7 mail
-        
+
         sketchybar --reload
       '';
     };
