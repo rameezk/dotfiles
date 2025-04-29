@@ -128,25 +128,4 @@ in
     };
   };
 
-  services.sketchybar = {
-    enable = true;
-    package = pkgs.sketchybar;
-  };
-
-  services.skhd = {
-    enable = true;
-  };
-
-  services.yabai = {
-    enable = true;
-    enableScriptingAddition = true;
-  };
-
-  services.jankyborders = {
-    enable = true;
-    active_color = "0xff2cf9ed";
-    inactive_color = "0xff414550";
-    width = 4.5;
-  };
-
 }

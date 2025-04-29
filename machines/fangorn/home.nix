@@ -31,11 +31,6 @@
 
   shell.enable = true;
 
-  macos.window-management = {
-    yabai.enable = true;
-    sketchybar.enable = true;
-  };
-
   editor = {
     neovim.enable = true;
     jetbrains-vim-mode.enable = true;
