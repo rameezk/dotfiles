@@ -17,28 +17,28 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    catppuccin.tmux = lib.mkIf catppuccinThemeEnabled {
+      enable = true;
+      extraConfig = ''
+        set -g @catppuccin_window_right_separator "█ "
+        set -g @catppuccin_window_number_position "right"
+        set -g @catppuccin_window_middle_separator " | "
+
+        set -g @catppuccin_window_default_fill "none"
+
+        set -g @catppuccin_window_current_fill "all"
+
+        set -g @catppuccin_status_modules_right "date_time session"
+
+        set -g @catppuccin_status_left_separator "█"
+        set -g @catppuccin_status_right_separator "█"
+
+        set -g @catppuccin_date_time_text "%a %d/%m %H:%M"
+      '';
+    };
+
     programs.tmux = {
       enable = true;
-
-      catppuccin = lib.mkIf catppuccinThemeEnabled {
-        enable = true;
-        extraConfig = ''
-          set -g @catppuccin_window_right_separator "█ "
-          set -g @catppuccin_window_number_position "right"
-          set -g @catppuccin_window_middle_separator " | "
-
-          set -g @catppuccin_window_default_fill "none"
-
-          set -g @catppuccin_window_current_fill "all"
-
-          set -g @catppuccin_status_modules_right "date_time session"
-
-          set -g @catppuccin_status_left_separator "█"
-          set -g @catppuccin_status_right_separator "█"
-
-          set -g @catppuccin_date_time_text "%a %d/%m %H:%M"
-        '';
-      };
 
       clock24 = true; # Use a 24 hour clock
       baseIndex = 1; # Start window count at 1
