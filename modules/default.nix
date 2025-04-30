@@ -1,6 +1,7 @@
 { lib, ... }:
 {
   imports = [
+    ./browser
     ./cloud
     ./core
     ./editor

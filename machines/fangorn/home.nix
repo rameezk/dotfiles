@@ -27,6 +27,8 @@
     flavour = "frappe";
   };
 
+  browser.firefox.enable = true;
+
   fonts.enable = true;
 
   shell.enable = true;

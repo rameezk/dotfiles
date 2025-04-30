@@ -57,6 +57,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -175,42 +179,50 @@
       };
       darwinPackages = self.darwinConfigurations."rivendell".pkgs;
 
-      darwinConfigurations."fangorn" = inputs.nix-darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        specialArgs = inputs;
-        modules = [
-          inputs.home-manager.darwinModules.home-manager
-          inputs.nix-homebrew.darwinModules.nix-homebrew
-          {
-            nix-homebrew = {
-              user = "rameezk";
-              enable = true;
-              taps = {
-                "homebrew/homebrew-core" = inputs.homebrew-core;
-                "homebrew/homebrew-cask" = inputs.homebrew-cask;
-                "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
-                "nikitabobko/homebrew-tap" = inputs.homebrew-nikitabobko-tap;
+      darwinConfigurations."fangorn" =
+        let
+          system = "aarch64-darwin";
+          pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+          };
+        in
+        inputs.nix-darwin.lib.darwinSystem {
+          inherit system;
+          specialArgs = inputs;
+          modules = [
+            inputs.home-manager.darwinModules.home-manager
+            inputs.nix-homebrew.darwinModules.nix-homebrew
+            {
+              nix-homebrew = {
+                user = "rameezk";
+                enable = true;
+                taps = {
+                  "homebrew/homebrew-core" = inputs.homebrew-core;
+                  "homebrew/homebrew-cask" = inputs.homebrew-cask;
+                  "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
+                  "nikitabobko/homebrew-tap" = inputs.homebrew-nikitabobko-tap;
+                };
+                mutableTaps = false;
+                autoMigrate = true;
               };
-              mutableTaps = false;
-              autoMigrate = true;
-            };
-          }
-          {
-            home-manager = {
-              sharedModules = [
-                inputs.nixvim.homeManagerModules.nixvim
-                inputs.sops-nix.homeManagerModules.sops
-                inputs.catppuccin.homeModules.catppuccin
-              ];
-              users.rameezk = import ./machines/fangorn/home.nix;
-              extraSpecialArgs = {
-                inherit inputs;
+            }
+            {
+              home-manager = {
+                sharedModules = [
+                  inputs.nixvim.homeManagerModules.nixvim
+                  inputs.sops-nix.homeManagerModules.sops
+                  inputs.catppuccin.homeModules.catppuccin
+                ];
+                users.rameezk = import ./machines/fangorn/home.nix;
+                extraSpecialArgs = {
+                  inherit inputs pkgs;
+                };
               };
-            };
-          }
-          ./machines/fangorn
-        ];
-      };
+            }
+            ./machines/fangorn
+          ];
+        };
 
       devShells = forAllSystems devShell;
 
