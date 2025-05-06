@@ -217,6 +217,22 @@
         "type": "github"
       }
     },
+    "homebrew-tap-azure-functions": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1743023967,
+        "narHash": "sha256-4vCXqNuRy6wx0BL42JmTDeAejqK0kIwDp8u2z6rIjfc=",
+        "owner": "azure",
+        "repo": "homebrew-functions",
+        "rev": "2d458ec9d701621328c7ba11bc060d30218ac675",
+        "type": "github"
+      },
+      "original": {
+        "owner": "azure",
+        "repo": "homebrew-functions",
+        "type": "github"
+      }
+    },
     "ixx": {
       "inputs": {
         "flake-utils": [
@@ -484,6 +500,7 @@
         "homebrew-cask": "homebrew-cask",
         "homebrew-core": "homebrew-core",
         "homebrew-nikitabobko-tap": "homebrew-nikitabobko-tap",
+        "homebrew-tap-azure-functions": "homebrew-tap-azure-functions",
         "mysecrets": "mysecrets",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
