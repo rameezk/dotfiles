@@ -98,18 +98,16 @@ in
       "microsoft-powerpoint"
       "microsoft-teams"
       "microsoft-word"
-      "monarch"
-      "nikitabobko/tap/aerospace"
       "obsidian"
       "proton-mail"
       "protonvpn"
-      "sf-symbols"
       "slack"
       "spotify"
       "stats"
       "todoist"
       "wezterm"
       "zoom"
+      "microsoft-azure-storage-explorer"
     ];
 
     # These app IDs are from using the mas CLI app
