@@ -36,14 +36,6 @@ in
 
         config.hide_tab_bar_if_only_one_tab = true
 
-        local dimmer = { brightness = 0.03 }
-        config.background = {
-          {
-            source = {File = '${../../../wallpapers/forest.jpg}'},
-            hsb = dimmer
-          }
-        }
-
         return config
       '';
 

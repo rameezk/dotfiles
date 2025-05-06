@@ -113,7 +113,7 @@ in
           side-by-side = true;
           hyperlinks = true;
           line-numbers = true;
-          syntax-theme = "Dracula";
+          syntax-theme = "Catppuccin Frappe";
         };
         diff = {
           colorMoved = "default";
