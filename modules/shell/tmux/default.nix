@@ -44,7 +44,7 @@ in
       baseIndex = 1; # Start window count at 1
       historyLimit = 100000; # max lines held in history
       keyMode = "vi"; # use VI keybindings
-      prefix = "C-Space"; # Use CTRL-SPACE as prefix
+      prefix = "C-a"; # Use CTRL-A as prefix
       terminal = "tmux-256color";
 
       extraConfig = ''
