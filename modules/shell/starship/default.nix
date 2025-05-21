@@ -13,13 +13,61 @@ in
     settings = {
       scan_timeout = 10;
 
+      format = lib.concatStrings [
+        "$username"
+        "$hostname"
+        "$directory"
+        "$git_branch"
+        "$git_state"
+        "$git_status"
+        "$nix_shell"
+        "$cmd_duration"
+        "$line_break"
+        "$python"
+        "$character"
+      ];
+
       character = {
-        vimcmd_symbol = "[❮](blue)";
+        success_symbol = "[❯](purple)";
+        error_symbol = "[❯](red)";
+        vimcmd_symbol = "[❮](green)";
       };
 
       directory = {
         truncation_length = 3;
         truncation_symbol = "…/";
+      };
+
+      git_branch = {
+        symbol = " ";
+        format = "[$branch]($style)";
+        style = "bright-black";
+      };
+
+      git_status = {
+        format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style) ";
+        style = "cyan";
+        conflicted = "​";
+        untracked = "​";
+        modified = "​";
+        staged = "​";
+        renamed = "​";
+        deleted = "​";
+        stashed = "≡";
+      };
+
+      git_state = {
+        format = "\([$state( $progress_current/$progress_total)]($style)\) ";
+        style = "bright-black";
+      };
+
+      nix_shell = {
+        symbol = " ";
+      };
+
+      cmd_duration = {
+        format = "[$duration]($style) ";
+        style = "yellow";
       };
 
       docker_context.disabled = true;
@@ -37,7 +85,6 @@ in
       elm.symbol = " ";
       fennel.symbol = " ";
       fossil_branch.symbol = " ";
-      git_branch.symbol = " ";
       golang.symbol = " ";
       guix_shell.symbol = " ";
       haskell.symbol = " ";
@@ -51,7 +98,6 @@ in
       memory_usage.symbol = "󰍛 ";
       meson.symbol = "󰔷 ";
       nim.symbol = "󰆥 ";
-      nix_shell.symbol = " ";
       nodejs.symbol = " ";
       ocaml.symbol = " ";
       os.symbols = {
