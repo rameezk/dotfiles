@@ -48,10 +48,15 @@ let
     # Set ripgrep configuration file
     set -x RIPGREP_CONFIG_PATH ~/.ripgreprc
 
+    # Set homebrew path
+    set PATH $PATH /opt/homebrew/bin
+
     # Setup ASDF
     if test -e ~/.nix-profile/share/asdf-vm/asdf.fish
       source ~/.nix-profile/share/asdf-vm/asdf.fish
     end
+
+    alias claude="/Users/rameezk/.claude/local/claude"
   '';
 
   shellInit = baseShellInit + proxyConfig;
