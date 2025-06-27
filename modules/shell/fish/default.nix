@@ -73,6 +73,11 @@ in
 
       shellInit = shellInit;
 
+      shellAliases = {
+        # containers
+        docker = "podman";
+      };
+
       shellAbbrs = {
         # files
         ls = "eza";

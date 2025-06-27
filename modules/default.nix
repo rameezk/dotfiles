@@ -4,6 +4,7 @@
     ./ai
     ./browser
     ./cloud
+    ./container
     ./core
     ./editor
     ./font
