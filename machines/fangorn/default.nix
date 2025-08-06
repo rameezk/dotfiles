@@ -8,16 +8,6 @@ in
   nix = {
     enable = false; # # let determinate installer manage the nix daemon
     settings.experimental-features = "nix-command flakes";
-    # optimise.automatic = true;
-    # gc = {
-    #   automatic = true;
-    #   interval = {
-    #     Weekday = 3;
-    #     Hour = 8;
-    #     Minute = 0;
-    #   };
-    #   options = "--delete-older-than 14d";
-    # };
   };
 
   users.users.rameezk = {
@@ -85,7 +75,6 @@ in
       "clop"
       "cursor"
       "deskpad"
-      # "docker"
       "elgato-control-center"
       "google-chrome"
       "insomnia"
@@ -100,6 +89,7 @@ in
       "microsoft-teams"
       "microsoft-word"
       "obsidian"
+      "podman-desktop"
       "proton-mail"
       "protonvpn"
       "slack"

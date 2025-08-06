@@ -76,6 +76,7 @@ in
       shellAliases = {
         # containers
         docker = "podman";
+        docker-compose = "podman-compose";
       };
 
       shellAbbrs = {
