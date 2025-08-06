@@ -30,6 +30,8 @@ in
     '';
   };
 
+  system.primaryUser = user;
+
   system.defaults = {
     dock = {
       autohide = true;
@@ -95,9 +97,9 @@ in
       "slack"
       "spotify"
       "stats"
-      "todoist"
+      "todoist-app"
       "wezterm"
-      "wireshark"
+      "wireshark-app"
       "zoom"
     ];
 

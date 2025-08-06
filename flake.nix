@@ -126,7 +126,7 @@
             };
             modules = [
               inputs.declarative-cachix.homeManagerModules.declarative-cachix
-              inputs.nixvim.homeManagerModules.nixvim
+              inputs.nixvim.homeModules.nixvim
               inputs.catppuccin.homeManagerModules.catppuccin
               ./machines/gondor/home.nix
               {
@@ -168,7 +168,7 @@
           {
             home-manager = {
               sharedModules = [
-                inputs.nixvim.homeManagerModules.nixvim
+                inputs.nixvim.homeModules.nixvim
                 inputs.sops-nix.homeManagerModules.sops
                 inputs.catppuccin.homeManagerModules.catppuccin
               ];
@@ -215,7 +215,7 @@
             {
               home-manager = {
                 sharedModules = [
-                  inputs.nixvim.homeManagerModules.nixvim
+                  inputs.nixvim.homeModules.nixvim
                   inputs.sops-nix.homeManagerModules.sops
                   inputs.catppuccin.homeModules.catppuccin
                 ];
