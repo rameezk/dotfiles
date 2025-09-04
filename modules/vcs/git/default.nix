@@ -95,6 +95,7 @@ in
         sha = "rev-parse HEAD";
         create-gh-pr = "!f() { gh pr create -a @me ; }; f";
         copy-gh-pr-url = "!f() {  gh pr view --json url | jq -r '.url' | xargs echo -n | pbcopy; }; f";
+        commit-into-previous = "commit --amend --no-edit";
       };
       includes = forAllExtraSigningKeys mkIncludeSettings cfg.extraSigningKeys;
       extraConfig = {
