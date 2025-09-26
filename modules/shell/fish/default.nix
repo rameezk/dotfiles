@@ -24,7 +24,10 @@ let
 
     # nix
     if test -e ~/.nix-profile/etc/profile.d/nix.sh
-      fenv source ~/.nix-profile/etc/profile.d/nix.sh
+      # Only source if the nix profile bin is not already in PATH
+      if not contains ~/.nix-profile/bin $PATH
+        fenv source ~/.nix-profile/etc/profile.d/nix.sh
+      end
     end
 
     # Set LANG properly
@@ -37,19 +40,19 @@ let
     # set -U fish_color_command b8bb26 # fish's default command color is a horrible dark blue, make it a nicer green
 
     # pipx
-    set PATH $PATH ~/.local/bin
+    fish_add_path -P ~/.local/bin
 
     # Make gpg-agent play nicely with tmux
     export GPG_TTY=(tty)
 
     # dotfiles binaries
-    set PATH $PATH ~/.config/dotfiles/bin
+    fish_add_path -P ~/.config/dotfiles/bin
 
     # Set ripgrep configuration file
     set -x RIPGREP_CONFIG_PATH ~/.ripgreprc
 
     # Set homebrew path
-    set PATH $PATH /opt/homebrew/bin
+    fish_add_path -P /opt/homebrew/bin
 
     # Setup ASDF
     if test -e ~/.nix-profile/share/asdf-vm/asdf.fish
