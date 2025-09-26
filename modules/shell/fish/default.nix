@@ -204,6 +204,7 @@ in
               git pull
               git merge "$current_branch"
               git push
+              git done
               return 0
             end
           '';
