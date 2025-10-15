@@ -31,7 +31,7 @@ let
     end
 
     # Set LANG properly
-    export LANG="en_ZA.utf8"
+    export LANG="en_ZA.UTF-8"
 
     # editor
     export EDITOR=vim
@@ -217,6 +217,13 @@ in
           '';
         };
       };
+
+      plugins = [
+        {
+          name = "fzf-fish";
+          src = pkgs.fishPlugins.fzf-fish.src;
+        }
+      ];
 
     };
 
