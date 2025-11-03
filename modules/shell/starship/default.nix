@@ -20,12 +20,23 @@ in
         "$git_branch"
         "$git_state"
         "$git_status"
+        "$azure"
         "$nix_shell"
         "$cmd_duration"
         "$line_break"
         "$python"
         "$character"
       ];
+
+      azure = {
+        symbol = "󰠅 ";
+        disabled = false;
+        format = "[$symbol($subscription)]($style) ";
+        subscription_aliases = {
+          "MandS - V2 - Non Production - Clothing & Home Logistics" = "CHL Stg";
+          "MandS - V2 - Production - Clothing & Home Logistics" = "CHL Prod";
+        };
+      };
 
       character = {
         success_symbol = "[❯](purple)";
@@ -40,12 +51,12 @@ in
 
       git_branch = {
         symbol = " ";
-        format = "[$branch]($style)";
+        format = "[$symbol$branch]($style)";
         style = "bright-black";
       };
 
       git_status = {
-        format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style) ";
+        format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style )";
         style = "cyan";
         conflicted = "​";
         untracked = "​";
