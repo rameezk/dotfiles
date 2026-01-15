@@ -111,6 +111,14 @@ in
                         desc=$(echo "$desc" | tr '[:upper:]' '[:lower:]' | tr ' ' '-'); \
                         git checkout -b "$type-$ticket/$desc"; \
                       }; f'';
+          cc = ''
+            !f() { \
+              branch=$(git rev-parse --abbrev-ref HEAD); \
+              type=$(echo "$branch" | sed 's/-.*//'); \
+              ticket=$(echo "$branch" | sed 's/^[^-]*-//' | sed 's|/.*||'); \
+              desc=$(echo "$branch" | sed 's|.*/||' | tr '-' ' '); \
+              git commit -e -m "$type($ticket): $desc"; \
+            }; f'';
         };
         core = {
           pager = "delta";
