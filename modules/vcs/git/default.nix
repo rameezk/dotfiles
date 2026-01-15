@@ -101,6 +101,16 @@ in
           create-gh-pr = "!f() { gh pr create -a @me ; }; f";
           copy-gh-pr-url = "!f() {  gh pr view --json url | jq -r '.url' | xargs echo -n | pbcopy; }; f";
           commit-into-previous = "commit --amend --no-edit";
+          new-branch = ''
+            !f() { \
+                        read -p "Type (feat/chore/fix/docs/refactor) [feat]: " type; \
+                        type=''${type:-feat}; \
+                        read -p "Ticket number (e.g., abc-123): " ticket; \
+                        ticket=$(echo "$ticket" | tr '[:upper:]' '[:lower:]'); \
+                        read -p "Description: " desc; \
+                        desc=$(echo "$desc" | tr '[:upper:]' '[:lower:]' | tr ' ' '-'); \
+                        git checkout -b "$type-$ticket/$desc"; \
+                      }; f'';
         };
         core = {
           pager = "delta";
