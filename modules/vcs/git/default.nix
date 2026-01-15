@@ -100,7 +100,7 @@ in
           sha = "rev-parse HEAD";
           create-gh-pr = "!f() { gh pr create -a @me ; }; f";
           copy-gh-pr-url = "!f() {  gh pr view --json url | jq -r '.url' | xargs echo -n | pbcopy; }; f";
-          commit-into-previous = "commit --amend --no-edit";
+          commit-into-previous = "!f() { git diff --cached --quiet && echo 'Nothing staged. Use git add first.' && exit 1 || git commit --amend --no-edit; }; f";
           new-branch = ''
             !f() { \
                         read -p "Type (feat/chore/fix/docs/refactor) [feat]: " type; \
