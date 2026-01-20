@@ -191,25 +191,6 @@ in
           '';
         };
 
-        git_merge_pr_manually = {
-          description = "check if connected to internet";
-          body = ''
-            set -l current_branch (git rev-parse --abbrev-ref HEAD)
-
-            if [ "$current_branch" = main ]
-              echo "You are on main. Nothing to do."
-              return 1
-            else
-              git checkout main
-              git pull
-              git merge "$current_branch"
-              git push
-              git done
-              return 0
-            end
-          '';
-        };
-
         generate_uuid4 = {
           description = "generate a uuid4";
           body = ''

@@ -119,6 +119,19 @@ in
               desc=$(echo "$branch" | sed 's|.*/||' | tr '-' ' '); \
               git commit -e -m "$type($ticket): $desc"; \
             }; f'';
+          merge-pr-manually = ''
+            !f() { \
+              current_branch=$(git rev-parse --abbrev-ref HEAD); \
+              if [ "$current_branch" = "main" ]; then \
+                echo "You are on main. Nothing to do."; \
+                exit 1; \
+              fi; \
+              git checkout main && \
+              git pull && \
+              git merge "$current_branch" && \
+              git push && \
+              git done; \
+            }; f'';
         };
         core = {
           pager = "delta";
