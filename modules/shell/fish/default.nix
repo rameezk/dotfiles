@@ -59,7 +59,8 @@ let
       source ~/.nix-profile/share/asdf-vm/asdf.fish
     end
 
-    alias claude="/Users/rameezk/.claude/local/claude"
+    # Claude Code
+    fish_add_path -P ~/.local/bin
   '';
 
   shellInit = baseShellInit + proxyConfig;
