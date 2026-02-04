@@ -96,7 +96,7 @@ in
           rebase-commits-in-branch = "!f() { git rebase -i HEAD~$(git cherry -v main | wc -l | xargs); }; f";
           rb = "!f() { git checkout main; git pull; git checkout -; git rebase main; }; f";
           rc = "rebase-commits-in-branch";
-          done = "!f() { git checkout main && git pull -p && git prune-local-branches ; }; f";
+          done = "!f() { git checkout main && git pull -p && sleep 2 && git prune-local-branches ; }; f";
           sha = "rev-parse HEAD";
           create-gh-pr = "!f() { gh pr create -a @me ; }; f";
           copy-gh-pr-url = "!f() {  gh pr view --json url | jq -r '.url' | xargs echo -n | pbcopy; }; f";
