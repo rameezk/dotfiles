@@ -86,22 +86,7 @@ in
     # Homebrew is *installed* via the flake input nix-homebrew
     enable = true;
 
-    casks = [
-      "alfred"
-      "chatgpt"
-      "claude"
-      "google-chrome"
-      "intellij-idea-ce"
-      "jabra-direct"
-      "keymapp"
-      "nikitabobko/tap/aerospace"
-      "obsidian"
-      "proton-mail"
-      "slack"
-      "todoist"
-      "wezterm"
-      "zoom"
-    ];
+    casks = import ./casks.nix;
 
     # These app IDs are from using the mas CLI app
     # mas = mac app store

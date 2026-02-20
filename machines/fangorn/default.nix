@@ -69,40 +69,7 @@ in
     # Homebrew is *installed* via the flake input nix-homebrew
     enable = true;
 
-    casks = [
-      "1password"
-      "1password-cli"
-      "alfred"
-      "claude"
-      "clop"
-      "cursor"
-      "deskpad"
-      "elgato-control-center"
-      "google-chrome"
-      "insomnia"
-      "intellij-idea"
-      "jabra-direct"
-      "karabiner-elements"
-      "keymapp"
-      "microsoft-azure-storage-explorer"
-      "microsoft-excel"
-      "microsoft-outlook"
-      "microsoft-powerpoint"
-      "microsoft-teams"
-      "microsoft-word"
-      "obsidian"
-      "podman-desktop"
-      "proton-mail"
-      "protonvpn"
-      "slack"
-      "spotify"
-      "stats"
-      "todoist-app"
-      "visual-studio-code"
-      "wezterm"
-      "wireshark-app"
-      "zoom"
-    ];
+    casks = import ./casks.nix;
 
     # These app IDs are from using the mas CLI app
     # mas = mac app store
