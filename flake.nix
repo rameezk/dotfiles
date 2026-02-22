@@ -95,7 +95,7 @@
             };
         };
 
-      mkFormatter = system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
+      mkFormatter = system: nixpkgs.legacyPackages.${system}.nixfmt-tree;
     in
     {
       darwinConfigurations."rivendell" = inputs.nix-darwin.lib.darwinSystem {
