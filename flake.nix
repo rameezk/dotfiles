@@ -14,8 +14,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    emacs-overlay.url = "github:nix-community/emacs-overlay/master";
-
     nixvim = {
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -51,8 +49,6 @@
       url = "git+ssh://git@github.com/rameezk/nix-secrets.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    declarative-cachix.url = "github:jonascarpay/declarative-cachix/master";
 
     catppuccin.url = "github:catppuccin/nix";
 
@@ -104,47 +100,8 @@
         };
 
       mkFormatter = system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
-
-      mkMachines =
-        { }:
-        {
-          rohan = inputs.home-manager.lib.homeManagerConfiguration {
-            configuration =
-              { ... }:
-              {
-                nixpkgs.overlays = [ inputs.emacs-overlay.overlay ];
-                imports = [ ./machines/rohan/home.nix ];
-              };
-            system = "x86_64-linux";
-            homeDirectory = "/home/rameezk";
-            username = "rameezk";
-          };
-          gondor = inputs.home-manager.lib.homeManagerConfiguration {
-            pkgs = import nixpkgs {
-              system = "aarch64-darwin";
-              overlays = [ inputs.emacs-overlay.overlay ];
-            };
-            modules = [
-              inputs.declarative-cachix.homeManagerModules.declarative-cachix
-              inputs.nixvim.homeModules.nixvim
-              inputs.catppuccin.homeManagerModules.catppuccin
-              ./machines/gondor/home.nix
-              {
-                home = {
-                  username = "qxy6675";
-                  homeDirectory = "/Users/qxy6675";
-                };
-              }
-            ];
-          };
-        };
     in
     {
-      machines = mkMachines { };
-
-      rohan = self.machines.rohan.activationPackage;
-      gondor = self.machines.gondor.activationPackage;
-
       darwinConfigurations."rivendell" = inputs.nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         specialArgs = inputs;
@@ -181,7 +138,6 @@
           ./machines/rivendell
         ];
       };
-      darwinPackages = self.darwinConfigurations."rivendell".pkgs;
 
       darwinConfigurations."fangorn" =
         let

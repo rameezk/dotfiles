@@ -4,20 +4,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-This is a NixOS/Nix Darwin configuration repository using Home Manager and Nix Flakes. It manages dotfiles and system configurations for multiple machines (fangorn, rivendell, gondor, rohan) across macOS and Linux platforms.
+This is a NixOS/Nix Darwin configuration repository using Home Manager and Nix Flakes. It manages dotfiles and system configurations for multiple machines (fangorn, rivendell) across macOS and Linux platforms.
 
 ## Essential Commands
 
 ### Building and Rebuilding Configuration
 ```bash
 # Primary rebuild command (builds and activates configuration)
-./bin/dot rebuild
-
-# Rebuild with trace output for debugging
-./bin/dot rebuild --with-traces
+./bin/switch
 
 # Update flake inputs and rebuild
-nix flake update && ./bin/dot rebuild
+./bin/upgrade
+
+# Rollback to previous generation
+./bin/rollback
+
+# Clean up old generations
+./bin/collect-garbage
 ```
 
 ### Development Environment
@@ -27,21 +30,6 @@ nix-shell
 
 # Format Nix files
 nix fmt
-
-# Edit configuration files interactively
-./bin/dot edit
-
-# Edit with vim instead of emacs
-./bin/dot edit --vim
-```
-
-### Machine Management
-```bash
-# Set target machine (required before rebuild)
-echo "fangorn" > .machine   # or rivendell, gondor, rohan
-
-# Rollback to previous generation
-./bin/dot rollback
 ```
 
 ## Architecture
@@ -74,13 +62,13 @@ echo "fangorn" > .machine   # or rivendell, gondor, rohan
 ## Development Workflow
 
 1. Modify configuration files in appropriate modules
-2. Test changes with `./bin/dot rebuild`
+2. Test changes with `./bin/switch`
 3. Use `nix fmt` to format Nix files before committing
-4. Pre-commit hooks automatically format .nix files (nixfmt) and ./bin/dot (black)
+4. Pre-commit hooks automatically format .nix files (nixfmt)
 
 ## Machine Targeting
 
-The build system uses a `.machine` file to determine which configuration to build. Each machine configuration inherits from shared modules but can override settings as needed.
+The build system uses nix-darwin with flakes. The machine configuration is determined by hostname automatically when running `darwin-rebuild switch --flake .`. Each machine configuration inherits from shared modules but can override settings as needed.
 
 ## Secret Management
 
