@@ -8,6 +8,7 @@
     ./core
     ./editor
     ./font
+    ./iac
     ./language
     ./network
     ./os

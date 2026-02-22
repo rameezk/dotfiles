@@ -6,10 +6,83 @@
 }:
 let
   proxyEnabled = config.network.proxy.enable or false;
+  kubernetesEnabled = config.container.kubernetes.enable or false;
+  podmanEnabled = config.container.podman or false;
+  gitEnabled = config.vcs.git.enable or false;
+  terraformEnabled = config.iac.terraform.enable or false;
 
   proxyConfig = lib.optionalString proxyEnabled ''
     source ~/.proxyrc
   '';
+
+  podmanAliases = lib.optionalAttrs podmanEnabled {
+    docker = "podman";
+    docker-compose = "podman-compose";
+  };
+
+  gitAbbrs = lib.optionalAttrs gitEnabled {
+    g = "git";
+    gp = "git pull";
+    gco = "git checkout";
+    gcm = "git commit -m";
+    grt = "cd (git rev-parse --show-toplevel)";
+    gs = "git status";
+  };
+
+  gitFunctions = lib.optionalAttrs gitEnabled {
+    open_repo_in_browser = {
+      description = "open a git remote in default browser";
+      body = ''
+        set -l git_remote (git remote -v | head -n 1 | awk '{print $2}')
+
+        if string match -r '^git@.*$' $git_remote
+          set browser_remote (echo $git_remote | sed 's#:#/#' | sed 's#git@#http://#' | sed -E 's#.git$##')
+        else
+          set browser_remote (echo $git_remote | sed 's/.*@/http:\/\//' | sed -E 's/:[0-9]+//g' | sed 's/\.com:/\.com\//' | sed 's/\.[^.]*$//')
+        end
+
+        echo "[..] Opening $browser_remote in default browser"
+        open "$browser_remote" > /dev/null 2>&1
+      '';
+    };
+  };
+
+  terraformAbbrs = lib.optionalAttrs terraformEnabled {
+    tf = "terraform";
+    tg = "terragrunt";
+  };
+
+  kubernetesAbbrs = lib.optionalAttrs kubernetesEnabled {
+    k = "kubectl";
+    kc = "kubectx";
+    kn = "kubens";
+    kw = "watch kubectl";
+    kdebug = "kubectl run --rm -i -t debug --image=rameezk/debuggery --restart=Never";
+  };
+
+  kubernetesFunctions = lib.optionalAttrs kubernetesEnabled {
+    k-exec-into = {
+      description = "interactively select a pod and shell to exec into";
+      body = ''
+        set -l pod (kubectl get pods --no-headers | awk '{print $1}' | fzf)
+        set -l shell (echo -e "bash\nsh\nzsh\nfish" | fzf)
+        kubectl exec -it $pod -- $shell
+      '';
+    };
+
+    k-delete-pods-with-status = {
+      argumentNames = "pod_status";
+      description = "delete pods with a specific status";
+      body = ''
+        if [ -z "$pod_status" ]
+          echo "Please specify a status"
+          return 1
+        end
+
+        kubectl get pods | grep -i "$pod_status" | awk '{print $1}' | xargs kubectl delete pod
+      '';
+    };
+  };
 
   baseShellInit = ''
     # Disable fish greeting message
@@ -77,25 +150,13 @@ in
 
       shellInit = shellInit;
 
-      shellAliases = {
-        # containers
-        docker = "podman";
-        docker-compose = "podman-compose";
-      };
+      shellAliases = { } // podmanAliases;
 
       shellAbbrs = {
         # files
         ls = "eza";
         l = "eza -la --git";
         tree = "eza --tree";
-
-        #git
-        g = "git";
-        gp = "git pull";
-        gco = "git checkout";
-        gcm = "git commit -m";
-        grt = "cd (git rev-parse --show-toplevel)";
-        gs = "git status";
 
         # home-manager
         hm-rm-old-generations = "home-manager generations | tail -n +2 | awk '{ print $5 }' | xargs home-manager remove-generations";
@@ -106,69 +167,20 @@ in
         # shell
         "reload!" = ''exec "$SHELL" -l'';
 
-        # kubernetes
-        k = "kubectl";
-        kc = "kubectx";
-        kn = "kubens";
-        kw = "watch kubectl";
-        kdebug = "kubectl run --rm -i -t debug --image=rameezk/debuggery --restart=Never";
-
         # Nix
         "," = "nix run nixpkgs#";
-
-        # terraform and terrgrunt
-        tf = "terraform";
-        tg = "terragrunt";
-      };
+      }
+      // gitAbbrs
+      // terraformAbbrs
+      // kubernetesAbbrs;
 
       functions = {
-        open_repo_in_browser = {
-
-          description = "open a git remote in default browser";
-          body = ''
-            set -l git_remote (git remote -v | head -n 1 | awk '{print $2}')
-
-            if string match -r '^git@.*$' $git_remote
-              set browser_remote (echo $git_remote | sed 's#:#/#' | sed 's#git@#http://#' | sed -E 's#.git$##')
-            else
-              set browser_remote (echo $git_remote | sed 's/.*@/http:\/\//' | sed -E 's/:[0-9]+//g' | sed 's/\.com:/\.com\//' | sed 's/\.[^.]*$//')
-            end
-
-            echo "[..] Opening $browser_remote in default browser"
-            open "$browser_remote" > /dev/null 2>&1
-          '';
-
-        };
-
         mcd = {
           argumentNames = "directory";
           description = "create new directory and cd into it";
           body = ''
             mkdir -p "$directory" && cd "$directory";
           '';
-        };
-
-        k-exec-into = {
-          description = "interactively select a pod and shell to exec into";
-          body = ''
-            set -l pod (kubectl get pods --no-headers | awk '{print $1}' | fzf)
-            set -l shell (echo -e "bash\nsh\nzsh\nfish" | fzf)
-            kubectl exec -it $pod -- $shell
-          '';
-        };
-
-        k-delete-pods-with-status = {
-          argumentNames = "pod_status";
-          description = "delete pods with a specific status";
-          body = ''
-            if [ -z "$pod_status" ]
-              echo "Please specify a status"
-              return 1
-            end
-
-            kubectl get pods | grep -i "$pod_status" | awk '{print $1}' | xargs kubectl delete pod
-          '';
-
         };
 
         can_i_haz_internetz_plez = {
@@ -198,7 +210,9 @@ in
             python -c "import uuid; print(str(uuid.uuid4()).strip(), end=\"\");"
           '';
         };
-      };
+      }
+      // gitFunctions
+      // kubernetesFunctions;
 
       plugins = [
         {

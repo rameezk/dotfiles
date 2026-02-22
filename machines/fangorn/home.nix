@@ -59,6 +59,13 @@
     azure.enable = true;
   };
 
+  container = {
+    enable = true;
+    podman = true;
+  };
+
+  iac.terraform.enable = true;
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
