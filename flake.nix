@@ -36,10 +36,6 @@
       url = "github:nikitabobko/homebrew-tap";
       flake = false;
     };
-    homebrew-tap-azure-functions = {
-      url = "github:azure/homebrew-functions";
-      flake = false;
-    };
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -162,7 +158,6 @@
                   "homebrew/homebrew-cask" = inputs.homebrew-cask;
                   "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
                   "nikitabobko/homebrew-tap" = inputs.homebrew-nikitabobko-tap;
-                  "azure/homebrew-functions" = inputs.homebrew-tap-azure-functions;
                 };
                 mutableTaps = false;
                 autoMigrate = true;

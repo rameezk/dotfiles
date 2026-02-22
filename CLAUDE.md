@@ -39,7 +39,6 @@ nix fmt
 - **machines/**: Machine-specific configurations
   - Each machine has `default.nix` (system config) and `home.nix` (home-manager config)
 - **modules/**: Reusable configuration modules organized by category
-- **secrets/**: SOPS-encrypted secrets using nix-secrets repo
 
 ### Module Categories
 - **core/**: Essential system utilities and base configuration
