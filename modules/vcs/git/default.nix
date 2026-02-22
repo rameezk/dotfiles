@@ -68,6 +68,40 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+
+    verify.checks = [
+      {
+        type = "command";
+        name = "git";
+        desc = "Git version control";
+      }
+      {
+        type = "command";
+        name = "delta";
+        desc = "Git diff pager";
+      }
+      {
+        type = "command";
+        name = "gh";
+        desc = "GitHub CLI";
+      }
+      {
+        type = "command";
+        name = "gpg";
+        desc = "GPG for signing";
+      }
+      {
+        type = "command";
+        name = "git-crypt";
+        desc = "Git encryption";
+      }
+      {
+        type = "command";
+        name = "pre-commit";
+        desc = "Pre-commit hooks";
+      }
+    ];
+
     programs.git = {
       enable = true;
       includes = forAllExtraSigningKeys mkIncludeSettings cfg.extraSigningKeys;

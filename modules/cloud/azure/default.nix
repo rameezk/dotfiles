@@ -10,6 +10,15 @@
   };
 
   config = lib.mkIf config.cloud.azure.enable {
+
+    verify.checks = [
+      {
+        type = "command";
+        name = "az";
+        desc = "Azure CLI";
+      }
+    ];
+
     home.packages = with pkgs; [
       azure-cli
     ];

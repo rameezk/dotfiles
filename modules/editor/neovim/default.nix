@@ -6,6 +6,15 @@
   };
 
   config = lib.mkIf config.editor.neovim.enable {
+
+    verify.checks = [
+      {
+        type = "command";
+        name = "nvim";
+        desc = "Neovim editor";
+      }
+    ];
+
     programs.nixvim = {
       enable = true;
 

@@ -1,59 +1,55 @@
 # dotfiles
 
-## Where are the old .files?
-Through my progression and learning of the [Nix](https://nixos.org/) ecosystem, I discovered [Home Manager](https://github.com/nix-community/home-manager).
-
-As such I've declared my old .files as __old-school-thinking__. But you can still find them all [here](https://github.com/rameezk/dotfiles/tree/old-school-thinking).
+Nix configuration using Home Manager and Nix Flakes.
 
 ## Prerequisites
-1. [Nix](https://nixos.org/)
-2. [Home Manager](https://github.com/nix-community/home-manager)
+
+1. [Nix](https://nixos.org/) with flakes enabled
 
 ## Installation
-1. Clone this repo to `~/.config/dotfiles`
+
+1. Clone this repo:
    ```sh
    git clone git@github.com:rameezk/dotfiles.git ~/.config/dotfiles
+   cd ~/.config/dotfiles
    ```
 
-2. cd to `~/.config/dotfiles` and execute the following
+2. Build and activate the configuration:
    ```sh
-   nix-shell
+   ./bin/switch
    ```
-   This will give you the bare minimum packages to execute the `dot` binary in the next step.
+   The machine configuration is automatically determined by hostname.
 
-3. Specify machine in file `.machine`. You can find machines in the `./machines/` directory.
-   ```sh
-   echo "<machine>" > .machine
-   ```
+## Commands
 
-4. Execute the environment rebuild
-   ```sh
-   ./bin/dot rebuild
-   ```
-   
-## Upgrading Packages
-Upgrade the flake and rebuild environment:
-```shell
-nix flake update
-dot rebuild
+| Command | Description |
+|---------|-------------|
+| `./bin/switch` | Build and activate configuration |
+| `./bin/upgrade` | Update flake inputs and rebuild |
+| `./bin/rollback` | Rollback to previous generation |
+| `./bin/collect-garbage` | Clean up old generations |
+
+## Development
+
+### Formatting
+Format Nix files:
+```sh
+nix fmt
 ```
 
-## Other Docs
-For other docs see [docs](./docs) directory.
+### Pre-commit Hooks
+This repo uses [pre-commit](https://pre-commit.com/) to format `*.nix` files with nixfmt.
 
-## Nice to have
-### pre-commit hooks
-This repo is setup for git hooks using the the [pre-commit framework](https://pre-commit.com/). 
-
-Currently, hooks exist to format:
-- *.nix files using NixFmt
-- ./bin/dot file using Python black
-
-To install the hooks, run:
-
+To install hooks:
 ```sh
 pre-commit install
 ```
 
+## Other Docs
+See the [docs](./docs) directory for additional documentation.
+
 ## Emacs
-If you're interested in perusing my Emacs config you can do so [here](modules/editors/emacs/config/emacs.org).
+Interested in my Emacs config? See [modules/editor/emacs/config/emacs.org](modules/editor/emacs/config/emacs.org).
+
+## Legacy
+Looking for the old non-Nix dotfiles? Find them on the [old-school-thinking](https://github.com/rameezk/dotfiles/tree/old-school-thinking) branch.

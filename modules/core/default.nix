@@ -5,6 +5,10 @@
   ...
 }:
 {
+  imports = [
+    ./verify.nix
+  ];
+
   options = {
     core.enable = lib.mkEnableOption "enable core";
   };

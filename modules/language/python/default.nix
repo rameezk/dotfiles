@@ -10,6 +10,20 @@
   };
 
   config = lib.mkIf config.language.python.enable {
+
+    verify.checks = [
+      {
+        type = "command";
+        name = "python3";
+        desc = "Python 3";
+      }
+      {
+        type = "command";
+        name = "pipx";
+        desc = "Pipx";
+      }
+    ];
+
     home.packages = with pkgs; [
       (python312.withPackages (
         ps: with ps; [

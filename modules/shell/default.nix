@@ -19,6 +19,74 @@
 
   config = lib.mkIf config.shell.enable {
 
+    verify.checks = [
+      {
+        type = "command";
+        name = "fish";
+        desc = "Fish shell";
+      }
+      {
+        type = "command";
+        name = "fzf";
+        desc = "Fuzzy finder";
+      }
+      {
+        type = "command";
+        name = "bat";
+        desc = "Cat with syntax highlighting";
+      }
+      {
+        type = "command";
+        name = "eza";
+        desc = "Modern ls replacement";
+      }
+      {
+        type = "command";
+        name = "rg";
+        desc = "Ripgrep";
+      }
+      {
+        type = "command";
+        name = "zoxide";
+        desc = "Smarter cd";
+      }
+      {
+        type = "command";
+        name = "direnv";
+        desc = "Directory environments";
+      }
+      {
+        type = "command";
+        name = "tmux";
+        desc = "Terminal multiplexer";
+      }
+      {
+        type = "command";
+        name = "starship";
+        desc = "Cross-shell prompt";
+      }
+      {
+        type = "command";
+        name = "fd";
+        desc = "Fast find";
+      }
+      {
+        type = "command";
+        name = "jq";
+        desc = "JSON processor";
+      }
+      {
+        type = "command";
+        name = "htop";
+        desc = "Process viewer";
+      }
+      {
+        type = "file";
+        path = "~/.ripgreprc";
+        desc = "Ripgrep config";
+      }
+    ];
+
     fish.enable = true;
     tmux.enable = true;
     terminal.wezterm.enable = true;
