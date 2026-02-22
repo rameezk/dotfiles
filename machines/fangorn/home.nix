@@ -22,6 +22,30 @@
     };
   };
 
+  verify.checks = [
+    {
+      type = "file";
+      path = "~/.config/sops/age/keys.txt";
+      desc = "SOPS age keyfile";
+    }
+    {
+      type = "ssh_key";
+      path = "~/.ssh/id_ed25519";
+      desc = "SSH private key valid";
+    }
+    {
+      type = "file_permissions";
+      path = "~/.ssh/id_ed25519";
+      permissions = "600";
+      desc = "SSH key permissions";
+    }
+    {
+      type = "gpg_key";
+      path = "~/.config/gpg/rameezk_private.gpg";
+      desc = "GPG private key valid";
+    }
+  ];
+
   theme.catppuccin = {
     enable = true;
     flavour = "frappe";
