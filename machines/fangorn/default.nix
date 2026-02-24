@@ -85,4 +85,17 @@ in
     };
   };
 
+  launchd.user.agents.auto-volume-toggler = {
+    serviceConfig = {
+      ProgramArguments = [
+        "/bin/sh"
+        "-c"
+        ''echo "$(date '+%Y-%m-%d %H:%M:%S') - Running auto-volume-toggler" && ${pkgs.nix}/bin/nix run github:rameezk/auto-volume-toggler 2>&1''
+      ];
+      StartInterval = 300; # 5 minutes
+      StandardOutPath = "/tmp/auto-volume-toggler.log";
+      StandardErrorPath = "/tmp/auto-volume-toggler.log";
+    };
+  };
+
 }
