@@ -48,6 +48,8 @@
 
     catppuccin.url = "github:catppuccin/nix";
 
+    auto-volume-toggler.url = "github:rameezk/auto-volume-toggler";
+
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";

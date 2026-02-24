@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, auto-volume-toggler, ... }:
 
 let
   user = "rameezk";
@@ -85,17 +85,24 @@ in
     };
   };
 
-  launchd.user.agents.auto-volume-toggler = {
-    serviceConfig = {
-      ProgramArguments = [
-        "/bin/sh"
-        "-c"
-        ''echo "$(date '+%Y-%m-%d %H:%M:%S') - Running auto-volume-toggler" && ${pkgs.nix}/bin/nix run github:rameezk/auto-volume-toggler 2>&1''
-      ];
-      StartInterval = 300; # 5 minutes
-      StandardOutPath = "/tmp/auto-volume-toggler.log";
-      StandardErrorPath = "/tmp/auto-volume-toggler.log";
+  launchd.user.agents.auto-volume-toggler =
+    let
+      pkg = auto-volume-toggler.packages.aarch64-darwin.auto-volume-toggler {
+        targetVolume = 55;
+        deviceName = "MacBook Pro Speakers";
+      };
+    in
+    {
+      serviceConfig = {
+        ProgramArguments = [
+          "/bin/sh"
+          "-c"
+          ''echo "$(date '+%Y-%m-%d %H:%M:%S') - Running auto-volume-toggler" && ${pkg}/bin/auto-volume-toggler 2>&1''
+        ];
+        StartInterval = 300; # 5 minutes
+        StandardOutPath = "/tmp/auto-volume-toggler.log";
+        StandardErrorPath = "/tmp/auto-volume-toggler.log";
+      };
     };
-  };
 
 }
