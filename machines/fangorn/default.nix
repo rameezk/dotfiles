@@ -69,6 +69,13 @@ in
     # Homebrew is *installed* via the flake input nix-homebrew
     enable = true;
 
+    onActivation = {
+      autoUpdate = true;
+      upgrade = true;
+      cleanup = "none";
+    };
+
+    brews = [ "mas" ];
     casks = import ./casks.nix;
 
     # These app IDs are from using the mas CLI app
@@ -79,7 +86,7 @@ in
     # $ mas search <app name>
     #
     masApps = {
-      "adguard" = 1440147259;
+      "AdGuard Mini: Safari Adblock" = 1440147259;
       "dato" = 1470584107;
       "tuneful" = 6739804295;
     };
