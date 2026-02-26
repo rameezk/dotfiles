@@ -112,4 +112,27 @@ in
       };
     };
 
+  launchd.user.agents.msteams-cleanup = {
+    serviceConfig = {
+      ProgramArguments = [
+        "/bin/sh"
+        "-c"
+        ''
+          DIR="$HOME/Downloads/MSTeams"
+          if [ -d "$DIR" ]; then
+            SIZE=$(du -sh "$DIR" 2>/dev/null | cut -f1)
+            rm -rf "$DIR"
+            echo "$(date '+%Y-%m-%d %H:%M:%S') - Deleted $DIR ($SIZE)"
+          else
+            echo "$(date '+%Y-%m-%d %H:%M:%S') - $DIR does not exist, skipping"
+          fi
+        ''
+      ];
+      RunAtLoad = true;
+      StartInterval = 86400; # Once per day (24 hours)
+      StandardOutPath = "/tmp/msteams-cleanup.log";
+      StandardErrorPath = "/tmp/msteams-cleanup.log";
+    };
+  };
+
 }
