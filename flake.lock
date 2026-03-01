@@ -5,11 +5,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1771947962,
-        "narHash": "sha256-CYNGXQx1UJTMa8oZvquIoZb8uUGJYca3Mvd8THR1LC4=",
+        "lastModified": 1772185525,
+        "narHash": "sha256-6UHnqjfZgoNyWbQzRbWEU4kohTkPcAfpmJzlosLC5TY=",
         "owner": "rameezk",
         "repo": "auto-volume-toggler",
-        "rev": "28e02035b81298cfaf1668def5db3f43f91de4e4",
+        "rev": "60b80a9aa8d852649534363ba8cf3e2e4ea4ed49",
         "type": "github"
       },
       "original": {
