@@ -129,7 +129,7 @@ in
         ''
       ];
       RunAtLoad = true;
-      StartInterval = 86400; # Once per day (24 hours)
+      StartInterval = 1800; # Every 30 min
       StandardOutPath = "/tmp/msteams-cleanup.log";
       StandardErrorPath = "/tmp/msteams-cleanup.log";
     };
