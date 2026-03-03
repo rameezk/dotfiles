@@ -3,7 +3,10 @@
   "1password-cli"
   "alfred"
   "claude"
-  "calibre"
+  {
+    name = "calibre";
+    greedy = true;
+  }
   "clop"
   "cursor"
   "deskpad"
