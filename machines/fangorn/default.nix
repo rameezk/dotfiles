@@ -97,6 +97,7 @@ in
       pkg = auto-volume-toggler.packages.aarch64-darwin.auto-volume-toggler {
         targetVolume = 55;
         deviceName = "MacBook Pro Speakers";
+        onlyDecrease = true;
       };
     in
     {
