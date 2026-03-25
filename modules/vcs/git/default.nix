@@ -104,6 +104,7 @@ in
 
     programs.git = {
       enable = true;
+      signing.format = "openpgp";
       includes = forAllExtraSigningKeys mkIncludeSettings cfg.extraSigningKeys;
       settings = {
         user = {
