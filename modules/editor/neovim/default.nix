@@ -1,4 +1,9 @@
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 {
   options = {
@@ -17,6 +22,8 @@
 
     programs.nixvim = {
       enable = true;
+
+      nixpkgs.config = pkgs.config;
 
       viAlias = true;
       vimAlias = true;

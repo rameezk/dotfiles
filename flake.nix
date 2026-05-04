@@ -162,6 +162,7 @@
             }
             {
               home-manager = {
+                useGlobalPkgs = true;
                 sharedModules = [
                   inputs.nixvim.homeModules.nixvim
                   inputs.sops-nix.homeManagerModules.sops

@@ -33,6 +33,5 @@
   "todoist-app"
   "visual-studio-code"
   "wezterm"
-  "wireshark-app"
   "zoom"
 ]

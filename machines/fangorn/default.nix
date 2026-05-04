@@ -63,6 +63,7 @@ in
 
   # The platform the configuration will be used on.
   nixpkgs.hostPlatform = "aarch64-darwin";
+  nixpkgs.config.allowUnfree = true;
 
   homebrew = {
     # This is a module from nix-darwin
