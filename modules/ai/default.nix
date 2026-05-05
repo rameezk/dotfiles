@@ -5,6 +5,10 @@
   ...
 }:
 {
+  imports = [
+    ./claude-skills
+  ];
+
   options = {
     ai.enable = lib.mkEnableOption "enable ai";
   };

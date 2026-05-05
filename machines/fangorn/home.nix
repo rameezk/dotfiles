@@ -52,6 +52,7 @@
   };
 
   ai.enable = false;
+  ai.claude-skills.docx.enable = true;
 
   fonts.enable = true;
 

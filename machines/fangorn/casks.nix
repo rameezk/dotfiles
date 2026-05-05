@@ -17,6 +17,7 @@
   "jabra-direct"
   "karabiner-elements"
   "keymapp"
+  "libreoffice"
   "microsoft-azure-storage-explorer"
   "microsoft-excel"
   "microsoft-outlook"

@@ -1,0 +1,9 @@
+{
+  "name": "claude-docx-skill-deps",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Vendored npm dependencies for the Claude Code docx skill",
+  "dependencies": {
+    "docx": "^9.5.1"
+  }
+}
