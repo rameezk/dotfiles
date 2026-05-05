@@ -2,6 +2,7 @@
 {
   imports = [
     ./docx.nix
+    ./drawio.nix
   ];
 
   options.ai.claude-skills = {

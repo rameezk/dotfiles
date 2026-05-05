@@ -10,6 +10,7 @@
   "clop"
   "cursor"
   "deskpad"
+  "drawio"
   "elgato-control-center"
   "google-chrome"
   "insomnia"

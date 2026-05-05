@@ -59,6 +59,11 @@
       url = "github:anthropics/skills";
       flake = false;
     };
+
+    drawio-skill = {
+      url = "github:jgraph/drawio-mcp";
+      flake = false;
+    };
   };
 
   outputs =

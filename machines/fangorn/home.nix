@@ -53,6 +53,7 @@
 
   ai.enable = false;
   ai.claude-skills.docx.enable = true;
+  ai.claude-skills.drawio.enable = true;
 
   fonts.enable = true;
 

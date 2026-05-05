@@ -1,11 +1,13 @@
 # claude-skills
 
-Installs [Claude Code skills](https://github.com/anthropics/skills) from the
-pinned `claude-skills` flake input, plus the binary/runtime dependencies each
-skill needs.
+Installs Claude Code skills from pinned flake inputs, plus the binary/runtime
+dependencies each skill needs. Skill sources currently wired up:
+
+- [`anthropics/skills`](https://github.com/anthropics/skills) — flake input `claude-skills`
+- [`jgraph/drawio-mcp`](https://github.com/jgraph/drawio-mcp) — flake input `drawio-skill`
 
 Skills are symlinked into `~/.claude/skills/<name>` (Nix store path,
-read-only), so they bump in lockstep with the flake input.
+read-only), so they bump in lockstep with their flake input.
 
 ## Enabling a skill
 
@@ -16,6 +18,21 @@ ai.claude-skills.docx.enable = true;
 ```
 
 ## Available skills
+
+### drawio (`drawio.nix`)
+
+Generates native `.drawio` diagram files; can export to PNG/SVG/PDF via
+draw.io Desktop.
+
+Pulls in:
+- The `SKILL.md` from `jgraph/drawio-mcp` `skill-cli/drawio/`
+
+Also requires the draw.io Desktop app for image export. Add the cask in your
+machine's `casks.nix`:
+
+```nix
+"drawio"
+```
 
 ### docx (`docx.nix`)
 
@@ -43,10 +60,11 @@ the first `./bin/switch`:
 rm -rf ~/.claude/skills/docx
 ```
 
-## Bumping the skills repo
+## Bumping a skill source
 
 ```sh
-nix flake update claude-skills
+nix flake update claude-skills   # anthropics/skills (docx, etc.)
+nix flake update drawio-skill    # jgraph/drawio-mcp (drawio)
 ./bin/switch
 ```
 
@@ -64,8 +82,10 @@ nix flake update claude-skills
 ## Adding a new skill
 
 1. Create `modules/ai/claude-skills/<skill>.nix` following the pattern in
-   `docx.nix`: declare an `ai.claude-skills.<skill>.enable` option, install
-   deps, symlink the skill from `${inputs.claude-skills}/skills/<skill>`, and
-   register `verify.checks` for each binary.
+   `docx.nix` or `drawio.nix`: declare an `ai.claude-skills.<skill>.enable`
+   option, install deps, symlink the skill from the appropriate flake input
+   (`${inputs.claude-skills}/skills/<skill>` for anthropics, or add a new
+   non-flake input for an external repo), and register `verify.checks` for
+   each binary.
 2. Import it from `default.nix`.
 3. Enable it in the machine's `home.nix`.

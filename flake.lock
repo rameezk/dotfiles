@@ -69,6 +69,22 @@
         "type": "github"
       }
     },
+    "drawio-skill": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1777298021,
+        "narHash": "sha256-c6ZHfqNNwVrsIjw7Bu675hx047dDa3XHtK8555w1UjY=",
+        "owner": "jgraph",
+        "repo": "drawio-mcp",
+        "rev": "dcd3233f8fc61354428fd38ad854f7849567ffd1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jgraph",
+        "repo": "drawio-mcp",
+        "type": "github"
+      }
+    },
     "firefox-addons": {
       "inputs": {
         "nixpkgs": [
@@ -330,6 +346,7 @@
         "auto-volume-toggler": "auto-volume-toggler",
         "catppuccin": "catppuccin",
         "claude-skills": "claude-skills",
+        "drawio-skill": "drawio-skill",
         "firefox-addons": "firefox-addons",
         "home-manager": "home-manager",
         "homebrew-bundle": "homebrew-bundle",
