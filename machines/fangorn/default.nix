@@ -120,14 +120,15 @@ in
         "/bin/sh"
         "-c"
         ''
-          DIR="$HOME/Downloads/MSTeams"
-          if [ -d "$DIR" ]; then
-            SIZE=$(du -sh "$DIR" 2>/dev/null | cut -f1)
-            rm -rf "$DIR"
-            echo "$(date '+%Y-%m-%d %H:%M:%S') - Deleted $DIR ($SIZE)"
-          else
-            echo "$(date '+%Y-%m-%d %H:%M:%S') - $DIR does not exist, skipping"
-          fi
+          for DIR in "$HOME/Downloads/MSTeams" "$HOME/Downloads/Microsoft Teams ModuleHost"; do
+            if [ -d "$DIR" ]; then
+              SIZE=$(du -sh "$DIR" 2>/dev/null | cut -f1)
+              rm -rf "$DIR"
+              echo "$(date '+%Y-%m-%d %H:%M:%S') - Deleted $DIR ($SIZE)"
+            else
+              echo "$(date '+%Y-%m-%d %H:%M:%S') - $DIR does not exist, skipping"
+            fi
+          done
         ''
       ];
       RunAtLoad = true;
