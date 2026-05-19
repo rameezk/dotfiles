@@ -3,6 +3,7 @@
   imports = [
     ./docx.nix
     ./drawio.nix
+    ./mermaid.nix
   ];
 
   options.ai.claude-skills = {

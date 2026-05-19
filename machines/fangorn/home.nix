@@ -54,6 +54,7 @@
   ai.enable = false;
   ai.claude-skills.docx.enable = true;
   ai.claude-skills.drawio.enable = true;
+  ai.claude-skills.mermaid.enable = true;
 
   fonts.enable = true;
 

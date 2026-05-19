@@ -5,6 +5,7 @@ dependencies each skill needs. Skill sources currently wired up:
 
 - [`anthropics/skills`](https://github.com/anthropics/skills) — flake input `claude-skills`
 - [`jgraph/drawio-mcp`](https://github.com/jgraph/drawio-mcp) — flake input `drawio-skill`
+- Local `modules/ai/claude-skills/mermaid/` — custom skill, no external source
 
 Skills are symlinked into `~/.claude/skills/<name>` (Nix store path,
 read-only), so they bump in lockstep with their flake input.
@@ -49,6 +50,25 @@ accepting tracked changes. Add the cask in your machine's `casks.nix`:
 ```nix
 "libreoffice"
 ```
+
+### mermaid (`mermaid.nix`)
+
+Generates `.mmd` mermaid source files and renders them to SVG/PNG/PDF using
+[`mermaid-cli`](https://github.com/mermaid-js/mermaid-cli) (`mmdc`).
+
+Pulls in:
+- The `SKILL.md` from `modules/ai/claude-skills/mermaid/` (local, vendored
+  in this repo since upstream skills don't know about Nix).
+
+No system packages or casks needed. The skill invokes
+`nix run nixpkgs#mermaid-cli` on demand, which fetches and runs `mmdc`
+(including its puppeteer/chromium dependency) from nixpkgs. First
+invocation has download latency and needs network; subsequent runs are
+cached in the Nix store.
+
+Note: `nix run nixpkgs#…` resolves against the flake registry's nixpkgs,
+not this repo's pinned `nixpkgs`. Acceptable for v1; switch to
+`github:NixOS/nixpkgs/<rev>#mermaid-cli` if lockstep is needed.
 
 ## First-time setup
 
