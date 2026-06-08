@@ -112,7 +112,6 @@ let
     # colorscheme
     # set -U fish_color_command b8bb26 # fish's default command color is a horrible dark blue, make it a nicer green
 
-    # pipx
     fish_add_path -P ~/.local/bin
 
     # Make gpg-agent play nicely with tmux

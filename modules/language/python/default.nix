@@ -27,22 +27,10 @@
         name = "python3";
         desc = "Python 3";
       }
-      {
-        type = "command";
-        name = "pipx";
-        desc = "Pipx";
-      }
     ];
 
     home.packages = with pkgs; [
-      (python312.withPackages (
-        ps:
-        with ps;
-        [
-          pipx
-        ]
-        ++ lib.flatten (map (f: f ps) config.language.python.extraPackages)
-      ))
+      (python312.withPackages (ps: lib.flatten (map (f: f ps) config.language.python.extraPackages)))
       stdenv.cc.cc.lib
     ];
   };
