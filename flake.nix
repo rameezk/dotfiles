@@ -2,7 +2,7 @@
   description = "Rameez's configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "https://flakehub.com/f/DeterminateSystems/nixpkgs-weekly/0.1";
 
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
@@ -16,6 +16,7 @@
 
     nixvim = {
       url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
@@ -45,9 +46,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    catppuccin.url = "github:catppuccin/nix";
+    catppuccin = {
+      url = "github:catppuccin/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    auto-volume-toggler.url = "github:rameezk/auto-volume-toggler";
+    auto-volume-toggler = {
+      url = "github:rameezk/auto-volume-toggler";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";

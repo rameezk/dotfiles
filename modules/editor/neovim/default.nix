@@ -24,6 +24,7 @@
       enable = true;
 
       nixpkgs.config = pkgs.config;
+      nixpkgs.source = pkgs.path;
 
       viAlias = true;
       vimAlias = true;
