@@ -13,7 +13,8 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.file.".claude/skills/drawio".source = "${inputs.drawio-skill}/skill-cli/drawio";
+    home.file.".claude/skills/drawio".source =
+      "${inputs.drawio-skill}/plugins/claude-code/skills/drawio";
 
     verify.checks = [
       {
