@@ -119,6 +119,9 @@ in
         set -g @catppuccin_window_text " #W"
                 run ~/.config/tmux/plugins/catppuccin/tmux/catppuccin.tmux
 
+        set -gF message-style "fg=#{@thm_teal},bg=#{@thm_mantle},fill=#{@thm_mantle}"
+        set -gF message-command-style "fg=#{@thm_teal},bg=#{@thm_mantle},fill=#{@thm_mantle}"
+
         set -g status-right-length 100
         set -g status-left-length 100
         set -g status-left ""
