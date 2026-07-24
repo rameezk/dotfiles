@@ -135,7 +135,30 @@ let
     fish_add_path -P ~/.local/bin
   '';
 
-  shellInit = baseShellInit + proxyConfig;
+  themeCfg = config.theme.catppuccin;
+  themeFollowsAppearance = (themeCfg.enable or false) && (themeCfg.followAppearance or false);
+
+  appearanceConfig = lib.optionalString themeFollowsAppearance ''
+
+    theme-sync
+  '';
+
+  appearanceFunctions = lib.optionalAttrs themeFollowsAppearance {
+    theme-reload = {
+      description = "re-apply the catppuccin flavour after a macOS appearance change";
+      body = ''
+        theme-sync --force
+
+        if defaults read -g AppleInterfaceStyle >/dev/null 2>&1
+          echo "[..] theme is now dark (${themeCfg.flavour})"
+        else
+          echo "[..] theme is now light (${themeCfg.lightFlavour})"
+        end
+      '';
+    };
+  };
+
+  shellInit = baseShellInit + proxyConfig + appearanceConfig;
 in
 {
 
@@ -211,7 +234,8 @@ in
         };
       }
       // gitFunctions
-      // kubernetesFunctions;
+      // kubernetesFunctions
+      // appearanceFunctions;
 
       plugins = [
         {

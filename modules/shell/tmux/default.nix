@@ -111,7 +111,9 @@ in
 
 
                 set -g status-position top
-                set -g @catppuccin_flavor "frappe"
+                if-shell 'command -v defaults >/dev/null 2>&1 && ! defaults read -g AppleInterfaceStyle >/dev/null 2>&1' \
+                  'set -g @catppuccin_flavor "${config.theme.catppuccin.lightFlavour}"' \
+                  'set -g @catppuccin_flavor "${config.theme.catppuccin.flavour}"'
                 # set -g status-bg "#485270"
         set -g @catppuccin_window_status_style "rounded"
         set -g @catppuccin_window_default_text " #W"
@@ -128,6 +130,8 @@ in
         set -g status-right "#{E:@catppuccin_status_application}"
         set -ag status-right "#{E:@catppuccin_status_session}"
         set -ag status-right "#{E:@catppuccin_status_uptime}"
+        ${lib.optionalString (config.theme.catppuccin.followAppearance or false
+        ) ''set -ag status-right "#(${config.theme.catppuccin.syncPackage}/bin/theme-sync)"''}
 
 
       '';

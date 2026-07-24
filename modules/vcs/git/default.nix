@@ -105,7 +105,11 @@ in
     programs.git = {
       enable = true;
       signing.format = "openpgp";
-      includes = forAllExtraSigningKeys mkIncludeSettings cfg.extraSigningKeys;
+      includes =
+        forAllExtraSigningKeys mkIncludeSettings cfg.extraSigningKeys
+        ++ lib.optional (config.theme.catppuccin.followAppearance or false) {
+          path = "${config.home.homeDirectory}/.config/git/delta-active.inc";
+        };
       settings = {
         user = {
           name = cfg.userName;
@@ -178,11 +182,9 @@ in
         };
         delta = {
           navigate = true;
-          light = false;
           side-by-side = true;
           hyperlinks = true;
           line-numbers = true;
-          syntax-theme = "Catppuccin Frappe";
         };
         diff = {
           colorMoved = "default";

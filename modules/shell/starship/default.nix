@@ -1,11 +1,34 @@
-{ lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   cfg = config.prompt.starship;
+
+  theme = config.theme.catppuccin;
+  lightPalette = lib.importTOML "${config.catppuccin.sources.starship}/${theme.lightFlavour}.toml";
+
+  lightSettings =
+    config.programs.starship.settings
+    // {
+      palette = "catppuccin_${theme.lightFlavour}";
+    }
+    // lightPalette;
+
+  tomlFormat = pkgs.formats.toml { };
 in
 {
   options.prompt.starship = {
     enable = lib.mkEnableOption "enable starship prompt";
   };
+
+  config.xdg.configFile."starship-light.toml" =
+    lib.mkIf (cfg.enable && theme.enable && theme.followAppearance)
+      {
+        source = tomlFormat.generate "starship-light.toml" lightSettings;
+      };
 
   config.programs.starship = lib.mkIf cfg.enable {
     enable = true;

@@ -34,7 +34,11 @@
         enable = true;
         settings = {
           transparent_background = true;
-          flavour = "frappe";
+          flavour = "auto";
+          background = {
+            light = "latte";
+            dark = "frappe";
+          };
           integrations = {
             cmp = true;
             gitsigns = true;
