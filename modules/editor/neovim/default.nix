@@ -30,23 +30,6 @@
       vimAlias = true;
       vimdiffAlias = true;
 
-      colorschemes.catppuccin = {
-        enable = true;
-        settings = {
-          transparent_background = true;
-          flavour = "auto";
-          background = {
-            light = "latte";
-            dark = "frappe";
-          };
-          integrations = {
-            cmp = true;
-            gitsigns = true;
-            treesitter = true;
-          };
-        };
-      };
-
       plugins = {
         lualine.enable = true;
         transparent.enable = true;

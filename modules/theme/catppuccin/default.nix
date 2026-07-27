@@ -104,35 +104,124 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable (
-    lib.mkMerge [
-      {
-        catppuccin = {
-          enable = true;
-          autoEnable = true;
-          flavor = cfg.flavour;
-        };
-      }
+  config = lib.mkMerge [
+    (lib.mkIf (!cfg.enable) {
+      catppuccin = {
+        enable = false;
+        autoEnable = false;
+      };
+    })
 
-      (lib.mkIf cfg.followAppearance {
-        home.packages = [ themeSync ];
+    (lib.mkIf cfg.enable (
+      lib.mkMerge [
+        {
+          catppuccin = {
+            enable = true;
+            autoEnable = true;
+            flavor = cfg.flavour;
 
-        home.sessionVariables = {
-          STARSHIP_CONFIG = lib.mkForce "${configDir}/starship-active.toml";
-          FZF_DEFAULT_OPTS_FILE = lib.mkForce "${configDir}/fzf-active.rc";
-          BAT_CONFIG_PATH = "${configDir}/bat-active.conf";
-        };
+            tmux = {
+              enable = false;
+              extraConfig = ''
+                set -g @catppuccin_window_right_separator "█ "
+                set -g @catppuccin_window_number_position "right"
+                set -g @catppuccin_window_middle_separator " | "
 
-        xdg.configFile = {
-          "git/delta-dark.inc".text = deltaInclude cfg.flavour false;
-          "git/delta-light.inc".text = deltaInclude cfg.lightFlavour true;
-          "bat-light.conf".text = batConfig cfg.lightFlavour;
-        };
+                set -g @catppuccin_window_default_fill "none"
 
-        home.activation.themeSync = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-          run ${themeSync}/bin/theme-sync || true
-        '';
-      })
-    ]
-  );
+                set -g @catppuccin_window_current_fill "all"
+
+                set -g @catppuccin_status_modules_right "date_time session"
+
+                set -g @catppuccin_status_left_separator "█"
+                set -g @catppuccin_status_right_separator "█"
+
+                set -g @catppuccin_date_time_text "%a %d/%m %H:%M"
+              '';
+            };
+          };
+
+          theme.active = {
+            enable = true;
+            darkFlavour = cfg.flavour;
+            lightFlavour = cfg.lightFlavour;
+            followAppearance = cfg.followAppearance;
+            syncPackage = themeSync;
+
+            weztermScheme = {
+              dark = themeName cfg.flavour;
+              light = themeName cfg.lightFlavour;
+            };
+
+            starshipLightSettings = {
+              palette = "catppuccin_${cfg.lightFlavour}";
+            }
+            // lib.importTOML "${config.catppuccin.sources.starship}/${cfg.lightFlavour}.toml";
+
+            tmuxConfig = ''
+              if-shell 'command -v defaults >/dev/null 2>&1 && ! defaults read -g AppleInterfaceStyle >/dev/null 2>&1' \
+                'set -g @catppuccin_flavor "${cfg.lightFlavour}"' \
+                'set -g @catppuccin_flavor "${cfg.flavour}"'
+
+              set -g @catppuccin_window_status_style "rounded"
+              set -g @catppuccin_window_default_text " #W"
+              set -g @catppuccin_window_current_text " #W#{?window_zoomed_flag,(),}"
+              set -g @catppuccin_window_text " #W"
+              run ~/.config/tmux/plugins/catppuccin/tmux/catppuccin.tmux
+
+              set -gF message-style "fg=#{@thm_teal},bg=#{@thm_mantle},fill=#{@thm_mantle}"
+              set -gF message-command-style "fg=#{@thm_teal},bg=#{@thm_mantle},fill=#{@thm_mantle}"
+
+              set -g status-right-length 100
+              set -g status-left-length 100
+              set -g status-left ""
+              set -g status-right "#{E:@catppuccin_status_application}"
+              set -ag status-right "#{E:@catppuccin_status_session}"
+              set -ag status-right "#{E:@catppuccin_status_uptime}"
+              ${lib.optionalString cfg.followAppearance ''set -ag status-right "#(${themeSync}/bin/theme-sync)"''}
+            '';
+          };
+        }
+
+        (lib.mkIf config.editor.neovim.enable {
+          programs.nixvim.colorschemes.catppuccin = {
+            enable = true;
+            settings = {
+              transparent_background = true;
+              flavour = "auto";
+              background = {
+                light = cfg.lightFlavour;
+                dark = cfg.flavour;
+              };
+              integrations = {
+                cmp = true;
+                gitsigns = true;
+                treesitter = true;
+              };
+            };
+          };
+        })
+
+        (lib.mkIf cfg.followAppearance {
+          home.packages = [ themeSync ];
+
+          home.sessionVariables = {
+            STARSHIP_CONFIG = lib.mkForce "${configDir}/starship-active.toml";
+            FZF_DEFAULT_OPTS_FILE = lib.mkForce "${configDir}/fzf-active.rc";
+            BAT_CONFIG_PATH = "${configDir}/bat-active.conf";
+          };
+
+          xdg.configFile = {
+            "git/delta-dark.inc".text = deltaInclude cfg.flavour false;
+            "git/delta-light.inc".text = deltaInclude cfg.lightFlavour true;
+            "bat-light.conf".text = batConfig cfg.lightFlavour;
+          };
+
+          home.activation.themeSync = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+            run ${themeSync}/bin/theme-sync || true
+          '';
+        })
+      ]
+    ))
+  ];
 }

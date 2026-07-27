@@ -107,7 +107,7 @@ in
       signing.format = "openpgp";
       includes =
         forAllExtraSigningKeys mkIncludeSettings cfg.extraSigningKeys
-        ++ lib.optional (config.theme.catppuccin.followAppearance or false) {
+        ++ lib.optional config.theme.active.followAppearance {
           path = "${config.home.homeDirectory}/.config/git/delta-active.inc";
         };
       settings = {

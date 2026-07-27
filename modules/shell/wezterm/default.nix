@@ -17,9 +17,9 @@ in
 
         local function scheme_for_appearance(appearance)
           if appearance:find 'Dark' then
-            return 'Catppuccin Frappe'
+            return '${config.theme.active.weztermScheme.dark}'
           else
-            return 'Catppuccin Latte'
+            return '${config.theme.active.weztermScheme.light}'
           end
         end
 

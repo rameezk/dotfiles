@@ -51,6 +51,23 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    rose-pine-starship = {
+      url = "github:rose-pine/starship";
+      flake = false;
+    };
+    rose-pine-fzf = {
+      url = "github:rose-pine/fzf";
+      flake = false;
+    };
+    rose-pine-tm-theme = {
+      url = "github:rose-pine/tm-theme";
+      flake = false;
+    };
+    rose-pine-fish = {
+      url = "github:rose-pine/fish";
+      flake = false;
+    };
+
     auto-volume-toggler = {
       url = "github:rameezk/auto-volume-toggler";
       inputs.nixpkgs.follows = "nixpkgs";

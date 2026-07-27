@@ -135,8 +135,8 @@ let
     fish_add_path -P ~/.local/bin
   '';
 
-  themeCfg = config.theme.catppuccin;
-  themeFollowsAppearance = (themeCfg.enable or false) && (themeCfg.followAppearance or false);
+  themeCfg = config.theme.active;
+  themeFollowsAppearance = themeCfg.enable && themeCfg.followAppearance;
 
   appearanceConfig = lib.optionalString themeFollowsAppearance ''
 
@@ -145,12 +145,12 @@ let
 
   appearanceFunctions = lib.optionalAttrs themeFollowsAppearance {
     theme-reload = {
-      description = "re-apply the catppuccin flavour after a macOS appearance change";
+      description = "re-apply the theme flavour after a macOS appearance change";
       body = ''
         theme-sync --force
 
         if defaults read -g AppleInterfaceStyle >/dev/null 2>&1
-          echo "[..] theme is now dark (${themeCfg.flavour})"
+          echo "[..] theme is now dark (${themeCfg.darkFlavour})"
         else
           echo "[..] theme is now light (${themeCfg.lightFlavour})"
         end

@@ -6,8 +6,6 @@
 }:
 let
   cfg = config.tmux;
-
-  catppuccinThemeEnabled = config.theme.catppuccin.enable or false;
 in
 {
 
@@ -16,26 +14,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-
-    catppuccin.tmux = lib.mkIf catppuccinThemeEnabled {
-      enable = false;
-      extraConfig = ''
-        set -g @catppuccin_window_right_separator "█ "
-        set -g @catppuccin_window_number_position "right"
-        set -g @catppuccin_window_middle_separator " | "
-
-        set -g @catppuccin_window_default_fill "none"
-
-        set -g @catppuccin_window_current_fill "all"
-
-        set -g @catppuccin_status_modules_right "date_time session"
-
-        set -g @catppuccin_status_left_separator "█"
-        set -g @catppuccin_status_right_separator "█"
-
-        set -g @catppuccin_date_time_text "%a %d/%m %H:%M"
-      '';
-    };
 
     programs.tmux = {
       enable = true;
@@ -111,29 +89,8 @@ in
 
 
                 set -g status-position top
-                if-shell 'command -v defaults >/dev/null 2>&1 && ! defaults read -g AppleInterfaceStyle >/dev/null 2>&1' \
-                  'set -g @catppuccin_flavor "${config.theme.catppuccin.lightFlavour}"' \
-                  'set -g @catppuccin_flavor "${config.theme.catppuccin.flavour}"'
-                # set -g status-bg "#485270"
-        set -g @catppuccin_window_status_style "rounded"
-        set -g @catppuccin_window_default_text " #W"
-        set -g @catppuccin_window_current_text " #W#{?window_zoomed_flag,(),}"
-        set -g @catppuccin_window_text " #W"
-                run ~/.config/tmux/plugins/catppuccin/tmux/catppuccin.tmux
 
-        set -gF message-style "fg=#{@thm_teal},bg=#{@thm_mantle},fill=#{@thm_mantle}"
-        set -gF message-command-style "fg=#{@thm_teal},bg=#{@thm_mantle},fill=#{@thm_mantle}"
-
-        set -g status-right-length 100
-        set -g status-left-length 100
-        set -g status-left ""
-        set -g status-right "#{E:@catppuccin_status_application}"
-        set -ag status-right "#{E:@catppuccin_status_session}"
-        set -ag status-right "#{E:@catppuccin_status_uptime}"
-        ${lib.optionalString (config.theme.catppuccin.followAppearance or false
-        ) ''set -ag status-right "#(${config.theme.catppuccin.syncPackage}/bin/theme-sync)"''}
-
-
+        ${config.theme.active.tmuxConfig}
       '';
 
       plugins = with pkgs.tmuxPlugins; [

@@ -46,9 +46,10 @@
     }
   ];
 
-  theme.catppuccin = {
+  theme.rose-pine = {
     enable = true;
-    flavour = "frappe";
+    flavour = "moon";
+    lightFlavour = "dawn";
   };
 
   ai.enable = false;

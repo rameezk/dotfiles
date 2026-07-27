@@ -7,15 +7,9 @@
 let
   cfg = config.prompt.starship;
 
-  theme = config.theme.catppuccin;
-  lightPalette = lib.importTOML "${config.catppuccin.sources.starship}/${theme.lightFlavour}.toml";
+  theme = config.theme.active;
 
-  lightSettings =
-    config.programs.starship.settings
-    // {
-      palette = "catppuccin_${theme.lightFlavour}";
-    }
-    // lightPalette;
+  lightSettings = config.programs.starship.settings // theme.starshipLightSettings;
 
   tomlFormat = pkgs.formats.toml { };
 in
