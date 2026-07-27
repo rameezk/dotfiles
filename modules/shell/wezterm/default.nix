@@ -32,6 +32,17 @@ in
 
         config.color_scheme = scheme_for_appearance(current_appearance())
 
+        ${lib.optionalString
+          (config.theme.active.followAppearance && config.theme.active.syncPackage != null)
+          ''
+            wezterm.on('window-config-reloaded', function()
+              wezterm.background_child_process {
+                '${config.theme.active.syncPackage}/bin/theme-sync',
+              }
+            end)
+          ''
+        }
+
         config.font = wezterm.font_with_fallback { 
           'MesloLGS NF',
           'JetBrains Mono'
