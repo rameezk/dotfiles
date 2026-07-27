@@ -26,6 +26,7 @@
   "microsoft-teams"
   "microsoft-word"
   "obsidian"
+  "opensuperwhisper"
   "podman-desktop"
   "proton-mail"
   "protonvpn"
