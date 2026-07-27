@@ -145,18 +145,26 @@ let
         delta_target="$config_dir/git/delta-light.inc"
         bat_target="$config_dir/bat-light.conf"
         eza_target="$config_dir/eza/theme-light.yml"
+        fish_target="${fishThemes}/${slug cfg.lightFlavour}.fish"
+        fzf_target="${fzfThemes}/${slug cfg.lightFlavour}.rc"
+        appearance="light"
       else
         delta_target="$config_dir/git/delta-dark.inc"
         bat_target="$config_dir/bat/config"
         eza_target="$config_dir/eza/theme-dark.yml"
+        fish_target="${fishThemes}/${slug cfg.flavour}.fish"
+        fzf_target="${fzfThemes}/${slug cfg.flavour}.rc"
+        appearance="dark"
       fi
 
-      mkdir -p "$config_dir/git" "$config_dir/eza"
+      mkdir -p "$config_dir/git" "$config_dir/eza" "$config_dir/fish"
       ln -sfn "$delta_target" "$config_dir/git/delta-active.inc"
       ln -sfn "$bat_target" "$config_dir/bat-active.conf"
       ln -sfn "$eza_target" "$config_dir/eza/theme.yml"
-      ln -sfn "${fzfThemes}/$(if [ "$flavour" = "main" ]; then echo rose-pine; else echo "rose-pine-$flavour"; fi).rc" "$config_dir/fzf-active.rc"
+      ln -sfn "$fish_target" "$config_dir/fish/rose-pine-active.fish"
+      ln -sfn "$fzf_target" "$config_dir/fzf-active.rc"
       ln -sfn "$starship_target" "$active"
+      printf '%s\n' "$appearance" > "$config_dir/theme-appearance"
     '';
   };
 in
@@ -251,23 +259,40 @@ in
         };
 
         programs.fish.interactiveShellInit = lib.mkAfter ''
-          if defaults read -g AppleInterfaceStyle >/dev/null 2>&1
-            source ${fishThemes}/${slug cfg.flavour}.fish
-          else
-            source ${fishThemes}/${slug cfg.lightFlavour}.fish
+          function __rose_pine_apply --on-event fish_prompt
+              set -l target (path resolve $__fish_config_dir/rose-pine-active.fish)
+              if test -e "$target"; and test "$target" != "$__rose_pine_active"
+                  set -g __rose_pine_active "$target"
+                  source "$target"
+              end
           end
+          __rose_pine_apply
         '';
 
         programs.starship.settings = starshipSettings cfg.flavour;
       }
 
       (lib.mkIf config.editor.neovim.enable {
-        programs.nixvim.colorschemes.rose-pine = {
-          enable = true;
-          settings = {
-            variant = "auto";
-            dark_variant = cfg.flavour;
-            styles.transparency = true;
+        programs.nixvim = {
+          extraConfigLuaPre = ''
+            do
+              local config_dir = vim.env.XDG_CONFIG_HOME or (vim.env.HOME .. "/.config")
+              local f = io.open(config_dir .. "/theme-appearance", "r")
+              if f then
+                local appearance = f:read("l")
+                f:close()
+                vim.o.background = appearance == "light" and "light" or "dark"
+              end
+            end
+          '';
+
+          colorschemes.rose-pine = {
+            enable = true;
+            settings = {
+              variant = "auto";
+              dark_variant = cfg.flavour;
+              styles.transparency = true;
+            };
           };
         };
       })
@@ -290,7 +315,7 @@ in
         };
 
         home.activation.themeSync = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-          run ${themeSync}/bin/theme-sync || true
+          run ${themeSync}/bin/theme-sync --force || true
         '';
       })
     ]
