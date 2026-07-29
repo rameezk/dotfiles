@@ -11,6 +11,7 @@
     ./tmux
     ./wezterm
     ./starship
+    ./herdr
   ];
 
   options = {
