@@ -6,6 +6,7 @@
 }:
 {
   imports = [
+    ./agents
     ./claude-skills
   ];
 

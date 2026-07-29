@@ -53,6 +53,7 @@
   };
 
   ai.enable = false;
+  ai.agents.enable = true;
   ai.claude-skills.docx.enable = true;
   ai.claude-skills.drawio.enable = true;
   ai.claude-skills.mermaid.enable = true;
