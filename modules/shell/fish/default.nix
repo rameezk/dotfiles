@@ -175,6 +175,8 @@ in
       shellAliases = { } // podmanAliases;
 
       shellAbbrs = {
+        cc = "claude --permission-mode auto";
+
         # files
         ls = "eza";
         l = "eza -la --git";
