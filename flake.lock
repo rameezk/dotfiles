@@ -132,6 +132,22 @@
         "type": "github"
       }
     },
+    "herdr-skill": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1785370696,
+        "narHash": "sha256-F2tUBNjCwYBjTem23ldwCkPBmqBwOUBTAVTCz/6ZsUk=",
+        "owner": "herdrdev",
+        "repo": "herdr",
+        "rev": "cfa112e741eef8565261a0d404d92ad425829f3b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "herdrdev",
+        "repo": "herdr",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -318,6 +334,7 @@
         "claude-skills": "claude-skills",
         "drawio-skill": "drawio-skill",
         "firefox-addons": "firefox-addons",
+        "herdr-skill": "herdr-skill",
         "home-manager": "home-manager",
         "homebrew-bundle": "homebrew-bundle",
         "homebrew-cask": "homebrew-cask",

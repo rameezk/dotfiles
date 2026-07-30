@@ -5,6 +5,7 @@ dependencies each skill needs. Skill sources currently wired up:
 
 - [`anthropics/skills`](https://github.com/anthropics/skills) — flake input `claude-skills`
 - [`jgraph/drawio-mcp`](https://github.com/jgraph/drawio-mcp) — flake input `drawio-skill`
+- [`herdrdev/herdr`](https://github.com/herdrdev/herdr) — flake input `herdr-skill`
 - Local `modules/ai/claude-skills/mermaid/` — custom skill, no external source
 
 Skills are symlinked into `~/.claude/skills/<name>` (Nix store path,
@@ -51,6 +52,20 @@ accepting tracked changes. Add the cask in your machine's `casks.nix`:
 "libreoffice"
 ```
 
+### herdr (`herdr.nix`)
+
+Lets Claude drive the [herdr](https://herdr.dev) agent multiplexer: manage
+workspaces, split panes, run commands, read pane output, and coordinate with
+neighbouring agents via the `herdr` CLI.
+
+Pulls in:
+- The `SKILL.md` from `herdrdev/herdr` `skills/herdr/`
+
+Requires the `herdr` CLI, which comes from the separate `herdr` module
+(`herdr.enable = true;`). The skill only activates meaningfully when Claude is
+launched from inside a herdr pane, where `HERDR_ENV=1` and the local herdr
+socket are available.
+
 ### mermaid (`mermaid.nix`)
 
 Generates `.mmd` mermaid source files and renders them to SVG/PNG/PDF using
@@ -85,6 +100,7 @@ rm -rf ~/.claude/skills/docx
 ```sh
 nix flake update claude-skills   # anthropics/skills (docx, etc.)
 nix flake update drawio-skill    # jgraph/drawio-mcp (drawio)
+nix flake update herdr-skill     # herdrdev/herdr (herdr)
 ./bin/switch
 ```
 

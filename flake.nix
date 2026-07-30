@@ -87,6 +87,11 @@
       url = "github:jgraph/drawio-mcp";
       flake = false;
     };
+
+    herdr-skill = {
+      url = "github:herdrdev/herdr";
+      flake = false;
+    };
   };
 
   outputs =

@@ -3,6 +3,7 @@
   imports = [
     ./docx.nix
     ./drawio.nix
+    ./herdr.nix
     ./mermaid.nix
   ];
 
