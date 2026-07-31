@@ -147,6 +147,7 @@ let
         eza_target="$config_dir/eza/theme-light.yml"
         fish_target="${fishThemes}/${slug cfg.lightFlavour}.fish"
         fzf_target="${fzfThemes}/${slug cfg.lightFlavour}.rc"
+        hunk_target="$config_dir/hunk/config-light.toml"
         appearance="light"
       else
         delta_target="$config_dir/git/delta-dark.inc"
@@ -154,6 +155,7 @@ let
         eza_target="$config_dir/eza/theme-dark.yml"
         fish_target="${fishThemes}/${slug cfg.flavour}.fish"
         fzf_target="${fzfThemes}/${slug cfg.flavour}.rc"
+        hunk_target="$config_dir/hunk/config-dark.toml"
         appearance="dark"
       fi
 
@@ -164,6 +166,10 @@ let
       ln -sfn "$fish_target" "$config_dir/fish/rose-pine-active.fish"
       ln -sfn "$fzf_target" "$config_dir/fzf-active.rc"
       ln -sfn "$starship_target" "$active"
+      ${lib.optionalString config.vcs.hunk.enable ''
+        mkdir -p "$config_dir/hunk"
+        ln -sfn "$hunk_target" "$config_dir/hunk/config.toml"
+      ''}
       printf '%s\n' "$appearance" > "$config_dir/theme-appearance"
     '';
   };
@@ -294,6 +300,13 @@ in
               styles.transparency = true;
             };
           };
+        };
+      })
+
+      (lib.mkIf config.vcs.hunk.enable {
+        vcs.hunk = {
+          darkTheme = slug cfg.flavour;
+          lightTheme = slug cfg.lightFlavour;
         };
       })
 

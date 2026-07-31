@@ -61,14 +61,20 @@ let
       if [ "$flavour" = "${cfg.lightFlavour}" ]; then
         delta_target="$config_dir/git/delta-light.inc"
         bat_target="$config_dir/bat-light.conf"
+        hunk_target="$config_dir/hunk/config-light.toml"
       else
         delta_target="$config_dir/git/delta-dark.inc"
         bat_target="$config_dir/bat/config"
+        hunk_target="$config_dir/hunk/config-dark.toml"
       fi
 
       mkdir -p "$config_dir/git"
       ln -sfn "$delta_target" "$config_dir/git/delta-active.inc"
       ln -sfn "$bat_target" "$config_dir/bat-active.conf"
+      ${lib.optionalString config.vcs.hunk.enable ''
+        mkdir -p "$config_dir/hunk"
+        ln -sfn "$hunk_target" "$config_dir/hunk/config.toml"
+      ''}
       ln -sfn "${config.catppuccin.sources.fzf}/catppuccin-fzf-$flavour.rc" "$config_dir/fzf-active.rc"
       ln -sfn "$starship_target" "$active"
     '';
@@ -199,6 +205,13 @@ in
                 treesitter = true;
               };
             };
+          };
+        })
+
+        (lib.mkIf config.vcs.hunk.enable {
+          vcs.hunk = {
+            darkTheme = "catppuccin-${cfg.flavour}";
+            lightTheme = "catppuccin-${cfg.lightFlavour}";
           };
         })
 

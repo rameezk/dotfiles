@@ -77,6 +77,8 @@
     signingKey = "B18F680AF21C6B4A";
   };
 
+  vcs.hunk.enable = true;
+
   language = {
     python.enable = true;
     java = {
