@@ -13,3 +13,4 @@ build() {
 }
 
 build keylights "Key Lights"
+build launcher "launcher"

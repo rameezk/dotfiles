@@ -1,6 +1,7 @@
 { ... }:
 {
   imports = [
+    ./alfred
     ./window-management
   ];
 }

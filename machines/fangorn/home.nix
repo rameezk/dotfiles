@@ -59,6 +59,8 @@
   ai.claude-skills.herdr.enable = true;
   ai.claude-skills.mermaid.enable = true;
 
+  macos.alfred.enable = true;
+
   fonts.enable = true;
 
   shell.enable = true;
