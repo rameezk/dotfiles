@@ -85,6 +85,10 @@ let
   };
 
   baseShellInit = ''
+    if test "$HERDR_ENV" = 1
+      set -gx MC_SID herdr
+    end
+
     # Disable fish greeting message
     set fish_greeting
 
