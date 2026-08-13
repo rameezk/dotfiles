@@ -12,7 +12,7 @@ let
     pname = "claude-docx-skill-deps";
     version = "0.0.0";
     src = ./docx-npm;
-    npmDepsHash = "sha256-Tb6LbscV96Dn5le6908veVgLFoLrXZ8gkSc0rR8p66g=";
+    npmDepsHash = "sha256-9ApfMPHtkdie+tu99tjbZs0yeQM52faF47dvdM80Jh0=";
     dontNpmBuild = true;
     installPhase = ''
       runHook preInstall
