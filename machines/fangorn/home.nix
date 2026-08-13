@@ -11,6 +11,8 @@
 
     age.keyFile = "/Users/rameezk/.config/sops/age/keys.txt";
 
+    defaultSecretsMountPoint = "/Users/rameezk/.config/sops-nix/secrets.d";
+
     secrets = {
       "private_keys/ssh/rameezk" = {
         path = "/Users/rameezk/.ssh/id_ed25519";
@@ -80,6 +82,17 @@
   };
 
   vcs.hunk.enable = true;
+
+  programs.ssh = {
+    enable = true;
+    enableDefaultConfig = false;
+    settings."github.com" = {
+      IdentityFile = "~/.ssh/id_ed25519";
+      AddKeysToAgent = "yes";
+    };
+  };
+
+  home.file.".ssh/id_ed25519.pub".source = ../../keys/id_ed25519.pub;
 
   language = {
     python.enable = true;
