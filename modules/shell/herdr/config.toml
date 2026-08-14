@@ -12,8 +12,10 @@ focus_pane_left = "prefix+left"
 focus_pane_down = "prefix+down"
 focus_pane_up = "prefix+up"
 focus_pane_right = "prefix+right"
+next_agent = "prefix+shift+down"
+previous_agent = "prefix+shift+up"
 
 [ui]
 show_agent_labels_on_pane_borders = false
-agent_panel_sort = "spaces"
+agent_panel_sort = "priority"
 mouse_scroll_lines = 6
