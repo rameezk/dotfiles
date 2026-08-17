@@ -18,6 +18,8 @@ in
         enable-normalization-flatten-containers = true
         enable-normalization-opposite-orientation-for-nested-containers = true
 
+        automatically-unhide-macos-hidden-apps = true
+
         accordion-padding = 30
 
         default-root-container-layout = 'tiles'

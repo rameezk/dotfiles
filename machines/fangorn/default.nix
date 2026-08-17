@@ -37,7 +37,15 @@ in
       autohide = true;
       show-recents = false;
       mru-spaces = false;
+      orientation = "bottom";
+      expose-group-apps = true;
     };
+
+    spaces.spans-displays = true;
+
+    universalaccess.reduceMotion = true;
+
+    finder.CreateDesktop = false;
 
     # Might require you to logout to take effect
     NSGlobalDomain = {
