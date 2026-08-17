@@ -44,7 +44,8 @@ done
 
 if [ "$changed" -eq 1 ]; then
 	echo "alfred: reloading"
-	/usr/bin/osascript -e 'tell application "Alfred" to quit' >/dev/null 2>&1 || true
+	alfred_bundle_id="com.runningwithcrayons.Alfred"
+	/usr/bin/osascript -e "tell application id \"$alfred_bundle_id\" to quit" >/dev/null 2>&1 || true
 	sleep 1
-	/usr/bin/open -a Alfred >/dev/null 2>&1 || true
+	/usr/bin/open -b "$alfred_bundle_id" >/dev/null 2>&1 || true
 fi
