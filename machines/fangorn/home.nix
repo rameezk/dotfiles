@@ -62,6 +62,7 @@
   ai.claude-skills.mermaid.enable = true;
 
   macos.alfred.enable = true;
+  macos.karabiner.enable = true;
 
   fonts.enable = true;
 
