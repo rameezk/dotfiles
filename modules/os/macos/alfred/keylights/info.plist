@@ -27,7 +27,7 @@
 	<key>description</key>
 	<string>Toggle the study key lights by running the macOS Shortcut.</string>
 	<key>disabled</key>
-	<false/>
+	<true/>
 	<key>name</key>
 	<string>Key Lights</string>
 	<key>objects</key>

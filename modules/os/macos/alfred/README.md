@@ -28,6 +28,13 @@ relaunches Alfred only when something changed. It can also be run by hand.
 Adding a new workflow is just a new folder with an `info.plist`; the next switch
 picks it up automatically.
 
+## Status
+
+Both workflows below are **disabled** (`disabled = true` in their `info.plist`):
+their `Hyper` hotkeys were retired and folded into AeroSpace launch mode (see
+`../window-management/aerospace-migration.md`). They stay linked but inactive,
+freeing `Hyper + F13/F14`. Re-enable by flipping `disabled` back to `false`.
+
 ## Key Lights
 
 Toggles the study key lights by running the macOS Shortcut `Toggle Key Lights`
