@@ -72,9 +72,9 @@ in
         ctrl-alt-cmd-equal = 'resize smart +50'
         ctrl-alt-cmd-s = 'layout tiles horizontal vertical'
         ctrl-alt-cmd-semicolon = 'mode manage'
-        ctrl-alt-cmd-o = 'mode launch'
-        ctrl-alt-cmd-shift-f14 = 'mode launch'
-        ctrl-alt-cmd-shift-f15 = 'mode manage'
+        ctrl-alt-cmd-space = 'mode launch'
+        ctrl-alt-cmd-shift-f13 = 'exec-and-forget /usr/bin/shortcuts run "Toggle Key Lights"'
+        ctrl-alt-cmd-shift-f14 = 'exec-and-forget open -a ScreenSaverEngine'
         ctrl-alt-cmd-r = 'reload-config'
 
         [mode.manage.binding]
@@ -99,8 +99,6 @@ in
         o = ['exec-and-forget open -a "Microsoft Outlook"', 'mode main']
         s = ['exec-and-forget open -a Slack', 'mode main']
         t = ['exec-and-forget open -a WezTerm', 'mode main']
-        k = ['exec-and-forget /usr/bin/shortcuts run "Toggle Key Lights"', 'mode main']
-        v = ['exec-and-forget open -a ScreenSaverEngine', 'mode main']
         ctrl-alt-cmd-a = ['exec-and-forget open -a Claude', 'mode main']
         ctrl-alt-cmd-b = ['exec-and-forget open -a "Google Chrome"', 'mode main']
         ctrl-alt-cmd-c = ['exec-and-forget open -a "Microsoft Teams"', 'mode main']
@@ -111,8 +109,6 @@ in
         ctrl-alt-cmd-o = ['exec-and-forget open -a "Microsoft Outlook"', 'mode main']
         ctrl-alt-cmd-s = ['exec-and-forget open -a Slack', 'mode main']
         ctrl-alt-cmd-t = ['exec-and-forget open -a WezTerm', 'mode main']
-        ctrl-alt-cmd-k = ['exec-and-forget /usr/bin/shortcuts run "Toggle Key Lights"', 'mode main']
-        ctrl-alt-cmd-v = ['exec-and-forget open -a ScreenSaverEngine', 'mode main']
         esc = 'mode main'
 
         [[on-window-detected]]
