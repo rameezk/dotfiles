@@ -57,8 +57,6 @@
 
   shell.enable = true;
 
-  macos.window-management.aerospace.enable = true;
-
   editor = {
     neovim.enable = true;
     jetbrains-vim-mode.enable = true;

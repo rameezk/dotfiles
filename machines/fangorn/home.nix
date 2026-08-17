@@ -63,6 +63,7 @@
 
   macos.alfred.enable = true;
   macos.karabiner.enable = true;
+  macos.window-management.aerospace.enable = true;
 
   fonts.enable = true;
 

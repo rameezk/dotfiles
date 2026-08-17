@@ -2,6 +2,7 @@
   "1password"
   "1password-cli"
   "alfred"
+  "nikitabobko/tap/aerospace"
   "claude"
   {
     name = "calibre";
