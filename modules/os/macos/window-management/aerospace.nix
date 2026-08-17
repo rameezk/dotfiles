@@ -78,10 +78,6 @@ in
         ctrl-alt-cmd-r = 'reload-config'
 
         [mode.manage.binding]
-        h = ['join-with left', 'mode main']
-        j = ['join-with down', 'mode main']
-        k = ['join-with up', 'mode main']
-        l = ['join-with right', 'mode main']
         ctrl-alt-cmd-h = ['join-with left', 'mode main']
         ctrl-alt-cmd-j = ['join-with down', 'mode main']
         ctrl-alt-cmd-k = ['join-with up', 'mode main']
@@ -99,16 +95,6 @@ in
         o = ['exec-and-forget open -a "Microsoft Outlook"', 'mode main']
         s = ['exec-and-forget open -a Slack', 'mode main']
         t = ['exec-and-forget open -a WezTerm', 'mode main']
-        ctrl-alt-cmd-a = ['exec-and-forget open -a Claude', 'mode main']
-        ctrl-alt-cmd-b = ['exec-and-forget open -a "Google Chrome"', 'mode main']
-        ctrl-alt-cmd-c = ['exec-and-forget open -a "Microsoft Teams"', 'mode main']
-        ctrl-alt-cmd-e = ['exec-and-forget open -a "IntelliJ IDEA"', 'mode main']
-        ctrl-alt-cmd-l = ['exec-and-forget open -a Todoist', 'mode main']
-        ctrl-alt-cmd-m = ['exec-and-forget open -a Safari', 'mode main']
-        ctrl-alt-cmd-n = ['exec-and-forget open -a Obsidian', 'mode main']
-        ctrl-alt-cmd-o = ['exec-and-forget open -a "Microsoft Outlook"', 'mode main']
-        ctrl-alt-cmd-s = ['exec-and-forget open -a Slack', 'mode main']
-        ctrl-alt-cmd-t = ['exec-and-forget open -a WezTerm', 'mode main']
         esc = 'mode main'
 
         [[on-window-detected]]
