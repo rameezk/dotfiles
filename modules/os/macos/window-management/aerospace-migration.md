@@ -45,21 +45,25 @@ key instead; the keys land in the same spots.
 | Reset / flatten workspace tree | `Caps + b` | `flatten-workspace-tree` |
 | Enter manage mode (to group windows) | `Caps + ;` | `mode manage` |
 | Join window with neighbour (in manage mode, auto-exits) | `Caps + h / j / k / l` | `join-with left/down/up/right` |
-| Enter launch mode (then an app/util key) | `Caps + o` | `mode launch` |
+| Enter launch mode (then an app key) | `Caps + Space` | `mode launch` |
 | Shrink / grow focused window | `Caps + - / =` | `resize smart -50 / +50` |
 | Reload config | `Caps + r` | `reload-config` |
 
 ## Launch mode (retired Alfred Hyper launchers)
 
-`Caps + o` enters launch mode; the next key opens the target and returns to main.
+`Caps + Space` enters launch mode; the next key opens the target and returns to main.
 Replaces the old Alfred `Hyper + <key>` launchers (folded in here so app-launching
 reuses the leader instead of the Hyper namespace the move tier now owns).
 
-Entry works per keyboard: built-in uses `Caps + o`; the Moonlander uses a key emitting
-`Hyper + F14` (`ctrl-alt-cmd-shift-f14`, which it already has). Once in, the app key is a
-bare letter - tap it on the normal layer and it opens + returns to main. Manage mode is
-the same shape: `Caps + ;` or `Hyper + F15` to enter, then `h/j/k/l` (positional, so on
-the Moonlander hold the WM layer and use `N/E/I/O`).
+Entry is a leader chord on both keyboards, so it's identical: built-in `Caps + Space`;
+Moonlander = WM-layer `Space` (emits `Super + Space`). Once in, the app key is a bare
+letter - tap it on the normal layer and it opens + returns to main. Manage mode is the
+same shape via `Super + ;` (built-in `Caps + ;`; Moonlander WM-layer `G`), then
+`h/j/k/l` (positional, so on the Moonlander hold the WM layer and use the direction
+keys). No dedicated F-key mode entries needed.
+
+Launch mode holds **apps only**; the two utilities are one-tap dedicated keys instead
+(see below).
 
 | Key | Opens | Command |
 | --- | --- | --- |
@@ -73,53 +77,70 @@ the Moonlander hold the WM layer and use `N/E/I/O`).
 | `o` | Microsoft Outlook | `open -a "Microsoft Outlook"` |
 | `s` | Slack | `open -a Slack` |
 | `t` | WezTerm | `open -a WezTerm` |
-| `k` | Key Lights (toggle) | `shortcuts run "Toggle Key Lights"` |
-| `v` | Screen Saver | `open -a ScreenSaverEngine` |
 
-Key letters match the old Alfred bindings; the two former function-key launchers get
-new mnemonics: `k` (Key Lights, was `F13`) and `v` (screensaVer, was `F14`).
+Key letters match the old Alfred bindings.
+
+### One-tap utility keys (not in a mode)
+
+Key Lights and Screen Saver are single dedicated `Hyper + F-key` presses, mapped by
+AeroSpace to a direct `exec-and-forget`. Their old Moonlander keys already emit these
+chords, so no firmware change is needed for them:
+
+| Chord | Action | Command |
+| --- | --- | --- |
+| `Hyper + F13` | Key Lights (toggle) | `shortcuts run "Toggle Key Lights"` |
+| `Hyper + F14` | Screen Saver | `open -a ScreenSaverEngine` |
+
+These are Moonlander-only (the built-in has no F13/F14) - which is fine, since Key Lights
+is desk-only and Screen Saver has native macOS alternatives on the road.
 
 ## Moonlander WM layer (physical placement)
 
-Hold the left `Hyper` thumb to reach this layer. Right hand = directions, left hand
-= workspaces, left-top = toggles. Add `Shift` (right thumb or home-row-mod on `T`/`N`)
-for the move/send tier.
+Hold the left `Hyper` thumb (now `MO(WM)`) to reach this layer. **Hands are swapped
+vs the built-in** to match existing Moonlander muscle memory: **left hand = directions**
+(in the inverted-T arrow shape), **right hand = workspaces**, left-hand spares = toggles.
+Shift for the move/send tier stays on the right thumb.
+
+This diverges from the built-in only in *which hand* (built-in keeps `hjkl` on the right
+home row, since QWERTY has no good left-hand `hjkl`). The keycodes, cheat sheet, and
+mental model are identical; only the physical hand differs, which is fine because the
+Moonlander is the primary board and the built-in is the on-the-road fallback.
 
 ```
-        LEFT HAND                              RIGHT HAND
- top    W    F    P    B                       (directions on home row)
- home   A    R    S    T    G                  N     E     I     O
-        1    2    3    4    5                  h     j     k     l
-                                               left  down  up    right
+        LEFT HAND (directions, inverted-T)     RIGHT HAND (workspaces)
+ top    Q=f  W=w  [K↑ on F]  P=p  B=b          (digits on home row)
+ home   A=s  R=h  S=j        T=l  G=;          M    N    E    I    O
+              left down       right             1    2    3    4    5
+ bottom Z=g  X=Tab C=r  D=-  V=(=)
+ thumbs Space = Super+Space (launch mode)     right thumb Shift = move/send tier
 
- misc   Tab = bounce to monitor   g = prev ws   r = reload   - / = resize
-        s = flip split (H/V)       ; = manage mode (then join with N/E/I/O)
+   Directions: R=h(left) S=j(down) F=k(up, above S) T=l(right)
 ```
 
-Keycode mapping in the layer: `N E I O` send `h j k l`; `A R S T G` send `1 2 3 4 5`;
-`W F P B` send `w f p b`. Base layout (Colemak) is irrelevant - the layer emits fixed
-keycodes, so it matches the built-in QWERTY bindings exactly.
+Keycode mapping in the layer (all emitted as `Super + <key>`): directions `R S F T`
+send `h j k l` (inverted-T); workspaces `M N E I O` send `1 2 3 4 5`. Base layout
+(Colemak) is irrelevant - the layer emits fixed keycodes, so the Mac side is identical
+to the built-in bindings.
 
-The WM layer only carries the **positional** core (`Super + h j k l`, `Super + 1-5`,
-and the toggles `w f p b s g Tab r - =`). Manage-mode join-with reuses `N E I O`
-(= `h j k l`), so it needs no new keys - hold the layer, tap `;` (`Super + ;` → manage),
-keep holding, tap `N/E/I/O`.
+The WM layer carries the **positional** core (`Super + h j k l` on the left,
+`Super + 1-5` on the right) plus the toggles `w f p b s g Tab r - =` on the left-hand
+spare keys. Manage-mode join-with reuses the direction keys - hold the layer, tap `G`
+(`Super + ;` → manage), keep holding, tap `R/S/F/T`.
 
 Launch mode is handled differently, because it is **letter-mnemonic, not positional**
 (`s` = Slack by name). So it does *not* live in the WM layer at all:
 
-- **Entry** reuses the reserved F-key convention - a single key emitting `Hyper + F14`
-  enters launch mode; `Hyper + F15` enters manage mode. Your firmware already has a
-  `Hyper + F14` key (layer 3). AeroSpace binds both `ctrl-alt-cmd-shift-f14/f15` and the
-  `Caps + o` / `Caps + ;` forms, so the F-keys serve the Moonlander and `Caps` serves
-  the built-in.
+- **Entry** is a leader chord in the WM layer: `Space` -> `Super + Space` (launch),
+  `G` -> `Super + ;` (manage). Same chords as the built-in (`Caps + Space` / `Caps + ;`),
+  so no dedicated F-keys are needed for mode entry.
 - **App keys** are typed on the **normal base (Colemak) layer** after entry - launch
   mode has bare-letter bindings, so pressing the key that types `s` opens Slack. No
   launch letters in the WM layer.
 
 Step 4 firmware work, net: convert the left `Hyper` thumb to `MO(WM)`; build the WM
-layer's positional core above; point the existing `Hyper + F14` key (and add a
-`Hyper + F15` key) at launch/manage entry. Nothing else to mirror.
+layer's positional core above (including `Space` -> `Super + Space` for launch and
+`G` -> `Super + ;` for manage); keep the existing `Hyper + F13/F14` keys (Key Lights /
+Screen Saver, one-tap). Nothing else to mirror.
 
 ## AeroSpace bindings (implementation reference)
 
@@ -154,9 +175,9 @@ ctrl-alt-cmd-p = 'layout floating tiling'
 ctrl-alt-cmd-b = 'flatten-workspace-tree'
 ctrl-alt-cmd-s = 'layout tiles horizontal vertical'
 ctrl-alt-cmd-semicolon = 'mode manage'
-ctrl-alt-cmd-o = 'mode launch'
-ctrl-alt-cmd-shift-f14 = 'mode launch'
-ctrl-alt-cmd-shift-f15 = 'mode manage'
+ctrl-alt-cmd-space = 'mode launch'
+ctrl-alt-cmd-shift-f13 = 'exec-and-forget /usr/bin/shortcuts run "Toggle Key Lights"'
+ctrl-alt-cmd-shift-f14 = 'exec-and-forget open -a ScreenSaverEngine'
 ctrl-alt-cmd-minus = 'resize smart -50'
 ctrl-alt-cmd-equal = 'resize smart +50'
 ctrl-alt-cmd-r = 'reload-config'
@@ -183,8 +204,6 @@ n = ['exec-and-forget open -a Obsidian', 'mode main']
 o = ['exec-and-forget open -a "Microsoft Outlook"', 'mode main']
 s = ['exec-and-forget open -a Slack', 'mode main']
 t = ['exec-and-forget open -a WezTerm', 'mode main']
-k = ['exec-and-forget /usr/bin/shortcuts run "Toggle Key Lights"', 'mode main']
-v = ['exec-and-forget open -a ScreenSaverEngine', 'mode main']
 ctrl-alt-cmd-a = ['exec-and-forget open -a Claude', 'mode main']
 ctrl-alt-cmd-b = ['exec-and-forget open -a "Google Chrome"', 'mode main']
 ctrl-alt-cmd-c = ['exec-and-forget open -a "Microsoft Teams"', 'mode main']
@@ -195,8 +214,6 @@ ctrl-alt-cmd-n = ['exec-and-forget open -a Obsidian', 'mode main']
 ctrl-alt-cmd-o = ['exec-and-forget open -a "Microsoft Outlook"', 'mode main']
 ctrl-alt-cmd-s = ['exec-and-forget open -a Slack', 'mode main']
 ctrl-alt-cmd-t = ['exec-and-forget open -a WezTerm', 'mode main']
-ctrl-alt-cmd-k = ['exec-and-forget /usr/bin/shortcuts run "Toggle Key Lights"', 'mode main']
-ctrl-alt-cmd-v = ['exec-and-forget open -a ScreenSaverEngine', 'mode main']
 esc = 'mode main'
 ```
 
@@ -280,12 +297,15 @@ deleted - `disabled = true` in each `info.plist`, so they stay linked but inacti
 and reversible while the migration settles. Workflows live in
 `modules/os/macos/alfred/`:
 
-- `launcher` - was `Hyper + A S T B C E L M N O` + `F14` -> launch mode `a … t`, `v`
-- `Key Lights` - was `Hyper + F13` -> launch mode `k`
+- `launcher` - was `Hyper + A S T B C E L M N O` -> launch mode `a … t`; the `F14`
+  Screen Saver command is now a one-tap AeroSpace `exec` on that same `Hyper + F14` key.
+- `Key Lights` - was `Hyper + F13` -> one-tap AeroSpace `exec` on the same `Hyper + F13`
+  key.
 
-Freeing `Hyper + F13/F14` is what lets the Moonlander reuse `Hyper + F14/F15` as the
-launch/manage mode-entry keys. Delete the disabled workflows for good once the whole
-scheme (including firmware) feels right.
+The `Hyper + F13/F14` keys keep their original one-tap meaning (Key Lights / Screen
+Saver) via AeroSpace `exec` bindings; launch/manage modes are entered by leader chords
+(`Super + Space` / `Super + ;`), not F-keys. Delete the disabled workflows for good once
+the whole scheme (including firmware) feels right.
 
 The two Moonlander firmware macros that *type into Alfred* (`ST_MACRO_0` = sleep,
 `ST_MACRO_1` = `bm `) are not Hyper hotkeys and keep working.
@@ -301,12 +321,28 @@ Only after the built-in scheme feels right. Source of truth is Oryx, not this re
   / `N E I O`. The current left thumb is `KC_HYPR` (the key to repurpose).
 - The compiled `.bin` is downloaded from Oryx per-build; keep it out of the repo.
 
-Changes in Oryx:
+In Oryx, every WM-layer key gets `Super` = **Left Ctrl + Left Alt + Left GUI** added as
+modifiers to its base keycode (e.g. `H` -> `LCTL(LALT(LGUI(KC_H)))`).
 
-1. Convert the left `Hyper` thumb from `KC_HYPR` to a momentary WM layer (`MO(n)`).
-2. Build that layer per the "Moonlander WM layer" map above - each key emits
-   `Super + <key>` (`Cmd+Ctrl+Opt+<key>`). Move tier = the physical `Shift`.
-3. Compile, download the new `.bin`, flash via Keymapp.
+1. Add a new layer (WM). Convert the left `Hyper` thumb from `KC_HYPR` to `MO(WM)`.
+2. **Left hand - directions** (inverted-T, matches the existing arrow cluster), all
+   `+Super`: `R`->`H` (left), `S`->`J` (down), `F`->`K` (up, above S), `T`->`L` (right).
+3. **Right hand - workspaces** (contiguous, left->right = 1..5), all `+Super`:
+   `M`->`1`, `N`->`2`, `E`->`3`, `I`->`4`, `O`->`5`.
+4. **Move/send tier:** leave the right-thumb `Shift` transparent in the WM layer. Move =
+   WM (left thumb) + Shift (right thumb) + direction; send = WM + Shift + digit.
+5. **Toggles/extras** on the left-hand spares, all `+Super`: `Q`->`F` (fullscreen),
+   `W`->`W` (cycle layout), `P`->`P` (float/tile), `B`->`B` (flatten), `A`->`S` (flip
+   split), `G`->`;` (manage), `Z`->`G` (prev ws), `X`->`Tab` (bounce monitor),
+   `C`->`R` (reload), `D`->`-`, `V`->`=` (resize).
+6. **Mode entries** (leader chords, in the WM layer, `+Super`): `Space` -> `Super+Space`
+   (launch mode, then type the app letter on the base layer); `G` -> `Super+;`
+   (manage mode). No F-keys involved.
+7. **One-tap utility keys** (unchanged firmware; `KC_Fxx` + Left Ctrl+Alt+GUI+Shift =
+   `Hyper + Fxx`): `Hyper + F13` -> Key Lights, `Hyper + F14` -> Screen Saver. Your
+   existing F13/F14 keys already emit these and just regain their one-tap meaning via
+   AeroSpace.
+8. Compile, download the new `.bin`, flash via Keymapp.
 
 Raw Hyper remains on the left-pinky `Esc`/`Hyper` key (`ALL_T(KC_ESCAPE)`).
 
@@ -317,10 +353,10 @@ Walk the cheat sheet on the Moonlander and the built-in. Confirm identical behav
 
 ## Open items (still to decide)
 
-- **Workspace count / naming** - 5 numbered as drafted, or per-app named workspaces.
-- **MacBook pinning** - which workspace(s) live permanently on the built-in display.
-- **App launchers** - fold the retired Alfred launchers into AeroSpace on the leader
-  (`ctrl-alt-cmd-<letter> = exec-and-forget open -a <App>`), or drop them entirely.
+- **`config-version`** - AeroSpace warns v1 is outdated; migrating to v2 is a separate,
+  behaviour-affecting pass (some option semantics change).
+- **Delete disabled Alfred workflows** - do this once the whole scheme (incl. firmware)
+  feels right; they are currently disabled, not deleted.
 
 ## Decisions locked (context for a fresh session)
 
@@ -330,7 +366,15 @@ Walk the cheat sheet on the Moonlander and the built-in. Confirm identical behav
   layer keys emit `Super + <key>`; move = physical Shift.
 - Directions = `hjkl` (left/down/up/right); workspaces = digits. Position-based, so
   Colemak vs QWERTY is irrelevant.
-- Ultrawide = tiles, 2-3 columns. MacBook (physically left) hosts pinned workspaces.
-- Alfred Hyper launchers are being retired (user accepted the loss).
+- **Moonlander hands swapped vs built-in:** directions on the **left** hand (inverted-T
+  arrow shape), workspaces on the **right** hand - to match existing arrow muscle memory.
+  Built-in keeps `hjkl` on the right hand. Keycodes/cheat sheet identical; only the hand
+  differs.
+- **Workspaces = 5 numbered** (1-5). **Workspace 5 pinned** to the built-in display
+  (`workspace-to-monitor-force-assignment`, matched by `'built-in'`).
+- Ultrawide = tiles, 2-3 columns. MacBook (physically left) hosts workspace 5.
+- Alfred Hyper launchers retired: apps -> AeroSpace **launch mode** (`Super + Space` =
+  `Caps + Space` / WM-layer `Space`); Key Lights + Screen Saver -> **one-tap** `exec` on
+  `Hyper + F13/F14`. Alfred workflows disabled (not deleted).
 - Sequencing: built-in path first (reversible, no flashing); firmware last.
 ```
