@@ -10,10 +10,14 @@ in
   config = lib.mkIf cfg.enable {
     xdg.configFile."aerospace/aerospace.toml".text = # toml
       ''
+        config-version = 2
+
         after-login-command = []
         after-startup-command = []
 
         start-at-login = true
+
+        persistent-workspaces = ['1', '2', '3', '4', '5']
 
         enable-normalization-flatten-containers = true
         enable-normalization-opposite-orientation-for-nested-containers = true
