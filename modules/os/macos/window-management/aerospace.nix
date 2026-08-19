@@ -9,6 +9,15 @@ let
 
   helium-profile = pkgs.writeShellScriptBin "helium-profile" ''
     name="$1"
+    aerospace="/opt/homebrew/bin/aerospace"
+
+    win=$("$aerospace" list-windows --all --format '%{window-id}|%{window-title}' \
+      | ${pkgs.gnugrep}/bin/grep -F "Helium – $name" \
+      | head -n1 | cut -d'|' -f1 | tr -d '[:space:]')
+    if [ -n "$win" ]; then
+      exec "$aerospace" focus --window-id "$win"
+    fi
+
     state="$HOME/Library/Application Support/net.imput.helium/Local State"
     dir=$(${pkgs.jq}/bin/jq -r --arg n "$name" \
       '.profile.info_cache | to_entries[] | select(.value.name == $n) | .key' \
