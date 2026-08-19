@@ -14,6 +14,7 @@
   "drawio"
   "elgato-control-center"
   "google-chrome"
+  "helium-browser"
   "insomnia"
   "intellij-idea"
   "jabra-direct"
