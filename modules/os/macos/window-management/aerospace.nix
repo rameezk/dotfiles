@@ -1,6 +1,23 @@
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 let
   cfg = config.macos.window-management.aerospace;
+
+  helium-profile = pkgs.writeShellScriptBin "helium-profile" ''
+    name="$1"
+    state="$HOME/Library/Application Support/net.imput.helium/Local State"
+    dir=$(${pkgs.jq}/bin/jq -r --arg n "$name" \
+      '.profile.info_cache | to_entries[] | select(.value.name == $n) | .key' \
+      "$state" | head -n1)
+    if [ -z "$dir" ]; then
+      dir="$name"
+    fi
+    exec "/Applications/Helium.app/Contents/MacOS/Helium" --profile-directory="$dir"
+  '';
 in
 {
   options.macos.window-management.aerospace = {
@@ -92,15 +109,20 @@ in
 
         [mode.launch.binding]
         a = ['exec-and-forget open -a Claude', 'mode main']
-        b = ['exec-and-forget open -a "Google Chrome"', 'mode main']
+        b = 'mode browser'
         c = ['exec-and-forget open -a "Microsoft Teams"', 'mode main']
         e = ['exec-and-forget open -a "IntelliJ IDEA"', 'mode main']
         l = ['exec-and-forget open -a Todoist', 'mode main']
-        m = ['exec-and-forget open -a Safari', 'mode main']
         n = ['exec-and-forget open -a Obsidian', 'mode main']
         o = ['exec-and-forget open -a "Microsoft Outlook"', 'mode main']
         s = ['exec-and-forget open -a Slack', 'mode main']
         t = ['exec-and-forget open -a WezTerm', 'mode main']
+        esc = 'mode main'
+
+        [mode.browser.binding]
+        b = ['exec-and-forget ${helium-profile}/bin/helium-profile "M&S"', 'mode main']
+        e = ['exec-and-forget ${helium-profile}/bin/helium-profile EE', 'mode main']
+        p = ['exec-and-forget ${helium-profile}/bin/helium-profile Personal', 'mode main']
         esc = 'mode main'
 
         [[on-window-detected]]
