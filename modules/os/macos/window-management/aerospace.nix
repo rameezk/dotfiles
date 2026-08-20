@@ -102,18 +102,19 @@ in
         ctrl-alt-cmd-b = 'flatten-workspace-tree'
         ctrl-alt-cmd-minus = 'resize smart -50'
         ctrl-alt-cmd-equal = 'resize smart +50'
+        ctrl-alt-cmd-0 = 'balance-sizes'
         ctrl-alt-cmd-s = 'layout tiles horizontal vertical'
         ctrl-alt-cmd-semicolon = 'mode manage'
         ctrl-alt-cmd-space = 'mode launch'
         ctrl-alt-cmd-shift-f13 = 'exec-and-forget /usr/bin/shortcuts run "Toggle Key Lights"'
         ctrl-alt-cmd-shift-f14 = 'exec-and-forget open -a ScreenSaverEngine'
-        ctrl-alt-cmd-r = 'reload-config'
 
         [mode.manage.binding]
         ctrl-alt-cmd-h = ['join-with left', 'mode main']
         ctrl-alt-cmd-j = ['join-with down', 'mode main']
         ctrl-alt-cmd-k = ['join-with up', 'mode main']
         ctrl-alt-cmd-l = ['join-with right', 'mode main']
+        r = ['reload-config', 'mode main']
         esc = 'mode main'
 
         [mode.launch.binding]
