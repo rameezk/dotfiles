@@ -39,18 +39,38 @@ in
       mru-spaces = false;
       orientation = "bottom";
       expose-group-apps = true;
+      tilesize = 63;
+      wvous-br-corner = 14;
     };
 
     spaces.spans-displays = true;
 
     universalaccess.reduceMotion = true;
 
-    finder.CreateDesktop = false;
+    finder = {
+      CreateDesktop = false;
+      FXPreferredViewStyle = "Nlsv";
+      ShowStatusBar = true;
+    };
+
+    menuExtraClock = {
+      ShowDayOfWeek = true;
+      ShowDate = 0;
+      ShowSeconds = false;
+      Show24Hour = false;
+    };
+
+    WindowManager.HideDesktop = true;
 
     # Might require you to logout to take effect
     NSGlobalDomain = {
       "com.apple.swipescrolldirection" = false;
       "com.apple.keyboard.fnState" = true;
+      "com.apple.trackpad.forceClick" = true;
+
+      ApplePressAndHoldEnabled = false;
+      NSAutomaticPeriodSubstitutionEnabled = false;
+      NSAutomaticWindowAnimationsEnabled = false;
 
       # 120, 90, 60, 30, 12, 6, 2
       KeyRepeat = 2;
