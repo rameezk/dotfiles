@@ -32,6 +32,15 @@ in
 
         config.color_scheme = scheme_for_appearance(current_appearance())
 
+        wezterm.on('window-config-reloaded', function(window)
+          local overrides = window:get_config_overrides() or {}
+          local scheme = scheme_for_appearance(window:get_appearance())
+          if overrides.color_scheme ~= scheme then
+            overrides.color_scheme = scheme
+            window:set_config_overrides(overrides)
+          end
+        end)
+
         ${lib.optionalString
           (config.theme.active.followAppearance && config.theme.active.syncPackage != null)
           ''
