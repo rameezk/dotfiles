@@ -158,6 +158,10 @@ in
         [[on-window-detected]]
         if.app-id = 'com.microsoft.teams2'
         run = 'layout floating'
+
+        [[on-window-detected]]
+        if.app-id = 'net.imput.helium'
+        run = 'layout tiling'
       '';
   };
 }
