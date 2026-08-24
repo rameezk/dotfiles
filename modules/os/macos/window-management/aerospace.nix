@@ -154,6 +154,10 @@ in
         [[on-window-detected]]
         if.app-id = 'com.apple.ActivityMonitor'
         run = 'layout floating'
+
+        [[on-window-detected]]
+        if.app-id = 'com.microsoft.teams2'
+        run = 'layout floating'
       '';
   };
 }
