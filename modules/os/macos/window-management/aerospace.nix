@@ -103,7 +103,7 @@ in
         ctrl-alt-cmd-minus = 'resize smart -50'
         ctrl-alt-cmd-equal = 'resize smart +50'
         ctrl-alt-cmd-0 = 'balance-sizes'
-        ctrl-alt-cmd-s = 'layout tiles horizontal vertical'
+        ctrl-alt-cmd-slash = 'layout tiles horizontal vertical'
         ctrl-alt-cmd-semicolon = 'mode manage'
         ctrl-alt-cmd-space = 'mode launch'
         ctrl-alt-cmd-shift-f13 = 'exec-and-forget /usr/bin/shortcuts run "Toggle Key Lights"'
