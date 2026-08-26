@@ -61,6 +61,8 @@ in
         config.window_background_opacity = 0.9
         config.macos_window_background_blur = 30
 
+        config.window_decorations = 'RESIZE'
+
         config.native_macos_fullscreen_mode = true
 
         config.bypass_mouse_reporting_modifiers = 'CMD'
