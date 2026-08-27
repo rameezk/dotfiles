@@ -1,7 +1,14 @@
-{ pkgs, auto-volume-toggler, ... }:
+{
+  pkgs,
+  lib,
+  auto-volume-toggler,
+  ...
+}:
 
 let
   user = "rameezk";
+  palette = (import ../../modules/theme/rose-pine/palette.nix).moon;
+  toBorderColor = hex: "0xff" + lib.removePrefix "#" hex;
 in
 {
 
@@ -119,6 +126,13 @@ in
       "dato" = 1470584107;
       "tuneful" = 6739804295;
     };
+  };
+
+  services.jankyborders = {
+    enable = true;
+    active_color = toBorderColor palette.foam;
+    inactive_color = toBorderColor palette.overlay;
+    width = 2.5;
   };
 
   launchd.user.agents.auto-volume-toggler =
