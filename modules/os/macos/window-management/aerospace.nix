@@ -43,7 +43,7 @@ in
 
         start-at-login = true
 
-        persistent-workspaces = ['1', '2', '3', '4', '5']
+        persistent-workspaces = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
 
         enable-normalization-flatten-containers = true
         enable-normalization-opposite-orientation-for-nested-containers = true
@@ -69,7 +69,8 @@ in
         outer.right =      10
 
         [workspace-to-monitor-force-assignment]
-        5 = 'built-in'
+        8 = 'built-in'
+        9 = 'built-in'
 
         [mode.main.binding]
         ctrl-alt-cmd-h = 'focus left'
@@ -87,12 +88,20 @@ in
         ctrl-alt-cmd-3 = 'workspace 3'
         ctrl-alt-cmd-4 = 'workspace 4'
         ctrl-alt-cmd-5 = 'workspace 5'
+        ctrl-alt-cmd-6 = 'workspace 6'
+        ctrl-alt-cmd-7 = 'workspace 7'
+        ctrl-alt-cmd-8 = 'workspace 8'
+        ctrl-alt-cmd-9 = 'workspace 9'
 
         ctrl-alt-cmd-shift-1 = 'move-node-to-workspace 1'
         ctrl-alt-cmd-shift-2 = 'move-node-to-workspace 2'
         ctrl-alt-cmd-shift-3 = 'move-node-to-workspace 3'
         ctrl-alt-cmd-shift-4 = 'move-node-to-workspace 4'
         ctrl-alt-cmd-shift-5 = 'move-node-to-workspace 5'
+        ctrl-alt-cmd-shift-6 = 'move-node-to-workspace 6'
+        ctrl-alt-cmd-shift-7 = 'move-node-to-workspace 7'
+        ctrl-alt-cmd-shift-8 = 'move-node-to-workspace 8'
+        ctrl-alt-cmd-shift-9 = 'move-node-to-workspace 9'
 
         ctrl-alt-cmd-g = 'workspace-back-and-forth'
         ctrl-alt-cmd-tab = 'move-workspace-to-monitor --wrap-around next'
