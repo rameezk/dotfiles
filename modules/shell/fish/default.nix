@@ -180,6 +180,7 @@ in
 
       shellAbbrs = {
         cc = "claude --permission-mode auto";
+        ",c" = "claude --permission-mode auto -p";
 
         # files
         ls = "eza";
