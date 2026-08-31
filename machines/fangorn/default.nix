@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   auto-volume-toggler,
@@ -108,9 +109,10 @@ in
     onActivation = {
       autoUpdate = true;
       upgrade = true;
-      cleanup = "none";
+      cleanup = "uninstall";
     };
 
+    taps = builtins.attrNames config.nix-homebrew.taps;
     brews = [ "mas" ];
     casks = import ./casks.nix;
 

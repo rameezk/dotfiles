@@ -21,6 +21,7 @@
   "karabiner-elements"
   "keymapp"
   "libreoffice"
+  "microsoft-auto-update"
   "microsoft-azure-storage-explorer"
   "microsoft-excel"
   "microsoft-outlook"

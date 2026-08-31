@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
   user = "rameezk";
@@ -89,9 +89,10 @@ in
     onActivation = {
       autoUpdate = true;
       upgrade = true;
-      cleanup = "none";
+      cleanup = "uninstall";
     };
 
+    taps = builtins.attrNames config.nix-homebrew.taps;
     brews = [ "mas" ];
     casks = import ./casks.nix;
 
