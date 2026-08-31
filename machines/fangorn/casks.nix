@@ -25,7 +25,6 @@
   "microsoft-excel"
   "microsoft-outlook"
   "microsoft-powerpoint"
-  "microsoft-teams"
   "microsoft-word"
   # mutedeck ships a manual installer; cask only fetches it. Run the installer from:
   #   /opt/homebrew/Caskroom/mutedeck/*/MuteDeck-*-Installer.app
