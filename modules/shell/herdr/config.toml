@@ -16,6 +16,19 @@ next_agent = "prefix+shift+down"
 previous_agent = "prefix+shift+up"
 copy_mode = "prefix+["
 
+# plugin: herdr plugin install rmarganti/herdr-pluck -y
+[[keys.command]]
+key = "prefix+f"
+type = "plugin_action"
+command = "rmarganti.herdr-pluck.open-url"
+description = "open visible URL"
+
+[[keys.command]]
+key = "prefix+p"
+type = "plugin_action"
+command = "rmarganti.herdr-pluck.pluck"
+description = "pluck visible token"
+
 [ui]
 show_agent_labels_on_pane_borders = false
 agent_panel_sort = "priority"
