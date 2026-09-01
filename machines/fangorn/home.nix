@@ -123,7 +123,12 @@
   # Packages
   home.packages = with pkgs; [
     nixVersions.latest
+    inputs.mdmarks.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
+
+  xdg.configFile."mdmarks/config.toml".text = ''
+    store = "/Users/rameezk/DigitalGarden/bookmarks"
+  '';
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
