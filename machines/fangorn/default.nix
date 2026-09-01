@@ -127,6 +127,7 @@ in
       "AdGuard Mini: Safari Adblock" = 1440147259;
       "dato" = 1470584107;
       "tuneful" = 6739804295;
+      "WhatsApp Messenger" = 310633997;
     };
   };
 
