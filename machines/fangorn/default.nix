@@ -109,7 +109,7 @@ in
     onActivation = {
       autoUpdate = true;
       upgrade = true;
-      cleanup = "uninstall";
+      cleanup = "zap";
     };
 
     taps = builtins.attrNames config.nix-homebrew.taps;

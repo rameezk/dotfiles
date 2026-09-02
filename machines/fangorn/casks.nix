@@ -24,7 +24,6 @@
   "microsoft-auto-update"
   "microsoft-azure-storage-explorer"
   "microsoft-excel"
-  "microsoft-outlook"
   "microsoft-powerpoint"
   "microsoft-word"
   # mutedeck ships a manual installer; cask only fetches it. Run the installer from:
