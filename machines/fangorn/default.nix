@@ -86,6 +86,12 @@ in
       # 120, 94, 68, 35, 25, 15
       InitialKeyRepeat = 15;
     };
+
+    CustomUserPreferences = {
+      NSGlobalDomain = {
+        NSRecentDocumentsLimit = 0;
+      };
+    };
   };
 
   system.keyboard = {
