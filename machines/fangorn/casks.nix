@@ -31,6 +31,7 @@
   "podman-desktop"
   "proton-mail"
   "protonvpn"
+  "readest"
   "slack"
   "stats"
   "todoist-app"
