@@ -128,6 +128,22 @@
 
   xdg.configFile."mdmarks/config.toml".text = ''
     store = "/Users/rameezk/DigitalGarden/bookmarks"
+    default_space = "personal"
+
+    [spaces.personal]
+    browser = "Helium"
+    profile = "Personal"
+    chromium_support_dir = "net.imput.helium"
+
+    [spaces.mands]
+    browser = "Helium"
+    profile = "M&S"
+    chromium_support_dir = "net.imput.helium"
+
+    [spaces.ee]
+    browser = "Helium"
+    profile = "EE"
+    chromium_support_dir = "net.imput.helium"
   '';
 
   # This value determines the Home Manager release that your
