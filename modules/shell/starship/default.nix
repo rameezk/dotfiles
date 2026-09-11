@@ -34,6 +34,7 @@ in
         "$username"
         "$hostname"
         "$directory"
+        "\${custom.git_worktree}"
         "$git_branch"
         "$git_state"
         "$git_status"
@@ -87,6 +88,14 @@ in
       git_state = {
         format = "\([$state( $progress_current/$progress_total)]($style)\) ";
         style = "bright-black";
+      };
+
+      custom.git_worktree = {
+        description = "Indicate when inside a linked git worktree";
+        command = "printf '󰙅'";
+        when = "git rev-parse --is-inside-work-tree > /dev/null 2>&1 && test -f \"$(git rev-parse --git-dir)/commondir\"";
+        format = "[$output]($style) ";
+        style = "bold yellow";
       };
 
       nix_shell = {
