@@ -56,6 +56,7 @@
 
   ai.enable = false;
   ai.agents.enable = true;
+  ai.pi.enable = true;
   ai.claude-skills.docx.enable = true;
   ai.claude-skills.drawio.enable = true;
   ai.claude-skills.herdr.enable = true;

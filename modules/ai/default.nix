@@ -8,6 +8,7 @@
   imports = [
     ./agents
     ./claude-skills
+    ./pi.nix
   ];
 
   options = {
