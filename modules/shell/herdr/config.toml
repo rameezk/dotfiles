@@ -33,3 +33,4 @@ description = "pluck visible token"
 show_agent_labels_on_pane_borders = false
 agent_panel_sort = "priority"
 mouse_scroll_lines = 6
+status_indicators = "dots"
