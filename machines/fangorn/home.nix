@@ -136,11 +136,6 @@
     profile = "Personal"
     chromium_support_dir = "net.imput.helium"
 
-    [spaces.mands]
-    browser = "Helium"
-    profile = "M&S"
-    chromium_support_dir = "net.imput.helium"
-
     [spaces.ee]
     browser = "Helium"
     profile = "EE"
