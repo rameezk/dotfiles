@@ -12,7 +12,6 @@
   "deskpad"
   "drawio"
   "elgato-control-center"
-  "google-chrome"
   "helium-browser"
   "intellij-idea"
   "jabra-direct"
