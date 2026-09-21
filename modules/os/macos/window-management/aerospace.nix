@@ -7,6 +7,54 @@
 let
   cfg = config.macos.window-management.aerospace;
 
+  check-secure-input = pkgs.writeShellScriptBin "check-secure-input" ''
+    pid=$(ioreg -l -w 0 | ${pkgs.gnugrep}/bin/grep -o 'kCGSSessionSecureInputPID"=[0-9]*' | head -1 | ${pkgs.gnugrep}/bin/grep -o '[0-9]*')
+
+    if [ -z "$pid" ]; then
+      echo "[ok] Secure Input is not active"
+      exit 0
+    fi
+
+    proc=$(ps -p "$pid" -o comm= 2>/dev/null)
+
+    if [ -z "$proc" ]; then
+      echo "[!!] Secure Input is held by PID $pid, which is no longer running (orphaned lock)"
+      echo
+      echo "     Not clearable from the CLI. To fix:"
+      echo "       1. Lock 1Password, then click into its field and unlock by typing"
+      echo "          (steals the lock from the dead process and releases it cleanly)"
+      echo "       2. If that fails: lock screen (ctrl+cmd+q) and back in, or log out"
+      exit 1
+    fi
+
+    name=$(basename "$proc")
+
+    if [ "$name" = loginwindow ]; then
+      echo "[!!] Secure Input is held by loginwindow (PID $pid) - the macOS lock-screen leak"
+      echo
+      echo "     Not clearable from the CLI. To fix:"
+      echo "       1. Lock 1Password, then click into its field and unlock by typing"
+      echo "          (steals the lock from loginwindow and releases it cleanly)"
+      echo "       2. If that fails: log out and back in"
+      exit 1
+    fi
+
+    echo "[!!] Secure Input is held by: $name (PID $pid)"
+    echo "     $proc"
+    echo
+    printf '     Quit %s to release Secure Input? [y/N] ' "$name"
+    read -r answer
+    case "$answer" in
+      y | Y)
+        kill "$pid"
+        echo "[..] Sent quit to $name. Re-run 'check-secure-input' to confirm it cleared."
+        ;;
+      *)
+        echo "[..] Left it running. Quit $name yourself to release Secure Input."
+        ;;
+    esac
+  '';
+
   helium-profile = pkgs.writeShellScriptBin "helium-profile" ''
     name="$1"
     aerospace="/opt/homebrew/bin/aerospace"
@@ -34,6 +82,8 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    home.packages = [ check-secure-input ];
+
     xdg.configFile."aerospace/aerospace.toml".text = # toml
       ''
         config-version = 2
