@@ -91,6 +91,35 @@
 
       keymaps = import ./keymaps.nix { };
 
+      autoCmd = [
+        {
+          event = [ "FileType" ];
+          pattern = [
+            "markdown"
+            "text"
+            "gitcommit"
+          ];
+          callback = {
+            __raw = ''
+              function()
+                vim.opt_local.wrap = true
+                vim.opt_local.linebreak = true
+                vim.opt_local.breakindent = true
+                vim.opt_local.colorcolumn = ""
+                local opts = { buffer = true, silent = true }
+                local expr = vim.tbl_extend("force", opts, { expr = true })
+                vim.keymap.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", expr)
+                vim.keymap.set({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", expr)
+                vim.keymap.set({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", expr)
+                vim.keymap.set({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", expr)
+                vim.keymap.set({ "n", "x" }, "0", "g0", opts)
+                vim.keymap.set({ "n", "x" }, "$", "g$", opts)
+              end
+            '';
+          };
+        }
+      ];
+
     };
   };
 }
