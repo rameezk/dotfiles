@@ -102,6 +102,13 @@ in
     remapCapsLockToEscape = true;
   };
 
+  system.activationScripts.postActivation.text =
+    lib.optionalString config.home-manager.users.${user}.container.podman
+      ''
+        /bin/ln -sf /Users/${user}/.nix-profile/bin/podman /usr/local/bin/podman
+        /bin/ln -sf /Users/${user}/.nix-profile/bin/podman-compose /usr/local/bin/podman-compose
+      '';
+
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 4;
