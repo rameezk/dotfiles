@@ -7,6 +7,7 @@
 {
   imports = [
     ./agents
+    ./claude
     ./claude-skills
     ./pi.nix
   ];
