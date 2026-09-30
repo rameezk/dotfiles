@@ -33,6 +33,7 @@
   "readest"
   "slack"
   "stats"
+  "tailscale-app"
   "todoist-app"
   "visual-studio-code"
   "wezterm"
