@@ -19,6 +19,11 @@ in
     settings.experimental-features = "nix-command flakes";
   };
 
+  environment.etc."nix/nix.custom.conf".text = ''
+    extra-substituters = https://rameezk-forge.cachix.org
+    extra-trusted-public-keys = rameezk-forge.cachix.org-1:8l6PntPjhuEhz6xDTyILHid6JJH3ktkfhmGLds48mgI=
+  '';
+
   users.users.rameezk = {
     home = "/Users/${user}";
     shell = pkgs.fish;
