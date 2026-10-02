@@ -1,0 +1,3 @@
+#!/usr/bin/env fish
+
+sudo launchctl bootout system/org.nixos.linux-builder
