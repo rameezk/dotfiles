@@ -87,6 +87,11 @@ in
       }
       {
         type = "command";
+        name = "gh-setup-repo";
+        desc = "Apply standard GitHub repo settings";
+      }
+      {
+        type = "command";
         name = "gpg";
         desc = "GPG for signing";
       }
@@ -232,6 +237,14 @@ in
       delta # a better diffing tool pager
       cacert # needed for self signed certs in git
       gh # github cli
+      (pkgs.writeShellApplication {
+        name = "gh-setup-repo";
+        runtimeInputs = [
+          gh
+          jq
+        ];
+        text = builtins.readFile ./gh-setup-repo.sh;
+      })
     ];
   };
 }
