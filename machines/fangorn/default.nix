@@ -12,6 +12,7 @@ let
   toBorderColor = hex: "0xff" + lib.removePrefix "#" hex;
 in
 {
+  imports = [ ./linux-builder.nix ];
 
   nix = {
     enable = false; # # let determinate installer manage the nix daemon
