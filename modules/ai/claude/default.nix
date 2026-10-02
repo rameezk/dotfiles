@@ -28,6 +28,8 @@ in
       }
     ];
 
+    home.file.".claude/keybindings.json".source = ./keybindings.json;
+
     home.activation.claudeSettings = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
       claudeSettings="$HOME/.claude/settings.json"
       claudeSettingsCurrent='{}'
