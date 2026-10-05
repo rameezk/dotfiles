@@ -95,6 +95,10 @@ else
   warn "could not list rulesets (private repos on a free plan need GitHub Pro)"
 fi
 
+step "Issue labels"
+gh label create ready-for-refinement --repo "$repo" --color aaaaaa --force ||
+  warn "could not create label ready-for-refinement"
+
 if ((failures > 0)); then
   step "Done with $failures warning(s)"
   exit 1
