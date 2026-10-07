@@ -219,6 +219,10 @@ in
         run = 'layout floating'
 
         [[on-window-detected]]
+        if.app-id = 'rocks.koreader'
+        run = 'layout floating'
+
+        [[on-window-detected]]
         if.app-id = 'net.imput.helium'
         run = 'layout tiling'
       '';
