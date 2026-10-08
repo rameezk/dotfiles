@@ -132,7 +132,6 @@
 
   # Packages
   home.packages = with pkgs; [
-    nixVersions.latest
     inputs.mdmarks.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
