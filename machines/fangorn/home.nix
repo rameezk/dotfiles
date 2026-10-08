@@ -85,7 +85,15 @@
     signingKey = "B18F680AF21C6B4A";
   };
 
-  vcs.hunk.enable = true;
+  vcs.hunk = {
+    enable = true;
+    settings = {
+      wrap_lines = true;
+      agent_notes = true;
+      transparent_background = true;
+      color_moved = true;
+    };
+  };
 
   programs.ssh = {
     enable = true;
