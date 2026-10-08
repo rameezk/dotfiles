@@ -65,7 +65,7 @@
   vcs.git = {
     enable = true;
     userName = "Rameez Khan";
-    userEmail = "rameez@rameezkhan.dev";
+    userEmail = "5321924+rameezk@users.noreply.github.com";
     signingKey = "B18F680AF21C6B4A";
   };
 
