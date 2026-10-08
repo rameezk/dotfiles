@@ -14,15 +14,50 @@ in
 {
   imports = [ ./linux-builder.nix ];
 
-  nix = {
-    enable = false; # # let determinate installer manage the nix daemon
-    settings.experimental-features = "nix-command flakes";
+  determinateNix = {
+    enable = true;
+    customSettings = {
+      extra-substituters = [ "https://rameezk-forge.cachix.org" ];
+      extra-trusted-public-keys = [
+        "rameezk-forge.cachix.org-1:8l6PntPjhuEhz6xDTyILHid6JJH3ktkfhmGLds48mgI="
+      ];
+    };
+    determinateNixd.garbageCollector.strategy = "automatic";
   };
 
-  environment.etc."nix/nix.custom.conf".text = ''
-    extra-substituters = https://rameezk-forge.cachix.org
-    extra-trusted-public-keys = rameezk-forge.cachix.org-1:8l6PntPjhuEhz6xDTyILHid6JJH3ktkfhmGLds48mgI=
-  '';
+  launchd.daemons.nix-gc.serviceConfig = {
+    ProgramArguments = [
+      "/nix/var/nix/profiles/default/bin/nix-collect-garbage"
+      "--delete-older-than"
+      "14d"
+    ];
+    StartCalendarInterval = [
+      {
+        Weekday = 3;
+        Hour = 9;
+        Minute = 45;
+      }
+    ];
+    StandardOutPath = "/var/log/nix-gc.log";
+    StandardErrorPath = "/var/log/nix-gc.log";
+  };
+
+  launchd.user.agents.nix-gc.serviceConfig = {
+    ProgramArguments = [
+      "/nix/var/nix/profiles/default/bin/nix-collect-garbage"
+      "--delete-older-than"
+      "14d"
+    ];
+    StartCalendarInterval = [
+      {
+        Weekday = 3;
+        Hour = 9;
+        Minute = 30;
+      }
+    ];
+    StandardOutPath = "/tmp/nix-gc-user.log";
+    StandardErrorPath = "/tmp/nix-gc-user.log";
+  };
 
   users.users.rameezk = {
     home = "/Users/${user}";

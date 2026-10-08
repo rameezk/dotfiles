@@ -1,5 +1,7 @@
 #!/usr/bin/env fish
 
+sudo determinate-nixd upgrade
+
 nix flake update
 
 ./bin/switch

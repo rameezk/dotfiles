@@ -63,11 +63,8 @@ in
       IdentityFile /etc/nix/builder_ed25519
   '';
 
-  environment.etc."nix/nix.custom.conf" = {
-    knownSha256Hashes = [ "3bd68ef979a42070a44f8d82c205cfd8e8cca425d91253ec2c10a88179bb34aa" ];
-    text = ''
-      builders = ssh-ng://builder@linux-builder aarch64-linux /etc/nix/builder_ed25519 2 1 ${features} - ${hostKey}
-      builders-use-substitutes = true
-    '';
+  determinateNix.customSettings = {
+    builders = "ssh-ng://builder@linux-builder aarch64-linux /etc/nix/builder_ed25519 2 1 ${features} - ${hostKey}";
+    builders-use-substitutes = true;
   };
 }
