@@ -57,7 +57,6 @@
   ai.enable = false;
   ai.agents.enable = true;
   ai.claude.enable = true;
-  ai.omp.enable = true;
   ai.pi.enable = true;
   ai.claude-skills.docx.enable = false;
   ai.claude-skills.drawio.enable = false;

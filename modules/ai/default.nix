@@ -9,7 +9,6 @@
     ./agents
     ./claude
     ./claude-skills
-    ./omp.nix
     ./pi
   ];
 
