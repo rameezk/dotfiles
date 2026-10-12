@@ -53,7 +53,7 @@ in
         }
 
         config.font = wezterm.font_with_fallback { 
-          'MesloLGS NF',
+          'JetBrainsMono Nerd Font',
           'JetBrains Mono'
         }
         config.font_size = 16
