@@ -1,0 +1,12 @@
+{
+  "packages": [
+    "npm:@gotgenes/pi-anthropic-auth@3.4.2",
+    "npm:pi-subagents@0.77.0",
+    "npm:billion-context@0.1.195",
+    "npm:pi-web-access@0.39.0",
+    "npm:pi-powerline-footer@0.20.0"
+  ],
+  "warnings": {
+    "anthropicExtraUsage": false
+  }
+}

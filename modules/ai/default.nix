@@ -10,7 +10,7 @@
     ./claude
     ./claude-skills
     ./omp.nix
-    ./pi.nix
+    ./pi
   ];
 
   options = {
