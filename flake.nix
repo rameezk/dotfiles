@@ -105,6 +105,8 @@
       flake = false;
     };
 
+    llm-agents.url = "github:numtide/llm-agents.nix";
+
     herdr-skill = {
       url = "github:herdrdev/herdr";
       flake = false;

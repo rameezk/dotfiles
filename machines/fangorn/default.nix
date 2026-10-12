@@ -17,9 +17,13 @@ in
   determinateNix = {
     enable = true;
     customSettings = {
-      extra-substituters = [ "https://rameezk-forge.cachix.org" ];
+      extra-substituters = [
+        "https://rameezk-forge.cachix.org"
+        "https://cache.numtide.com"
+      ];
       extra-trusted-public-keys = [
         "rameezk-forge.cachix.org-1:8l6PntPjhuEhz6xDTyILHid6JJH3ktkfhmGLds48mgI="
+        "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
       ];
     };
     determinateNixd.garbageCollector.strategy = "automatic";
