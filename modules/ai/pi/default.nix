@@ -24,6 +24,9 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = [ piPkg ];
 
+    # Footer status: billion-context compression stats (folds / tokens saved / cache hit)
+    home.file.".pi/agent/extensions/billion-status.ts".source = ./extensions/billion-status.ts;
+
     verify.checks = [
       {
         type = "file";

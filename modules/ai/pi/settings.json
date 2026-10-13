@@ -6,6 +6,33 @@
     "npm:pi-web-access@0.39.0",
     "npm:pi-powerline-footer@0.20.0"
   ],
+  "powerline": {
+    "preset": "default",
+    "cache_read": {
+      "format": "percent"
+    },
+    "cost": {
+      "subscriptionDisplay": "both",
+      "currency": "USD"
+    },
+    "layout": {
+      "left": [
+        "model",
+        "shell_mode",
+        "context_pct",
+        "queue",
+        "path",
+        "git",
+        "thinking",
+        "cost",
+        "cache_read"
+      ],
+      "secondary": [
+        "extension_statuses"
+      ]
+    },
+    "secondaryOverflow": "wrap"
+  },
   "warnings": {
     "anthropicExtraUsage": false
   }
