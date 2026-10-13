@@ -27,6 +27,8 @@ in
     # Footer status: billion-context compression stats (folds / tokens saved / cache hit)
     home.file.".pi/agent/extensions/billion-status.ts".source = ./extensions/billion-status.ts;
 
+    home.file.".pi/agent/keybindings.json".source = ./keybindings.json;
+
     verify.checks = [
       {
         type = "file";

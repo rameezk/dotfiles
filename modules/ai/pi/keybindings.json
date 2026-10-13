@@ -1,0 +1,9 @@
+{
+  "tui.altScreen.lineUp": "alt+up",
+  "tui.altScreen.lineDown": "alt+down",
+  "tui.altScreen.pageUp": ["pageUp", "alt+shift+up"],
+  "tui.altScreen.pageDown": ["pageDown", "alt+shift+down"],
+  "tui.altScreen.top": ["ctrl+home", "alt+g"],
+  "tui.altScreen.bottom": ["ctrl+end", "alt+shift+g"],
+  "app.message.dequeue": "alt+q"
+}

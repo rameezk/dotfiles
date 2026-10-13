@@ -29,9 +29,15 @@ in
         path = "~/.codex/AGENTS.md";
         desc = "global agent instructions (codex)";
       }
+      {
+        type = "file";
+        path = "~/.pi/agent/AGENTS.md";
+        desc = "global agent instructions (pi)";
+      }
     ];
 
     home.file.".claude/CLAUDE.md".source = config.lib.file.mkOutOfStoreSymlink cfg.instructionsPath;
     home.file.".codex/AGENTS.md".source = config.lib.file.mkOutOfStoreSymlink cfg.instructionsPath;
+    home.file.".pi/agent/AGENTS.md".source = config.lib.file.mkOutOfStoreSymlink cfg.instructionsPath;
   };
 }
