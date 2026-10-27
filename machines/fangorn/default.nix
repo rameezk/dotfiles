@@ -174,7 +174,10 @@ in
     };
 
     taps = builtins.attrNames config.nix-homebrew.taps;
-    brews = [ "mas" ];
+    brews = [
+      "mas"
+      "media-control"
+    ];
     casks = import ./casks.nix;
 
     # These app IDs are from using the mas CLI app

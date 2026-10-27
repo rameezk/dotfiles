@@ -12,6 +12,7 @@
   "deskpad"
   "drawio"
   "elgato-control-center"
+  "hammerspoon"
   "helium-browser"
   "intellij-idea"
   "jabra-direct"

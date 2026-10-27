@@ -64,6 +64,7 @@
   ai.claude-skills.mermaid.enable = false;
 
   macos.alfred.enable = true;
+  macos.hammerspoon.enable = true;
   macos.karabiner.enable = true;
   macos.window-management.aerospace.enable = true;
 
