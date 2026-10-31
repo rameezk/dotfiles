@@ -43,8 +43,17 @@ in
       export TMPDIR=/run/org.nixos.linux-builder USE_TMPDIR=1
       rm -rf $TMPDIR
       mkdir -p $TMPDIR
-      trap "rm -rf $TMPDIR" EXIT
-      ${package}/bin/create-builder
+      stop() {
+        trap "" TERM INT
+        kill -TERM 0
+        while /usr/bin/pgrep -g $$ -x vzvm >/dev/null; do sleep 1; done
+        rm -rf $TMPDIR
+        exit 0
+      }
+      trap stop TERM INT
+      ${package}/bin/create-builder &
+      wait $!
+      rm -rf $TMPDIR
     '';
 
     serviceConfig = {
