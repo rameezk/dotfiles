@@ -7,18 +7,12 @@
 let
   proxyEnabled = config.network.proxy.enable or false;
   kubernetesEnabled = config.container.kubernetes.enable or false;
-  podmanEnabled = config.container.podman or false;
   gitEnabled = config.vcs.git.enable or false;
   terraformEnabled = config.iac.terraform.enable or false;
 
   proxyConfig = lib.optionalString proxyEnabled ''
     source ~/.proxyrc
   '';
-
-  podmanAliases = lib.optionalAttrs podmanEnabled {
-    docker = "podman";
-    docker-compose = "podman-compose";
-  };
 
   gitAbbrs = lib.optionalAttrs gitEnabled {
     g = "git";
@@ -175,8 +169,6 @@ in
       enable = true;
 
       shellInit = shellInit;
-
-      shellAliases = { } // podmanAliases;
 
       shellAbbrs = {
         cc = "claude --permission-mode auto";

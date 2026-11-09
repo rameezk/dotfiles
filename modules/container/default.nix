@@ -20,6 +20,8 @@
       lib.optionals config.container.podman [
         podman
         podman-compose
+        (writeShellScriptBin "docker" ''exec ${podman}/bin/podman "$@"'')
+        (writeShellScriptBin "docker-compose" ''exec ${podman-compose}/bin/podman-compose "$@"'')
       ];
   };
 }
