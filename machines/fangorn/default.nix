@@ -139,6 +139,9 @@ in
       NSGlobalDomain = {
         NSRecentDocumentsLimit = 0;
       };
+      "com.apple.coreservices.useractivityd" = {
+        ClipboardSharingEnabled = true;
+      };
     };
   };
 
