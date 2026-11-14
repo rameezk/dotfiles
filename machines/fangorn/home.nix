@@ -3,6 +3,7 @@
 {
   imports = [
     ../../modules
+    inputs.jarvis.homeManagerModules.default
   ];
 
   sops = {
@@ -134,7 +135,18 @@
   # Packages
   home.packages = with pkgs; [
     inputs.mdmarks.packages.${pkgs.stdenv.hostPlatform.system}.default
+    inputs.jarvis.packages.${pkgs.stdenv.hostPlatform.system}.jarvis
+    inputs.jarvis.packages.${pkgs.stdenv.hostPlatform.system}.jarvis-mail
   ];
+
+  programs.jarvis.mail = {
+    enable = false;
+    onepassword = {
+      account = "my.1password.com";
+      usernameRef = "op://private/Proton Mail Bridge/username";
+      passwordRef = "op://private/Proton Mail Bridge/password";
+    };
+  };
 
   xdg.configFile."mdmarks/config.toml".text = ''
     store = "/Users/rameezk/DigitalGarden/bookmarks"

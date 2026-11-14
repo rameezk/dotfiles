@@ -30,6 +30,7 @@
   "opensuperwhisper"
   "podman-desktop"
   "proton-mail"
+  "proton-mail-bridge"
   "protonvpn"
   "readest"
   "slack"
