@@ -140,7 +140,8 @@
   ];
 
   programs.jarvis.mail = {
-    enable = false;
+    enable = true;
+    tlsFingerprint = "BE:88:19:4B:17:4E:21:D4:3A:5C:BC:DD:39:ED:98:C5:F8:3E:B0:73:F9:7A:65:D7:50:09:F0:44:06:2E:E4:88";
     onepassword = {
       account = "my.1password.com";
       usernameRef = "op://private/Proton Mail Bridge/username";
