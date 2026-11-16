@@ -138,7 +138,13 @@
     inputs.jarvis.packages.${pkgs.stdenv.hostPlatform.system}.jarvis
     inputs.jarvis.packages.${pkgs.stdenv.hostPlatform.system}.jarvis-mail
     inputs.jarvis.packages.${pkgs.stdenv.hostPlatform.system}.jarvis-digital-garden
+    inputs.jarvis.packages.${pkgs.stdenv.hostPlatform.system}.jarvis-calendar
   ];
+
+  programs.jarvis.calendar = {
+    enable = true;
+    blockingCalendar = "Personal";
+  };
 
   programs.jarvis.digitalGarden = {
     enable = true;
