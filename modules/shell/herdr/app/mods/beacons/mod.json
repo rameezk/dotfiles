@@ -1,0 +1,10 @@
+{
+  "place": "none",
+  "overlay": {
+    "kind": "window",
+    "key": "beacons",
+    "keep": true,
+    "frame": "none",
+    "at": { "x": 900, "y": 8 }
+  }
+}

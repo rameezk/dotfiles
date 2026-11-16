@@ -14,6 +14,7 @@
   "elgato-control-center"
   "hammerspoon"
   "helium-browser"
+  "herdr-app"
   "intellij-idea"
   "jabra-direct"
   "karabiner-elements"

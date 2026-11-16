@@ -1,0 +1,10 @@
+{
+  "place": "none",
+  "overlay": {
+    "kind": "window",
+    "key": "agent-badge",
+    "keep": true,
+    "frame": "none",
+    "at": { "x": 0, "y": 0 }
+  }
+}

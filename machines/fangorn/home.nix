@@ -75,6 +75,8 @@
 
   herdr.enable = true;
 
+  herdr.app.enable = true;
+
   editor = {
     neovim.enable = true;
     jetbrains-vim-mode.enable = true;
