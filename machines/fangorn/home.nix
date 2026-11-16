@@ -137,7 +137,13 @@
     inputs.mdmarks.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.jarvis.packages.${pkgs.stdenv.hostPlatform.system}.jarvis
     inputs.jarvis.packages.${pkgs.stdenv.hostPlatform.system}.jarvis-mail
+    inputs.jarvis.packages.${pkgs.stdenv.hostPlatform.system}.jarvis-digital-garden
   ];
+
+  programs.jarvis.digitalGarden = {
+    enable = true;
+    vault = "/Users/rameezk/DigitalGarden";
+  };
 
   programs.jarvis.mail = {
     enable = true;
