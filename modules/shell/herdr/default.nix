@@ -15,7 +15,6 @@ let
     "mods/leader/main.js"
     "mods/leader/mod.json"
     "mods/pluck/main.js"
-    "mods/pluck/patterns.js"
     "mods/pluck/mod.json"
     "mods/copy-mode/main.js"
     "mods/copy-mode/mod.json"
