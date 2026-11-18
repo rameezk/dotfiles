@@ -8,7 +8,7 @@ const SIDEBAR_LIMIT = 6;
 const KEY = "prs.inbox";
 
 const FRAGMENT = `fragment pr on PullRequest {
-  id number title url isDraft updatedAt headRefName headRefOid baseRefName additions deletions changedFiles reviewDecision mergeStateStatus
+  id number state title url isDraft updatedAt headRefName headRefOid baseRefName additions deletions changedFiles reviewDecision mergeStateStatus
   repository { nameWithOwner viewerPermission viewerDefaultMergeMethod mergeCommitAllowed squashMergeAllowed rebaseMergeAllowed }
   author { login __typename }
   latestReviews(first: 20) { nodes { author { login } state commit { oid } } }
@@ -82,7 +82,7 @@ function classify(data) {
   for (const key of Object.keys(SEARCHES)) {
     from[key] = new Set();
     for (const pr of data[key]?.nodes ?? []) {
-      if (!pr?.id) continue;
+      if (!pr?.id || pr.state !== "OPEN") continue;
       from[key].add(pr.id);
       seen.set(pr.id, pr);
     }
@@ -97,6 +97,7 @@ function classify(data) {
     const old = now - Date.parse(pr.updatedAt) > STALE_DAYS * 86400000;
     const method = mergeMethod(pr.repository);
     const canMerge = !pr.isDraft && pr.mergeStateStatus === "CLEAN" && WRITERS.has(pr.repository.viewerPermission) && method !== null;
+    const canBypass = mine && !pr.isDraft && !canMerge && pr.mergeStateStatus !== "DIRTY" && WRITERS.has(pr.repository.viewerPermission) && method !== null;
     const approvedAtHead = review?.state === "APPROVED" && review.commit?.oid === pr.headRefOid;
     let group;
     let why;
@@ -149,6 +150,8 @@ function classify(data) {
       head: pr.headRefOid,
       mine,
       canMerge,
+      canBypass,
+      blockedBy: BLOCKED[pr.mergeStateStatus] ?? null,
       approvedAtHead,
       method,
       ci: checks.ci,
@@ -236,19 +239,20 @@ async function gh(args) {
   if (r.code !== 0) throw new Error((r.stderr || r.stdout).trim().split("\n").pop() || `gh ${args[0]} failed`);
 }
 
-async function mergePr(item, phase) {
+async function mergePr(item, phase, admin) {
   const target = [String(item.number), "--repo", item.repo];
-  if (!item.mine && !item.approvedAtHead) {
+  if (!admin && !item.mine && !item.approvedAtHead) {
     phase("approving");
     await gh(["pr", "review", ...target, "--approve"]);
   }
   phase("merging");
-  await gh(["pr", "merge", ...target, METHOD_FLAG[item.method], "--match-head-commit", item.head]);
+  await gh(["pr", "merge", ...target, METHOD_FLAG[item.method], "--match-head-commit", item.head, ...(admin ? ["--admin"] : [])]);
 }
 
 const ACTIONS = [
   { key: "enter", hint: "↵", label: "Review in Hunk", primary: true, closes: true, run: (item) => reviewInHunk(item) },
-  { key: "m", label: (item) => mergeLabel(item), primary: true, confirm: true, when: (item) => item.canMerge },
+  { key: "m", label: (item) => mergeLabel(item), primary: true, confirm: "merge", when: (item) => item.canMerge },
+  { key: "a", label: (item) => `${METHOD_LABEL[item.method] ?? "Merge"} as admin`, primary: true, confirm: "admin", when: (item) => item.canBypass },
   { key: "o", label: "Open PR", run: (item) => openUrl(item.url) },
   { key: "f", label: "Files", run: (item) => openUrl(`${item.url}/files`) },
   { key: "c", label: "Checks", run: (item) => openUrl(`${item.url}/checks`) },
@@ -448,7 +452,7 @@ export default class PullRequests extends View {
     if (this.job) return;
     if (this.confirming && this.selected()?.id !== this.confirming) this.confirming = null;
     if (this.confirming) {
-      if (k === "enter") return this.merge(this.selected(), cx);
+      if (k === "enter") return this.merge(this.selected(), cx, this.confirmMode === "admin");
       if (k === "escape" || k === "n") {
         this.confirming = null;
         return cx.notify();
@@ -477,6 +481,7 @@ export default class PullRequests extends View {
     if (action.when && !action.when(item)) return;
     if (action.confirm) {
       this.confirming = item.id;
+      this.confirmMode = action.confirm;
       this.mergeError = null;
       return cx.notify();
     }
@@ -484,20 +489,26 @@ export default class PullRequests extends View {
     action.run(item);
   }
 
-  merge(item, cx) {
-    this.job = { item, phase: "merging" };
+  merge(item, cx, admin) {
+    this.job = { item, phase: "merging", admin };
     this.mergeError = null;
     cx.notify();
     cx.spawn(async (cx) => {
       try {
-        await mergePr(item, (phase) => {
-          this.job = { item, phase };
-          cx.notify();
-        });
-        this.job = { item, phase: "done" };
+        await mergePr(
+          item,
+          (phase) => {
+            this.job = { item, phase, admin };
+            cx.notify();
+          },
+          admin,
+        );
+        this.job = { item, phase: "done", admin };
         cx.notify();
         notify({ title: `Merged ${short(item.repo)}#${item.number}`, body: item.title, timeout: 4000 });
         cx.timer.after(1400, (cx) => {
+          const data = inbox();
+          setShared(KEY, { ...data, items: data.items.filter((i) => i.id !== item.id) });
           this.job = null;
           this.confirming = null;
           this.refresh(cx);
@@ -511,14 +522,14 @@ export default class PullRequests extends View {
   }
 
   progress(job, t) {
-    const { item, phase } = job;
+    const { item, phase, admin } = job;
     const done = phase === "done";
     const verb = (METHOD_LABEL[item.method] ?? "Merge").replace(" and merge", "-merging").replace(/^Merge$/, "Merging");
     const text = done
       ? `Merged ${short(item.repo)}#${item.number} into ${item.base}`
       : phase === "approving"
         ? `Approving ${short(item.repo)}#${item.number}…`
-        : `${verb} ${short(item.repo)}#${item.number} into ${item.base}…`;
+        : `${verb} ${short(item.repo)}#${item.number} into ${item.base}${admin ? " as admin" : ""}…`;
     return v_flex()
       .gap(12)
       .p(14)
@@ -539,25 +550,54 @@ export default class PullRequests extends View {
       );
   }
 
+  button(id, label, hint, variant, t, onClick) {
+    const accent = variant === "danger" ? t.blocked : variant === "merge" ? t.done : variant === "primary" ? t.ansi6 : null;
+    return h_flex()
+      .id(id)
+      .h(28)
+      .px(10)
+      .gap(8)
+      .items_center()
+      .rounded(6)
+      .border_1()
+      .border_color(accent ?? t.border)
+      .bg(accent ? tint(accent, "1f") : t.surface)
+      .cursor_pointer()
+      .hover((s) => s.bg(accent ? tint(accent, "33") : t.hover))
+      .on_click(onClick)
+      .child(div().text_color(accent ?? t.foreground).child(label))
+      .when(Boolean(hint), (el) => el.child(div().text_size(11).text_color(t.dim).child(hint)));
+  }
+
   actionsFor(sel, t) {
     if (this.job) return this.progress(this.job, t);
     if (this.confirming === sel.id) {
-      const verb = mergeLabel(sel);
+      const admin = this.confirmMode === "admin";
+      const verb = admin ? `${METHOD_LABEL[sel.method] ?? "Merge"} as admin` : mergeLabel(sel);
+      const accent = admin ? t.blocked : t.done;
       return v_flex()
         .gap(10)
         .p(14)
         .rounded(8)
         .border_1()
-        .border_color(t.done)
-        .bg(tint(t.done, "14"))
+        .border_color(accent)
+        .bg(tint(accent, "14"))
         .child(div().font_semibold().text_color(t.foreground).child(`${verb} ${short(sel.repo)}#${sel.number} into ${sel.base}?`))
-        .when(!sel.mine && !sel.approvedAtHead, (el) => el.child(div().text_size(12).text_color(t.muted).child("This approves it as you first.")))
+        .when(admin, (el) =>
+          el.child(
+            div()
+              .text_size(12)
+              .text_color(t.blocked)
+              .child(`Are you sure? This bypasses branch protection${sel.blockedBy ? ` (${sel.blockedBy})` : ""}.`),
+          ),
+        )
+        .when(!admin && !sel.mine && !sel.approvedAtHead, (el) => el.child(div().text_size(12).text_color(t.muted).child("This approves it as you first.")))
         .child(div().text_size(12).text_color(t.muted).child("Only merges if nothing was pushed since this list was loaded."))
         .when(Boolean(this.mergeError), (el) => el.child(div().text_size(12).text_color(t.blocked).child(this.mergeError)))
         .child(
           h_flex()
             .gap(8)
-            .child(this.button("merge-yes", verb, "↵", "merge", t, (_e, cx) => this.merge(sel, cx)))
+            .child(this.button("merge-yes", verb, "↵", admin ? "danger" : "merge", t, (_e, cx) => this.merge(sel, cx, admin)))
             .child(
               this.button("merge-no", "Cancel", "n", null, t, (_e, cx) => {
                 this.confirming = null;
@@ -581,7 +621,7 @@ export default class PullRequests extends View {
                   `act-${a.key}`,
                   typeof a.label === "function" ? a.label(sel) : a.label,
                   a.hint ?? a.key,
-                  a.confirm ? "merge" : a.primary ? "primary" : null,
+                  a.confirm === "admin" ? "danger" : a.confirm ? "merge" : a.primary ? "primary" : null,
                   t,
                   (_e, cx) => this.act(a, sel, cx),
                 ),
@@ -747,7 +787,7 @@ export default class PullRequests extends View {
           .border_color(t.border)
           .text_size(11.5)
           .text_color(t.dim)
-          .child("1-5 or tab group · ↑↓ / jk move · ↵ Hunk · m merge · o PR · f files · c checks · g repo · y copy · r refresh · esc close"),
+          .child("1-5 or tab group · ↑↓ / jk move · ↵ Hunk · m merge · a admin merge · o PR · f files · c checks · g repo · y copy · r refresh · esc close"),
       );
   }
 }
