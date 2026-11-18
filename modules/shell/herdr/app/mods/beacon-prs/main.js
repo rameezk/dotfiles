@@ -841,48 +841,55 @@ export default class PullRequests extends View {
       ? v_flex()
           .flex_1()
           .min_w(0)
-          .p(20)
-          .gap(12)
-          .child(div().text_size(11.5).text_color(t.dim).child(`${sel.repo}#${sel.number} · ${sel.author}${sel.bot ? " (bot)" : ""}`))
-          .child(div().text_size(17).font_semibold().text_color(t.foreground).child(sel.title))
-          .child(div().text_size(12).text_color(sel.group === "ready" ? t.done : sel.rank === 0 ? t.ansi3 : t.muted).child(sel.why))
+          .min_h(0)
           .child(
-            h_flex()
-              .gap(6)
-              .flex_wrap()
-              .child(chip(sel.branch, t.ansi5))
+            v_flex()
+              .id("prs-detail")
+              .flex_1()
+              .min_h(0)
+              .p(20)
+              .gap(12)
+              .overflow_y_scrollbar()
+              .child(div().text_size(11.5).text_color(t.dim).child(`${sel.repo}#${sel.number} · ${sel.author}${sel.bot ? " (bot)" : ""}`))
+              .child(div().text_size(17).font_semibold().text_color(t.foreground).child(sel.title))
+              .child(div().text_size(12).text_color(sel.group === "ready" ? t.done : sel.rank === 0 ? t.ansi3 : t.muted).child(sel.why))
               .child(
                 h_flex()
-                  .px(8)
-                  .py(2)
-                  .gap(4)
-                  .rounded(4)
-                  .bg(t.surface)
-                  .text_size(11.5)
-                  .child(div().text_color(t.ansi2).child(`+${sel.add}`))
-                  .child(div().text_color(t.ansi1).child(`-${sel.del}`))
-                  .child(div().text_color(t.muted).child(`· ${sel.files} files`)),
+                  .gap(6)
+                  .flex_wrap()
+                  .child(chip(sel.branch, t.ansi5))
+                  .child(
+                    h_flex()
+                      .px(8)
+                      .py(2)
+                      .gap(4)
+                      .rounded(4)
+                      .bg(t.surface)
+                      .text_size(11.5)
+                      .child(div().text_color(t.ansi2).child(`+${sel.add}`))
+                      .child(div().text_color(t.ansi1).child(`-${sel.del}`))
+                      .child(div().text_color(t.muted).child(`· ${sel.files} files`)),
+                  )
+                  .when(Boolean(sel.decision), (el) => el.child(chip(sel.decision))),
               )
-              .when(Boolean(sel.decision), (el) => el.child(chip(sel.decision))),
+              .when((sel.labels ?? []).length > 0, (el) =>
+                el.child(h_flex().gap(6).flex_wrap().children(sel.labels.map((l) => labelPill(t, l)))),
+              )
+              .child(div().pt(6).text_size(10.5).font_bold().text_color(t.dim).child("CHECKS"))
+              .when(sel.checks.length === 0, (el) => el.child(div().text_size(12).text_color(t.dim).child("No checks on the latest commit")))
+              .children(
+                sel.checks.map((c, i) =>
+                  h_flex()
+                    .id(`check-${i}`)
+                    .gap(10)
+                    .items_center()
+                    .child(ciDot(t, c.state))
+                    .child(div().flex_1().min_w(0).truncate().text_color(t.foreground).child(c.name))
+                    .child(div().flex_none().text_size(11).text_color(t.dim).child(c.label)),
+                ),
+              )
           )
-          .when((sel.labels ?? []).length > 0, (el) =>
-            el.child(h_flex().gap(6).flex_wrap().children(sel.labels.map((l) => labelPill(t, l)))),
-          )
-          .child(div().pt(6).text_size(10.5).font_bold().text_color(t.dim).child("CHECKS"))
-          .when(sel.checks.length === 0, (el) => el.child(div().text_size(12).text_color(t.dim).child("No checks on the latest commit")))
-          .children(
-            sel.checks.map((c, i) =>
-              h_flex()
-                .id(`check-${i}`)
-                .gap(10)
-                .items_center()
-                .child(ciDot(t, c.state))
-                .child(div().flex_1().min_w(0).truncate().text_color(t.foreground).child(c.name))
-                .child(div().flex_none().text_size(11).text_color(t.dim).child(c.label)),
-            ),
-          )
-          .child(div().flex_1())
-          .child(this.actionsFor(sel, t))
+          .child(div().flex_none().px(20).py(14).border_t_1().border_color(t.border).child(this.actionsFor(sel, t)))
       : v_flex().flex_1().p(20).text_color(t.dim).child(data.at ? "Nothing here." : "Checking GitHub…");
 
     const status = this.busy ? "Refreshing…" : data.error ? data.error : data.at ? `Checked ${age(data.at)} ago` : "";
