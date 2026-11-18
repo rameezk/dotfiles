@@ -30,6 +30,11 @@ in
 
     home.file.".claude/keybindings.json".source = ./keybindings.json;
 
+    home.file.".claude/hooks/herdr-subagents.sh" = {
+      source = ./herdr-subagents.sh;
+      force = true;
+    };
+
     home.file.".claude/statusline-command.sh" = {
       source = ./statusline-command.sh;
       force = true;

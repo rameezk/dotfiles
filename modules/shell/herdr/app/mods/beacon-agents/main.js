@@ -3,16 +3,24 @@ import { View, div, image, svg } from "gpui-kit";
 import { v_flex, h_flex } from "gpui-base";
 import { agents, terminals, panes, focused, spaces, run, theme, shared, setShared, setAgentOrder, openOverlay, closeOverlay, props, window, layout, home, exec, checking, readTextFile, watchFolder } from "herdr";
 
-const FUEL_LINES = { 200000: 80000, 1000000: 200000 };
+const FUEL_LINE = 150000;
+const SUB_LINGER_MS = 120000;
 const fuelDir = () => `${home()}/.local/state/herdr-fuel`;
-function lineFor(reading) {
-  const lines = Object.entries(props()?.lines ?? FUEL_LINES)
-    .map(([window, line]) => [Number(window), line])
-    .sort((a, b) => a[0] - b[0]);
-  const window = reading?.window ?? 0;
-  let pick = lines[0]?.[1] ?? 80000;
-  for (const [w, line] of lines) if (window >= w) pick = line;
-  return pick;
+const fuelLine = () => props()?.line ?? FUEL_LINE;
+
+function foldSubs(text) {
+  const subs = new Map();
+  for (const raw of text.split("\n")) {
+    let e;
+    try { e = JSON.parse(raw); } catch { continue; }
+    if (typeof e?.id !== "string") continue;
+    const s = subs.get(e.id) ?? { id: e.id, status: "working" };
+    if (e.ev === "start") Object.assign(s, { type: e.type, status: "working", at: e.at });
+    if (e.ev === "stop") Object.assign(s, { status: "done", ended: e.at });
+    if (typeof e.desc === "string" && e.desc) s.desc = e.desc;
+    subs.set(e.id, s);
+  }
+  return [...subs.values()].filter((s) => s.at);
 }
 
 function fuelZone(tokens, line) {
@@ -141,8 +149,11 @@ export default class Agents extends View {
 
   async loadFuel() {
     const next = {};
+    const subs = {};
     for (const a of agents()) {
       if (a.address.includes("/")) continue;
+      const log = await readTextFile(`${fuelDir()}/${a.address}.subagents.jsonl`).catch(() => null);
+      if (log) subs[a.address] = foldSubs(log);
       const text = await readTextFile(`${fuelDir()}/${a.address}.json`).catch(() => null);
       if (!text) continue;
       try {
@@ -151,12 +162,22 @@ export default class Agents extends View {
       } catch {}
     }
     this.fuel = next;
+    this.subs = subs;
+  }
+
+  virtualKids(addr) {
+    const pane = this.panes?.get(addr);
+    if (!pane) return [];
+    const cutoff = Date.now() - SUB_LINGER_MS;
+    return (this.subs?.[addr] ?? [])
+      .filter((s) => s.status === "working" || (s.ended ?? 0) * 1000 > cutoff)
+      .map((s) => ({ address: `${addr}~${s.id}`, name: s.desc ?? s.type ?? "Subagent", kind: s.desc ? s.type : null, status: s.status, pane }));
   }
 
   publishSmoke(list) {
     const smoke = {};
     for (const a of list) {
-      if (fuelZone(this.fuel[a.address]?.tokens, lineFor(this.fuel[a.address])) === "dumb") smoke[a.space] = true;
+      if (fuelZone(this.fuel[a.address]?.tokens, fuelLine()) === "dumb") smoke[a.space] = true;
     }
     const key = JSON.stringify(Object.keys(smoke).sort());
     if (key === this.smokeKey) return;
@@ -184,7 +205,7 @@ export default class Agents extends View {
   }
 
   gauge(t, reading) {
-    const line = lineFor(reading);
+    const line = fuelLine();
     const zone = fuelZone(reading.tokens, line);
     const color = fuelColor(t, zone);
     const scale = line * 2;
@@ -296,7 +317,7 @@ export default class Agents extends View {
   }
 
   tree(all, addr, lead = []) {
-    const kids = all.filter((k) => k.parent === addr && k.state === "live");
+    const kids = [...all.filter((k) => k.parent === addr && k.state === "live"), ...this.virtualKids(addr)];
     return kids.flatMap((k, i) => {
       const last = i === kids.length - 1;
       return [
@@ -323,12 +344,14 @@ export default class Agents extends View {
       .text_size(12.5)
       .when(on, (el) => el.bg(t.raised))
       .hover((s) => s.bg(t.hover))
-      .on_click(() => (this.listed.has(k.address) ? run("pane.focus", { terminal: k.address }) : this.peek(k.address)))
+      .on_click(() => (k.pane ? run("pane.focus", { pane: k.pane }) : this.listed.has(k.address) ? run("pane.focus", { terminal: k.address }) : this.peek(k.address)))
       .children(s.lines.map(l => div().self_start().mt(-4).w(9).h(17).mr(4).flex_none()
         .when(Boolean(l), el => el.border_l(1.5).border_color(t.input))
         .when(l === "└" || l === "├", el => el.border_b(1.5).rounded_bl(6))))
       .when(Boolean(pic), el => el.child(div().mr(8).child(pic)))
-      .child(div().flex_1().truncate().text_color(on ? t.foreground : t.muted).child(k.name || k.template || k.program?.name || k.address))
+      .child(h_flex().flex_1().min_w(0).gap(5).items_center()
+        .child(div().min_w(0).truncate().text_color(on ? t.foreground : t.muted).child(k.name || k.template || k.program?.name || k.address))
+        .when(Boolean(k.kind), (el) => el.child(div().flex_none().text_size(11).text_color(t.dim).child(k.kind))))
       .child(this.status(t, { status: st }, compact));
   }
 
@@ -348,6 +371,7 @@ export default class Agents extends View {
     const sort = sortOf();
     let list = agents();
     this.listed = new Map(list.map((a) => [a.address, a.status]));
+    this.panes = new Map(list.map((a) => [a.address, a.pane]));
     const all = terminals();
     this.migratePins(all);
     const shown = focused()?.agent;
@@ -453,7 +477,7 @@ export default class Agents extends View {
       const full = byPriority || isPinned;
       const name = full ? a.space_name || label(a) : more ?? (/^\d+$/.test(label(a)) ? a.program?.name || label(a) : label(a));
       const reading = this.fuel[a.address];
-      const zone = fuelZone(reading?.tokens, lineFor(reading));
+      const zone = fuelZone(reading?.tokens, fuelLine());
       const smoking = zone === "dumb";
       const head = h_flex()
         .h(22)
