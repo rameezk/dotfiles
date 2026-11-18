@@ -167,14 +167,14 @@ export default class Agents extends View {
   badge(t, zone) {
     const ring = zone === "dumb" ? t.muted : fuelColor(t, zone);
     const mark = zone === "dumb"
-      ? svg("mods/beacon-agents/smoke.svg").size(9).text_color(t.foreground)
-      : svg("mods/beacon-agents/flame.svg").size(zone === "warm" ? 7 : 9).text_color(fuelColor(t, zone));
+      ? svg("mods/beacon-agents/smoke.svg").size(8).text_color(t.foreground)
+      : svg("mods/beacon-agents/flame.svg").size(zone === "warm" ? 6 : 8).text_color(fuelColor(t, zone));
     return h_flex()
       .absolute()
-      .right(-5)
-      .bottom(-5)
-      .size(14)
-      .rounded(7)
+      .right(-4)
+      .bottom(-4)
+      .size(12)
+      .rounded(6)
       .bg(t.background)
       .border(1)
       .border_color(ring)
@@ -196,10 +196,10 @@ export default class Agents extends View {
       ? svg("mods/workspace-chrome/chevron-right.svg").absolute().right(-7).top(-1.5).size(12).text_color(color)
       : div().absolute().left(`${at}%`).top(0).size(9).ml(-4.5).rounded(5).bg(color).border(1.5).border_color(t.background);
     return v_flex()
-      .pl(34)
-      .pr(4)
-      .pb(6)
-      .gap(3)
+      .pl(40)
+      .pr(14)
+      .mt(-2).pb(3)
+      .gap(0)
       .child(
         h_flex()
           .items_center()
@@ -219,7 +219,7 @@ export default class Agents extends View {
       .child(
         h_flex()
           .gap(4)
-          .text_size(10.5)
+          .text_size(10.5).h(14).items_center()
           .child(div().flex_none().font_semibold().text_color(color).child(`${tokensLabel(reading.tokens)} used`))
           .child(div().min_w(0).truncate().text_color(t.muted).child(`· ${fuelText(reading.tokens, line, zone)}`)),
       );
@@ -456,14 +456,14 @@ export default class Agents extends View {
       const zone = fuelZone(reading?.tokens, lineFor(reading));
       const smoking = zone === "dumb";
       const head = h_flex()
-        .h(32)
+        .h(22)
         .items_center()
-        .gap(10)
+        .gap(8)
         .child(div().id(`agent-fold-${a.address}`)
           .relative()
-          .size(24)
+          .size(20)
           .flex_none()
-          .rounded(7)
+          .rounded(6)
           .bg(t.foreground + "0f")
           .flex()
           .items_center()
@@ -515,8 +515,8 @@ export default class Agents extends View {
       return h_flex()
         .id(g.id)
         .px(8)
-        .pt(8)
-        .h(30)
+        .pt(6)
+        .h(26)
         .flex_none()
         .gap(6)
         .items_center()

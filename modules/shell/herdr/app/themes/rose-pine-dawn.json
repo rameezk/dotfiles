@@ -24,6 +24,7 @@
   "colors": {
     "background": "#faf4edb3",
     "canvas": "#fffaf330",
-    "chrome": "#00000000"
+    "chrome": "#00000000",
+    "done": "#56949f"
   }
 }
