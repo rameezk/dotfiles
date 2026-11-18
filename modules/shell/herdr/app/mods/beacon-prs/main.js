@@ -11,6 +11,7 @@ const FRAGMENT = `fragment pr on PullRequest {
   id number state title url isDraft updatedAt headRefName headRefOid baseRefName additions deletions changedFiles reviewDecision mergeStateStatus
   repository { nameWithOwner viewerPermission viewerDefaultMergeMethod mergeCommitAllowed squashMergeAllowed rebaseMergeAllowed }
   author { login __typename }
+  labels(first: 20) { nodes { name color } }
   latestReviews(first: 20) { nodes { author { login } state commit { oid } } }
   commits(last: 1) { nodes { commit { statusCheckRollup { state contexts(first: 30) { nodes { __typename ... on CheckRun { name status conclusion } ... on StatusContext { context state } } } } } } }
 }`;
@@ -141,6 +142,7 @@ function classify(data) {
       author: pr.author?.login ?? "ghost",
       bot: pr.author?.__typename === "Bot",
       branch: pr.headRefName,
+      labels: (pr.labels?.nodes ?? []).map((l) => ({ name: l.name, color: `#${l.color}` })),
       add: pr.additions,
       del: pr.deletions,
       files: pr.changedFiles,
@@ -200,6 +202,22 @@ function tint(color, alpha) {
   return /^#[0-9a-f]{6}/i.test(color) ? `${color.slice(0, 7)}${alpha}` : color;
 }
 
+function labelPill(t, label, size) {
+  return h_flex()
+    .flex_none()
+    .px(size === "sm" ? 6 : 8)
+    .py(size === "sm" ? 0 : 2)
+    .gap(5)
+    .items_center()
+    .rounded(10)
+    .border_1()
+    .border_color(tint(label.color, "73"))
+    .bg(tint(label.color, "1f"))
+    .text_size(size === "sm" ? 10.5 : 11.5)
+    .child(div().size(6).rounded(3).flex_none().bg(label.color))
+    .child(div().text_color(t.foreground).child(label.name));
+}
+
 function whyColor(t, item) {
   return item.group === "ready" ? t.done : item.rank === 0 ? t.ansi3 : t.dim;
 }
@@ -249,8 +267,13 @@ async function mergePr(item, phase, admin) {
   await gh(["pr", "merge", ...target, METHOD_FLAG[item.method], "--match-head-commit", item.head, ...(admin ? ["--admin"] : [])]);
 }
 
+async function approvePr(item) {
+  await gh(["pr", "review", String(item.number), "--repo", item.repo, "--approve"]);
+}
+
 const ACTIONS = [
   { key: "enter", hint: "↵", label: "Review in Hunk", primary: true, closes: true, run: (item) => reviewInHunk(item) },
+  { key: "v", label: "Approve", primary: true, confirm: "approve", when: (item) => !item.mine && !item.approvedAtHead },
   { key: "m", label: (item) => mergeLabel(item), primary: true, confirm: "merge", when: (item) => item.canMerge },
   { key: "a", label: (item) => `${METHOD_LABEL[item.method] ?? "Merge"} as admin`, primary: true, confirm: "admin", when: (item) => item.canBypass },
   { key: "o", label: "Open PR", run: (item) => openUrl(item.url) },
@@ -464,7 +487,7 @@ export default class PullRequests extends View {
     cx.notify();
   }
 
-  close() {
+  dismiss() {
     closeOverlay(props().overlay);
   }
 
@@ -473,14 +496,14 @@ export default class PullRequests extends View {
     if (this.job) return;
     if (this.confirming && this.selected()?.id !== this.confirming) this.confirming = null;
     if (this.confirming) {
-      if (k === "enter") return this.merge(this.selected(), cx, this.confirmMode === "admin");
+      if (k === "enter") return this.confirm(this.selected(), cx);
       if (k === "escape" || k === "n") {
         this.confirming = null;
         return cx.notify();
       }
       return;
     }
-    if (k === "escape" || k === "q") return this.close();
+    if (k === "escape" || k === "q") return this.dismiss();
     if (k === "tab") return this.cycle(e.modifiers?.shift ? -1 : 1, cx);
     if (k === "right" || k === "l") return this.cycle(1, cx);
     if (k === "left" || k === "h") return this.cycle(-1, cx);
@@ -506,8 +529,36 @@ export default class PullRequests extends View {
       this.mergeError = null;
       return cx.notify();
     }
-    if (action.closes) this.close();
+    if (action.closes) this.dismiss();
     action.run(item);
+  }
+
+  confirm(item, cx) {
+    if (this.confirmMode === "approve") return this.approve(item, cx);
+    this.merge(item, cx, this.confirmMode === "admin");
+  }
+
+  approve(item, cx) {
+    this.job = { item, phase: "approving", kind: "approve" };
+    this.mergeError = null;
+    cx.notify();
+    cx.spawn(async (cx) => {
+      try {
+        await approvePr(item);
+        this.job = { item, phase: "done", kind: "approve" };
+        cx.notify();
+        notify({ title: `Approved ${short(item.repo)}#${item.number}`, body: item.title, timeout: 4000 });
+        cx.timer.after(1400, (cx) => {
+          this.job = null;
+          this.confirming = null;
+          this.refresh(cx);
+        });
+      } catch (e) {
+        this.mergeError = String(e?.message ?? e);
+        this.job = null;
+        cx.notify();
+      }
+    });
   }
 
   merge(item, cx, admin) {
@@ -543,14 +594,16 @@ export default class PullRequests extends View {
   }
 
   progress(job, t) {
-    const { item, phase, admin } = job;
+    const { item, phase, admin, kind } = job;
     const done = phase === "done";
+    const ref = `${short(item.repo)}#${item.number}`;
     const verb = (METHOD_LABEL[item.method] ?? "Merge").replace(" and merge", "-merging").replace(/^Merge$/, "Merging");
-    const text = done
-      ? `Merged ${short(item.repo)}#${item.number} into ${item.base}`
-      : phase === "approving"
-        ? `Approving ${short(item.repo)}#${item.number}…`
-        : `${verb} ${short(item.repo)}#${item.number} into ${item.base}${admin ? " as admin" : ""}…`;
+    const text = (() => {
+      if (kind === "approve") return done ? `Approved ${ref}` : `Approving ${ref}…`;
+      if (done) return `Merged ${ref} into ${item.base}`;
+      if (phase === "approving") return `Approving ${ref}…`;
+      return `${verb} ${ref} into ${item.base}${admin ? " as admin" : ""}…`;
+    })();
     return v_flex()
       .gap(12)
       .p(14)
@@ -594,7 +647,8 @@ export default class PullRequests extends View {
     if (this.job) return this.progress(this.job, t);
     if (this.confirming === sel.id) {
       const admin = this.confirmMode === "admin";
-      const verb = admin ? `${METHOD_LABEL[sel.method] ?? "Merge"} as admin` : mergeLabel(sel);
+      const approving = this.confirmMode === "approve";
+      const verb = approving ? "Approve" : admin ? `${METHOD_LABEL[sel.method] ?? "Merge"} as admin` : mergeLabel(sel);
       const accent = admin ? t.blocked : t.done;
       return v_flex()
         .gap(10)
@@ -603,7 +657,12 @@ export default class PullRequests extends View {
         .border_1()
         .border_color(accent)
         .bg(tint(accent, "14"))
-        .child(div().font_semibold().text_color(t.foreground).child(`${verb} ${short(sel.repo)}#${sel.number} into ${sel.base}?`))
+        .child(
+          div()
+            .font_semibold()
+            .text_color(t.foreground)
+            .child(approving ? `Approve ${short(sel.repo)}#${sel.number} as you?` : `${verb} ${short(sel.repo)}#${sel.number} into ${sel.base}?`),
+        )
         .when(admin, (el) =>
           el.child(
             div()
@@ -612,13 +671,13 @@ export default class PullRequests extends View {
               .child(`Are you sure? This bypasses branch protection${sel.blockedBy ? ` (${sel.blockedBy})` : ""}.`),
           ),
         )
-        .when(!admin && !sel.mine && !sel.approvedAtHead, (el) => el.child(div().text_size(12).text_color(t.muted).child("This approves it as you first.")))
-        .child(div().text_size(12).text_color(t.muted).child("Only merges if nothing was pushed since this list was loaded."))
+        .when(!approving && !admin && !sel.mine && !sel.approvedAtHead, (el) => el.child(div().text_size(12).text_color(t.muted).child("This approves it as you first.")))
+        .when(!approving, (el) => el.child(div().text_size(12).text_color(t.muted).child("Only merges if nothing was pushed since this list was loaded.")))
         .when(Boolean(this.mergeError), (el) => el.child(div().text_size(12).text_color(t.blocked).child(this.mergeError)))
         .child(
           h_flex()
             .gap(8)
-            .child(this.button("merge-yes", verb, "↵", admin ? "danger" : "merge", t, (_e, cx) => this.merge(sel, cx, admin)))
+            .child(this.button("merge-yes", verb, "↵", admin ? "danger" : "merge", t, (_e, cx) => this.confirm(sel, cx)))
             .child(
               this.button("merge-no", "Cancel", "n", null, t, (_e, cx) => {
                 this.confirming = null;
@@ -706,7 +765,10 @@ export default class PullRequests extends View {
             .child(div().flex_none().text_size(11).text_color(t.dim).child(age(item.updatedAt))),
         )
         .child(div().truncate().text_color(t.foreground).child(item.title))
-        .child(div().truncate().text_size(11.5).text_color(whyColor(t, item)).child(item.why));
+        .child(div().truncate().text_size(11.5).text_color(whyColor(t, item)).child(item.why))
+        .when((item.labels ?? []).length > 0, (el) =>
+          el.child(h_flex().pt(3).gap(4).overflow_hidden().children(item.labels.map((l) => labelPill(t, l, "sm")))),
+        );
     });
 
     const chip = (text, color) => div().px(8).py(2).rounded(4).bg(t.surface).text_size(11.5).text_color(color ?? t.muted).child(text);
@@ -738,6 +800,9 @@ export default class PullRequests extends View {
                   .child(div().text_color(t.muted).child(`· ${sel.files} files`)),
               )
               .when(Boolean(sel.decision), (el) => el.child(chip(sel.decision))),
+          )
+          .when((sel.labels ?? []).length > 0, (el) =>
+            el.child(h_flex().gap(6).flex_wrap().children(sel.labels.map((l) => labelPill(t, l)))),
           )
           .child(div().pt(6).text_size(10.5).font_bold().text_color(t.dim).child("CHECKS"))
           .when(sel.checks.length === 0, (el) => el.child(div().text_size(12).text_color(t.dim).child("No checks on the latest commit")))
@@ -808,7 +873,7 @@ export default class PullRequests extends View {
           .border_color(t.border)
           .text_size(11.5)
           .text_color(t.dim)
-          .child("1-5 or tab group · ↑↓ / jk move · ↵ Hunk · m merge · a admin merge · o PR · f files · c checks · g repo · y copy · r refresh · esc close"),
+          .child("1-5 or tab group · ↑↓ / jk move · ↵ Hunk · v approve · m merge · a admin merge · o PR · f files · c checks · g repo · y copy · r refresh · esc close"),
       );
   }
 }

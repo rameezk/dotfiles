@@ -1,10 +1,4 @@
 {
   "place": "none",
-  "overlay": {
-    "kind": "popup",
-    "frame": "none",
-    "width": 1,
-    "height": 1,
-    "at": { "x": 0, "y": 0 }
-  }
+  "overlay": { "kind": "dialog", "width": 760, "height": 0.5 }
 }

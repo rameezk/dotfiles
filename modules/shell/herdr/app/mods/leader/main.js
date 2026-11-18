@@ -62,11 +62,9 @@ function pluck(mode) {
     openOverlay({
       mod: "pluck",
       props: { mode },
-      kind: "popup",
-      frame: "none",
-      width: 1,
-      height: 1,
-      at: { x: 0, y: 0 },
+      kind: "dialog",
+      width: 760,
+      height: 0.5,
     });
 }
 

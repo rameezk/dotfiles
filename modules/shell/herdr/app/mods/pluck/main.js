@@ -1,5 +1,5 @@
 import { View, div } from "gpui-kit";
-import { v_flex, h_flex } from "gpui-base";
+import { v_flex, h_flex, ScrollHandle } from "gpui-base";
 import {
   props,
   closeOverlay,
@@ -10,6 +10,7 @@ import {
   notify,
   checking,
   settings,
+  home,
 } from "herdr";
 
 const K8S_KINDS =
@@ -27,14 +28,20 @@ const PATTERNS = [
   {
     name: "git-status",
     priority: 15,
-    re: /(?:modified|deleted|deleted by us|new file): +(?<match>.+)/g,
+    re: /^\s*(?:modified|deleted|deleted by us|new file|renamed): +(?<match>\S+)/g,
+    accept: hasLetter,
   },
   {
     name: "git-status-branch",
     priority: 15,
     re: /Your branch is up to date with '(?<match>.*)'\./g,
   },
-  { name: "diff", priority: 15, re: /(?:---|\+\+\+) [ab]\/(?<match>.*)/g },
+  {
+    name: "diff",
+    priority: 15,
+    re: /^(?:---|\+\+\+) [ab]\/(?<match>\S+)/g,
+    accept: hasLetter,
+  },
   {
     name: "kubernetes",
     priority: 18,
@@ -43,7 +50,12 @@ const PATTERNS = [
       "g",
     ),
   },
-  { name: "path", priority: 20, re: /(?:[.\w\-~$@]+)?(?:\/[.\w\-@]+)+\/?/g },
+  {
+    name: "path",
+    priority: 20,
+    re: /(?<![\w\\/.:@$-])(?:~|\.{1,2}|[\w\-@.]+)?(?:\/[\w\-@.]+)+\/?/g,
+    accept: isPath,
+  },
   {
     name: "uuid",
     priority: 30,
@@ -57,8 +69,26 @@ const PATTERNS = [
   { name: "git-sha", priority: 40, re: /\b[0-9a-fA-F]{7,40}\b/g },
   { name: "hex", priority: 45, re: /\b0x[0-9a-fA-F]+\b/g },
   { name: "ipv4", priority: 50, re: /\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/g },
-  { name: "number", priority: 60, re: /[0-9]{4,}/g },
+  { name: "number", priority: 60, re: /(?<![\d/.:-])[0-9]{4,}(?![\d/.:-])/g },
 ];
+
+const FILE_KINDS = new Set(["path", "git-status", "diff"]);
+
+function hasLetter(text) {
+  return /[A-Za-z]/.test(text);
+}
+
+function isPath(text) {
+  const t = text.replace(/\/$/, "");
+  if (!hasLetter(t)) return false;
+  const segs = t.split("/");
+  if (segs.some((seg) => /^\.{3,}$/.test(seg) || seg.includes("…"))) return false;
+  const head = segs[0];
+  const rest = segs.slice(1).filter(Boolean);
+  if (head === "") return rest.length >= 2;
+  if (head === "~" || head === "." || head === "..") return rest.length >= 1;
+  return segs.length >= 3 || /\.[A-Za-z0-9]+$/.test(segs[segs.length - 1]);
+}
 
 const ALPHABET = "asdfghjklqwertyuiopzxcvbnm";
 
@@ -91,6 +121,7 @@ function candidates(lines, patterns) {
           (m.groups && m.groups.match !== undefined ? m[0].indexOf(group) : 0);
         const text = p.trimUrl ? trimUrlEnd(group) : group;
         if (text.length === 0) continue;
+        if (p.accept && !p.accept(text)) continue;
         out.push({
           line: lineIndex,
           start,
@@ -139,26 +170,16 @@ function findTokens(lines, mode) {
   let spans = resolve(candidates(lines, mode === "url" ? [URL] : PATTERNS));
   if (mode === "url")
     spans = spans.filter((s) => /^(https?|file):\/\//i.test(s.text));
+  const seen = new Set();
   const order = [];
-  const byText = new Map();
-  for (const s of spans) {
-    if (!byText.has(s.text)) {
-      if (order.length >= ALPHABET.length * ALPHABET.length) continue;
-      byText.set(s.text, order.length);
-      order.push({ text: s.text, pattern: s.pattern, spans: [] });
-    }
-    order[byText.get(s.text)].spans.push({
-      line: s.line,
-      start: s.start,
-      end: s.end,
-    });
+  for (const s of [...spans].reverse()) {
+    if (seen.has(s.text)) continue;
+    if (order.length >= ALPHABET.length * ALPHABET.length) break;
+    seen.add(s.text);
+    order.push({ text: s.text, pattern: s.pattern });
   }
   const labels = hints(order.length);
   return order.map((t, i) => ({ ...t, hint: labels[i] }));
-}
-
-function visible(text) {
-  return text.replace(/ /g, " ");
 }
 
 export default class Pluck extends View {
@@ -166,20 +187,21 @@ export default class Pluck extends View {
     const p = props() ?? {};
     this.mode = p.mode === "url" ? "url" : "pluck";
     this.typed = "";
-    this.lines = null;
-    this.tokens = [];
+    this.tokens = null;
+    this.selected = 0;
+    this.scroll = ScrollHandle.new();
     this.handle = cx.focus_handle();
     this.handle.focus();
+    cx.timer.after(150, () => this.handle.focus());
     const terminal = focused()?.terminal;
+    this.cwd = focused()?.cwd ?? null;
     if (!terminal || checking()) {
-      this.lines = [];
+      this.tokens = [];
       return;
     }
     cx.spawn(async (cx) => {
       const r = await hc(["read", terminal, "--json"]);
       const lines = (JSON.parse(r.stdout).text ?? "").split("\n");
-      while (lines.length && lines[lines.length - 1].trim() === "") lines.pop();
-      this.lines = lines;
       this.tokens = findTokens(lines, this.mode);
       if (this.tokens.length === 0) {
         notify({
@@ -189,152 +211,256 @@ export default class Pluck extends View {
               : "Nothing to pluck on screen",
           timeout: 2000,
         });
-        this.close();
+        this.dismiss();
         return;
       }
       cx.notify();
     });
   }
 
-  close() {
+  dismiss() {
     closeOverlay(props().overlay);
   }
 
-  choose(token, cx) {
-    this.close();
+  shown() {
+    return (this.tokens ?? []).filter((t) => t.hint.startsWith(this.typed));
+  }
+
+  canOpen(token) {
+    return token.pattern === "url" || FILE_KINDS.has(token.pattern);
+  }
+
+  canReveal(token) {
+    return FILE_KINDS.has(token.pattern);
+  }
+
+  async locate(text) {
+    const exists = async (p) => (await exec("test", ["-e", p])).code === 0;
+    if (text.startsWith("/")) return (await exists(text)) ? text : null;
+    if (text === "~" || text.startsWith("~/")) {
+      const p = home() + text.slice(1);
+      return (await exists(p)) ? p : null;
+    }
+    if (!this.cwd) return null;
+    const bases = [this.cwd];
+    const git = await exec("git", ["rev-parse", "--show-toplevel"], { cwd: this.cwd });
+    if (git.code === 0 && git.stdout.trim()) bases.push(git.stdout.trim());
+    for (const base of bases) {
+      const p = `${base}/${text}`;
+      if (await exists(p)) return p;
+    }
+    return null;
+  }
+
+  choose(token, action, cx) {
+    if (this.busy) return;
+    if (action === "reveal" && !this.canReveal(token)) action = "open";
+    if (action === "open" && !this.canOpen(token)) action = "copy";
+    if (action === "copy") {
+      exec("sh", ["-c", 'printf %s "$1" | pbcopy', "sh", token.text]);
+      notify({ title: "Copied", body: token.text, timeout: 2000 });
+      return this.dismiss();
+    }
+    if (token.pattern === "url") {
+      exec("open", [token.text]);
+      return this.dismiss();
+    }
+    this.busy = true;
     cx.spawn(async () => {
-      if (this.mode === "url") {
-        await exec("open", [token.text]);
-      } else {
-        await exec("sh", ["-c", 'printf %s "$1" | pbcopy', "sh", token.text]);
-        notify({ title: "Copied", body: token.text, timeout: 2000 });
-      }
+      const target = await this.locate(token.text);
+      if (target) exec("open", action === "reveal" ? ["-R", target] : [target]);
+      else notify({ title: "Could not find that path", body: token.text, level: "error" });
+      this.dismiss();
     });
   }
 
-  key(e, cx) {
-    if (e.key === "escape" || e.keystroke === "ctrl-c") return this.close();
-    if (e.key === "backspace") {
-      this.typed = this.typed.slice(0, -1);
-      return cx.notify();
-    }
-    const ch = e.key_char;
-    if (!ch || ch.length !== 1 || !/[a-z]/.test(ch)) return;
-    const typed = this.typed + ch;
-    const exact = this.tokens.find((t) => t.hint === typed);
-    if (exact) return this.choose(exact, cx);
-    if (this.tokens.some((t) => t.hint.startsWith(typed))) this.typed = typed;
+  defaultAction() {
+    return this.mode === "url" ? "open" : "copy";
+  }
+
+  actionFor(e) {
+    if (e.modifiers?.alt) return "reveal";
+    if (e.modifiers?.shift) return this.mode === "url" ? "copy" : "open";
+    return this.defaultAction();
+  }
+
+  move(by, cx) {
+    const list = this.shown();
+    if (!list.length) return;
+    this.selected = (this.selected + by + list.length) % list.length;
+    this.scroll.scroll_to_item(this.selected);
     cx.notify();
   }
 
-  segments(line, index, t) {
-    const marks = [];
-    for (const token of this.tokens) {
-      if (!token.hint.startsWith(this.typed)) continue;
-      for (const s of token.spans)
-        if (s.line === index) marks.push({ ...s, token });
+  key(e, cx) {
+    if (e.key === "escape" || e.keystroke === "ctrl-c") return this.dismiss();
+    if (e.key === "down" || e.keystroke === "ctrl-n") return this.move(1, cx);
+    if (e.key === "up" || e.keystroke === "ctrl-p") return this.move(-1, cx);
+    if (e.key === "enter") {
+      const token = this.shown()[this.selected];
+      if (token) this.choose(token, this.actionFor(e), cx);
+      return;
     }
-    marks.sort((a, b) => a.start - b.start);
-    const out = [];
-    let at = 0;
-    for (const m of marks) {
-      if (m.start < at) continue;
-      if (m.start > at)
-        out.push(
-          div()
-            .text_color(t.dim)
-            .child(visible(line.slice(at, m.start))),
-        );
-      const hint = m.token.hint;
-      const rest = line.slice(
-        m.start + Math.min(hint.length, m.end - m.start),
-        m.end,
-      );
-      out.push(
-        div().bg(t.ansi3).text_color(t.background).font_weight(800).child(hint),
-      );
-      if (rest)
-        out.push(
-          div().text_color(t.foreground).font_weight(600).child(visible(rest)),
-        );
-      at = m.end;
+    if (e.key === "backspace") {
+      this.typed = this.typed.slice(0, -1);
+      this.selected = 0;
+      return cx.notify();
     }
-    if (at < line.length)
-      out.push(
-        div()
-          .text_color(t.dim)
-          .child(visible(line.slice(at))),
-      );
-    if (out.length === 0) out.push(div().child(" "));
-    return out;
+    const ch = e.key;
+    if (e.modifiers?.control || e.modifiers?.platform) return;
+    if (!ch || ch.length !== 1 || !/[a-z]/.test(ch)) return;
+    const typed = this.typed + ch;
+    const exact = (this.tokens ?? []).find((t) => t.hint === typed);
+    if (exact) return this.choose(exact, this.actionFor(e), cx);
+    if ((this.tokens ?? []).some((t) => t.hint.startsWith(typed))) {
+      this.typed = typed;
+      this.selected = 0;
+    }
+    cx.notify();
   }
 
-  render(cx) {
+  row(token, index, t, font) {
+    const on = index === this.selected;
+    const rest = token.hint.slice(this.typed.length);
+    return h_flex()
+      .id(`pluck-${token.hint}`)
+      .px(10)
+      .py(6)
+      .gap(12)
+      .items_center()
+      .rounded(6)
+      .cursor_pointer()
+      .when(on, (el) => el.bg(t.selected))
+      .hover((s) => s.bg(t.hover))
+      .on_click((_e, cx) => this.choose(token, this.defaultAction(), cx))
+      .child(
+        h_flex()
+          .flex_none()
+          .w(30)
+          .justify_center()
+          .py(1)
+          .rounded(4)
+          .bg(t.ansi3)
+          .font_family(font)
+          .font_weight(800)
+          .text_color(t.background)
+          .when(this.typed.length > 0, (el) =>
+            el.child(div().opacity(0.45).child(this.typed)),
+          )
+          .child(rest),
+      )
+      .child(
+        div()
+          .flex_1()
+          .min_w(0)
+          .truncate()
+          .font_family(font)
+          .text_color(on ? t.foreground : t.muted)
+          .child(token.text),
+      )
+      .when(on && this.mode !== "url" && this.canOpen(token), (el) =>
+        el.child(this.button(`open-${token.hint}`, "Open", "⇧", t, (cx) => this.choose(token, "open", cx))),
+      )
+      .when(on && this.canReveal(token), (el) =>
+        el.child(this.button(`reveal-${token.hint}`, "Finder", "⌥", t, (cx) => this.choose(token, "reveal", cx))),
+      )
+      .child(
+        div()
+          .flex_none()
+          .text_size(11)
+          .text_color(t.dim)
+          .child(token.pattern),
+      );
+  }
+
+  button(id, label, hint, t, run) {
+    return h_flex()
+      .id(id)
+      .flex_none()
+      .px(8)
+      .h(22)
+      .gap(6)
+      .items_center()
+      .rounded(5)
+      .border_1()
+      .border_color(t.border)
+      .bg(t.surface)
+      .text_size(11.5)
+      .cursor_pointer()
+      .hover((s) => s.bg(t.hover))
+      .on_mouse_down("left", (_e, cx) => cx.stop_propagation())
+      .on_click((_e, cx) => {
+        cx.stop_propagation();
+        run(cx);
+      })
+      .child(div().text_color(t.foreground).child(label))
+      .child(div().text_size(10.5).text_color(t.dim).child(hint));
+  }
+
+  render(_cx) {
     const t = theme();
-    const s = settings();
-    const font = s.font_family ?? "Menlo";
-    const size = Number(s.font_size ?? 13);
-    const title = this.mode === "url" ? "OPEN URL" : "PLUCK";
-    const lines = this.lines ?? [];
+    const font = settings().font_family ?? "Menlo";
+    const list = this.shown();
+    const title = this.mode === "url" ? "Open URL" : "Pluck";
     return v_flex()
       .id("pluck-root")
       .size_full()
-      .bg(t.background)
+      .text_size(13)
       .track_focus(this.handle)
+      .on_mouse_down("left", () => this.handle.focus())
       .on_key_down((e, cx) => {
         cx.stop_propagation();
         this.key(e, cx);
       })
-      .on_mouse_down("left", (_e, cx) => {
-        cx.stop_propagation();
-        this.close();
-      })
       .child(
-        v_flex()
-          .flex_1()
-          .min_h(0)
-          .overflow_hidden()
-          .justify_end()
+        h_flex()
+          .flex_none()
           .px(14)
-          .pt(40)
-          .pb(8)
-          .font_family(font)
-          .text_size(size)
-          .children(
-            this.lines === null
-              ? [div().text_color(t.muted).child("Reading terminal…")]
-              : lines.map((line, i) =>
-                  h_flex()
-                    .whitespace_nowrap()
-                    .children(this.segments(line, i, t)),
-                ),
+          .py(10)
+          .gap(10)
+          .items_center()
+          .border_b_1()
+          .border_color(t.border)
+          .child(div().font_semibold().text_color(t.foreground).child(title))
+          .child(
+            div()
+              .text_size(11)
+              .text_color(t.dim)
+              .child(this.tokens === null ? "Reading terminal…" : `${list.length}`),
+          )
+          .child(div().flex_1())
+          .when(this.typed.length > 0, (el) =>
+            el.child(
+              div()
+                .text_size(11.5)
+                .text_color(t.ansi3)
+                .child(`hint: ${this.typed}`),
+            ),
           ),
       )
       .child(
-        h_flex()
-          .justify_end()
+        v_flex()
+          .id("pluck-list")
+          .flex_1()
+          .min_h(0)
+          .p(6)
+          .overflow_y_scrollbar()
+          .track_scroll(this.scroll)
+          .children(list.map((token, i) => this.row(token, i, t, font))),
+      )
+      .child(
+        div()
+          .flex_none()
           .px(14)
-          .pb(14)
+          .py(8)
+          .border_t_1()
+          .border_color(t.border)
+          .text_size(11.5)
+          .text_color(t.dim)
           .child(
-            h_flex()
-              .gap(10)
-              .px(12)
-              .py(5)
-              .rounded(8)
-              .bg(t.popover)
-              .border_1()
-              .border_color(t.accent)
-              .text_size(12.5)
-              .child(div().text_color(t.accent).font_semibold().child(title))
-              .child(
-                div()
-                  .text_color(t.dim)
-                  .child(
-                    this.typed
-                      ? `hint: ${this.typed}`
-                      : "type a hint · esc to cancel",
-                  ),
-              ),
+            this.mode === "url"
+              ? "hint open · ⇧hint copy · ↑↓ ↵ · esc close"
+              : "hint copy · ⇧hint open in default app · ⌥hint reveal in Finder · ↑↓ ↵ · esc close",
           ),
       );
   }
