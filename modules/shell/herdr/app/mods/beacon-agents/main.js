@@ -197,7 +197,7 @@ export default class Agents extends View {
       : div().absolute().left(`${at}%`).top(0).size(9).ml(-4.5).rounded(5).bg(color).border(1.5).border_color(t.background);
     return v_flex()
       .pl(40)
-      .pr(14)
+      .pr(1)
       .mt(-2).pb(3)
       .gap(0)
       .child(
