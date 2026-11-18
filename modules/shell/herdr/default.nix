@@ -42,6 +42,8 @@ let
     "mods/beacon-prs/main.js"
     "mods/beacon-prs/mod.json"
     "mods/beacon-prs/diamond.svg"
+    "mods/toast-top/main.js"
+    "mods/toast-top/mod.json"
   ];
 in
 {

@@ -211,5 +211,6 @@
     26
   ],
   "window_blur": true,
-  "terminal_opacity": 0
+  "terminal_opacity": 0,
+  "toast": "toast-top"
 }

@@ -260,8 +260,8 @@ const ACTIONS = [
   { key: "y", label: "Copy", run: (item) => copyUrl(item) },
 ];
 
-function openInbox(select) {
-  openOverlay({ mod: "beacon-prs", kind: "dialog", width: 980, height: 0.8, props: { select } });
+function openInbox(select, group) {
+  openOverlay({ mod: "beacon-prs", kind: "dialog", width: 980, height: 0.8, props: { select, group } });
 }
 
 export default class PullRequests extends View {
@@ -274,7 +274,7 @@ export default class PullRequests extends View {
       cx.timer.after(150, () => this.handle.focus());
       cx.timer.after(600, () => this.handle.focus());
       this.scroll = ScrollHandle.new();
-      this.group = "review";
+      this.group = props()?.group ?? "review";
       this.selectedId = props()?.select ?? null;
       const picked = inbox().items.find((i) => i.id === this.selectedId);
       if (picked) this.group = picked.group;
@@ -342,9 +342,33 @@ export default class PullRequests extends View {
             .child(div().flex_1().min_w(0).truncate().text_color(whyColor(t, item)).child(item.why)),
         ),
     );
-    const rest = GROUPS.filter((g) => !ACTIONABLE.has(g.id) && counts[g.id] > 0).map((g) => `${g.label} ${counts[g.id]}`);
     const more = review.length - rows.length;
-    const footer = [more > 0 ? `${more} more` : null, ...rest].filter(Boolean).join(" · ");
+    const pills = data.at
+      ? [
+          ...(more > 0 ? [{ id: "more", label: "More to review", count: more, group: "review" }] : []),
+          ...GROUPS.filter((g) => !ACTIONABLE.has(g.id)).map((g) => ({ id: g.id, label: g.label, count: counts[g.id], group: g.id })),
+        ]
+      : [];
+    const pill = (p) => {
+      const on = p.count > 0;
+      return h_flex()
+        .id(`prs-pill-${p.id}`)
+        .px(8)
+        .py(3)
+        .gap(6)
+        .items_center()
+        .rounded(6)
+        .border_1()
+        .border_color(on ? tint(t.ansi6, "40") : tint(t.dim, "40"))
+        .bg(on ? tint(t.ansi6, "14") : "#00000000")
+        .text_size(11.5)
+        .cursor_pointer()
+        .hover((s) => (on ? s.bg(tint(t.ansi6, "2e")).border_color(tint(t.ansi6, "80")) : s.border_color(tint(t.dim, "80"))))
+        .on_click(() => openInbox(null, p.group))
+        .tooltip(`Open ${p.label.toLowerCase()} in the PR inbox`)
+        .child(div().text_color(on ? t.foreground : t.dim).child(p.label))
+        .child(div().font_bold().text_color(on ? t.ansi6 : t.dim).child(String(p.count)));
+    };
 
     return v_flex()
       .size_full()
@@ -389,8 +413,8 @@ export default class PullRequests extends View {
           ),
       )
       .when(Boolean(data.error), (el) => el.child(div().px(16).pb(4).text_size(11).text_color(t.ansi1).truncate().child(data.error)))
-      .when(rows.length === 0 && !data.error, (el) =>
-        el.child(div().px(16).py(4).text_size(12).text_color(t.dim).child(data.at ? "Nothing waiting on you." : "Checking GitHub…")),
+      .when(!data.at && !data.error, (el) =>
+        el.child(div().px(16).py(4).text_size(12).text_color(t.dim).child("Checking GitHub…")),
       )
       .child(
         v_flex()
@@ -400,18 +424,15 @@ export default class PullRequests extends View {
           .px(8)
           .overflow_y_scrollbar()
           .children(rows)
-          .when(Boolean(footer), (el) =>
+          .when(pills.length > 0, (el) =>
             el.child(
-              div()
+              h_flex()
                 .id("prs-footer")
+                .flex_wrap()
+                .gap(6)
                 .px(8)
                 .py(6)
-                .text_size(11)
-                .text_color(t.dim)
-                .cursor_pointer()
-                .hover((s) => s.text_color(t.foreground))
-                .on_click(() => openInbox(null))
-                .child(footer),
+                .children(pills.map(pill)),
             ),
           ),
       );
