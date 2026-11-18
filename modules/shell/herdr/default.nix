@@ -30,6 +30,15 @@ let
     "mods/mission-control/mod.json"
     "mods/branches/main.js"
     "mods/branches/mod.json"
+    "mods/beacon-spaces/main.js"
+    "mods/beacon-spaces/mod.json"
+    "mods/beacon-spaces/diamond.svg"
+    "mods/beacon-spaces/smoke.svg"
+    "mods/beacon-agents/main.js"
+    "mods/beacon-agents/mod.json"
+    "mods/beacon-agents/diamond.svg"
+    "mods/beacon-agents/flame.svg"
+    "mods/beacon-agents/smoke.svg"
   ];
 in
 {

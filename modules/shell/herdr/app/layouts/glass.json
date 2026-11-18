@@ -11,65 +11,83 @@
       "type": "column",
       "children": [
         {
-          "id": "brand",
-          "type": "block",
-          "content": {
-            "mod": "workspace-chrome"
-          },
-          "size": {
-            "px": 46
-          },
-          "window_drag": true
-        },
-        {
-          "id": "sidebar-lists",
+          "id": "sidebar-card",
           "type": "column",
           "children": [
             {
-              "id": "spaces",
+              "id": "brand",
               "type": "block",
               "content": {
-                "mod": "spaces"
+                "mod": "workspace-chrome"
               },
               "size": {
-                "weight": 1
+                "px": 46
               },
-              "min": 90
+              "window_drag": true
             },
             {
-              "id": "agents",
+              "id": "sidebar-lists",
+              "type": "column",
+              "children": [
+                {
+                  "id": "spaces",
+                  "type": "block",
+                  "content": {
+                    "mod": "beacon-spaces"
+                  },
+                  "size": {
+                    "weight": 1
+                  },
+                  "min": 90
+                },
+                {
+                  "id": "agents",
+                  "type": "block",
+                  "content": {
+                    "mod": "beacon-agents",
+                    "props": {
+                      "lines": {
+                        "200000": 80000,
+                        "1000000": 200000
+                      }
+                    }
+                  },
+                  "size": {
+                    "weight": 1
+                  },
+                  "min": 90
+                }
+              ]
+            },
+            {
+              "id": "sidebar-footer",
               "type": "block",
               "content": {
-                "mod": "agents"
+                "mod": "workspace-chrome",
+                "props": {
+                  "footer": true
+                }
               },
               "size": {
-                "weight": 1
-              },
-              "min": 90
+                "px": 69
+              }
             }
-          ]
-        },
-        {
-          "id": "sidebar-footer",
-          "type": "block",
-          "content": {
-            "mod": "workspace-chrome",
-            "props": {
-              "footer": true
-            }
+          ],
+          "border": {
+            "width": 1,
+            "color": "#c4a7e72e"
           },
-          "size": {
-            "px": 69
-          }
+          "radius": 16
         }
       ],
       "size": {
-        "px": 268
+        "px": 288
       },
       "min": 44,
       "max": 480,
-      "background": "chrome",
-      "resizable": false
+      "resizable": false,
+      "padding": 10,
+      "background": "chrome"
     },
     {
       "id": "work",
@@ -181,8 +199,8 @@
   },
   "titlebar": "none",
   "traffic_lights": [
-    12,
-    16
+    26,
+    26
   ],
   "window_blur": true,
   "terminal_opacity": 0

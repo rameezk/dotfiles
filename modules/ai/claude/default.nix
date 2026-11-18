@@ -30,6 +30,11 @@ in
 
     home.file.".claude/keybindings.json".source = ./keybindings.json;
 
+    home.file.".claude/statusline-command.sh" = {
+      source = ./statusline-command.sh;
+      force = true;
+    };
+
     home.activation.claudeSettings = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
       claudeSettings="$HOME/.claude/settings.json"
       claudeSettingsCurrent='{}'
