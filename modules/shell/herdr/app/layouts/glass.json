@@ -53,6 +53,17 @@
                     "weight": 1
                   },
                   "min": 90
+                },
+                {
+                  "id": "prs",
+                  "type": "block",
+                  "content": {
+                    "mod": "beacon-prs"
+                  },
+                  "size": {
+                    "weight": 1
+                  },
+                  "min": 90
                 }
               ]
             },

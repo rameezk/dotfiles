@@ -186,6 +186,7 @@ const BINDINGS = {
   d: hunkDiff,
   "shift-b": () =>
     openOverlay({ mod: "branches", kind: "dialog", width: 680, height: 0.7 }),
+  r: ["mod.open", { name: "beacon-prs" }],
   t: triage,
   enter: keepPeek,
   escape: closePeek,

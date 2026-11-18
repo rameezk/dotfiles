@@ -39,6 +39,9 @@ let
     "mods/beacon-agents/diamond.svg"
     "mods/beacon-agents/flame.svg"
     "mods/beacon-agents/smoke.svg"
+    "mods/beacon-prs/main.js"
+    "mods/beacon-prs/mod.json"
+    "mods/beacon-prs/diamond.svg"
   ];
 in
 {
