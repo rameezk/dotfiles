@@ -20,5 +20,10 @@
     "#c4a7e7",
     "#ebbcba",
     "#e0def4"
-  ]
+  ],
+  "colors": {
+    "background": "#191724b3",
+    "canvas": "#00000000",
+    "chrome": "#00000000"
+  }
 }

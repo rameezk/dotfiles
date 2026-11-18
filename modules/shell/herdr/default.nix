@@ -10,6 +10,7 @@ let
   appFiles = [
     "keys.json"
     "settings.json"
+    "layouts/glass.json"
     "themes/rose-pine.json"
     "themes/rose-pine-dawn.json"
     "mods/leader/main.js"
