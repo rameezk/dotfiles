@@ -40,6 +40,23 @@ const GROUPS = [
 
 const ACTIONABLE = new Set(["review", "ready"]);
 
+const SORTS = [
+  { id: "priority", label: "Priority", icon: "sort-priority" },
+  { id: "newest", label: "Newest first", icon: "sort-newest" },
+  { id: "oldest", label: "Oldest first", icon: "sort-oldest" },
+];
+const SORT_KEY = "prs.sort";
+
+function sortOf() {
+  return SORTS.find((s) => s.id === shared(SORT_KEY)) ?? SORTS[0];
+}
+
+function sorted(items, mode) {
+  if (mode === "priority") return items;
+  const dir = mode === "newest" ? -1 : 1;
+  return [...items].sort((a, b) => dir * (Date.parse(a.updatedAt) - Date.parse(b.updatedAt)));
+}
+
 const VERDICT = { APPROVED: "You approved", CHANGES_REQUESTED: "You asked for changes", COMMENTED: "You commented", DISMISSED: "Your review was dismissed" };
 const DECISION = { APPROVED: "approved", CHANGES_REQUESTED: "changes requested", REVIEW_REQUIRED: "review required" };
 const BLOCKED = {
@@ -289,6 +306,7 @@ function openInbox(select, group) {
 
 export default class PullRequests extends View {
   init(_props, cx) {
+    if (props()?.sortMenu) return;
     this.overlayMode = Boolean(props()?.overlay);
     this.busy = false;
     if (this.overlayMode) {
@@ -329,13 +347,48 @@ export default class PullRequests extends View {
   }
 
   render(cx) {
+    if (props()?.sortMenu) return this.sortMenu(theme());
     return this.overlayMode ? this.renderInbox(cx) : this.renderSidebar(cx);
+  }
+
+  sortMenu(t) {
+    const on = sortOf().id;
+    return v_flex()
+      .w_full()
+      .p(5)
+      .bg(t.popover)
+      .text_size(12.8)
+      .child(div().px(8).pt(4).pb(6).text_size(11).text_color(t.dim).child("Sort pull requests"))
+      .children(
+        SORTS.map((s) =>
+          h_flex()
+            .id(`sort-${s.id}`)
+            .h(31)
+            .px(8)
+            .gap(9)
+            .rounded(7)
+            .items_center()
+            .text_color(t.foreground)
+            .hover((el) => el.bg(t.hover))
+            .on_click(() => {
+              setShared(SORT_KEY, s.id);
+              closeOverlay(props().overlay);
+            })
+            .child(svg(`mods/beacon-prs/${s.icon}.svg`).size(14).flex_none().text_color(t.muted))
+            .child(div().flex_1().child(s.label))
+            .when(s.id === on, (el) => el.child(svg("mods/workspace-chrome/check.svg").size(14).flex_none().text_color(t.foreground))),
+        ),
+      );
   }
 
   renderSidebar(_cx) {
     const t = theme();
     const data = inbox();
-    const review = GROUPS.filter((g) => ACTIONABLE.has(g.id)).flatMap((g) => data.items.filter((i) => i.group === g.id));
+    const sort = sortOf();
+    const review = sorted(
+      GROUPS.filter((g) => ACTIONABLE.has(g.id)).flatMap((g) => data.items.filter((i) => i.group === g.id)),
+      sort.id,
+    );
     const counts = Object.fromEntries(GROUPS.map((g) => [g.id, data.items.filter((i) => i.group === g.id).length]));
     const rows = review.slice(0, SIDEBAR_LIMIT).map((item) =>
       v_flex()
@@ -425,6 +478,17 @@ export default class PullRequests extends View {
           .child(div().flex_1().h(1).bg(tint(t.ansi6, "33")))
           .child(
             div()
+              .id("prs-sort")
+              .text_size(11)
+              .text_color(t.dim)
+              .cursor_pointer()
+              .hover((s) => s.text_color(t.foreground))
+              .on_click(() => openOverlay({ mod: "beacon-prs", kind: "popup", width: 200, height: 172, props: { sortMenu: true } }))
+              .tooltip(`Sort pull requests: ${sort.label}`)
+              .child(svg(`mods/beacon-prs/${sort.icon}.svg`).size(14)),
+          )
+          .child(
+            div()
               .id("prs-open")
               .text_size(11)
               .text_color(t.dim)
@@ -473,7 +537,7 @@ export default class PullRequests extends View {
   move(by, cx) {
     const list = this.listed();
     if (!list.length) return;
-    const at = Math.max(list.indexOf(this.selected()), 0);
+    const at = Math.max(list.findIndex((i) => i.id === this.selectedId), 0);
     const next = (at + by + list.length) % list.length;
     this.selectedId = list[next].id;
     this.scroll.scroll_to_item(next);
