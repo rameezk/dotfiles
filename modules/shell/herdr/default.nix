@@ -105,6 +105,18 @@ in
           };
         }) appFiles
       );
+
+      home.activation.herdrAppRemoveUnlinkedFiles =
+        lib.hm.dag.entryBetween [ "linkGeneration" ] [ "writeBoundary" ]
+          ''
+            for target in ${
+              lib.escapeShellArgs (map (file: "${config.xdg.configHome}/herdr-app/${file}") appFiles)
+            }; do
+              if [[ -e "$target" && ! -L "$target" ]]; then
+                run rm $VERBOSE_ARG "$target"
+              fi
+            done
+          '';
     })
   ];
 }
