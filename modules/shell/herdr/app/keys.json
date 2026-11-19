@@ -18,6 +18,12 @@
     "cmd-n": "space.new",
     "cmd-p": "mod.open:picker",
     "cmd-shift-p": "app.palette",
+    "cmd-.": {
+      "command": "overlay.close",
+      "args": {
+        "id": "terminal-peek"
+      }
+    },
     "cmd-,": "app.settings",
     "cmd-d": "pane.split:right",
     "cmd-shift-d": "pane.split:down",

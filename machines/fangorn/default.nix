@@ -111,7 +111,7 @@ in
 
     spaces.spans-displays = true;
 
-    universalaccess.reduceMotion = true;
+    universalaccess.reduceMotion = false;
 
     finder = {
       CreateDesktop = false;

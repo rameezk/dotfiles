@@ -192,7 +192,6 @@ const BINDINGS = {
   r: ["mod.open", { name: "beacon-prs" }],
   t: triage,
   enter: keepPeek,
-  escape: closePeek,
   o: nextWaiting,
   a: nextWaiting,
   ...Object.fromEntries(
