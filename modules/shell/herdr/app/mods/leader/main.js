@@ -45,6 +45,11 @@ function hunkDiff() {
   run("pane.zoom", {});
 }
 
+function newTab() {
+  run("tab.new", {});
+  run("tab.rename", {});
+}
+
 function newWorktree() {
   const space = focused()?.space;
   if (space)
@@ -147,7 +152,7 @@ const BINDINGS = {
   "-": ["pane.split", { direction: "down" }],
   x: ["pane.close", {}],
   z: ["pane.zoom", {}],
-  c: ["tab.new", {}],
+  c: newTab,
   n: ["tab.next", {}],
   "shift-t": ["tab.rename", {}],
   "shift-x": ["tab.close", {}],

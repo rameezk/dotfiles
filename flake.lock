@@ -453,11 +453,11 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1794761528,
-        "narHash": "sha256-oWZWko7m7TkwFVELRMO6RUV3prUkWNMmg3djgIckGC4=",
+        "lastModified": 1794894941,
+        "narHash": "sha256-EuDIXVO1Q20UohWOOsN37e4eWCWN53e56g9/3NhTM3U=",
         "ref": "refs/heads/main",
-        "rev": "8f2d1fcea6497250c7667293fd26282f557f5e40",
-        "revCount": 35,
+        "rev": "71dddb8369aa75e66e36676bc8f940595ea5cbe0",
+        "revCount": 39,
         "type": "git",
         "url": "ssh://git@github.com/rameezk/jarvis.git"
       },
