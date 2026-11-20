@@ -47,6 +47,12 @@ let
     "mods/beacon-prs/sort-oldest.svg"
     "mods/toast-top/main.js"
     "mods/toast-top/mod.json"
+    "mods/glass-tabs/main.js"
+    "mods/glass-tabs/mod.json"
+    "mods/glass-tabs/win-close.svg"
+    "mods/glass-tabs/win-max.svg"
+    "mods/glass-tabs/win-min.svg"
+    "mods/glass-tabs/win-restore.svg"
   ];
 in
 {

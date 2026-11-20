@@ -83,7 +83,7 @@
           ],
           "border": {
             "width": 1,
-            "color": "#c4a7e72e"
+            "color": "#c4a7e766"
           },
           "radius": 16
         }
@@ -105,7 +105,7 @@
           "id": "tabs",
           "type": "block",
           "content": {
-            "mod": "tabs"
+            "mod": "glass-tabs"
           },
           "size": {
             "px": 42
@@ -133,7 +133,7 @@
                   "background": "#00000000",
                   "border": {
                     "width": 2,
-                    "color": "border"
+                    "color": "#c4a7e766"
                   },
                   "focus": {
                     "width": 2,
