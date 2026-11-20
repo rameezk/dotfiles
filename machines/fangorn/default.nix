@@ -29,7 +29,10 @@ in
         "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
       ];
     };
-    determinateNixd.garbageCollector.strategy = "automatic";
+    determinateNixd = {
+      garbageCollector.strategy = "automatic";
+      builder.state = "disabled";
+    };
   };
 
   launchd.daemons.nix-gc.serviceConfig = {
