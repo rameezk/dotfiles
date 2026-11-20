@@ -1,6 +1,5 @@
 {
   config,
-  lib,
   pkgs,
   ...
 }:
@@ -20,14 +19,6 @@ let
     ];
   };
 
-  hostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUpCV2N4Yi9CbGFxdDFhdU90RStGOFFVV3JVb3RpQzVxQkorVXVFV2RWQ2Igcm9vdEBuaXhvcwo=";
-
-  features = lib.concatStringsSep "," [
-    "kvm"
-    "nixos-test"
-    "big-parallel"
-    "benchmark"
-  ];
 in
 {
   system.activationScripts.preActivation.text = ''
@@ -72,8 +63,26 @@ in
       IdentityFile /etc/nix/builder_ed25519
   '';
 
-  determinateNix.customSettings = {
-    builders = "ssh-ng://builder@linux-builder aarch64-linux /etc/nix/builder_ed25519 2 1 ${features} - ${hostKey}";
-    builders-use-substitutes = true;
+  determinateNix = {
+    distributedBuilds = true;
+    buildMachines = [
+      {
+        protocol = "ssh-ng";
+        sshUser = "builder";
+        hostName = "linux-builder";
+        systems = [ "aarch64-linux" ];
+        sshKey = "/etc/nix/builder_ed25519";
+        maxJobs = 2;
+        speedFactor = 1;
+        supportedFeatures = [
+          "kvm"
+          "nixos-test"
+          "big-parallel"
+          "benchmark"
+        ];
+        publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUpCV2N4Yi9CbGFxdDFhdU90RStGOFFVV3JVb3RpQzVxQkorVXVFV2RWQ2Igcm9vdEBuaXhvcwo=";
+      }
+    ];
+    customSettings.builders-use-substitutes = true;
   };
 }

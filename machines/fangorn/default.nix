@@ -12,7 +12,10 @@ let
   toBorderColor = hex: "0xff" + lib.removePrefix "#" hex;
 in
 {
-  imports = [ ./linux-builder.nix ];
+  imports = [
+    ./linux-builder.nix
+    ./edoras-builder.nix
+  ];
 
   determinateNix = {
     enable = true;
