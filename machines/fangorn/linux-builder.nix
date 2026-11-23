@@ -10,11 +10,12 @@ let
   package = pkgs.darwin.linux-builder-vz.override {
     modules = [
       {
-        virtualisation.vz.nestedVirtualization = true;
+        virtualisation.vz.nestedVirtualization = false;
         virtualisation.vz.rosetta.enable = false;
         virtualisation.cores = 8;
         virtualisation.darwin-builder.memorySize = 16 * 1024;
         virtualisation.darwin-builder.diskSize = 60 * 1024;
+        boot.kernelParams = [ "panic=10" ];
       }
     ];
   };
@@ -75,8 +76,6 @@ in
         maxJobs = 2;
         speedFactor = 1;
         supportedFeatures = [
-          "kvm"
-          "nixos-test"
           "big-parallel"
           "benchmark"
         ];
