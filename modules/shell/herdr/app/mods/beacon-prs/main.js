@@ -45,10 +45,33 @@ const SORTS = [
   { id: "newest", label: "Newest first", icon: "sort-newest" },
   { id: "oldest", label: "Oldest first", icon: "sort-oldest" },
 ];
-const SORT_KEY = "prs.sort";
+const SORT_SCOPES = {
+  sidebar: { key: "prs.sort", fallback: "priority" },
+  inbox: { key: "prs.inboxSort", fallback: "oldest" },
+};
 
-function sortOf() {
-  return SORTS.find((s) => s.id === shared(SORT_KEY)) ?? SORTS[0];
+function sortOf(scope) {
+  const { key, fallback } = SORT_SCOPES[scope];
+  return SORTS.find((s) => s.id === shared(key)) ?? SORTS.find((s) => s.id === fallback);
+}
+
+let pressedAt = "pointer";
+
+function sortButton(t, scope) {
+  const sort = sortOf(scope);
+  return div()
+    .id(`prs-sort-${scope}`)
+    .text_size(11)
+    .text_color(t.dim)
+    .cursor_pointer()
+    .hover((s) => s.text_color(t.foreground))
+    .on_mouse_down("left", (e, cx) => {
+      cx.stop_propagation();
+      pressedAt = e.position;
+    })
+    .on_click(() => openOverlay({ mod: "beacon-prs", kind: "popup", width: 200, height: 172, at: pressedAt, props: { sortMenu: scope } }))
+    .tooltip(`Sort pull requests: ${sort.label}`)
+    .child(svg(`mods/beacon-prs/${sort.icon}.svg`).size(14));
 }
 
 function sorted(items, mode) {
@@ -352,7 +375,8 @@ export default class PullRequests extends View {
   }
 
   sortMenu(t) {
-    const on = sortOf().id;
+    const scope = props().sortMenu;
+    const on = sortOf(scope).id;
     return v_flex()
       .w_full()
       .p(5)
@@ -371,7 +395,7 @@ export default class PullRequests extends View {
             .text_color(t.foreground)
             .hover((el) => el.bg(t.hover))
             .on_click(() => {
-              setShared(SORT_KEY, s.id);
+              setShared(SORT_SCOPES[scope].key, s.id);
               closeOverlay(props().overlay);
             })
             .child(svg(`mods/beacon-prs/${s.icon}.svg`).size(14).flex_none().text_color(t.muted))
@@ -384,10 +408,9 @@ export default class PullRequests extends View {
   renderSidebar(_cx) {
     const t = theme();
     const data = inbox();
-    const sort = sortOf();
     const review = sorted(
       GROUPS.filter((g) => ACTIONABLE.has(g.id)).flatMap((g) => data.items.filter((i) => i.group === g.id)),
-      sort.id,
+      sortOf("sidebar").id,
     );
     const counts = Object.fromEntries(GROUPS.map((g) => [g.id, data.items.filter((i) => i.group === g.id).length]));
     const rows = review.slice(0, SIDEBAR_LIMIT).map((item) =>
@@ -476,17 +499,7 @@ export default class PullRequests extends View {
           .child(div().text_size(10.5).font_bold().text_color(t.ansi6).child("PULL REQUESTS"))
           .when(review.length > 0, (el) => el.child(div().text_size(10.5).font_bold().text_color(t.ansi6).child(String(review.length))))
           .child(div().flex_1().h(1).bg(tint(t.ansi6, "33")))
-          .child(
-            div()
-              .id("prs-sort")
-              .text_size(11)
-              .text_color(t.dim)
-              .cursor_pointer()
-              .hover((s) => s.text_color(t.foreground))
-              .on_click(() => openOverlay({ mod: "beacon-prs", kind: "popup", width: 200, height: 172, props: { sortMenu: true } }))
-              .tooltip(`Sort pull requests: ${sort.label}`)
-              .child(svg(`mods/beacon-prs/${sort.icon}.svg`).size(14)),
-          )
+          .child(sortButton(t, "sidebar"))
           .child(
             div()
               .id("prs-open")
@@ -526,7 +539,7 @@ export default class PullRequests extends View {
   }
 
   listed() {
-    return inbox().items.filter((i) => i.group === this.group);
+    return sorted(inbox().items.filter((i) => i.group === this.group), sortOf("inbox").id);
   }
 
   selected() {
@@ -915,7 +928,8 @@ export default class PullRequests extends View {
           .child(div().mr(10).font_semibold().text_color(t.foreground).child("Pull requests"))
           .children(tabs)
           .child(div().flex_1())
-          .child(div().text_size(11).text_color(data.error && !this.busy ? t.ansi1 : t.dim).truncate().child(status)),
+          .child(div().text_size(11).text_color(data.error && !this.busy ? t.ansi1 : t.dim).truncate().child(status))
+          .child(div().ml(8).child(sortButton(t, "inbox"))),
       )
       .child(
         h_flex()
