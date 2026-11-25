@@ -18,9 +18,17 @@ function foldSubs(text) {
     if (e.ev === "start") Object.assign(s, { type: e.type, status: "working", at: e.at });
     if (e.ev === "stop") Object.assign(s, { status: "done", ended: e.at });
     if (typeof e.desc === "string" && e.desc) s.desc = e.desc;
+    if (typeof e.model === "string" && e.model) s.model = e.model;
     subs.set(e.id, s);
   }
   return [...subs.values()].filter((s) => s.at);
+}
+
+function modelLabel(id) {
+  if (!id) return null;
+  const m = id.replace(/\[[^\]]*\]$/, "").match(/^claude-([a-z]+)-(\d+)(?:-(\d{1,2}))?(?:-\d{8})?$/);
+  if (!m) return id;
+  return `${m[1][0].toUpperCase()}${m[1].slice(1)} ${m[2]}${m[3] ? `.${m[3]}` : ""}`;
 }
 
 function fuelZone(tokens, line) {
@@ -171,7 +179,7 @@ export default class Agents extends View {
     const cutoff = Date.now() - SUB_LINGER_MS;
     return (this.subs?.[addr] ?? [])
       .filter((s) => s.status === "working" || (s.ended ?? 0) * 1000 > cutoff)
-      .map((s) => ({ address: `${addr}~${s.id}`, name: s.desc ?? s.type ?? "Subagent", kind: s.desc ? s.type : null, status: s.status, pane }));
+      .map((s) => ({ address: `${addr}~${s.id}`, name: s.desc ?? s.type ?? "Subagent", kind: [s.desc ? s.type : null, modelLabel(s.model)].filter(Boolean).join(" · ") || null, status: s.status, pane }));
   }
 
   publishSmoke(list) {
@@ -349,8 +357,8 @@ export default class Agents extends View {
         .when(Boolean(l), el => el.border_l(1.5).border_color(t.input))
         .when(l === "└" || l === "├", el => el.border_b(1.5).rounded_bl(6))))
       .when(Boolean(pic), el => el.child(div().mr(8).child(pic)))
-      .child(h_flex().flex_1().min_w(0).gap(5).items_center()
-        .child(div().min_w(0).truncate().text_color(on ? t.foreground : t.muted).child(k.name || k.template || k.program?.name || k.address))
+      .child(h_flex().flex_1().min_w(0).gap(5).mr(8).items_center()
+        .child(div().flex_1().min_w(0).truncate().text_color(on ? t.foreground : t.muted).child(k.name || k.template || k.program?.name || k.address))
         .when(Boolean(k.kind), (el) => el.child(div().flex_none().text_size(11).text_color(t.dim).child(k.kind))))
       .child(this.status(t, { status: st }, compact));
   }

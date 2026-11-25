@@ -25,7 +25,7 @@ case "$event" in
     jq -c '.tool_response
       | (if type == "string" then (fromjson? // {}) else . end)
       | select(type == "object" and (.agentId | type) == "string")
-      | {id: .agentId, desc: .description}' <<<"$input" >>"$log"
+      | {id: .agentId, desc: .description, model: .resolvedModel}' <<<"$input" >>"$log"
     ;;
 esac
 
