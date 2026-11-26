@@ -166,7 +166,6 @@ const BINDINGS = {
   f: pluck("url"),
   p: pluck("pluck"),
   g: ["mod.open", { name: "picker" }],
-  w: ["mod.open", { name: "picker" }],
   "[": () =>
     openOverlay({
       mod: "copy-mode",
@@ -187,7 +186,7 @@ const BINDINGS = {
       height: 0.94,
     }),
   d: hunkDiff,
-  "shift-b": () =>
+  w: () =>
     openOverlay({ mod: "branches", kind: "dialog", width: 680, height: 0.7 }),
   r: ["mod.open", { name: "beacon-prs" }],
   t: triage,
