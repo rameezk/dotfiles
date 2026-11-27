@@ -13,6 +13,7 @@
   "drawio"
   "elgato-control-center"
   "hammerspoon"
+  "handy"
   "helium-browser"
   "herdr-app"
   "intellij-idea"
