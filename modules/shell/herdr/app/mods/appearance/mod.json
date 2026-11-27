@@ -1,0 +1,13 @@
+{
+  "place": "none",
+  "title": "Appearance",
+  "overlay": { "kind": "dialog", "width": 520, "height": 220 },
+  "palette": [
+    {
+      "title": "Appearance: mode and transparency",
+      "command": "mod.open",
+      "args": { "name": "appearance" },
+      "words": "theme light dark transparency glass solid opacity"
+    }
+  ]
+}

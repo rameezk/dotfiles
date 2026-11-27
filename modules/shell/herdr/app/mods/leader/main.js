@@ -189,6 +189,7 @@ const BINDINGS = {
   w: () =>
     openOverlay({ mod: "branches", kind: "dialog", width: 680, height: 0.7 }),
   r: ["mod.open", { name: "beacon-prs" }],
+  "shift-a": ["mod.open", { name: "appearance" }],
   t: triage,
   enter: keepPeek,
   o: nextWaiting,
