@@ -182,11 +182,61 @@ function findTokens(lines, mode) {
   return order.map((t, i) => ({ ...t, hint: labels[i] }));
 }
 
+const BOUNDARY = /[\s/\\\-_.:@#?&=]/;
+
+function fuzzyFrom(query, hay, text, first) {
+  const hits = [];
+  let score = 0;
+  let prev = -1;
+  let qi = 0;
+  for (let i = first; i < hay.length && qi < query.length; i++) {
+    if (hay[i] !== query[qi]) continue;
+    let bonus = 1;
+    if (prev >= 0 && i === prev + 1) bonus += 6;
+    if (i === 0 || BOUNDARY.test(text[i - 1])) bonus += 4;
+    else if (/[a-z0-9]/.test(text[i - 1]) && /[A-Z]/.test(text[i])) bonus += 3;
+    if (prev >= 0) bonus -= Math.min(i - prev - 1, 4) * 0.5;
+    score += bonus;
+    hits.push(i);
+    prev = i;
+    qi++;
+  }
+  if (qi < query.length) return null;
+  return { score: score - (prev - hits[0]) * 0.05 - text.length * 0.01, hits };
+}
+
+function fuzzy(query, text) {
+  const sensitive = query !== query.toLowerCase();
+  const q = sensitive ? query : query.toLowerCase();
+  const hay = sensitive ? text : text.toLowerCase();
+  let best = null;
+  for (let i = hay.indexOf(q[0]); i !== -1; i = hay.indexOf(q[0], i + 1)) {
+    const m = fuzzyFrom(q, hay, text, i);
+    if (!m) break;
+    if (!best || m.score > best.score) best = m;
+  }
+  return best;
+}
+
+function segments(text, hits) {
+  const set = new Set(hits);
+  const out = [];
+  for (let i = 0; i < text.length; i++) {
+    const hit = set.has(i);
+    const last = out[out.length - 1];
+    if (last && last.hit === hit) last.text += text[i];
+    else out.push({ text: text[i], hit });
+  }
+  return out;
+}
+
 export default class Pluck extends View {
   init(_p, cx) {
     const p = props() ?? {};
     this.mode = p.mode === "url" ? "url" : "pluck";
     this.typed = "";
+    this.searching = false;
+    this.query = "";
     this.tokens = null;
     this.selected = 0;
     this.scroll = ScrollHandle.new();
@@ -223,7 +273,48 @@ export default class Pluck extends View {
   }
 
   shown() {
-    return (this.tokens ?? []).filter((t) => t.hint.startsWith(this.typed));
+    const tokens = this.tokens ?? [];
+    if (!this.searching) return tokens.filter((t) => t.hint.startsWith(this.typed));
+    if (!this.query) return tokens;
+    return tokens
+      .map((t, i) => ({ t, i, m: fuzzy(this.query, t.text) }))
+      .filter((r) => r.m)
+      .sort((a, b) => b.m.score - a.m.score || a.i - b.i)
+      .map((r) => ({ ...r.t, hits: r.m.hits }));
+  }
+
+  setQuery(query, cx) {
+    this.query = query;
+    this.selected = 0;
+    this.scroll.scroll_to_item(0);
+    cx.notify();
+  }
+
+  startSearch(cx) {
+    this.searching = true;
+    this.typed = "";
+    this.setQuery("", cx);
+  }
+
+  stopSearch(cx) {
+    this.searching = false;
+    this.setQuery("", cx);
+  }
+
+  searchKey(e, cx) {
+    if (e.key === "escape") return this.stopSearch(cx);
+    if (e.key === "backspace") {
+      if (!this.query) return this.stopSearch(cx);
+      if (e.modifiers?.alt || e.modifiers?.platform) return this.setQuery("", cx);
+      return this.setQuery(this.query.slice(0, -1), cx);
+    }
+    if (e.keystroke === "ctrl-u") return this.setQuery("", cx);
+    if (e.keystroke === "ctrl-w")
+      return this.setQuery(this.query.replace(/[\s/\\\-_.:@]*[^\s/\\\-_.:@]*$/, ""), cx);
+    if (e.modifiers?.control || e.modifiers?.platform) return;
+    const ch = e.key_char;
+    if (!ch || ch.length !== 1 || ch < " ") return;
+    this.setQuery(this.query + ch, cx);
   }
 
   canOpen(token) {
@@ -293,7 +384,7 @@ export default class Pluck extends View {
   }
 
   key(e, cx) {
-    if (e.key === "escape" || e.keystroke === "ctrl-c") return this.dismiss();
+    if (e.keystroke === "ctrl-c") return this.dismiss();
     if (e.key === "down" || e.keystroke === "ctrl-n") return this.move(1, cx);
     if (e.key === "up" || e.keystroke === "ctrl-p") return this.move(-1, cx);
     if (e.key === "enter") {
@@ -301,6 +392,10 @@ export default class Pluck extends View {
       if (token) this.choose(token, this.actionFor(e), cx);
       return;
     }
+    if (this.searching) return this.searchKey(e, cx);
+    if (e.key === "escape") return this.dismiss();
+    if (e.key_char === "/" && !e.modifiers?.control && !e.modifiers?.platform)
+      return this.startSearch(cx);
     if (e.key === "backspace") {
       this.typed = this.typed.slice(0, -1);
       this.selected = 0;
@@ -350,13 +445,29 @@ export default class Pluck extends View {
           .child(rest),
       )
       .child(
-        div()
-          .flex_1()
-          .min_w(0)
-          .truncate()
-          .font_family(font)
-          .text_color(on ? t.foreground : t.muted)
-          .child(token.text),
+        token.hits?.length
+          ? h_flex()
+              .flex_1()
+              .min_w(0)
+              .overflow_hidden()
+              .whitespace_nowrap()
+              .font_family(font)
+              .text_color(on ? t.foreground : t.muted)
+              .children(
+                segments(token.text, token.hits).map((s) =>
+                  div()
+                    .flex_none()
+                    .when(s.hit, (el) => el.text_color(t.ansi3).font_weight(700))
+                    .child(s.text),
+                ),
+              )
+          : div()
+              .flex_1()
+              .min_w(0)
+              .truncate()
+              .font_family(font)
+              .text_color(on ? t.foreground : t.muted)
+              .child(token.text),
       )
       .when(on && this.mode !== "url" && this.canOpen(token), (el) =>
         el.child(this.button(`open-${token.hint}`, "Open", "⇧", t, (cx) => this.choose(token, "open", cx))),
@@ -428,8 +539,32 @@ export default class Pluck extends View {
               .text_color(t.dim)
               .child(this.tokens === null ? "Reading terminal…" : `${list.length}`),
           )
-          .child(div().flex_1())
-          .when(this.typed.length > 0, (el) =>
+          .when(this.searching, (el) =>
+            el.child(
+              h_flex()
+                .flex_1()
+                .min_w(0)
+                .h(24)
+                .px(8)
+                .gap(6)
+                .items_center()
+                .rounded(5)
+                .border_1()
+                .border_color(t.ansi3)
+                .bg(t.surface)
+                .font_family(font)
+                .child(div().flex_none().text_color(t.ansi3).child("/"))
+                .child(
+                  div()
+                    .min_w(0)
+                    .truncate()
+                    .text_color(this.query ? t.foreground : t.dim)
+                    .child(this.query || "fuzzy search…"),
+                ),
+            ),
+          )
+          .when(!this.searching, (el) => el.child(div().flex_1()))
+          .when(!this.searching && this.typed.length > 0, (el) =>
             el.child(
               div()
                 .text_size(11.5)
@@ -458,9 +593,13 @@ export default class Pluck extends View {
           .text_size(11.5)
           .text_color(t.dim)
           .child(
-            this.mode === "url"
-              ? "hint open · ⇧hint copy · ↑↓ ↵ · esc close"
-              : "hint copy · ⇧hint open in default app · ⌥hint reveal in Finder · ↑↓ ↵ · esc close",
+            this.searching
+              ? this.mode === "url"
+                ? "↵ open · ⇧↵ copy · ↑↓ select · ⌫ on empty / esc back to hints"
+                : "↵ copy · ⇧↵ open in default app · ⌥↵ reveal in Finder · ↑↓ select · esc back to hints"
+              : this.mode === "url"
+                ? "hint open · ⇧hint copy · / search · ↑↓ ↵ · esc close"
+                : "hint copy · ⇧hint open in default app · ⌥hint reveal in Finder · / search · ↑↓ ↵ · esc close",
           ),
       );
   }
