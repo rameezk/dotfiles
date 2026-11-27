@@ -189,7 +189,6 @@ in
         esc = 'mode main'
 
         [mode.browser.binding]
-        b = ['exec-and-forget ${helium-profile}/bin/helium-profile "M&S"', 'mode main']
         e = ['exec-and-forget ${helium-profile}/bin/helium-profile EE', 'mode main']
         p = ['exec-and-forget ${helium-profile}/bin/helium-profile Personal', 'mode main']
         esc = 'mode main'

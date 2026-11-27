@@ -50,10 +50,6 @@ in
         symbol = "󰠅 ";
         disabled = false;
         format = "[$symbol($subscription)]($style) ";
-        subscription_aliases = {
-          "MandS - V2 - Non Production - Clothing & Home Logistics" = "CHL Stg";
-          "MandS - V2 - Production - Clothing & Home Logistics" = "CHL Prod";
-        };
       };
 
       character = {
