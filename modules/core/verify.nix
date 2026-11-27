@@ -119,7 +119,7 @@ let
         set expanded_path (eval echo ${check.path})
         if test -e "$expanded_path"
           set resolved_path (realpath "$expanded_path" 2>/dev/null; or echo "$expanded_path")
-          set actual_perms (stat -Lf %Lp "$resolved_path" 2>/dev/null; or stat -Lc %a "$resolved_path" 2>/dev/null)
+          set actual_perms (stat -Lc %a "$resolved_path" 2>/dev/null; or stat -Lf %Lp "$resolved_path" 2>/dev/null)
           if test "$actual_perms" = "${check.permissions}"
             set passed (math $passed + 1)
             echo -e "$green✓$reset ${check.desc} (${check.permissions})"
