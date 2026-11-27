@@ -13,7 +13,9 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.file.".claude/skills/herdr".source = "${inputs.herdr-skill}/skills/herdr";
+    home.file = lib.genAttrs (map (dir: "${dir}/skills/herdr") config.ai.claude.configDirs) (_: {
+      source = "${inputs.herdr-skill}/skills/herdr";
+    });
 
     verify.checks = [
       {

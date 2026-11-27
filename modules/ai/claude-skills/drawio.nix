@@ -13,8 +13,9 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.file.".claude/skills/drawio".source =
-      "${inputs.drawio-skill}/plugins/claude-code/skills/drawio";
+    home.file = lib.genAttrs (map (dir: "${dir}/skills/drawio") config.ai.claude.configDirs) (_: {
+      source = "${inputs.drawio-skill}/plugins/claude-code/skills/drawio";
+    });
 
     verify.checks = [
       {

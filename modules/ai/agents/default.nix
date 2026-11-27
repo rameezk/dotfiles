@@ -18,26 +18,32 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    verify.checks = [
-      {
+    verify.checks =
+      map (dir: {
         type = "file";
-        path = "~/.claude/CLAUDE.md";
-        desc = "global agent instructions (claude)";
-      }
-      {
-        type = "file";
-        path = "~/.codex/AGENTS.md";
-        desc = "global agent instructions (codex)";
-      }
-      {
-        type = "file";
-        path = "~/.pi/agent/AGENTS.md";
-        desc = "global agent instructions (pi)";
-      }
-    ];
+        path = "~/${dir}/CLAUDE.md";
+        desc = "global agent instructions (claude ${dir})";
+      }) config.ai.claude.configDirs
+      ++ [
+        {
+          type = "file";
+          path = "~/.codex/AGENTS.md";
+          desc = "global agent instructions (codex)";
+        }
+        {
+          type = "file";
+          path = "~/.pi/agent/AGENTS.md";
+          desc = "global agent instructions (pi)";
+        }
+      ];
 
-    home.file.".claude/CLAUDE.md".source = config.lib.file.mkOutOfStoreSymlink cfg.instructionsPath;
-    home.file.".codex/AGENTS.md".source = config.lib.file.mkOutOfStoreSymlink cfg.instructionsPath;
-    home.file.".pi/agent/AGENTS.md".source = config.lib.file.mkOutOfStoreSymlink cfg.instructionsPath;
+    home.file =
+      lib.genAttrs (map (dir: "${dir}/CLAUDE.md") config.ai.claude.configDirs) (_: {
+        source = config.lib.file.mkOutOfStoreSymlink cfg.instructionsPath;
+      })
+      // {
+        ".codex/AGENTS.md".source = config.lib.file.mkOutOfStoreSymlink cfg.instructionsPath;
+        ".pi/agent/AGENTS.md".source = config.lib.file.mkOutOfStoreSymlink cfg.instructionsPath;
+      };
   };
 }

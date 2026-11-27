@@ -61,6 +61,10 @@
   ai.enable = false;
   ai.agents.enable = true;
   ai.claude.enable = true;
+  ai.claude.configDirs = [
+    ".claude"
+    ".claude-work"
+  ];
   ai.pi.enable = true;
   ai.claude-skills.docx.enable = false;
   ai.claude-skills.drawio.enable = false;

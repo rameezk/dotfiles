@@ -39,7 +39,9 @@ in
       (ps: [ ps.defusedxml ])
     ];
 
-    home.file.".claude/skills/docx".source = "${inputs.claude-skills}/skills/docx";
+    home.file = lib.genAttrs (map (dir: "${dir}/skills/docx") config.ai.claude.configDirs) (_: {
+      source = "${inputs.claude-skills}/skills/docx";
+    });
 
     verify.checks = [
       {

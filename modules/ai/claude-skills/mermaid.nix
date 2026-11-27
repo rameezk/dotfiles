@@ -12,7 +12,9 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.file.".claude/skills/mermaid".source = ./mermaid;
+    home.file = lib.genAttrs (map (dir: "${dir}/skills/mermaid") config.ai.claude.configDirs) (_: {
+      source = ./mermaid;
+    });
 
     verify.checks = [
       {

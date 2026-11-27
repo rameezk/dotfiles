@@ -173,6 +173,7 @@ in
       shellAbbrs = {
         cc = "claude --permission-mode auto";
         ",c" = "claude --permission-mode auto -p";
+        ccw = "CLAUDE_CONFIG_DIR=$HOME/.claude-work claude --permission-mode auto";
 
         # files
         ls = "eza";
