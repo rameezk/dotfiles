@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; form-action 'none'; base-uri 'none'">
+<title>Survey of {{repo}}</title>
+<style>
+:root {
+  --bg: #fafaf9; --fg: #1c1917; --muted: #57534e; --card: #ffffff; --line: #e7e5e4; --code: #f5f5f4;
+  --strong: #166534; --strong-bg: #dcfce7; --worth: #854d0e; --worth-bg: #fef9c3; --spec: #3f3f46; --spec-bg: #e4e4e7;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1917; --fg: #f5f5f4; --muted: #a8a29e; --card: #292524; --line: #44403c; --code: #0c0a09;
+    --strong: #bbf7d0; --strong-bg: #14532d; --worth: #fef08a; --worth-bg: #713f12; --spec: #e4e4e7; --spec-bg: #3f3f46;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 960px; margin: 0 auto; padding: 32px 16px 64px; }
+h1 { font-size: 1.6rem; margin: 0 0 4px; }
+.meta { color: var(--muted); margin: 0 0 24px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 20px; margin: 0 0 20px; }
+.card header { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; margin-bottom: 8px; }
+.card h2 { font-size: 1.15rem; margin: 0; flex: 1 1 320px; }
+.badge { font-size: .8rem; font-weight: 600; padding: 2px 10px; border-radius: 999px; white-space: nowrap; }
+.badge.strong { color: var(--strong); background: var(--strong-bg); }
+.badge.worth-exploring { color: var(--worth); background: var(--worth-bg); }
+.badge.speculative { color: var(--spec); background: var(--spec-bg); }
+.kind { font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); border: 1px solid var(--line); padding: 1px 8px; border-radius: 4px; white-space: nowrap; }
+.note { border-left: 3px solid var(--muted); border-radius: 0 6px 6px 0; padding: 6px 12px; margin: 8px 0 0; background: var(--code); }
+.adr { border-left: 3px solid var(--worth); border-radius: 0 6px 6px 0; padding: 6px 12px; margin: 8px 0 0; background: var(--worth-bg); color: var(--worth); }
+h3 { font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin: 16px 0 4px; }
+code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }
+pre { background: var(--code); border: 1px solid var(--line); border-radius: 6px; padding: 12px; margin: 0; overflow-x: auto; }
+.diagram { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.diagram figure { margin: 0; }
+.diagram figcaption { font-size: .8rem; font-weight: 600; color: var(--muted); margin-bottom: 4px; }
+.top { border: 2px solid var(--fg); border-radius: 10px; padding: 20px; margin-top: 32px; }
+.top h2 { margin-top: 0; }
+</style>
+</head>
+<body>
+<main>
+<h1>Survey of {{repo}}</h1>
+<p class="meta">Mode: {{mode}} &middot; {{date}} &middot; {{scope summary}}</p>
+
+<article class="card">
+  <header>
+    <span class="kind">{{Deepening | Test | Drift}}</span>
+    <h2>{{number}}. {{candidate title}}</h2>
+    <span class="badge {{strong | worth-exploring | speculative}}">{{Strong | Worth exploring | Speculative}}</span>
+  </header>
+  <p class="note">Fails: {{one or more of Duplicate, Cross-layer redundant, Implementation-pinned, Tautological, Orphaned}}</p>
+  <p class="note">Diverges from {{ADR or CONTEXT.md term, by path and title}}</p>
+  <p class="adr">Reopens {{ADR}}: {{why the problem goes past what it weighed}}</p>
+  <h3>Files</h3>
+  <ul><li><code>{{path}}</code></li></ul>
+  <h3>Problem</h3>
+  <p>{{the problem today}}</p>
+  <h3>Solution</h3>
+  <p>{{the fix, as the skill describes it for this kind}}</p>
+  <h3>Benefits</h3>
+  <p>{{what callers and maintainers gain}}</p>
+  <h3>Before / After</h3>
+  <div class="diagram">
+    <figure><figcaption>Before</figcaption><pre>{{diagram}}</pre></figure>
+    <figure><figcaption>After</figcaption><pre>{{diagram}}</pre></figure>
+  </div>
+</article>
+
+<section class="top">
+  <h2>Top recommendation</h2>
+  <p>{{the one candidate to take on first, by number and title, and why}}</p>
+</section>
+</main>
+</body>
+</html>
