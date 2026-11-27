@@ -68,5 +68,16 @@
   "autoMemoryEnabled": false,
   "agentPushNotifEnabled": true,
   "skipDangerousModePermissionPrompt": true,
-  "skipAutoPermissionPrompt": true
+  "skipAutoPermissionPrompt": true,
+  "enabledPlugins": {
+    "session-cost@gibb-claude-mods": true
+  },
+  "extraKnownMarketplaces": {
+    "gibb-claude-mods": {
+      "source": {
+        "source": "github",
+        "repo": "bgibb95/gibb-claude-mods"
+      }
+    }
+  }
 }
