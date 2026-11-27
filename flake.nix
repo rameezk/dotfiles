@@ -117,6 +117,8 @@
       url = "github:herdrdev/herdr";
       flake = false;
     };
+
+    forge.url = "github:rameezk/forge";
   };
 
   outputs =

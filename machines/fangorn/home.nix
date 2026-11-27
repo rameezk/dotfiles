@@ -4,7 +4,10 @@
   imports = [
     ../../modules
     inputs.jarvis.homeManagerModules.default
+    inputs.forge.homeManagerModules.default
   ];
+
+  programs.forge-mcp.boxAddress = "https://forge.tail29474.ts.net";
 
   sops = {
     defaultSopsFile = "${builtins.toString inputs.mysecrets}/secrets.yaml";
