@@ -1,0 +1,6 @@
+{
+  "name": "profile-band",
+  "version": "0.1.0",
+  "description": "Shows a coloured band above the prompt saying whether this session uses the personal or work Claude config",
+  "types": "./types/index.d.ts"
+}

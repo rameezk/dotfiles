@@ -8,6 +8,12 @@ let
   cfg = config.ai.claude;
   jq = lib.getExe pkgs.jq;
 
+  pluginSettings = pkgs.writeText "claude-plugin-settings.json" (
+    builtins.toJSON {
+      env.CLAUDE_CODE_PLUGIN_DIRS = "${./mods/profile-band}";
+    }
+  );
+
   mergeSettings = dir: ''
     claudeDir="$HOME/${dir}"
     claudeSettings="$claudeDir/settings.json"
@@ -17,7 +23,7 @@ let
     fi
     mkdir -p "$claudeDir"
     claudeSettingsTmp="$(mktemp "$claudeDir/.settings.json.XXXXXX")"
-    if printf '%s' "$claudeSettingsCurrent" | ${jq} -s '.[0] * .[1]' - ${cfg.managedSettings} > "$claudeSettingsTmp"; then
+    if printf '%s' "$claudeSettingsCurrent" | ${jq} -s '.[0] * .[1] * .[2]' - ${cfg.managedSettings} ${pluginSettings} > "$claudeSettingsTmp"; then
       if ! cmp -s "$claudeSettingsTmp" "$claudeSettings"; then
         run chmod 644 "$claudeSettingsTmp"
         run mv "$claudeSettingsTmp" "$claudeSettings"
